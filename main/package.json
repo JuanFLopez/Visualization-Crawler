@@ -1,0 +1,14 @@
+{
+  "name": "d3-viz-crawler",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Alimenta con cualquier visualización D3, descubre su tabla de transiciones y devuelve transitions.json + el diagrama del autómata (automaton.svg).",
+  "main": "run.js",
+  "scripts": {
+    "start": "node run.js"
+  },
+  "dependencies": {
+    "@sparticuz/chromium": "^131.0.1",
+    "playwright": "^1.63.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_A": "root > A",
+      "Click_B": "root > B",
+      "Click_c2": "root"
+    },
+    "root > A": {
+      "Click_c2": "root"
+    },
+    "root > B": {
+      "Click_c2": "root"
+    }
+  }
+}

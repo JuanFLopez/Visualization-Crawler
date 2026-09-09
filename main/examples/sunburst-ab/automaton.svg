@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="sans-serif">
+<title>Autómata (3 estados)</title>
+<defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M1,1 L9,5 L1,9 Z" fill="#666"/>
+      </marker>
+      <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M1,1 L9,5 L1,9 Z" fill="#d33"/>
+      </marker>
+    </defs>
+<rect width="900" height="700" fill="white"/>
+<line x1="334.28513308999305" y1="264.73277596273016" x2="362.28513308999305" y2="264.73277596273016" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M 404.79684016263525,252.8451058269681 Q 576.1443705362167,176.08703515943157 717.2323769278585,52.2082555797149" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="576.1443705362167" y="176.08703515943157" text-anchor="middle" font-size="11" fill="#333">Click_root/A</text>
+<path d="M 367.92475679634106,276.8528659935633 Q 197.71699741484525,355.6602577652876 58.36037629365201,481.2031528299444" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="197.71699741484525" y="355.6602577652876" text-anchor="middle" font-size="11" fill="#333">Click_root/B</text>
+<path d="M 376.28513308999305,247.73277596273016 C 362.28513308999305,212.73277596273016 410.28513308999305,212.73277596273016 396.28513308999305,247.73277596273016" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="386.28513308999305" y="208.73277596273016" text-anchor="middle" font-size="11" fill="#333">Click_BACK</text>
+<path d="M 717.2323769278585,52.2082555797149 Q 545.8848465542769,128.96632624725143 404.79684016263525,252.8451058269681" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="545.8848465542769" y="128.96632624725143" text-anchor="middle" font-size="11" fill="#333">Click_BACK</text>
+<path d="M 58.36037629365201,481.2031528299444 Q 228.5681356751478,402.39576105822005 367.92475679634106,276.8528659935633" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="228.5681356751478" y="402.39576105822005" text-anchor="middle" font-size="11" fill="#333">Click_BACK</text>
+<g>
+<title>root</title>
+<circle cx="386.28513308999305" cy="264.73277596273016" r="22" fill="#e6f1fb" stroke="#333" stroke-width="1"/>
+<text x="386.28513308999305" y="264.73277596273016" text-anchor="middle" dominant-baseline="central" font-size="11">root</text>
+</g>
+<g>
+<title>root &gt; root/A</title>
+<circle cx="735.7440840005006" cy="40.32058544395285" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="735.7440840005006" y="40.32058544395285" text-anchor="middle" dominant-baseline="central" font-size="11">A</text>
+</g>
+<g>
+<title>root &gt; root/B</title>
+<circle cx="40" cy="493.3232428607775" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="40" y="493.3232428607775" text-anchor="middle" dominant-baseline="central" font-size="11">B</text>
+</g>
+</svg>
