@@ -121,7 +121,8 @@ async function _selectorFor(el) {
 async function crawl({
   fixtureUrl,
   chromePath,
-  clickableSelector = '[data-crawler-clickable]',
+  containerSelector = null,
+  clickableSelector = containerSelector ? `${containerSelector} [data-crawler-clickable]` : '[data-crawler-clickable]',
   stateKeyFn = (raw) => raw,
   initScripts = [],
   backSelector = null,
@@ -143,7 +144,7 @@ async function crawl({
 
   let errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
-
+  page.on('dialog', (d) => d.dismiss().catch(() => {})); // alert/confirm/prompt no deben colgar el crawl
   async function clickSelector(sel, wait) {
     errors = [];
     await page.$eval(sel, (el) =>

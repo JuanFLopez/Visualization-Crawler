@@ -21,6 +21,7 @@ function usage() {
   console.error('  --maxStates <n>          tope de estados a descubrir');
   console.error('  --maxSteps <n>           tope duro de interacciones totales');
   console.error('  --include-links          no excluir <a>/[href] de la detección automática (se excluyen por defecto)');
+    console.error('  --containerSelector <css> acotar detección y estado a este contenedor (ej. "#sb")');
   process.exit(1);
 }
 
@@ -40,6 +41,11 @@ function parseCliOverrides(args) {
       }
       overrides[flag] = value;
     }
+  }
+    const stringFlags = ['containerSelector'];
+  for (const flag of stringFlags) {
+    const idx = args.indexOf(`--${flag}`);
+    if (idx >= 0 && args[idx + 1] !== undefined) overrides[flag] = args[idx + 1];
   }
   return overrides;
 }
@@ -99,11 +105,17 @@ async function resolveChromePath() {
   }
 
   const instrumentSrc = fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8');
-  const includeLinks = args.includes('--include-links');
-  const initScripts = includeLinks
-    ? ['window.__crawlerIncludeLinks = true;', instrumentSrc]
-    : [instrumentSrc];
-  if (includeLinks) console.log('--include-links: los <a>/[href] SÍ se van a detectar como clickeables');
+    const includeLinks = args.includes('--include-links');
+  const initScripts = [];
+  if (includeLinks) {
+    initScripts.push('window.__crawlerIncludeLinks = true;');
+    console.log('--include-links: los <a>/[href] SÍ se van a detectar como clickeables');
+  }
+  if (userConfig.containerSelector) {
+    initScripts.push(`window.__crawlerContainerSelector = ${JSON.stringify(userConfig.containerSelector)};`);
+    console.log(`acotado al contenedor: ${userConfig.containerSelector}`);
+  }
+  initScripts.push(instrumentSrc);
 
   const CHECKPOINT_PATH = path.join(outDir, 'checkpoint.json');
   const TRANSITIONS_PATH = path.join(outDir, 'transitions.json');

@@ -33,6 +33,10 @@
  * esas hace falta un window.__testState manual.
  */
 (function () {
+    // Cada carga arranca con el storage limpio: el crawler reutiliza la misma
+  // pestaña, y page.goto() NO limpia localStorage/sessionStorage.
+  try { localStorage.clear(); } catch (e) {}
+  try { sessionStorage.clear(); } catch (e) {}
   let counter = 0;
   const origAdd = EventTarget.prototype.addEventListener;
 
@@ -76,8 +80,11 @@
   // ver EXACTAMENTE qué atributo cambió entre dos lecturas que deberían
   // ser idénticas.
   window.__crawlerStateDebug = function () {
+   const sel = window.__crawlerContainerSelector;
+    const root = sel ? document.querySelector(sel) : document;
+    if (!root) throw new Error('contenedor no encontrado: ' + sel);
     let buf = '';
-    document.querySelectorAll('svg, svg *, [data-crawler-clickable]').forEach((el) => {
+    root.querySelectorAll('svg, svg *, [data-crawler-clickable]').forEach((el) => {
       buf += el.tagName;
       for (const attr of STATE_ATTRS) {
         const v = el.getAttribute(attr);
