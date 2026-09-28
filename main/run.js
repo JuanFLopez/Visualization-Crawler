@@ -20,6 +20,7 @@ function usage() {
   console.error('  --discoverySettleMs <ms> pausa antes de listar candidatos de un estado recién visitado');
   console.error('  --maxStates <n>          tope de estados a descubrir');
   console.error('  --maxSteps <n>           tope duro de interacciones totales');
+  console.error('  --include-links          no excluir <a>/[href] de la detección automática (se excluyen por defecto)');
   process.exit(1);
 }
 
@@ -98,6 +99,11 @@ async function resolveChromePath() {
   }
 
   const instrumentSrc = fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8');
+  const includeLinks = args.includes('--include-links');
+  const initScripts = includeLinks
+    ? ['window.__crawlerIncludeLinks = true;', instrumentSrc]
+    : [instrumentSrc];
+  if (includeLinks) console.log('--include-links: los <a>/[href] SÍ se van a detectar como clickeables');
 
   const CHECKPOINT_PATH = path.join(outDir, 'checkpoint.json');
   const TRANSITIONS_PATH = path.join(outDir, 'transitions.json');
@@ -115,10 +121,10 @@ async function resolveChromePath() {
   const t0 = Date.now();
 
   try {
-    const { transitions, initialState } = await crawl({
+    const { transitions, initialState, usedManualState } = await crawl({
       fixtureUrl: `http://localhost:${PORT}/index.html`,
       chromePath,
-      initScripts: [instrumentSrc],
+      initScripts,
       resume,
       ...userConfig,
       onCalibrated: (ms) => console.log(`settleMs calibrado automáticamente: ${ms}ms (pasá --settleMs para fijarlo vos)`),
@@ -144,19 +150,28 @@ async function resolveChromePath() {
     console.log('transiciones a ERROR_STATE:', errorTransitions.length);
     if (errorTransitions.length) console.log(JSON.stringify(errorTransitions, null, 2));
 
-    // Nombres legibles: el fingerprint hex sirve para que el crawler sepa
-    // "es el mismo estado", pero no para leerlo. Se renombra ACÁ (no
-    // adentro del crawler) porque solo hace falta para mostrar/guardar --
-    // la comparación de igualdad durante el crawl sigue usando el hash
-    // internamente, mientras corría.
-    const pretty = prettifyStates({ initialState, transitions });
-    fs.writeFileSync(TRANSITIONS_PATH, JSON.stringify({ initialState: pretty.initialState, transitions: pretty.transitions }, null, 2));
-    console.log(`tabla completa guardada en ${TRANSITIONS_PATH} (nombres de estado legibles)`);
+    // Nombres legibles: si el estado vino de window.__testState (manual,
+    // instrumentado a mano) ya es legible tal cual -- renombrarlo encima
+    // solo generaría redundancia ("root > root/A"). El renombrado por
+    // camino solo tiene sentido para el fingerprint automático (hashes
+    // opacos), así que se aplica nada más en ese caso.
+    let outState = initialState;
+    let outTransitions = transitions;
+    if (!usedManualState) {
+      const pretty = prettifyStates({ initialState, transitions });
+      outState = pretty.initialState;
+      outTransitions = pretty.transitions;
+      console.log('nombres de estado legibles aplicados (fingerprint automático -> camino de acciones)');
+    } else {
+      console.log('estado ya legible vía window.__testState -- sin renombrar');
+    }
+    fs.writeFileSync(TRANSITIONS_PATH, JSON.stringify({ initialState: outState, transitions: outTransitions }, null, 2));
+    console.log(`tabla completa guardada en ${TRANSITIONS_PATH}`);
 
     // Autómata observado: directo desde lo que acabamos de descubrir, sin
     // pedirle nada más al usuario -- transitions.json ES el autómata, esto
     // solo lo dibuja.
-    const dfa = fromTransitionsJson({ initialState: pretty.initialState, transitions: pretty.transitions });
+    const dfa = fromTransitionsJson({ initialState: outState, transitions: outTransitions });
     const svg = toSVG(dfa, { width: 900, height: 700 });
     fs.writeFileSync(AUTOMATON_SVG_PATH, svg);
     console.log(`diagrama del autómata guardado en ${AUTOMATON_SVG_PATH}`);

@@ -80,7 +80,11 @@ function layout(dfa, { width = 900, height = 700, iterations = 400 } = {}) {
 }
 
 function defaultLabel(state) {
-  const last = state.split('/').pop();
+  // los estados "prettificados" (ver lib/labels.js) usan " > " como
+  // separador de camino ("root > A > A1"); los nombres armados a mano
+  // (window.__testState) suelen usar "/" ("root/A"). Probamos los dos.
+  const bySeparator = state.includes(' > ') ? state.split(' > ') : state.split('/');
+  const last = bySeparator.pop();
   return last.length > 10 ? last.slice(0, 9) + '…' : last;
 }
 

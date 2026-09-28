@@ -160,19 +160,22 @@ async function crawl({
     await page.waitForTimeout(wait);
   }
 
+  let usedManualState = false; // true si en algún momento se usó window.__testState (ya legible)
+
   async function readState() {
-    const raw = await page.evaluate(() => {
-      if (typeof window.__testState !== 'undefined') return window.__testState;
-      if (typeof window.__crawlerState === 'function') return window.__crawlerState();
+    const result = await page.evaluate(() => {
+      if (typeof window.__testState !== 'undefined') return { raw: window.__testState, manual: true };
+      if (typeof window.__crawlerState === 'function') return { raw: window.__crawlerState(), manual: false };
       return null;
     });
-    if (raw === null) {
+    if (result === null) {
       throw new Error(
         'no se pudo leer el estado: definí window.__testState en tu código, ' +
         'o pasá instrument.js en initScripts para detección automática.'
       );
     }
-    return stateKeyFn(raw);
+    if (result.manual) usedManualState = true;
+    return stateKeyFn(result.raw);
   }
 
   // Calibración automática de settleMs: si no vino explícito, medimos
@@ -379,7 +382,7 @@ async function crawl({
 
   const transitions = {};
   for (const [state, node] of graph) transitions[state] = node.transitions;
-  return { transitions, initialState };
+  return { transitions, initialState, usedManualState };
 }
 
 module.exports = { crawl, ERROR_STATE };

@@ -2,14 +2,14 @@
   "initialState": "root",
   "transitions": {
     "root": {
-      "Click_root/A": "root > root/A",
-      "Click_root/B": "root > root/B",
+      "Click_root/A": "root/A",
+      "Click_root/B": "root/B",
       "Click_BACK": "root"
     },
-    "root > root/A": {
+    "root/A": {
       "Click_BACK": "root"
     },
-    "root > root/B": {
+    "root/B": {
       "Click_BACK": "root"
     }
   }

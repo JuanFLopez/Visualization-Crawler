@@ -11,6 +11,16 @@
  *    que el usuario tenga que distinguir a mano los elementos realmente
  *    interactivos de los decorativos.
  *
+ *    Los <a> (y cualquier elemento con href) se EXCLUYEN por defecto: en
+ *    una página real (no un fixture aislado) es común que haya links de
+ *    navegación con su propio listener de click (tracking, ruteo SPA,
+ *    etc.) que casi nunca son parte del vocabulario interactivo de la
+ *    visualización en sí -- y si el crawler llega a clickear uno de
+ *    verdad, puede navegar la página entera y tirar abajo el crawl. Para
+ *    incluirlos de nuevo (si tu visualización SÍ usa <a> como parte de su
+ *    interacción), seteá window.__crawlerIncludeLinks = true antes de que
+ *    corra este script (vía un initScript propio, antes de este).
+ *
  * 2. EXPONE window.__crawlerState(): un fingerprint (hash corto) de los
  *    atributos visualmente relevantes de todo el DOM bajo <svg> (o de
  *    cualquier elemento clickeable, aunque esté fuera de un <svg>). Sirve
@@ -26,12 +36,19 @@
   let counter = 0;
   const origAdd = EventTarget.prototype.addEventListener;
 
+  function isLink(el) {
+    return el.tagName === 'A' || el.hasAttribute('href');
+  }
+
   EventTarget.prototype.addEventListener = function (type, listener, options) {
     if (type === 'click' && this && this.nodeType === 1) {
-      if (!this.hasAttribute('data-crawler-id')) {
-        this.setAttribute('data-crawler-id', 'c' + counter++);
+      const includeLinks = window.__crawlerIncludeLinks === true;
+      if (includeLinks || !isLink(this)) {
+        if (!this.hasAttribute('data-crawler-id')) {
+          this.setAttribute('data-crawler-id', 'c' + counter++);
+        }
+        this.setAttribute('data-crawler-clickable', '1');
       }
-      this.setAttribute('data-crawler-clickable', '1');
     }
     return origAdd.call(this, type, listener, options);
   };

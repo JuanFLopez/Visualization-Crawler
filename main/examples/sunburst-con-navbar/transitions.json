@@ -1,0 +1,23 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_Home": "root > Home",
+      "Click_About": "root > Home",
+      "Click_c2": "root > c2",
+      "Click_c3": "root > c3",
+      "Click_c4": "root"
+    },
+    "root > Home": {},
+    "root > c2": {
+      "Click_Home": "root > Home",
+      "Click_About": "root > Home",
+      "Click_c4": "root"
+    },
+    "root > c3": {
+      "Click_Home": "root > Home",
+      "Click_About": "root > Home",
+      "Click_c4": "root"
+    }
+  }
+}

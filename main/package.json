@@ -10,5 +10,12 @@
   "dependencies": {
     "@sparticuz/chromium": "^131.0.1",
     "playwright": "^1.63.0"
-  }
+  },
+  "directories": {
+    "example": "examples",
+    "lib": "lib"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
