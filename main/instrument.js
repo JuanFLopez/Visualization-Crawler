@@ -33,8 +33,7 @@
  * esas hace falta un window.__testState manual.
  */
 (function () {
-    // Cada carga arranca con el storage limpio: el crawler reutiliza la misma
-  // pestaña, y page.goto() NO limpia localStorage/sessionStorage.
+   
   try { localStorage.clear(); } catch (e) {}
   try { sessionStorage.clear(); } catch (e) {}
   let counter = 0;

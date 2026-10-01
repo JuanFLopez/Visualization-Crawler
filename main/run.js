@@ -25,9 +25,7 @@ function usage() {
   process.exit(1);
 }
 
-// Flags numéricos simples: --nombre valor. Devuelve {} si no se pasó
-// ninguno, para poder hacer {...config, ...cliOverrides} sin pisar con
-// undefined lo que sí venga de config.js.
+
 function parseCliOverrides(args) {
   const numericFlags = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps'];
   const overrides = {};
@@ -162,11 +160,7 @@ async function resolveChromePath() {
     console.log('transiciones a ERROR_STATE:', errorTransitions.length);
     if (errorTransitions.length) console.log(JSON.stringify(errorTransitions, null, 2));
 
-    // Nombres legibles: si el estado vino de window.__testState (manual,
-    // instrumentado a mano) ya es legible tal cual -- renombrarlo encima
-    // solo generaría redundancia ("root > root/A"). El renombrado por
-    // camino solo tiene sentido para el fingerprint automático (hashes
-    // opacos), así que se aplica nada más en ese caso.
+
     let outState = initialState;
     let outTransitions = transitions;
     if (!usedManualState) {
@@ -180,9 +174,7 @@ async function resolveChromePath() {
     fs.writeFileSync(TRANSITIONS_PATH, JSON.stringify({ initialState: outState, transitions: outTransitions }, null, 2));
     console.log(`tabla completa guardada en ${TRANSITIONS_PATH}`);
 
-    // Autómata observado: directo desde lo que acabamos de descubrir, sin
-    // pedirle nada más al usuario -- transitions.json ES el autómata, esto
-    // solo lo dibuja.
+    
     const dfa = fromTransitionsJson({ initialState: outState, transitions: outTransitions });
     const svg = toSVG(dfa, { width: 900, height: 700 });
     fs.writeFileSync(AUTOMATON_SVG_PATH, svg);

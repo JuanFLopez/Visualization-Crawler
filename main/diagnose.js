@@ -1,17 +1,3 @@
-/**
- * Diagnóstico para cuando el crawler nunca converge (sigue "descubriendo"
- * estados nuevos sin parar). Recarga la MISMA página (sin clickear nada)
- * varias veces seguidas, y compara el fingerprint crudo de cada lectura.
- * Si en la raíz -- sin tocar nada -- el fingerprint ya cambia entre
- * recargas, el problema no es el crawler: es que el estado "observado" no
- * es estable, y hace falta encontrar por qué antes de seguir.
- *
- * Uso:
- *   node diagnose.js <carpeta-con-index.html> [waitMs] [rondas]
- *
- * Ejemplo:
- *   node diagnose.js "C:\...\toyprototype" 1500 6
- */
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
