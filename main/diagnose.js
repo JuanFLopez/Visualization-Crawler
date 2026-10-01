@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const { chromium } = require('playwright');
+const { isActionable, measureSettle } = require('./crawler');
 
 const PORT = 8935;
 const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json' };
@@ -47,23 +48,31 @@ function firstDifference(a, b) {
 }
 
 (async () => {
-  const vizDir = process.argv[2];
-  const waitMs = parseInt(process.argv[3], 10) || 500;
-  const rounds = parseInt(process.argv[4], 10) || 5;
+  const args = process.argv.slice(2);
+  const csIdx = args.indexOf('--containerSelector');
+  const containerSelector = csIdx >= 0 ? args.splice(csIdx, 2)[1] : null;
+  const vizDir = args[0];
+  const waitMs = parseInt(args[1], 10) || 500;
+  const rounds = parseInt(args[2], 10) || 5;
 
   if (!vizDir) {
-    console.error('Uso: node diagnose.js <carpeta-con-index.html> [waitMs=500] [rondas=5]');
+    console.error('Uso: node diagnose.js <carpeta-con-index.html> [waitMs=500] [rondas=5] [--containerSelector <css>]');
     process.exit(1);
   }
 
   const resolvedDir = path.resolve(vizDir);
   const instrumentSrc = fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8');
+  const initScripts = [];
+  if (containerSelector) {
+    initScripts.push(`window.__crawlerContainerSelector = ${JSON.stringify(containerSelector)};`);
+  }
+  initScripts.push(instrumentSrc);
 
   const server = await startServer(resolvedDir);
   const chromePath = await resolveChromePath();
   const browser = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
   const page = await browser.newPage({ viewport: { width: 700, height: 700 } });
-  await page.addInitScript({ content: instrumentSrc });
+  for (const src of initScripts) await page.addInitScript({ content: src });
 
   console.log(`recargando ${resolvedDir} ${rounds} veces, esperando ${waitMs}ms cada vez, sin clickear nada...\n`);
 
@@ -109,37 +118,40 @@ function firstDifference(a, b) {
 
   const browser2 = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
   const page2 = await browser2.newPage({ viewport: { width: 700, height: 700 } });
-  await page2.addInitScript({ content: instrumentSrc });
+  for (const src of initScripts) await page2.addInitScript({ content: src });
   const server2 = await startServer(resolvedDir);
 
   await page2.goto(`http://localhost:${PORT}/index.html`);
   await page2.waitForTimeout(waitMs);
 
-  const firstClickable = await page2.locator('[data-crawler-clickable]').first();
-  const count = await page2.locator('[data-crawler-clickable]').count();
-  if (count === 0) {
-    console.log('No se detectó ningún elemento clickeable (¿el selector automático no encontró listeners de click?). Salteando fase 2.');
-  } else {
-    await firstClickable.evaluate((el) => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+  const clickableSelector = containerSelector
+    ? `${containerSelector} [data-crawler-clickable]`
+    : '[data-crawler-clickable]';
+  const all = await page2.locator(clickableSelector).all();
+  const actionable = [];
+  for (const el of all) if (await isActionable(el)) actionable.push(el);
+  console.log(`clickeables detectados: ${all.length} (${actionable.length} interactuables ahora)`);
 
-    const checkpoints = [100, 300, 600, 1000, 2000, 4000];
-    let prev = null;
-    let settledAt = null;
-    for (const ms of checkpoints) {
-      await page2.waitForTimeout(ms - (checkpoints[checkpoints.indexOf(ms) - 1] || 0));
-      const buf = await page2.evaluate(() => window.__crawlerStateDebug());
-      const changed = prev !== null && buf !== prev;
-      console.log(`  +${ms}ms: ${changed ? 'CAMBIÓ respecto a la lectura anterior' : (prev === null ? '(primera lectura)' : 'igual a la lectura anterior')}`);
-      if (prev !== null && buf === prev && settledAt === null) settledAt = ms;
-      prev = buf;
-    }
+  if (actionable.length === 0) {
+    console.log('No se detectó ningún elemento clickeable interactuable (¿el selector automático no encontró listeners de click?). Salteando fase 2.');
+  } else {
+    const id = await actionable[0].getAttribute('data-crawler-id');
+    const maxMs = 6000;
+    const settledAt = await measureSettle(
+      page2,
+      `[data-crawler-id="${id}"]`,
+      () => page2.evaluate(() => window.__crawlerState()),
+      { maxMs, onChange: (ms) => console.log(`  +${ms}ms: CAMBIÓ`) }
+    );
 
     console.log('');
-    if (settledAt !== null) {
-      console.log(`Se asienta alrededor de los ${settledAt}ms. Usá un settleMs/discoverySettleMs por`);
-      console.log('encima de ese valor (con margen) en tu config.js y debería converger.');
+    if (settledAt === 0) {
+      console.log('El click no cambió nada observable (¿el primer candidato es un no-op?).');
+    } else if (settledAt !== null) {
+      console.log(`Se asienta a los ~${settledAt}ms (último cambio observado). Usá un settleMs/discoverySettleMs`);
+      console.log(`algo por encima (p.ej. ${Math.round(settledAt * 1.5) + 200}ms, lo que calibraría crawler.js).`);
     } else {
-      console.log('NUNCA se asentó en los', checkpoints[checkpoints.length - 1], 'ms que probamos.');
+      console.log('NUNCA se asentó en los', maxMs, 'ms que probamos.');
       console.log('Esto apunta a una animación/simulación continua (d3-force, algo con requestAnimationFrame');
       console.log('corriendo indefinidamente) más que a "hace falta esperar un poco más". Ahí, el fingerprint');
       console.log('automático basado en atributos del DOM no es la herramienta correcta: hace falta');

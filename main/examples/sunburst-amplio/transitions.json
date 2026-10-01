@@ -1,0 +1,153 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root > flex_4,116": {
+      "Click_c31": "root"
+    },
+    "root > physics_29,934": {
+      "Click_c31": "root"
+    },
+    "root": {
+      "Click_vis_432,629": "root > vis_432,629",
+      "Click_util_165,157": "root > util_165,157",
+      "Click_animate_100,024": "root > animate_100,024",
+      "Click_query_89,721": "root > query_89,721",
+      "Click_analytics_48,716": "root > analytics_48,716",
+      "Click_scale_31,294": "root > scale_31,294",
+      "Click_data_30,284": "root > data_30,284",
+      "Click_physics_29,934": "root > physics_29,934",
+      "Click_display_24,254": "root > display_24,254",
+      "Click_flex_4,116": "root > flex_4,116",
+      "Click_operator_183,967": "root > operator_183,967",
+      "Click_data_110,583": "root > data_110,583",
+      "Click_controls_44,639": "root > controls_44,639",
+      "Click_legend_36,003": "root > legend_36,003",
+      "Click_axis_33,886": "root > axis_33,886",
+      "Click_events_7,011": "root > events_7,011",
+      "Click_palette_11,946": "root > palette_11,946",
+      "Click_heap_10,587": "root > heap_10,587",
+      "Click_math_9,346": "root > math_9,346",
+      "Click_interpolate_23,081": "root > interpolate_23,081",
+      "Click_methods_14,326": "root > methods_14,326",
+      "Click_graph_26,435": "root > graph_26,435",
+      "Click_cluster_15,207": "root > cluster_15,207",
+      "Click_optimization_7,074": "root > optimization_7,074",
+      "Click_converters_18,349": "root > converters_18,349",
+      "Click_c31": "root"
+    },
+    "root > vis_432,629": {
+      "Click_operator_183,967": "root > operator_183,967",
+      "Click_data_110,583": "root > data_110,583",
+      "Click_controls_44,639": "root > controls_44,639",
+      "Click_legend_36,003": "root > legend_36,003",
+      "Click_axis_33,886": "root > axis_33,886",
+      "Click_events_7,011": "root > events_7,011",
+      "Click_layout_108,083": "root > vis_432,629 > layout_108,083",
+      "Click_label_17,057": "root > vis_432,629 > label_17,057",
+      "Click_encoder_14,897": "root > vis_432,629 > encoder_14,897",
+      "Click_distortion_14,219": "root > vis_432,629 > distortion_14,219",
+      "Click_filter_11,893": "root > vis_432,629 > filter_11,893",
+      "Click_render_8,867": "root > vis_432,629 > render_8,867",
+      "Click_c31": "root"
+    },
+    "root > util_165,157": {
+      "Click_palette_11,946": "root > palette_11,946",
+      "Click_heap_10,587": "root > heap_10,587",
+      "Click_math_9,346": "root > math_9,346",
+      "Click_c31": "root"
+    },
+    "root > animate_100,024": {
+      "Click_interpolate_23,081": "root > interpolate_23,081",
+      "Click_c31": "root"
+    },
+    "root > query_89,721": {
+      "Click_methods_14,326": "root > methods_14,326",
+      "Click_c31": "root"
+    },
+    "root > analytics_48,716": {
+      "Click_graph_26,435": "root > graph_26,435",
+      "Click_cluster_15,207": "root > cluster_15,207",
+      "Click_optimization_7,074": "root > optimization_7,074",
+      "Click_c31": "root"
+    },
+    "root > scale_31,294": {
+      "Click_c31": "root"
+    },
+    "root > data_30,284": {
+      "Click_converters_18,349": "root > converters_18,349",
+      "Click_c31": "root"
+    },
+    "root > display_24,254": {
+      "Click_c31": "root"
+    },
+    "root > operator_183,967": {
+      "Click_layout_108,083": "root > vis_432,629 > layout_108,083",
+      "Click_label_17,057": "root > vis_432,629 > label_17,057",
+      "Click_encoder_14,897": "root > vis_432,629 > encoder_14,897",
+      "Click_distortion_14,219": "root > vis_432,629 > distortion_14,219",
+      "Click_filter_11,893": "root > vis_432,629 > filter_11,893",
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > data_110,583": {
+      "Click_render_8,867": "root > vis_432,629 > render_8,867",
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > controls_44,639": {
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > legend_36,003": {
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > axis_33,886": {
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > events_7,011": {
+      "Click_c31": "root > vis_432,629"
+    },
+    "root > palette_11,946": {
+      "Click_c31": "root > util_165,157"
+    },
+    "root > heap_10,587": {
+      "Click_c31": "root > util_165,157"
+    },
+    "root > math_9,346": {
+      "Click_c31": "root > util_165,157"
+    },
+    "root > interpolate_23,081": {
+      "Click_c31": "root > animate_100,024"
+    },
+    "root > methods_14,326": {
+      "Click_c31": "root > query_89,721"
+    },
+    "root > graph_26,435": {
+      "Click_c31": "root > analytics_48,716"
+    },
+    "root > cluster_15,207": {
+      "Click_c31": "root > analytics_48,716"
+    },
+    "root > optimization_7,074": {
+      "Click_c31": "root > analytics_48,716"
+    },
+    "root > converters_18,349": {
+      "Click_c31": "root > data_30,284"
+    },
+    "root > vis_432,629 > layout_108,083": {
+      "Click_c31": "root > operator_183,967"
+    },
+    "root > vis_432,629 > label_17,057": {
+      "Click_c31": "root > operator_183,967"
+    },
+    "root > vis_432,629 > encoder_14,897": {
+      "Click_c31": "root > operator_183,967"
+    },
+    "root > vis_432,629 > distortion_14,219": {
+      "Click_c31": "root > operator_183,967"
+    },
+    "root > vis_432,629 > filter_11,893": {
+      "Click_c31": "root > operator_183,967"
+    },
+    "root > vis_432,629 > render_8,867": {
+      "Click_c31": "root > data_110,583"
+    }
+  }
+}

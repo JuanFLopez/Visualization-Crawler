@@ -62,6 +62,8 @@
     'fill-opacity', 'opacity', 'stroke-opacity', 'fill', 'stroke', 'class',
   ];
 
+  const NON_NUMERIC_ATTRS = new Set(['fill', 'stroke', 'class']);
+
   function fnv1a(str) {
     let h = 0x811c9dc5;
     for (let i = 0; i < str.length; i++) {
@@ -69,6 +71,32 @@
       h = Math.imul(h, 0x01000193);
     }
     return (h >>> 0).toString(16);
+  }
+
+  // Redondeo de todos los números de un atributo: interpolaciones D3 que
+  // "vuelven" al mismo lugar dejan ruido de punto flotante en los últimos
+  // dígitos (rotate(97.4140204930506) vs rotate(97.41402049305063)), y sin
+  // esto el mismo estado lógico da fingerprints distintos según el camino.
+  function roundNumbers(v) {
+    return v.replace(/-?\d*\.\d+(e[-+]?\d+)?/gi, (m) => {
+      const r = Math.round(parseFloat(m) * 100) / 100;
+      return String(r === 0 ? 0 : r); // evita "-0"
+    });
+  }
+
+  // Un elemento invisible no aporta su geometría al estado: D3 suele
+  // dejar de actualizar los elementos ocultos (p.ej. clicked() del
+  // sunburst solo transiciona arcos/labels visibles), así que sus
+  // atributos quedan "viejos" y dependen del camino recorrido.
+  function isInvisible(el) {
+    const cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) return true;
+    if (el instanceof SVGGeometryElement || el instanceof SVGTextContentElement) {
+      const noFill = cs.fill === 'none' || parseFloat(cs.fillOpacity) === 0;
+      const noStroke = cs.stroke === 'none' || parseFloat(cs.strokeOpacity) === 0;
+      return noFill && noStroke;
+    }
+    return false;
   }
 
   window.__crawlerState = function () {
@@ -85,9 +113,13 @@
     let buf = '';
     root.querySelectorAll('svg, svg *, [data-crawler-clickable]').forEach((el) => {
       buf += el.tagName;
+      if (isInvisible(el)) {
+        buf += '|hidden;';
+        return;
+      }
       for (const attr of STATE_ATTRS) {
         const v = el.getAttribute(attr);
-        if (v) buf += '|' + attr + '=' + v;
+        if (v) buf += '|' + attr + '=' + (NON_NUMERIC_ATTRS.has(attr) ? v : roundNumbers(v));
       }
       buf += ';';
     });

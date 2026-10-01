@@ -89,6 +89,42 @@ async function _selectorFor(el) {
   throw new Error('elemento clickeable sin identidad estable');
 }
 
+// Filtro genérico de "interactuable ahora" (ver comentario en el loop
+// principal de crawl()).
+function isActionable(locator) {
+  return locator.evaluate((node) => {
+    const cs = getComputedStyle(node);
+    return cs.pointerEvents !== 'none' && cs.display !== 'none' && cs.visibility !== 'hidden';
+  });
+}
+
+/**
+ * Clickea `sel` y mide cuándo deja de cambiar el estado: lee cada
+ * `pollMs` y considera "asentado" cuando pasan `quietMs` sin cambios.
+ * Devuelve el instante (ms desde el click) del último cambio observado,
+ * o null si sigue cambiando al llegar a `maxMs`. Lo usan tanto la
+ * calibración de crawl() como diagnose.js.
+ */
+async function measureSettle(page, sel, readFn, { pollMs = 50, quietMs = 400, maxMs = 6000, onChange = null } = {}) {
+  let prev = await readFn();
+  await page.$eval(sel, (el) => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
+  const t0 = Date.now();
+  let lastChange = 0;
+  while (Date.now() - t0 < maxMs) {
+    await page.waitForTimeout(pollMs);
+    const cur = await readFn();
+    const now = Date.now() - t0;
+    if (cur !== prev) {
+      lastChange = now;
+      prev = cur;
+      if (onChange) onChange(now);
+    } else if (now - lastChange >= quietMs) {
+      return lastChange;
+    }
+  }
+  return null;
+}
+
 /**
  * @param {Object} opts
  * @param {string} opts.fixtureUrl
@@ -191,11 +227,7 @@ async function crawl({
     const candidatesRaw = await page.locator(clickableSelector).all();
     let firstClickableSel = null;
     for (const el of candidatesRaw) {
-      const isActionable = await el.evaluate((node) => {
-        const cs = getComputedStyle(node);
-        return cs.pointerEvents !== 'none' && cs.display !== 'none' && cs.visibility !== 'hidden';
-      });
-      if (isActionable) { firstClickableSel = await _selectorFor(el); break; }
+      if (await isActionable(el)) { firstClickableSel = await _selectorFor(el); break; }
     }
     if (!firstClickableSel) {
       throw new Error(
@@ -206,23 +238,12 @@ async function crawl({
     }
 
     errors = [];
-    await page.$eval(firstClickableSel, (el) => el.dispatchEvent(new MouseEvent('click', { bubbles: true })));
-
-    const checkpoints = [100, 300, 600, 1000, 2000, 4000];
-    let prev = null;
-    let settledAt = null;
-    let elapsed = 0;
-    for (const ms of checkpoints) {
-      await page.waitForTimeout(ms - elapsed);
-      elapsed = ms;
-      const cur = await readState();
-      if (prev !== null && cur === prev) { settledAt = ms; break; }
-      prev = cur;
-    }
+    const maxMs = 6000;
+    const settledAt = await measureSettle(page, firstClickableSel, readState, { maxMs });
 
     if (settledAt === null) {
       throw new Error(
-        `el estado observado nunca se asentó en los ${checkpoints[checkpoints.length - 1]}ms de calibración ` +
+        `el estado observado nunca se asentó en los ${maxMs}ms de calibración ` +
         `(sigue cambiando después de un click sin volver a repetirse). Esto apunta a una animación o ` +
         `simulación continua (d3-force, algo con requestAnimationFrame corriendo indefinidamente) más que ` +
         `a "hace falta esperar un poco más" -- ahí, la detección automática de estado no es la herramienta ` +
@@ -325,11 +346,7 @@ async function crawl({
     // real nunca podría disparar clickeando.
     const candidates = [];
     for (const el of candidatesRaw) {
-      const isActionable = await el.evaluate((node) => {
-        const cs = getComputedStyle(node);
-        return cs.pointerEvents !== 'none' && cs.display !== 'none' && cs.visibility !== 'hidden';
-      });
-      if (isActionable) candidates.push(el);
+      if (await isActionable(el)) candidates.push(el);
     }
     const found = [];
     const seenNames = new Set();
@@ -386,4 +403,4 @@ async function crawl({
   return { transitions, initialState, usedManualState };
 }
 
-module.exports = { crawl, ERROR_STATE };
+module.exports = { crawl, ERROR_STATE, isActionable, measureSettle };

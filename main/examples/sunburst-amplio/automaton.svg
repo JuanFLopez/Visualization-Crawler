@@ -1,0 +1,341 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="700" viewBox="0 0 900 700" font-family="sans-serif">
+<title>Autómata (32 estados)</title>
+<defs>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M1,1 L9,5 L1,9 Z" fill="#666"/>
+      </marker>
+      <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M1,1 L9,5 L1,9 Z" fill="#d33"/>
+      </marker>
+    </defs>
+<rect width="900" height="700" fill="white"/>
+<line x1="323.00417345253953" y1="258.7883121637109" x2="351.00417345253953" y2="258.7883121637109" stroke="#666" stroke-width="1.5" marker-end="url(#arrow)"/>
+<path d="M 342.61761244166183,61.70882746280036 Q 329.39774341948913,153.93456673546387 371.43670793899,237.0794847009105" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="329.39774341948913" y="153.93456673546387" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 273.52316306213845,59.602510741235164 Q 294.32148308649164,162.10497279306867 365.01710317944344,239.18580142247572" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="294.32148308649164" y="162.10497279306867" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 391.10843148657636,273.77673680318384 Q 488.17475247365667,402.36827034474175 623.3934270884864,489.9671470723877" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="488.17475247365667" y="402.36827034474175" text-anchor="middle" font-size="11" fill="#333">Click_vis_432,629</text>
+<path d="M 355.89421957275806,269.688296691802 Q 243.24085774091566,301.70930024074056 158.3329110714871,382.37382275639555" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="243.24085774091566" y="301.70930024074056" text-anchor="middle" font-size="11" fill="#333">Click_util_165,157</text>
+<path d="M 395.0271848045315,249.67354302796193 Q 490.59513885616633,236.93420859557455 562.9618623804403,173.22720890357127" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="490.59513885616633" y="236.93420859557455" text-anchor="middle" font-size="11" fill="#333">Click_animate_100,024</text>
+<path d="M 387.7678028220372,240.86933436590957 Q 475.7312453368068,165.63877527939792 518.0827443662639,57.918977797801325" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="475.7312453368068" y="165.63877527939792" text-anchor="middle" font-size="11" fill="#333">Click_query_89,721</text>
+<path d="M 355.8115498614191,248.034559344831 Q 272.3134892354995,169.15438448810085 161.4422396160675,139.12816059058636" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="272.3134892354995" y="169.15438448810085" text-anchor="middle" font-size="11" fill="#333">Click_analytics_48,716</text>
+<path d="M 353.0124595595804,258.18455720495086 Q 288.7059277064278,228.4085519934313 222.86256504915883,254.61145487308048" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="288.7059277064278" y="228.4085519934313" text-anchor="middle" font-size="11" fill="#333">Click_scale_31,294</text>
+<path d="M 385.01476626420913,239.19780345262967 Q 455.8370844594571,162.1349105694349 476.79265320831655,59.59050871108123" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="455.8370844594571" y="162.1349105694349" text-anchor="middle" font-size="11" fill="#333">Click_data_30,284</text>
+<path d="M 365.01710317944344,239.18580142247572 Q 344.21878315509025,136.68333937064222 273.52316306213845,59.602510741235164" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="344.21878315509025" y="136.68333937064222" text-anchor="middle" font-size="11" fill="#333">Click_physics_29,934</text>
+<path d="M 363.50698107399796,277.54503275689575 Q 298.9376571337239,329.30625831917126 282.1127128851932,410.3330644813707" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="298.9376571337239" y="329.30625831917126" text-anchor="middle" font-size="11" fill="#333">Click_display_24,254</text>
+<path d="M 371.43670793899,237.0794847009105 Q 384.6565769611628,144.853745428247 342.61761244166183,61.70882746280036" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="384.6565769611628" y="144.853745428247" text-anchor="middle" font-size="11" fill="#333">Click_flex_4,116</text>
+<line x1="392.3585267638035" y1="272.30964424112915" x2="736.4858394397926" y2="540.4302470746253" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="564.422183101798" y="400.3699456578772" text-anchor="middle" font-size="11" fill="#333">Click_operator_183,967</text>
+<line x1="381.63456165012803" y1="279.76539376123725" x2="471.63013640843076" y2="564.4914850341157" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="426.6323490292794" y="416.1284393976765" text-anchor="middle" font-size="11" fill="#333">Click_data_110,583</text>
+<line x1="396.3319050165468" y1="264.18533600409256" x2="667.7237359158186" y2="332.86156521545604" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="532.0278204661827" y="292.5234506097743" text-anchor="middle" font-size="11" fill="#333">Click_controls_44,639</text>
+<line x1="394.90760974473" y1="268.1613172187994" x2="579.3372944882506" y2="355.013674873627" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="487.1224521164903" y="305.58749604621323" text-anchor="middle" font-size="11" fill="#333">Click_legend_36,003</text>
+<line x1="388.86187809564655" y1="275.87526689603254" x2="508.47998536075886" y2="423.3678882676126" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="448.67093172820273" y="343.6215775818226" text-anchor="middle" font-size="11" fill="#333">Click_axis_33,886</text>
+<line x1="381.35692093292465" y1="279.8511372223411" x2="443.81681374466086" y2="486.9397708468349" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="412.5868673387928" y="377.395454034588" text-anchor="middle" font-size="11" fill="#333">Click_events_7,011</text>
+<line x1="360.13923881877946" y1="275.0066264513932" x2="149.6479514697535" y2="504.6621168490547" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="254.8935951442665" y="383.83437165022394" text-anchor="middle" font-size="11" fill="#333">Click_palette_11,946</text>
+<line x1="353.4068428240223" y1="262.97821785746" x2="61.59733062851724" y2="319.58958144068424" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="207.50208672626977" y="285.2838996490721" text-anchor="middle" font-size="11" fill="#333">Click_heap_10,587</text>
+<line x1="355.6297350475003" y1="269.2109383437742" x2="59.37443840503923" y2="428.5837235680943" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="207.50208672626974" y="342.89733095593425" text-anchor="middle" font-size="11" fill="#333">Click_math_9,346</text>
+<line x1="394.8950039347297" y1="249.38858542679054" x2="678.6457837299964" y2="115.29766379072784" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="536.7703938323631" y="176.34312460875918" text-anchor="middle" font-size="11" fill="#333">Click_interpolate_23,081</text>
+<line x1="380.367584576502" y1="237.45210300848944" x2="424.63889525439015" y2="61.33620915522145" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="402.5032399154461" y="143.39415608185544" text-anchor="middle" font-size="11" fill="#333">Click_methods_14,326</text>
+<line x1="359.5130425027113" y1="243.16701702229338" x2="173.53004234584458" y2="55.621295141417505" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="266.5215424242779" y="143.39415608185544" text-anchor="middle" font-size="11" fill="#333">Click_graph_26,435</text>
+<line x1="356.8865989391043" y1="246.30818821600414" x2="75.50362454796681" y2="52.48012394770673" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="216.19511174353556" y="143.39415608185544" text-anchor="middle" font-size="11" fill="#333">Click_cluster_15,207</text>
+<line x1="353.98089958654725" y1="252.30587774788484" x2="61.02327386599228" y2="161.9736769948134" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="207.50208672626977" y="201.1397773713491" text-anchor="middle" font-size="11" fill="#333">Click_optimization_7,074</text>
+<line x1="391.71296675507455" y1="244.47691019279407" x2="613.7342737247171" y2="54.311401970916805" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="502.7236202398958" y="143.39415608185544" text-anchor="middle" font-size="11" fill="#333">Click_converters_18,349</text>
+<path d="M 365.00417345253953,241.78831216371088 C 351.00417345253953,206.78831216371088 399.00417345253953,206.78831216371088 385.00417345253953,241.78831216371088" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="375.00417345253953" y="202.78831216371088" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 659.7193831683194,513.6206122856054 Q 685.6407054792966,555.1902820356927 733.6184947052604,545.2865385782989" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="685.6407054792966" y="555.1902820356927" text-anchor="middle" font-size="11" fill="#333">Click_operator_183,967</text>
+<path d="M 619.815134014543,514.7839582468799 Q 546.3702492742467,520.1615495797766 497.94307571399946,575.6401800966228" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="546.3702492742467" y="520.1615495797766" text-anchor="middle" font-size="11" fill="#333">Click_data_110,583</text>
+<path d="M 645.7664754249859,483.8676067046877 Q 691.1138044921219,429.58554076880165 682.7826771773632,359.3465540630107" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="691.1138044921219" y="429.58554076880165" text-anchor="middle" font-size="11" fill="#333">Click_controls_44,639</text>
+<path d="M 633.4406882217079,483.8058012983665 Q 646.2870975686566,426.9622206737959 605.2977276812563,385.5364503422097" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="646.2870975686566" y="426.9622206737959" text-anchor="middle" font-size="11" fill="#333">Click_legend_36,003</text>
+<path d="M 620.2252941470072,494.34543758985967 Q 594.4214946275594,448.1767097506953 541.6100809793819,451.06497712193527" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="594.4214946275594" y="448.1767097506953" text-anchor="middle" font-size="11" fill="#333">Click_axis_33,886</text>
+<path d="M 617.5005337120396,505.30959123710784 Q 544.3830528689246,478.4827092862291 472.1667126355297,507.64857638021795" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="544.3830528689246" y="478.4827092862291" text-anchor="middle" font-size="11" fill="#333">Click_events_7,011</text>
+<line x1="657.494183056749" y1="517.6096644135682" x2="842.0035020657742" y2="647.3459072982924" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="749.7488425612617" y="576.4777858559303" text-anchor="middle" font-size="11" fill="#333">Click_layout_108,083</text>
+<line x1="657.494183056749" y1="517.6096644135682" x2="842.0035020657742" y2="647.3459072982924" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="749.7488425612617" y="576.4777858559303" text-anchor="middle" font-size="11" fill="#333">Click_label_17,057</text>
+<line x1="661.4368230613684" y1="503.3202654713288" x2="838.0608620611548" y2="490.15500829443266" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="749.7488425612617" y="490.73763688288074" text-anchor="middle" font-size="11" fill="#333">Click_encoder_14,897</text>
+<line x1="657.494183056749" y1="517.6096644135682" x2="842.0035020657742" y2="647.3459072982924" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="749.7488425612617" y="576.4777858559303" text-anchor="middle" font-size="11" fill="#333">Click_distortion_14,219</text>
+<line x1="657.494183056749" y1="517.6096644135682" x2="842.0035020657742" y2="647.3459072982924" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="749.7488425612617" y="576.4777858559303" text-anchor="middle" font-size="11" fill="#333">Click_filter_11,893</text>
+<line x1="626.9210350418685" y1="523.0062745444035" x2="544.0486511273414" y2="641.9492971674572" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="585.484843084605" y="576.4777858559303" text-anchor="middle" font-size="11" fill="#333">Click_render_8,867</text>
+<path d="M 623.3934270884864,489.9671470723877 Q 526.3271061014061,361.3756135308298 391.10843148657636,273.77673680318384" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="526.3271061014061" y="361.3756135308298" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 138.45795289472207,415.2605025437929 Q 109.01992032018714,456.1034773780873 135.54802113297703,498.8937358774308" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="109.01992032018714" y="456.1034773780873" text-anchor="middle" font-size="11" fill="#333">Click_palette_11,946</text>
+<path d="M 121.20311904049075,380.65297399171163 Q 105.67435733211201,335.5923077442774 58.01983815121491,336.4003204272084" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="105.67435733211201" y="335.5923077442774" text-anchor="middle" font-size="11" fill="#333">Click_heap_10,587</text>
+<path d="M 119.2430520003235,402.48268281537423 Q 77.89109155654137,390.71110827274487 59.979905191382166,429.79747421727006" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="77.89109155654137" y="390.71110827274487" text-anchor="middle" font-size="11" fill="#333">Click_math_9,346</text>
+<path d="M 158.3329110714871,382.37382275639555 Q 270.98627290332945,350.352819207457 355.89421957275806,269.688296691802" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="270.98627290332945" y="350.352819207457" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 602.632348881947,154.21412070602193 Q 653.358604596419,160.01106587383367 678.8891390626718,115.79625611560789" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="653.358604596419" y="160.01106587383367" text-anchor="middle" font-size="11" fill="#333">Click_interpolate_23,081</text>
+<path d="M 562.9618623804403,173.22720890357127 Q 467.39390832880537,185.96654333595865 395.0271848045315,249.67354302796193" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="467.39390832880537" y="185.96654333595865" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 508.8463737357615,40 Q 480.42434005705707,12 452.0023063783526,40" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="480.42434005705707" y="12" text-anchor="middle" font-size="11" fill="#333">Click_methods_14,326</text>
+<path d="M 518.0827443662639,57.918977797801325 Q 430.1193018514943,133.14953688431297 387.7678028220372,240.86933436590957" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="430.1193018514943" y="133.14953688431297" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 146.11894584575245,106.71734687374928 Q 177.70779576242722,89.11180547596922 154.16958157521094,61.65706089795719" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="177.70779576242722" y="89.11180547596922" text-anchor="middle" font-size="11" fill="#333">Click_graph_26,435</text>
+<path d="M 127.01166077831579,112.506051842321 Q 120.01392239441174,64.793442662868 72.62400528116285,55.86835592938547" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="120.01392239441174" y="64.793442662868" text-anchor="middle" font-size="11" fill="#333">Click_cluster_15,207</text>
+<path d="M 120.98471470870125,134.01390881438107 Q 83.94726123088766,114.86840531830683 61.2649013162458,149.85174153631274" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="83.94726123088766" y="114.86840531830683" text-anchor="middle" font-size="11" fill="#333">Click_optimization_7,074</text>
+<path d="M 161.4422396160675,139.12816059058636 Q 244.9403002419871,218.00833544731654 355.8115498614191,248.034559344831" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="244.9403002419871" y="218.00833544731654" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 222.86256504915883,254.61145487308048 Q 287.1690969023115,284.3874600846001 353.0124595595804,258.18455720495086" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="287.1690969023115" y="284.3874600846001" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 508.80324601998615,40 Q 558.6231565236192,68 608.4430670272521,40" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="558.6231565236192" y="68" text-anchor="middle" font-size="11" fill="#333">Click_converters_18,349</text>
+<path d="M 476.79265320831655,59.59050871108123 Q 405.97033501306856,136.65340159427598 385.01476626420913,239.19780345262967" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="405.97033501306856" y="136.65340159427598" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 282.1127128851932,410.3330644813707 Q 346.68203682546726,358.5718389190952 363.50698107399796,277.54503275689575" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="346.68203682546726" y="358.5718389190952" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 769.4047051962757,569.4997607930786 Q 787.1315015596655,626.785169051755 844.4354875547809,644.4518183589649" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="787.1315015596655" y="626.785169051755" text-anchor="middle" font-size="11" fill="#333">Click_layout_108,083</text>
+<path d="M 769.4047051962757,569.4997607930786 Q 787.1315015596655,626.785169051755 844.4354875547809,644.4518183589649" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="787.1315015596655" y="626.785169051755" text-anchor="middle" font-size="11" fill="#333">Click_label_17,057</text>
+<path d="M 772.5685789779557,542.4082889219532 Q 821.6115566683707,545.0717685281163 841.271613773101,500.06299228399115" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="821.6115566683707" y="545.0717685281163" text-anchor="middle" font-size="11" fill="#333">Click_encoder_14,897</text>
+<path d="M 769.4047051962757,569.4997607930786 Q 787.1315015596655,626.785169051755 844.4354875547809,644.4518183589649" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="787.1315015596655" y="626.785169051755" text-anchor="middle" font-size="11" fill="#333">Click_distortion_14,219</text>
+<path d="M 769.4047051962757,569.4997607930786 Q 787.1315015596655,626.785169051755 844.4354875547809,644.4518183589649" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="787.1315015596655" y="626.785169051755" text-anchor="middle" font-size="11" fill="#333">Click_filter_11,893</text>
+<path d="M 733.6184947052604,545.2865385782989 Q 707.6971723942833,503.71686882821155 659.7193831683194,513.6206122856054" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="707.6971723942833" y="503.71686882821155" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 491.0437460677692,603.3735728885484 Q 482.07807304483583,639.0038379035027 518.6887795849368,642.0949937430936" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="482.07807304483583" y="639.0038379035027" text-anchor="middle" font-size="11" fill="#333">Click_render_8,867</text>
+<path d="M 497.94307571399946,575.6401800966228 Q 571.3879604542957,570.2625887637262 619.815134014543,514.7839582468799" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="571.3879604542957" y="570.2625887637262" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 682.7826771773632,359.3465540630107 Q 637.4353481102272,413.6286199988967 645.7664754249859,483.8676067046877" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="637.4353481102272" y="413.6286199988967" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 605.2977276812563,385.5364503422097 Q 592.4513183343078,442.38003096678034 633.4406882217079,483.8058012983665" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="592.4513183343078" y="442.38003096678034" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 541.6100809793819,451.06497712193527 Q 567.4138804988296,497.23370496109965 620.2252941470072,494.34543758985967" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="567.4138804988296" y="497.23370496109965" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 472.1667126355297,507.64857638021795 Q 545.2841934786447,534.4754583310967 617.5005337120396,505.30959123710784" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="545.2841934786447" y="534.4754583310967" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 135.54802113297703,498.8937358774308 Q 164.98605370751196,458.0507610431364 138.45795289472207,415.2605025437929" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="164.98605370751196" y="458.0507610431364" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 58.01983815121491,336.4003204272084 Q 73.54859985959365,381.46098667464264 121.20311904049075,380.65297399171163" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="73.54859985959365" y="381.46098667464264" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 59.979905191382166,429.79747421727006 Q 101.33186563516429,441.56904875989943 119.2430520003235,402.48268281537423" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="101.33186563516429" y="441.56904875989943" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 678.8891390626718,115.79625611560789 Q 628.1628833481999,109.99931094779616 602.632348881947,154.21412070602193" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="628.1628833481999" y="109.99931094779616" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 452.0023063783526,40 Q 480.42434005705707,68 508.8463737357615,40" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="480.42434005705707" y="68" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 154.16958157521094,61.65706089795719 Q 122.5807316585362,79.26260229573725 146.11894584575245,106.71734687374928" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="122.5807316585362" y="79.26260229573725" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 72.62400528116285,55.86835592938547 Q 79.6217436650669,103.58096510883847 127.01166077831579,112.506051842321" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="79.6217436650669" y="103.58096510883847" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 61.2649013162458,149.85174153631274 Q 98.30235479405938,168.997245032387 120.98471470870125,134.01390881438107" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="98.30235479405938" y="168.997245032387" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 608.4430670272521,40 Q 558.6231565236192,12 508.80324601998615,40" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="558.6231565236192" y="12" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 844.4354875547809,644.4518183589649 Q 826.7086911913913,587.1664101002884 769.4047051962757,569.4997607930786" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="826.7086911913913" y="587.1664101002884" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 844.4354875547809,644.4518183589649 Q 826.7086911913913,587.1664101002884 769.4047051962757,569.4997607930786" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="826.7086911913913" y="587.1664101002884" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 841.271613773101,500.06299228399115 Q 792.2286360826861,497.39951267782794 772.5685789779557,542.4082889219532" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="792.2286360826861" y="497.39951267782794" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 844.4354875547809,644.4518183589649 Q 826.7086911913913,587.1664101002884 769.4047051962757,569.4997607930786" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="826.7086911913913" y="587.1664101002884" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 844.4354875547809,644.4518183589649 Q 826.7086911913913,587.1664101002884 769.4047051962757,569.4997607930786" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="826.7086911913913" y="587.1664101002884" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<path d="M 518.6887795849368,642.0949937430936 Q 527.6544526078702,606.4647287281393 491.0437460677692,603.3735728885484" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"/>
+<text x="527.6544526078702" y="606.4647287281393" text-anchor="middle" font-size="11" fill="#333">Click_c31</text>
+<g>
+<title>root &gt; flex_4,116</title>
+<circle cx="339.0501469281123" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="339.0501469281123" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">flex_4,116</text>
+</g>
+<g>
+<title>root &gt; physics_29,934</title>
+<circle cx="263.53609278904236" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="263.53609278904236" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">physics_2…</text>
+</g>
+<g>
+<title>root</title>
+<circle cx="375.00417345253953" cy="258.7883121637109" r="22" fill="#e6f1fb" stroke="#333" stroke-width="1"/>
+<text x="375.00417345253953" y="258.7883121637109" text-anchor="middle" dominant-baseline="central" font-size="11">root</text>
+</g>
+<g>
+<title>root &gt; vis_432,629</title>
+<circle cx="639.4976851225232" cy="504.95557171186067" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="639.4976851225232" y="504.95557171186067" text-anchor="middle" dominant-baseline="central" font-size="11">vis_432,6…</text>
+</g>
+<g>
+<title>root &gt; util_165,157</title>
+<circle cx="139.22295719170566" cy="393.2738072844867" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="139.22295719170566" y="393.2738072844867" text-anchor="middle" dominant-baseline="central" font-size="11">util_165,…</text>
+</g>
+<g>
+<title>root &gt; animate_100,024</title>
+<circle cx="582.9848737324322" cy="164.1124397678223" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="582.9848737324322" y="164.1124397678223" text-anchor="middle" dominant-baseline="central" font-size="11">animate_1…</text>
+</g>
+<g>
+<title>root &gt; query_89,721</title>
+<circle cx="530.8463737357615" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="530.8463737357615" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">query_89,…</text>
+</g>
+<g>
+<title>root &gt; analytics_48,716</title>
+<circle cx="142.24961602494704" cy="128.37440777170647" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="142.24961602494704" y="128.37440777170647" text-anchor="middle" dominant-baseline="central" font-size="11">analytics…</text>
+</g>
+<g>
+<title>root &gt; scale_31,294</title>
+<circle cx="200.87085115619968" cy="254.00769991432048" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="200.87085115619968" y="254.00769991432048" text-anchor="middle" dominant-baseline="central" font-size="11">scale_31,…</text>
+</g>
+<g>
+<title>root &gt; data_30,284</title>
+<circle cx="486.80324601998615" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="486.80324601998615" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">data_30,2…</text>
+</g>
+<g>
+<title>root &gt; display_24,254</title>
+<circle cx="270.61552050665165" cy="429.08978507455555" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="270.61552050665165" y="429.08978507455555" text-anchor="middle" dominant-baseline="central" font-size="11">display_2…</text>
+</g>
+<g>
+<title>root &gt; operator_183,967</title>
+<circle cx="753.8401927510566" cy="553.9515791520436" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="753.8401927510566" y="553.9515791520436" text-anchor="middle" dominant-baseline="central" font-size="11">operator_…</text>
+</g>
+<g>
+<title>root &gt; data_110,583</title>
+<circle cx="478.26052460601926" cy="585.468566631642" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="478.26052460601926" y="585.468566631642" text-anchor="middle" dominant-baseline="central" font-size="11">data_110,…</text>
+</g>
+<g>
+<title>root &gt; controls_44,639</title>
+<circle cx="689.0514674798259" cy="338.2585890558377" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="689.0514674798259" y="338.2585890558377" text-anchor="middle" dominant-baseline="central" font-size="11">controls_…</text>
+</g>
+<g>
+<title>root &gt; legend_36,003</title>
+<circle cx="599.240730780441" cy="364.3866799287155" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="599.240730780441" y="364.3866799287155" text-anchor="middle" dominant-baseline="central" font-size="11">legend_36…</text>
+</g>
+<g>
+<title>root &gt; axis_33,886</title>
+<circle cx="522.3376900038659" cy="440.45484299993427" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="522.3376900038659" y="440.45484299993427" text-anchor="middle" dominant-baseline="central" font-size="11">axis_33,8…</text>
+</g>
+<g>
+<title>root &gt; events_7,011</title>
+<circle cx="450.169561225046" cy="508.0025959054651" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="450.169561225046" y="508.0025959054651" text-anchor="middle" dominant-baseline="central" font-size="11">events_7,…</text>
+</g>
+<g>
+<title>root &gt; palette_11,946</title>
+<circle cx="134.78301683599344" cy="520.880431136737" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="134.78301683599344" y="520.880431136737" text-anchor="middle" dominant-baseline="central" font-size="11">palette_1…</text>
+</g>
+<g>
+<title>root &gt; heap_10,587</title>
+<circle cx="40" cy="323.77948713443334" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="40" y="323.77948713443334" text-anchor="middle" dominant-baseline="central" font-size="11">heap_10,5…</text>
+</g>
+<g>
+<title>root &gt; math_9,346</title>
+<circle cx="40" cy="439.0063497481576" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="40" y="439.0063497481576" text-anchor="middle" dominant-baseline="central" font-size="11">math_9,346</text>
+</g>
+<g>
+<title>root &gt; interpolate_23,081</title>
+<circle cx="698.5366142121866" cy="105.8979370538075" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="698.5366142121866" y="105.8979370538075" text-anchor="middle" dominant-baseline="central" font-size="11">interpola…</text>
+</g>
+<g>
+<title>root &gt; methods_14,326</title>
+<circle cx="430.0023063783526" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="430.0023063783526" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">methods_1…</text>
+</g>
+<g>
+<title>root &gt; graph_26,435</title>
+<circle cx="158.03891139601635" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="158.03891139601635" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">graph_26,…</text>
+</g>
+<g>
+<title>root &gt; cluster_15,207</title>
+<circle cx="57.38605003453161" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="57.38605003453161" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">cluster_1…</text>
+</g>
+<g>
+<title>root &gt; optimization_7,074</title>
+<circle cx="40" cy="155.49124257898734" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="40" y="155.49124257898734" text-anchor="middle" dominant-baseline="central" font-size="11">optimizat…</text>
+</g>
+<g>
+<title>root &gt; converters_18,349</title>
+<circle cx="630.4430670272521" cy="40" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="630.4430670272521" y="40" text-anchor="middle" dominant-baseline="central" font-size="11">converter…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; layout_108,083</title>
+<circle cx="860" cy="660" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="860" y="660" text-anchor="middle" dominant-baseline="central" font-size="11">layout_10…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; label_17,057</title>
+<circle cx="860" cy="660" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="860" y="660" text-anchor="middle" dominant-baseline="central" font-size="11">label_17,…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; encoder_14,897</title>
+<circle cx="860" cy="488.5197020539008" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="860" y="488.5197020539008" text-anchor="middle" dominant-baseline="central" font-size="11">encoder_1…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; distortion_14,219</title>
+<circle cx="860" cy="660" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="860" y="660" text-anchor="middle" dominant-baseline="central" font-size="11">distortio…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; filter_11,893</title>
+<circle cx="860" cy="660" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="860" y="660" text-anchor="middle" dominant-baseline="central" font-size="11">filter_11…</text>
+</g>
+<g>
+<title>root &gt; vis_432,629 &gt; render_8,867</title>
+<circle cx="531.4720010466867" cy="660" r="22" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+<text x="531.4720010466867" y="660" text-anchor="middle" dominant-baseline="central" font-size="11">render_8,…</text>
+</g>
+</svg>
