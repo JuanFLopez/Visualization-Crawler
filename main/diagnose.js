@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const http = require('http');
 const { chromium } = require('playwright');
-const { isActionable, measureSettle } = require('./crawler');
+const { installPageHelpers, isActionable, measureSettle } = require('./crawler');
 
 const PORT = 8935;
 const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json' };
@@ -118,7 +118,10 @@ function firstDifference(a, b) {
 
   const browser2 = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
   const page2 = await browser2.newPage({ viewport: { width: 700, height: 700 } });
+  await page2.addInitScript(installPageHelpers);
   for (const src of initScripts) await page2.addInitScript({ content: src });
+  let pageErrors = 0;
+  page2.on('pageerror', () => pageErrors++);
   const server2 = await startServer(resolvedDir);
 
   await page2.goto(`http://localhost:${PORT}/index.html`);
@@ -135,21 +138,32 @@ function firstDifference(a, b) {
   if (actionable.length === 0) {
     console.log('No se detectó ningún elemento clickeable interactuable (¿el selector automático no encontró listeners de click?). Salteando fase 2.');
   } else {
-    const id = await actionable[0].getAttribute('data-crawler-id');
+    // el primer candidato puede ser un no-op (o romper: el rect raíz de
+    // un icicle en el estado raíz) -- probamos hasta que alguno cambie algo
     const maxMs = 6000;
-    const settledAt = await measureSettle(
-      page2,
-      `[data-crawler-id="${id}"]`,
-      () => page2.evaluate(() => window.__crawlerState()),
-      { maxMs, onChange: (ms) => console.log(`  +${ms}ms: CAMBIÓ`) }
-    );
+    const maxTries = Math.min(actionable.length, 10);
+    let settledAt = 0;
+    for (let i = 0; i < maxTries && settledAt === 0; i++) {
+      const id = await actionable[i].getAttribute('data-crawler-id');
+      const errorsBefore = pageErrors;
+      settledAt = await measureSettle(
+        page2,
+        `[data-crawler-id="${id}"]`,
+        () => page2.evaluate(() => window.__crawlerState()),
+        { maxMs, onChange: (ms) => console.log(`  +${ms}ms: CAMBIÓ`) }
+      );
+      if (settledAt === 0) {
+        const why = pageErrors > errorsBefore ? 'tiró un error en la página' : 'no cambió nada observable';
+        console.log(`candidato ${id}: ${why}, probando el siguiente...`);
+      }
+    }
 
     console.log('');
     if (settledAt === 0) {
-      console.log('El click no cambió nada observable (¿el primer candidato es un no-op?).');
+      console.log(`Ninguno de los primeros ${maxTries} candidatos cambió algo observable.`);
     } else if (settledAt !== null) {
-      console.log(`Se asienta a los ~${settledAt}ms (último cambio observado). Usá un settleMs/discoverySettleMs`);
-      console.log(`algo por encima (p.ej. ${Math.round(settledAt * 1.5) + 200}ms, lo que calibraría crawler.js).`);
+      console.log(`Se asienta a los ~${settledAt}ms (último cambio observado). crawler.js no necesita este número`);
+      console.log(`(usa tiempo virtual); si querés una pausa fija en tiempo real, usá algo por encima, p.ej. --settleMs ${Math.round(settledAt * 1.5) + 200}.`);
     } else {
       console.log('NUNCA se asentó en los', maxMs, 'ms que probamos.');
       console.log('Esto apunta a una animación/simulación continua (d3-force, algo con requestAnimationFrame');

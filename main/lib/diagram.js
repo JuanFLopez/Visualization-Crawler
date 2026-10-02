@@ -12,9 +12,19 @@
  * ser rutas largas tipo "flare/vis/operator").
  */
 
+// Estados a dibujar: los que tienen fila en la tabla MÁS los que solo
+// aparecen como destino (p.ej. __ERROR__ del crawler, que nunca se expande).
+function drawnStates(dfa) {
+  const all = new Set(dfa.states());
+  for (const symbolMap of dfa.transitions.values()) {
+    for (const to of symbolMap.values()) all.add(to);
+  }
+  return [...all];
+}
+
 // --- layout: fuerzas tipo Fruchterman-Reingold, simplificado ---
 function layout(dfa, { width = 900, height = 700, iterations = 400 } = {}) {
-  const states = dfa.states();
+  const states = drawnStates(dfa);
   const n = states.length;
   const pos = new Map();
   states.forEach((s, i) => {
@@ -187,7 +197,7 @@ function toSVG(dfa, opts = {}) {
     }
   }
 
-  for (const state of dfa.states()) {
+  for (const state of drawnStates(dfa)) {
     const p = pos.get(state);
     const isInitial = state === dfa.initial;
     svgParts.push(

@@ -1,6 +1,6 @@
 /**
  * Se inyecta ANTES de que corra el código de la visualización del usuario
- * (vía page.addInitScript). Hace dos cosas, sin requerir que el usuario
+ * (vía page.addInitScript). Hace tres cosas, sin requerir que el usuario
  * toque una sola línea de su código D3:
  *
  * 1. DETECTA elementos clickeables de verdad: parchea addEventListener
@@ -27,6 +27,9 @@
  *    como "estado" genérico cuando el usuario no define su propio
  *    window.__testState -- que sigue teniendo prioridad si existe, para
  *    quien prefiera instrumentar a mano con más precisión.
+ *
+ * 3. EXPONE window.__crawlerActivity(): frames de animación y requests
+ *    en vuelo, para esperar a que la página se asiente (ver más abajo).
  *
  * Limitación conocida: solo ve DOM real (SVG/HTML). Visualizaciones
  * basadas en <canvas> no exponen atributos para fingerprintear -- para
@@ -56,6 +59,43 @@
     return origAdd.call(this, type, listener, options);
   };
 
+  // 3. ACTIVIDAD de la página, para que el crawler espere "hasta que se
+  //    quede quieta" en vez de un settleMs fijo. Dos señales genéricas:
+  //    - requestAnimationFrame: d3-timer (y por ende toda transición D3,
+  //      y casi cualquier animación JS) pide un frame por cuadro mientras
+  //      anima y deja de pedirlos al terminar.
+  //    - fetch/XHR en vuelo: d3.json/d3.csv cargan datos después del
+  //      evento load; hasta que no vuelven, la visualización ni existe.
+  //    Limitación: una transición con .delay() largo duerme vía
+  //    setTimeout sin pedir frames -- para esas, pasar --settleMs fijo.
+  let lastFrameRequest = -Infinity;
+  let pendingRequests = 0;
+
+  const origRaf = window.requestAnimationFrame;
+  window.requestAnimationFrame = function (cb) {
+    lastFrameRequest = performance.now();
+    return origRaf.call(window, cb);
+  };
+
+  const origFetch = window.fetch;
+  if (origFetch) {
+    window.fetch = function () {
+      pendingRequests++;
+      return origFetch.apply(this, arguments).finally(() => { pendingRequests--; });
+    };
+  }
+
+  const origSend = XMLHttpRequest.prototype.send;
+  XMLHttpRequest.prototype.send = function () {
+    pendingRequests++;
+    origAdd.call(this, 'loadend', () => { pendingRequests--; });
+    return origSend.apply(this, arguments);
+  };
+
+  window.__crawlerActivity = function () {
+    return { pendingRequests, msSinceFrame: performance.now() - lastFrameRequest };
+  };
+
   const STATE_ATTRS = [
     'd', 'transform', 'cx', 'cy', 'r', 'rx', 'ry',
     'x', 'y', 'x1', 'y1', 'x2', 'y2', 'width', 'height', 'points',
@@ -77,26 +117,50 @@
   // "vuelven" al mismo lugar dejan ruido de punto flotante en los últimos
   // dígitos (rotate(97.4140204930506) vs rotate(97.41402049305063)), y sin
   // esto el mismo estado lógico da fingerprints distintos según el camino.
+  // También normaliza separadores: el mismo transform puede venir escrito
+  // "translate(0,12.3)" (el código del usuario) o "translate(0, 12.3)"
+  // (d3.interpolateTransformSvg al terminar una transición) según el
+  // camino por el que se llegó.
   function roundNumbers(v) {
-    return v.replace(/-?\d*\.\d+(e[-+]?\d+)?/gi, (m) => {
-      const r = Math.round(parseFloat(m) * 100) / 100;
-      return String(r === 0 ? 0 : r); // evita "-0"
-    });
+    return v
+      .replace(/-?\d*\.\d+(e[-+]?\d+)?/gi, (m) => {
+        const r = Math.round(parseFloat(m) * 100) / 100;
+        return String(r === 0 ? 0 : r); // evita "-0"
+      })
+      .replace(/\s*,\s*/g, ',')
+      .replace(/\s+/g, ' ')
+      .trim();
   }
 
   // Un elemento invisible no aporta su geometría al estado: D3 suele
   // dejar de actualizar los elementos ocultos (p.ej. clicked() del
   // sunburst solo transiciona arcos/labels visibles), así que sus
   // atributos quedan "viejos" y dependen del camino recorrido.
-  function isInvisible(el) {
+  function isInvisible(el, svgRects) {
     const cs = getComputedStyle(el);
     if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) return true;
     if (el instanceof SVGGeometryElement || el instanceof SVGTextContentElement) {
       const noFill = cs.fill === 'none' || parseFloat(cs.fillOpacity) === 0;
       const noStroke = cs.stroke === 'none' || parseFloat(cs.strokeOpacity) === 0;
-      return noFill && noStroke;
+      if (noFill && noStroke) return true;
     }
-    return false;
+    return isOutsideSvg(el, svgRects);
+  }
+
+  // Lo mismo para lo que quedó entero FUERA del área visible del <svg>
+  // (p.ej. los nodos fuera de foco de un icicle zoomable, trasladados más
+  // allá del viewBox): no se ve, y su posición exacta depende del camino
+  // -- justo en el borde, 890.935 vs 890.93499 redondean distinto. La
+  // comparación es booleana con medio px de tolerancia, sin redondeo.
+  function isOutsideSvg(el, svgRects) {
+    if (!(el instanceof SVGGraphicsElement) || el instanceof SVGSVGElement) return false;
+    let svg = el.ownerSVGElement;
+    while (svg && svg.ownerSVGElement) svg = svg.ownerSVGElement;
+    if (!svg) return false;
+    if (!svgRects.has(svg)) svgRects.set(svg, svg.getBoundingClientRect());
+    const s = svgRects.get(svg);
+    const r = el.getBoundingClientRect();
+    return r.right < s.left + 0.5 || r.left > s.right - 0.5 || r.bottom < s.top + 0.5 || r.top > s.bottom - 0.5;
   }
 
   window.__crawlerState = function () {
@@ -111,9 +175,10 @@
     const root = sel ? document.querySelector(sel) : document;
     if (!root) throw new Error('contenedor no encontrado: ' + sel);
     let buf = '';
+    const svgRects = new Map();
     root.querySelectorAll('svg, svg *, [data-crawler-clickable]').forEach((el) => {
       buf += el.tagName;
-      if (isInvisible(el)) {
+      if (isInvisible(el, svgRects)) {
         buf += '|hidden;';
         return;
       }

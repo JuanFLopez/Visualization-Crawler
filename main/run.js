@@ -16,7 +16,7 @@ function usage() {
   console.error('');
   console.error('Opciones (pisan lo que diga config.js, si existe):');
   console.error('  --out <carpeta>          dónde guardar transitions.json/automaton.svg (default: la misma carpeta)');
-  console.error('  --settleMs <ms>          pausa tras cada click de reposicionamiento/prueba');
+  console.error('  --settleMs <ms>          pausa FIJA en tiempo real tras cada click (default: tiempo virtual, se adelanta el reloj hasta que termina la animación)');
   console.error('  --discoverySettleMs <ms> pausa antes de listar candidatos de un estado recién visitado');
   console.error('  --maxStates <n>          tope de estados a descubrir');
   console.error('  --maxSteps <n>           tope duro de interacciones totales');
@@ -131,13 +131,15 @@ async function resolveChromePath() {
   const t0 = Date.now();
 
   try {
-    const { transitions, initialState, usedManualState } = await crawl({
+    if (userConfig.settleMs == null) {
+      console.log('tiempo virtual: tras cada click/carga se adelanta el reloj de la página hasta que termina la animación (pasá --settleMs para una pausa fija en tiempo real)');
+    }
+    const { transitions, initialState, usedManualState, truncated } = await crawl({
       fixtureUrl: `http://localhost:${PORT}/index.html`,
       chromePath,
       initScripts,
       resume,
       ...userConfig,
-      onCalibrated: (ms) => console.log(`settleMs calibrado automáticamente: ${ms}ms (pasá --settleMs para fijarlo vos)`),
       onStateExpanded: (state, trans, snapshot) => {
         const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
         console.log(`[${elapsed}s] estado expandido: "${state}" (${Object.keys(trans).length} acciones) -- total conocido: ${snapshot.graph.length}`);
@@ -153,7 +155,12 @@ async function resolveChromePath() {
       }
     }
 
-    console.log('\n=== CRAWL COMPLETO ===');
+    if (truncated) {
+      console.log(`\n=== CRAWL INCOMPLETO: se alcanzó maxStates (${states.length} estados) con estados sin expandir ===`);
+      console.log('el autómata de abajo es PARCIAL -- volvé a correr con un --maxStates mayor.');
+    } else {
+      console.log('\n=== CRAWL COMPLETO ===');
+    }
     console.log('estado inicial:', initialState);
     console.log('estados descubiertos:', states.length);
     console.log('tiempo de esta corrida:', ((Date.now() - t0) / 1000).toFixed(1), 's');
