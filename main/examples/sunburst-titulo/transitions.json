@@ -12,5 +12,12 @@
     "root > B": {
       "Click_c2": "root"
     }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "language": "((Click_A | Click_B)? Click_c2)* (Click_A | Click_B)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "((Click_A | Click_B)? Click_c2)*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
   }
 }
