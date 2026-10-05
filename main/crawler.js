@@ -156,16 +156,25 @@ function installPageHelpers() {
   // de descubrir el candidato (no al momento de detectar el listener),
   // porque en D3 es común que el <title> se agregue en una línea
   // posterior a .on("click", ...).
+  // De un <title> solo cuenta la primera línea: el tooltip típico de D3
+  // es "flare/vis\n432,629" (ruta + valor), y el valor no identifica al
+  // nodo -- solo ensucia el nombre de la acción.
+  function titleText(t) {
+    if (!t) return null;
+    const first = t.textContent.split('\n').map((l) => l.trim()).find(Boolean);
+    return first || null;
+  }
+
   function readableOf(node) {
-    const t = node.querySelector(':scope > title');
-    if (t && t.textContent.trim()) return t.textContent.trim();
+    const own = titleText(node.querySelector(':scope > title'));
+    if (own) return own;
     // patrón "celda" de D3: <g><rect (clickeable)/><text/><title/></g> --
     // el tooltip es hermano, no hijo. Solo si el padre es un <g>: más
     // arriba ya no describe a este elemento en particular.
     const parent = node.parentElement;
     if (parent && parent.tagName.toLowerCase() === 'g') {
-      const pt = parent.querySelector(':scope > title');
-      if (pt && pt.textContent.trim()) return pt.textContent.trim();
+      const pt = titleText(parent.querySelector(':scope > title'));
+      if (pt) return pt;
     }
     const aria = node.getAttribute('aria-label');
     if (aria && aria.trim()) return aria.trim();
@@ -203,22 +212,57 @@ function installPageHelpers() {
   };
 }
 
-function _actionName(info) {
-  if (info.dataName) return `Click_${info.dataName}`;
-  if (info.cls.includes('center-circle')) return 'Click_BACK';
+// Nombres posibles para la acción, del más corto al más específico.
+function _nameOptions(info) {
+  if (info.dataName) return [info.dataName];
+  if (info.cls.includes('center-circle')) return ['BACK'];
 
+  const options = [];
   // Sin instrumentación manual: algo humano ya presente en el propio
   // elemento -- <title> hijo (la convención SVG para tooltips, muy común
   // en D3), aria-label, atributo title, o su propio texto.
   if (info.readable) {
-    // si viene como ruta de ancestros ("root / A"), nos quedamos con el
-    // último segmento -- el nombre del propio nodo alcanza como acción.
-    const cleaned = info.readable.split('/').pop().trim().replace(/\s+/g, '_');
-    if (cleaned) return `Click_${cleaned}`;
+    // si viene como ruta de ancestros ("root/A/B") alcanza con el último
+    // segmento; los anteriores solo se agregan si hace falta desempatar
+    // (dos nodos "data" en ramas distintas -> "data" y "vis/data")
+    const segments = info.readable
+      .replace(/\s+[-+]?\d[\d.,]*%?$/, '') // valor numérico al final ("vis 432,629")
+      .split('/')
+      .map((s) => s.trim().replace(/\s+/g, '_'))
+      .filter(Boolean);
+    for (let k = 1; k <= segments.length; k++) options.push(segments.slice(-k).join('/'));
   }
+  if (info.crawlerId) options.push(info.crawlerId);
+  return options;
+}
 
-  if (info.crawlerId) return `Click_${info.crawlerId}`;
-  return `Click_unknown_${_unknownCounter++}`;
+// El nombre de una acción es del ELEMENTO, no del estado: el mismo
+// elemento tiene que ser el mismo símbolo del alfabeto en todos los
+// estados (si no, el autómata y su regex no significan nada). Por eso
+// se asigna una sola vez por crawl y se reusa.
+function createNaming(graph = null) {
+  const bySelector = new Map();
+  const taken = new Set();
+  // al retomar un checkpoint, respetar los nombres ya usados
+  if (graph) {
+    for (const [, node] of graph) {
+      for (const [action, sel] of Object.entries(node.selectors || {})) {
+        bySelector.set(sel, action);
+        taken.add(action);
+      }
+    }
+  }
+  return function nameFor(info, sel) {
+    if (bySelector.has(sel)) return bySelector.get(sel);
+    let name = null;
+    for (const opt of _nameOptions(info)) {
+      if (!taken.has(`Click_${opt}`)) { name = `Click_${opt}`; break; }
+    }
+    if (!name) name = `Click_unknown_${_unknownCounter++}`;
+    bySelector.set(sel, name);
+    taken.add(name);
+    return name;
+  };
 }
 
 function _selectorFor(info) {
@@ -236,22 +280,12 @@ function isActionable(locator) {
 
 // Candidatos interactuables del estado actual, ya nombrados:
 // [[accion, selector], ...]. Requiere installPageHelpers en la página.
-async function discoverCandidates(page, clickableSelector) {
+async function discoverCandidates(page, clickableSelector, nameFor) {
   const infos = await page.evaluate((sel) => window.__crawlerCandidates(sel), clickableSelector);
-  const found = [];
-  const seenNames = new Set();
-  for (const info of infos) {
-    let action = _actionName(info);
-    if (seenNames.has(action)) {
-      // colisión de nombres legibles (dos elementos distintos con el
-      // mismo texto/último segmento) -- desambiguar con el id estable
-      // en vez de perder silenciosamente una transición.
-      action = info.crawlerId ? `${action}(${info.crawlerId})` : `${action}_${_unknownCounter++}`;
-    }
-    seenNames.add(action);
-    found.push([action, _selectorFor(info)]);
-  }
-  return found;
+  return infos.map((info) => {
+    const sel = _selectorFor(info);
+    return [nameFor(info, sel), sel];
+  });
 }
 
 /**
@@ -472,6 +506,8 @@ async function _crawl(browser, {
     queue = [initialState];
   }
 
+  const nameFor = createNaming(graph);
+
   // Camino más corto (lista de selectores) de `from` a `to` usando solo
   // transiciones ya observadas, o null si no se conoce ninguno.
   function knownRoute(from, to) {
@@ -563,7 +599,7 @@ async function _crawl(browser, {
     // filtro, el modo automático descubre "transiciones fantasma" que un
     // usuario real nunca podría disparar clickeando -- los arcos fuera de
     // foco de un sunburst, o los rects fuera de pantalla de un icicle.
-    const found = await discoverCandidates(page, clickableSelector);
+    const found = await discoverCandidates(page, clickableSelector, nameFor);
 
     for (const [action, sel] of found) {
       if (action in node.transitions) continue; // ya probada antes de un corte (checkpoint)

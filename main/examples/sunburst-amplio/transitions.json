@@ -1,153 +1,160 @@
 {
   "initialState": "root",
   "transitions": {
-    "root > flex_4,116": {
+    "root > flex": {
       "Click_c31": "root"
     },
-    "root > physics_29,934": {
+    "root > physics": {
       "Click_c31": "root"
     },
     "root": {
-      "Click_vis_432,629": "root > vis_432,629",
-      "Click_util_165,157": "root > util_165,157",
-      "Click_animate_100,024": "root > animate_100,024",
-      "Click_query_89,721": "root > query_89,721",
-      "Click_analytics_48,716": "root > analytics_48,716",
-      "Click_scale_31,294": "root > scale_31,294",
-      "Click_data_30,284": "root > data_30,284",
-      "Click_physics_29,934": "root > physics_29,934",
-      "Click_display_24,254": "root > display_24,254",
-      "Click_flex_4,116": "root > flex_4,116",
-      "Click_operator_183,967": "root > operator_183,967",
-      "Click_data_110,583": "root > data_110,583",
-      "Click_controls_44,639": "root > controls_44,639",
-      "Click_legend_36,003": "root > legend_36,003",
-      "Click_axis_33,886": "root > axis_33,886",
-      "Click_events_7,011": "root > events_7,011",
-      "Click_palette_11,946": "root > palette_11,946",
-      "Click_heap_10,587": "root > heap_10,587",
-      "Click_math_9,346": "root > math_9,346",
-      "Click_interpolate_23,081": "root > interpolate_23,081",
-      "Click_methods_14,326": "root > methods_14,326",
-      "Click_graph_26,435": "root > graph_26,435",
-      "Click_cluster_15,207": "root > cluster_15,207",
-      "Click_optimization_7,074": "root > optimization_7,074",
-      "Click_converters_18,349": "root > converters_18,349",
+      "Click_vis": "root > vis",
+      "Click_util": "root > util",
+      "Click_animate": "root > animate",
+      "Click_query": "root > query",
+      "Click_analytics": "root > analytics",
+      "Click_scale": "root > scale",
+      "Click_data": "root > data",
+      "Click_physics": "root > physics",
+      "Click_display": "root > display",
+      "Click_flex": "root > flex",
+      "Click_operator": "root > operator",
+      "Click_vis/data": "root > vis/data",
+      "Click_controls": "root > controls",
+      "Click_legend": "root > legend",
+      "Click_axis": "root > axis",
+      "Click_events": "root > events",
+      "Click_palette": "root > palette",
+      "Click_heap": "root > heap",
+      "Click_math": "root > math",
+      "Click_interpolate": "root > interpolate",
+      "Click_methods": "root > methods",
+      "Click_graph": "root > graph",
+      "Click_cluster": "root > cluster",
+      "Click_optimization": "root > optimization",
+      "Click_converters": "root > converters",
       "Click_c31": "root"
     },
-    "root > vis_432,629": {
-      "Click_operator_183,967": "root > operator_183,967",
-      "Click_data_110,583": "root > data_110,583",
-      "Click_controls_44,639": "root > controls_44,639",
-      "Click_legend_36,003": "root > legend_36,003",
-      "Click_axis_33,886": "root > axis_33,886",
-      "Click_events_7,011": "root > events_7,011",
-      "Click_layout_108,083": "root > vis_432,629 > layout_108,083",
-      "Click_label_17,057": "root > vis_432,629 > label_17,057",
-      "Click_encoder_14,897": "root > vis_432,629 > encoder_14,897",
-      "Click_distortion_14,219": "root > vis_432,629 > distortion_14,219",
-      "Click_filter_11,893": "root > vis_432,629 > filter_11,893",
-      "Click_render_8,867": "root > vis_432,629 > render_8,867",
+    "root > vis": {
+      "Click_operator": "root > operator",
+      "Click_vis/data": "root > vis/data",
+      "Click_controls": "root > controls",
+      "Click_legend": "root > legend",
+      "Click_axis": "root > axis",
+      "Click_events": "root > events",
+      "Click_layout": "root > vis > layout",
+      "Click_label": "root > vis > label",
+      "Click_encoder": "root > vis > encoder",
+      "Click_distortion": "root > vis > distortion",
+      "Click_filter": "root > vis > filter",
+      "Click_render": "root > vis > render",
       "Click_c31": "root"
     },
-    "root > util_165,157": {
-      "Click_palette_11,946": "root > palette_11,946",
-      "Click_heap_10,587": "root > heap_10,587",
-      "Click_math_9,346": "root > math_9,346",
+    "root > operator": {
+      "Click_layout": "root > vis > layout",
+      "Click_label": "root > vis > label",
+      "Click_encoder": "root > vis > encoder",
+      "Click_distortion": "root > vis > distortion",
+      "Click_filter": "root > vis > filter",
+      "Click_c31": "root > vis"
+    },
+    "root > vis > layout": {
+      "Click_c31": "root > operator"
+    },
+    "root > vis > label": {
+      "Click_c31": "root > operator"
+    },
+    "root > vis > encoder": {
+      "Click_c31": "root > operator"
+    },
+    "root > vis > distortion": {
+      "Click_c31": "root > operator"
+    },
+    "root > vis > filter": {
+      "Click_c31": "root > operator"
+    },
+    "root > vis/data": {
+      "Click_render": "root > vis > render",
+      "Click_c31": "root > vis"
+    },
+    "root > vis > render": {
+      "Click_c31": "root > vis/data"
+    },
+    "root > controls": {
+      "Click_c31": "root > vis"
+    },
+    "root > legend": {
+      "Click_c31": "root > vis"
+    },
+    "root > axis": {
+      "Click_c31": "root > vis"
+    },
+    "root > events": {
+      "Click_c31": "root > vis"
+    },
+    "root > util": {
+      "Click_palette": "root > palette",
+      "Click_heap": "root > heap",
+      "Click_math": "root > math",
       "Click_c31": "root"
     },
-    "root > animate_100,024": {
-      "Click_interpolate_23,081": "root > interpolate_23,081",
+    "root > palette": {
+      "Click_c31": "root > util"
+    },
+    "root > heap": {
+      "Click_c31": "root > util"
+    },
+    "root > math": {
+      "Click_c31": "root > util"
+    },
+    "root > animate": {
+      "Click_interpolate": "root > interpolate",
       "Click_c31": "root"
     },
-    "root > query_89,721": {
-      "Click_methods_14,326": "root > methods_14,326",
+    "root > interpolate": {
+      "Click_c31": "root > animate"
+    },
+    "root > query": {
+      "Click_methods": "root > methods",
       "Click_c31": "root"
     },
-    "root > analytics_48,716": {
-      "Click_graph_26,435": "root > graph_26,435",
-      "Click_cluster_15,207": "root > cluster_15,207",
-      "Click_optimization_7,074": "root > optimization_7,074",
+    "root > methods": {
+      "Click_c31": "root > query"
+    },
+    "root > analytics": {
+      "Click_graph": "root > graph",
+      "Click_cluster": "root > cluster",
+      "Click_optimization": "root > optimization",
       "Click_c31": "root"
     },
-    "root > scale_31,294": {
+    "root > graph": {
+      "Click_c31": "root > analytics"
+    },
+    "root > cluster": {
+      "Click_c31": "root > analytics"
+    },
+    "root > optimization": {
+      "Click_c31": "root > analytics"
+    },
+    "root > scale": {
       "Click_c31": "root"
     },
-    "root > data_30,284": {
-      "Click_converters_18,349": "root > converters_18,349",
+    "root > data": {
+      "Click_converters": "root > converters",
       "Click_c31": "root"
     },
-    "root > display_24,254": {
+    "root > converters": {
+      "Click_c31": "root > data"
+    },
+    "root > display": {
       "Click_c31": "root"
-    },
-    "root > operator_183,967": {
-      "Click_layout_108,083": "root > vis_432,629 > layout_108,083",
-      "Click_label_17,057": "root > vis_432,629 > label_17,057",
-      "Click_encoder_14,897": "root > vis_432,629 > encoder_14,897",
-      "Click_distortion_14,219": "root > vis_432,629 > distortion_14,219",
-      "Click_filter_11,893": "root > vis_432,629 > filter_11,893",
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > data_110,583": {
-      "Click_render_8,867": "root > vis_432,629 > render_8,867",
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > controls_44,639": {
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > legend_36,003": {
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > axis_33,886": {
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > events_7,011": {
-      "Click_c31": "root > vis_432,629"
-    },
-    "root > palette_11,946": {
-      "Click_c31": "root > util_165,157"
-    },
-    "root > heap_10,587": {
-      "Click_c31": "root > util_165,157"
-    },
-    "root > math_9,346": {
-      "Click_c31": "root > util_165,157"
-    },
-    "root > interpolate_23,081": {
-      "Click_c31": "root > animate_100,024"
-    },
-    "root > methods_14,326": {
-      "Click_c31": "root > query_89,721"
-    },
-    "root > graph_26,435": {
-      "Click_c31": "root > analytics_48,716"
-    },
-    "root > cluster_15,207": {
-      "Click_c31": "root > analytics_48,716"
-    },
-    "root > optimization_7,074": {
-      "Click_c31": "root > analytics_48,716"
-    },
-    "root > converters_18,349": {
-      "Click_c31": "root > data_30,284"
-    },
-    "root > vis_432,629 > layout_108,083": {
-      "Click_c31": "root > operator_183,967"
-    },
-    "root > vis_432,629 > label_17,057": {
-      "Click_c31": "root > operator_183,967"
-    },
-    "root > vis_432,629 > encoder_14,897": {
-      "Click_c31": "root > operator_183,967"
-    },
-    "root > vis_432,629 > distortion_14,219": {
-      "Click_c31": "root > operator_183,967"
-    },
-    "root > vis_432,629 > filter_11,893": {
-      "Click_c31": "root > operator_183,967"
-    },
-    "root > vis_432,629 > render_8,867": {
-      "Click_c31": "root > data_110,583"
     }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "language": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)*)? Click_c31)* (Click_scale | Click_physics | Click_display | Click_flex | Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | Click_vis/data (Click_render Click_c31)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter | Click_render | (Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events)? | Click_palette | Click_heap | Click_math | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* (Click_palette | Click_heap | Click_math)? | Click_interpolate | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* Click_interpolate? | Click_methods | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* Click_methods? | Click_graph | Click_cluster | Click_optimization | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* (Click_graph | Click_cluster | Click_optimization)? | Click_converters | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)* Click_converters?)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)*)? Click_c31)*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
   }
 }
