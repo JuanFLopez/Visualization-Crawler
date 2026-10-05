@@ -1,10 +1,4 @@
 /**
- * En vez de leer el código de clicked() a mano esto DESCUBRE la tabla de
- * transiciones explorando la visualización corriendo de verdad: desde cada
- * estado alcanzado, prueba cada elemento clickeable, mira a qué estado
- * lleva (o si rompe), y sigue explorando estados nuevos hasta que no queda
- * nada por descubrir.
- *
  * DOS MODOS de navegación entre estados:
  *
  *  - RÁPIDO (con `backSelector`): asume semántica de jerarquía con una
@@ -47,10 +41,6 @@
  * crecer sin límite.
  */
 
-// Paquete completo `playwright` (no `playwright-core`): trae y gestiona su
-// propio Chromium multiplataforma -- necesita `npx playwright install
-// chromium` una vez, pero después `chromePath` puede quedar undefined y
-// funciona igual en Windows/Mac/Linux.
 const { chromium } = require('playwright');
 
 const ERROR_STATE = '__ERROR__';
@@ -218,15 +208,11 @@ function _nameOptions(info) {
   if (info.cls.includes('center-circle')) return ['BACK'];
 
   const options = [];
-  // Sin instrumentación manual: algo humano ya presente en el propio
-  // elemento -- <title> hijo (la convención SVG para tooltips, muy común
-  // en D3), aria-label, atributo title, o su propio texto.
+
   if (info.readable) {
-    // si viene como ruta de ancestros ("root/A/B") alcanza con el último
-    // segmento; los anteriores solo se agregan si hace falta desempatar
-    // (dos nodos "data" en ramas distintas -> "data" y "vis/data")
+
     const segments = info.readable
-      .replace(/\s+[-+]?\d[\d.,]*%?$/, '') // valor numérico al final ("vis 432,629")
+      .replace(/\s+[-+]?\d[\d.,]*%?$/, '') 
       .split('/')
       .map((s) => s.trim().replace(/\s+/g, '_'))
       .filter(Boolean);
@@ -349,8 +335,6 @@ async function crawl(opts) {
     headless: true,
     args: ['--no-sandbox'],
   });
-  // cerrar SIEMPRE, también si el crawl tira: un Chromium huérfano deja
-  // colgado el proceso de node aunque run.js ya haya reportado el error.
   try {
     return await _crawl(browser, opts);
   } finally {
@@ -374,17 +358,15 @@ async function _crawl(browser, {
 }) {
   const page = await browser.newPage({ viewport: { width: 700, height: 700 } });
   discoverySettleMs = discoverySettleMs ?? settleMs;
-  // reloj falso ANTES que instrument.js, para que su seguimiento de
-  // requestAnimationFrame envuelva al rAF falso (que es el que va a usar d3)
   if (settleMs == null || discoverySettleMs == null) await page.clock.install();
   await page.addInitScript(installPageHelpers);
   for (const src of initScripts) await page.addInitScript({ content: src });
 
   let errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
-  page.on('dialog', (d) => d.dismiss().catch(() => {})); // alert/confirm/prompt no deben colgar el crawl
+  page.on('dialog', (d) => d.dismiss().catch(() => {})); 
 
-  let usedManualState = false; // true si en algún momento se usó window.__testState (ya legible)
+  let usedManualState = false; 
 
   async function readState() {
     const state = await page.evaluate(() => {
@@ -393,7 +375,7 @@ async function _crawl(browser, {
         if (typeof window.__crawlerState === 'function') return { raw: window.__crawlerState(), manual: false };
         return null;
       } catch (e) {
-        // p.ej. el contenedor todavía no existe porque la viz se arma tras un fetch
+      
         return { raw: `estado ilegible: ${e.message}`, unreadable: true };
       }
     });
@@ -414,10 +396,6 @@ async function _crawl(browser, {
       : { pendingRequests: 0, msSinceFrame: Infinity }));
   }
 
-  // Tiempo virtual: espera (en tiempo real, es red) a que vuelvan los
-  // requests en vuelo, y salta el reloj falso hasta que la página deja de
-  // pedir frames de animación. Si un click dispara otro fetch, se vuelve
-  // a esperar la red.
   async function virtualSettle() {
     const t0 = Date.now();
     let chunks = 0;
@@ -445,7 +423,7 @@ async function _crawl(browser, {
     }
   }
 
-  // wait: ms fijos (tiempo real), o null para tiempo virtual
+
   function settle(wait) {
     return wait == null ? virtualSettle() : page.waitForTimeout(wait);
   }
@@ -458,16 +436,13 @@ async function _crawl(browser, {
     await settle(wait);
   }
 
-  // única carga de página en modo rápido: al arrancar (o al resumir un
-  // checkpoint). En modo genérico, se vuelve a llamar en cada navigateTo().
+
   async function initialLoad(wait) {
     errors = [];
     await page.goto(fixtureUrl);
     await settle(wait);
   }
 
-  // si ni siquiera la carga inicial es estable, mejor fallar acá con un
-  // mensaje claro que dejar que el crawl explore sin límite.
   if (!resume) {
     await initialLoad(discoverySettleMs);
     const first = await readState();
@@ -498,7 +473,7 @@ async function _crawl(browser, {
       );
     }
   } else {
-    // la página ya quedó recién cargada por el chequeo de estabilidad
+   
     graph = new Map();
     initialState = await readState();
     graph.set(initialState, { path: [], visited: false, transitions: {}, selectors: {} });
@@ -508,8 +483,7 @@ async function _crawl(browser, {
 
   const nameFor = createNaming(graph);
 
-  // Camino más corto (lista de selectores) de `from` a `to` usando solo
-  // transiciones ya observadas, o null si no se conoce ninguno.
+
   function knownRoute(from, to) {
     if (!graph.has(from)) return null;
     const prev = new Map([[from, null]]);
@@ -531,12 +505,7 @@ async function _crawl(browser, {
     return route;
   }
 
-  // Navega la página persistente desde currentState hasta target.
-  // Con backSelector: sube al ancestro común y baja por el resto del
-  // camino, sin recargar. Sin backSelector (modo genérico): si con
-  // transiciones ya observadas se llega en no más clicks que el camino
-  // desde la raíz, las rehace (y verifica que se llegó); si no, recarga y
-  // reproduce el camino completo desde la raíz.
+
   async function navigateTo(target, wait) {
     if (currentState === target) return;
 
@@ -566,7 +535,7 @@ async function _crawl(browser, {
           currentState = target;
           return;
         }
-        // no llegó (transición no determinista): caer a recarga + replay
+       
       }
     }
     await initialLoad(wait);
@@ -579,8 +548,7 @@ async function _crawl(browser, {
   function snapshot() {
     return {
       graph: Array.from(graph.entries()),
-      // todo lo no terminado, incluidos los ancestros a medio expandir de
-      // la recursión (al retomar se completan las acciones que falten)
+      
       queue: [...graph.keys()].filter((s) => !graph.get(s).expanded),
       initialState,
     };
@@ -593,16 +561,10 @@ async function _crawl(browser, {
     node.selectors = node.selectors || {};
 
     await navigateTo(state, discoverySettleMs);
-    // Filtro genérico (no específico de D3, ver installPageHelpers): tener
-    // un listener de click no alcanza, el elemento tiene que poder
-    // clickearse AHORA (visible, dentro del viewBox, no tapado). Sin este
-    // filtro, el modo automático descubre "transiciones fantasma" que un
-    // usuario real nunca podría disparar clickeando -- los arcos fuera de
-    // foco de un sunburst, o los rects fuera de pantalla de un icicle.
     const found = await discoverCandidates(page, clickableSelector, nameFor);
 
     for (const [action, sel] of found) {
-      if (action in node.transitions) continue; // ya probada antes de un corte (checkpoint)
+      if (action in node.transitions) continue;
       steps++;
       if (steps > maxSteps) {
         throw new Error(
@@ -611,9 +573,9 @@ async function _crawl(browser, {
         );
       }
 
-      await navigateTo(state, settleMs); // volver exactamente al estado que se está expandiendo
+      await navigateTo(state, settleMs); 
       await clickSelector(sel, settleMs);
-      currentState = null; // desconocido hasta leer
+      currentState = null; 
 
       const nextState = errors.length > 0 ? ERROR_STATE : await readState();
       node.transitions[action] = nextState;
@@ -622,9 +584,6 @@ async function _crawl(browser, {
 
       if (nextState !== ERROR_STATE && !graph.has(nextState)) {
         graph.set(nextState, { path: [...node.path, sel], visited: false, transitions: {}, selectors: {} });
-        // la página ya está parada en el estado nuevo: expandirlo ahora
-        // ahorra navegar hasta él, y al volver sus transiciones (casi
-        // siempre alguna "hacia atrás") ya son conocidas
         if (graph.size <= maxStates) await expand(nextState);
       }
     }
@@ -633,8 +592,7 @@ async function _crawl(browser, {
     if (onStateExpanded) onStateExpanded(state, node.transitions, snapshot());
   }
 
-  // checkpoints viejos no tienen `expanded`: ahí visitado = terminado.
-  // Lo no terminado se vuelve a abrir para completarlo.
+  
   for (const node of graph.values()) {
     if (node.expanded === undefined) node.expanded = node.visited;
     if (!node.expanded) node.visited = false;

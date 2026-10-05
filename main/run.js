@@ -269,11 +269,6 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
     server.close();
   }
 }
-
-// ---------------------------------------------------------------------
-// Línea de comandos
-// ---------------------------------------------------------------------
-
 function usage() {
   console.error(`Uso:
   node run.js <carpeta-con-index.html> [opciones]     crawlea la visualización
