@@ -78,9 +78,21 @@ function installPageHelpers() {
   // un icicle/treemap zoomable), los tapados por otro elemento, y los de
   // área nula, sin que la visualización tenga que marcarlos con
   // pointer-events:none como hace el sunburst.
-  function isActionable(node) {
+  // Además de si es interactuable, mide `visibleFrac`: qué fracción
+  // (aproximada) del elemento cae dentro del <svg> que lo contiene. Un
+  // elemento clickeable con visibleFrac < 1 es p.ej. un círculo vecino
+  // que asoma en la esquina de un circle pack zoomeado: clickearlo es
+  // legítimo, pero esas transiciones "laterales" vuelven denso el grafo
+  // (y explosivo el regex), así que el reporte las señala. No cuenta lo
+  // que queda fuera de la ventana (se ve scrolleando: un icicle es más
+  // alto que el viewport del crawler) ni lo tapado por otros elementos
+  // (en un circle pack los hijos tapan al padre y eso no es "no verse").
+  // Fuera de un <svg> vale 1. null = no se pudo medir (forma demasiado
+  // fina para la grilla).
+  function measure(node) {
+    const no = { actionable: false, visibleFrac: 0 };
     const cs = getComputedStyle(node);
-    if (cs.pointerEvents === 'none' || cs.display === 'none' || cs.visibility === 'hidden') return false;
+    if (cs.pointerEvents === 'none' || cs.display === 'none' || cs.visibility === 'hidden') return no;
 
     node.scrollIntoView({ block: 'nearest', inline: 'nearest' });
     const r = node.getBoundingClientRect();
@@ -89,37 +101,49 @@ function installPageHelpers() {
 
     let svg = node.ownerSVGElement;
     while (svg && svg.ownerSVGElement) svg = svg.ownerSVGElement;
-    if (svg) {
-      const s = svg.getBoundingClientRect();
-      left = Math.max(left, s.left); top = Math.max(top, s.top);
-      right = Math.min(right, s.right); bottom = Math.min(bottom, s.bottom);
+    const frame = svg ? svg.getBoundingClientRect() : null;
+    if (frame) {
+      left = Math.max(left, frame.left); top = Math.max(top, frame.top);
+      right = Math.min(right, frame.right); bottom = Math.min(bottom, frame.bottom);
     }
     // al menos 1x1 px CSS visible: además de no ser clickeable de verdad,
     // por debajo de eso aparecen "astillas" de redondeo (un rect que
     // empieza justo en el borde del <svg> deja 0.001px "adentro")
-    if (right - left < 1 || bottom - top < 1) return false;
+    if (right - left < 1 || bottom - top < 1) return no;
 
-    const points = samplePoints(node, { left, top, right, bottom });
+    const { pts: points, total, inFrame } = samplePoints(node, { left, top, right, bottom }, frame);
+    let visibleFrac = 1;
+    if (node instanceof SVGGeometryElement) {
+      visibleFrac = total > 0 ? inFrame / total : null;
+    } else if (frame) {
+      const w = Math.min(r.right, frame.right) - Math.max(r.left, frame.left);
+      const h = Math.min(r.bottom, frame.bottom) - Math.max(r.top, frame.top);
+      visibleFrac = (Math.max(w, 0) * Math.max(h, 0)) / Math.max(r.width * r.height, 1e-9);
+    }
     // forma SVG demasiado fina para que caiga algún punto de la grilla
     // adentro: ya sabemos que es visible y está dentro del recorte, así
     // que la damos por clickeable en vez de perder la transición
-    if (points.length === 0) return node instanceof SVGGeometryElement;
+    if (points.length === 0) return { actionable: node instanceof SVGGeometryElement, visibleFrac };
     for (const [x, y] of points) {
       const hit = document.elementFromPoint(x, y);
-      if (hit && (hit === node || node.contains(hit))) return true;
+      if (hit && (hit === node || node.contains(hit))) return { actionable: true, visibleFrac };
     }
-    return false;
+    return no;
   }
 
   // Puntos de pantalla, dentro de `clip`, donde probar el hit-test. Para
   // formas SVG, solo puntos que caen DENTRO de la forma (isPointInFill):
   // el centro de la caja de un arco de sunburst suele caer en el hueco
-  // del anillo, no en el arco. Para el resto (HTML, <g>), una grilla
-  // sobre la parte visible de la caja.
-  function samplePoints(node, clip) {
+  // del anillo, no en el arco; para visibleFrac, `total` cuenta los
+  // puntos de la forma antes de recortar e `inFrame` los que caen dentro
+  // de `frame` (el <svg>, sin importar la ventana). Para el resto (HTML,
+  // <g>), una grilla sobre la parte visible de la caja.
+  function samplePoints(node, clip, frame) {
     const N = 5;
     const pts = [];
+    let total = 0, inFrame = 0;
     const inClip = (x, y) => x >= clip.left && x < clip.right && y >= clip.top && y < clip.bottom;
+    const inFrameRect = (x, y) => !frame || (x >= frame.left && x < frame.right && y >= frame.top && y < frame.bottom);
     const m = node instanceof SVGGeometryElement ? node.getScreenCTM() : null;
     if (m) {
       const bb = node.getBBox();
@@ -129,17 +153,19 @@ function installPageHelpers() {
         for (let j = 0; j < N; j++) {
           const local = new DOMPoint(bb.x + bb.width * (i + 0.5) / N, bb.y + bb.height * (j + 0.5) / N);
           if (!(useFill ? node.isPointInFill(local) : node.isPointInStroke(local))) continue;
+          total++;
           const s = local.matrixTransform(m);
+          if (inFrameRect(s.x, s.y)) inFrame++;
           if (inClip(s.x, s.y)) pts.push([s.x, s.y]);
         }
       }
-      return pts;
+      return { pts, total, inFrame };
     }
     const w = clip.right - clip.left, h = clip.bottom - clip.top;
     for (let i = 0; i < N; i++) {
       for (let j = 0; j < N; j++) pts.push([clip.left + w * (i + 0.5) / N, clip.top + h * (j + 0.5) / N]);
     }
-    return pts;
+    return { pts, total: pts.length, inFrame: pts.length };
   }
 
   // Lo que hace falta para nombrar una acción, leído EN VIVO al momento
@@ -172,12 +198,47 @@ function installPageHelpers() {
     if (titleAttr && titleAttr.trim()) return titleAttr.trim();
     const text = node.textContent && node.textContent.trim();
     if (text && text.length > 0 && text.length <= 40) return text;
+    return datumText(node);
+  }
+
+  // Nombre a partir del dato que D3 ligó al elemento (`__data__`, lo que
+  // setean .data() y .datum()). Hace falta cuando el elemento clickeable
+  // no tiene <title> ni texto propio y la etiqueta visible es OTRO
+  // elemento ligado al mismo dato -- p.ej. el circle pack: los <circle>
+  // y los <text> están en grupos separados, unidos solo por el dato.
+  // Para un nodo de d3.hierarchy se arma el camino de ancestros
+  // ("flare/vis/data"), con la misma forma que los tooltips típicos, así
+  // _nameOptions elige el sufijo más corto que no esté tomado.
+  function datumText(node) {
+    const d = node.__data__;
+    if (d == null || typeof d !== 'object') return nameOfDatum(d);
+    if (typeof d.depth === 'number' && 'parent' in d && d.data != null) {
+      const parts = [];
+      for (let x = d; x; x = x.parent) {
+        const n = nameOfDatum(x.data);
+        if (n == null) break;
+        parts.unshift(n);
+      }
+      return parts.length ? parts.join('/') : null;
+    }
+    // d3.pie y similares envuelven el dato original en .data
+    return nameOfDatum(d) ?? (d.data != null ? nameOfDatum(d.data) : null);
+  }
+
+  function nameOfDatum(d) {
+    if (typeof d === 'number') return String(d);
+    if (typeof d === 'string') return d.trim() || null;
+    if (d == null || typeof d !== 'object') return null;
+    for (const k of ['name', 'label', 'title', 'id', 'key', 'text']) {
+      const v = d[k];
+      if (typeof v === 'number' || (typeof v === 'string' && v.trim())) return String(v).trim();
+    }
     return null;
   }
 
   window.__crawlerIsActionable = function (node) {
     const sx = window.scrollX, sy = window.scrollY;
-    const ok = isActionable(node);
+    const ok = measure(node).actionable;
     window.scrollTo(sx, sy);
     return ok;
   };
@@ -189,12 +250,18 @@ function installPageHelpers() {
     const sx = window.scrollX, sy = window.scrollY;
     const out = [];
     for (const node of document.querySelectorAll(selector)) {
-      if (!isActionable(node)) continue;
+      const { actionable, visibleFrac } = measure(node);
+      if (!actionable) continue;
       out.push({
         dataName: node.getAttribute('data-name'),
         cls: node.getAttribute('class') || '',
         crawlerId: node.getAttribute('data-crawler-id'),
         readable: readableOf(node),
+        tag: node.tagName.toLowerCase(),
+        // el <svg> exterior con su propio click: en D3 suele ser "click en
+        // el fondo" (p.ej. alejar el zoom hasta la raíz en el circle pack)
+        isRootSvg: node instanceof SVGSVGElement && !node.ownerSVGElement,
+        visibleFrac,
       });
     }
     window.scrollTo(sx, sy);
@@ -217,9 +284,57 @@ function _nameOptions(info) {
       .map((s) => s.trim().replace(/\s+/g, '_'))
       .filter(Boolean);
     for (let k = 1; k <= segments.length; k++) options.push(segments.slice(-k).join('/'));
+  } else if (info.isRootSvg) {
+    options.push('background');
   }
   if (info.crawlerId) options.push(info.crawlerId);
   return options;
+}
+
+// Un elemento cuyo nombre legible CAMBIA según el estado no puede llevar
+// ninguno de esos nombres: el símbolo es del elemento, no del estado. El
+// caso típico es el círculo central del sunburst, al que cada click le
+// re-liga como dato el padre del foco (parent.datum(p.parent)) -- en cada
+// estado "dice" otro nodo. Al terminar el crawl, esas acciones pasan a
+// llamarse por su etiqueta SVG/HTML ("Click_circle"). Se lee de
+// node.labels, que guarda lo visto en cada estado (y viaja en el
+// checkpoint, así que funciona también al retomar).
+function renameUnstableActions(graph) {
+  const seen = new Map(); // acción -> { readables: Set, tag }
+  for (const node of graph.values()) {
+    for (const [action, { readable, tag }] of Object.entries(node.labels || {})) {
+      if (!seen.has(action)) seen.set(action, { readables: new Set(), tag });
+      seen.get(action).readables.add(readable);
+    }
+  }
+  const taken = new Set();
+  for (const node of graph.values()) for (const a of Object.keys(node.transitions)) taken.add(a);
+
+  const rename = new Map();
+  for (const [action, { readables, tag }] of seen) {
+    if (readables.size < 2) continue;
+    // '#n' y no '_n': lib/names.js saca los sufijos "_<número>"
+    let name = `Click_${tag}`;
+    for (let k = 2; taken.has(name); k++) name = `Click_${tag}#${k}`;
+    taken.delete(action);
+    taken.add(name);
+    rename.set(action, name);
+  }
+  if (rename.size === 0) return rename;
+
+  const renameKeys = (obj) => {
+    if (!obj) return obj;
+    const out = {};
+    for (const [k, v] of Object.entries(obj)) out[rename.get(k) ?? k] = v;
+    return out;
+  };
+  for (const node of graph.values()) {
+    node.transitions = renameKeys(node.transitions);
+    node.selectors = renameKeys(node.selectors);
+    node.visibility = renameKeys(node.visibility);
+    node.labels = renameKeys(node.labels);
+  }
+  return rename;
 }
 
 // El nombre de una acción es del ELEMENTO, no del estado: el mismo
@@ -265,12 +380,12 @@ function isActionable(locator) {
 }
 
 // Candidatos interactuables del estado actual, ya nombrados:
-// [[accion, selector], ...]. Requiere installPageHelpers en la página.
+// [[accion, selector, info], ...]. Requiere installPageHelpers en la página.
 async function discoverCandidates(page, clickableSelector, nameFor) {
   const infos = await page.evaluate((sel) => window.__crawlerCandidates(sel), clickableSelector);
   return infos.map((info) => {
     const sel = _selectorFor(info);
-    return [nameFor(info, sel), sel];
+    return [nameFor(info, sel), sel, info];
   });
 }
 
@@ -327,7 +442,14 @@ async function measureSettle(page, sel, readFn, { pollMs = 50, quietMs = 400, ma
  *   hook de progreso/checkpoint.
  * @param {Object} [opts.resume] - { graph: [[state,node],...], queue: string[], initialState }
  *   generado por un checkpoint previo (ver snapshot en onStateExpanded).
- * @returns {Promise<{transitions: Object, initialState: string, usedManualState: boolean, truncated: boolean}>}
+ * @returns {Promise<{transitions: Object, initialState: string, visibility: Object, renamed: Object, usedManualState: boolean, truncated: boolean}>}
+ *   visibility: estado -> acción -> fracción visible, solo para los clicks sobre
+ *   elementos que se veían en parte (ver measure en installPageHelpers)
+ *   renamed: acción -> nuevo nombre, para las que mostraban un nombre distinto
+ *   según el estado (ver renameUnstableActions)
+ *   labels: estado -> acción -> nombre legible completo del elemento EN ese
+ *   estado (p.ej. "flare/vis/operator"); lib/labels.js lo usa para nombrar
+ *   los estados por su lugar en la jerarquía
  */
 async function crawl(opts) {
   const browser = await chromium.launch({
@@ -563,8 +685,16 @@ async function _crawl(browser, {
     await navigateTo(state, discoverySettleMs);
     const found = await discoverCandidates(page, clickableSelector, nameFor);
 
-    for (const [action, sel] of found) {
+    for (const [action, sel, { visibleFrac, readable, tag }] of found) {
       if (action in node.transitions) continue;
+      node.labels = node.labels || {};
+      node.labels[action] = { readable, tag };
+      // solo las que se ven en parte (redondeadas a 2 decimales): son las
+      // que el reporte señala (ver measure en installPageHelpers)
+      if (visibleFrac != null && Math.round(visibleFrac * 100) < 100) {
+        node.visibility = node.visibility || {};
+        node.visibility[action] = Math.round(visibleFrac * 100) / 100;
+      }
       steps++;
       if (steps > maxSteps) {
         throw new Error(
@@ -604,10 +734,20 @@ async function _crawl(browser, {
 
   // quedaron estados descubiertos sin expandir: corte por maxStates
   const truncated = [...graph.values()].some((n) => !n.expanded);
+  const renamed = Object.fromEntries(renameUnstableActions(graph));
 
   const transitions = {};
-  for (const [state, node] of graph) transitions[state] = node.transitions;
-  return { transitions, initialState, usedManualState, truncated };
+  const visibility = {};
+  const labels = {};
+  for (const [state, node] of graph) {
+    transitions[state] = node.transitions;
+    if (node.visibility) visibility[state] = node.visibility;
+    if (node.labels) {
+      labels[state] = {};
+      for (const [action, { readable }] of Object.entries(node.labels)) labels[state][action] = readable;
+    }
+  }
+  return { transitions, initialState, visibility, labels, renamed, usedManualState, truncated };
 }
 
 module.exports = { crawl, ERROR_STATE, installPageHelpers, isActionable, measureSettle };

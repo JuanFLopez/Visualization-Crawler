@@ -2,276 +2,1145 @@
   "initialState": "root",
   "transitions": {
     "root": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c1": "root > c1",
-      "Click_c2": "root > c2",
-      "Click_c3": "root > c3",
-      "Click_c4": "root > c4",
-      "Click_c5": "root > c5",
-      "Click_c6": "root > c6",
-      "Click_c7": "root > c7",
-      "Click_c8": "root > c8",
-      "Click_c9": "root > c9",
-      "Click_c10": "root > c10",
-      "Click_c11": "root > c11",
-      "Click_c12": "root > c12",
-      "Click_c13": "root > c13",
-      "Click_c14": "root > c14",
-      "Click_c16": "root > c16",
-      "Click_c21": "root > c21",
-      "Click_c23": "root > c23",
-      "Click_c25": "root > c25",
-      "Click_c36": "root > c36",
-      "Click_c48": "root > c48",
-      "Click_c77": "root > c77",
-      "Click_c78": "root > c78",
-      "Click_c79": "root > c79",
-      "Click_c90": "root > c90",
-      "Click_c110": "root > c110",
-      "Click_c111": "root > c111",
-      "Click_c112": "root > c112",
-      "Click_c113": "root > c113",
-      "Click_c114": "root > c114",
-      "Click_c127": "root > c127"
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_util": "root > util",
+      "Click_animate": "root > animate",
+      "Click_query": "root > query",
+      "Click_analytics": "root > analytics",
+      "Click_scale": "root > scale",
+      "Click_data": "root > data",
+      "Click_physics": "root > physics",
+      "Click_display": "root > display",
+      "Click_flex": "root > flex",
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root > vis > axis",
+      "Click_events": "root > vis > events",
+      "Click_palette": "root > util > palette",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math",
+      "Click_interpolate": "root > animate > interpolate",
+      "Click_methods": "root > query > methods",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_optimization": "root > analytics > optimization",
+      "Click_converters": "root > data > converters",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter",
+      "Click_render": "root > vis > data > render"
     },
-    "root > c0": {
-      "Click_c251": "root",
-      "Click_c0": "root",
-      "Click_c2": "root > c2",
-      "Click_c3": "root > c3",
-      "Click_c4": "root > c4",
-      "Click_c5": "root > c5",
-      "Click_c7": "root > c7",
-      "Click_c10": "root > c10",
-      "Click_c11": "root > c11",
-      "Click_c12": "root > c12",
-      "Click_c13": "root > c13",
-      "Click_c14": "root > c14",
-      "Click_c16": "root > c16",
-      "Click_c36": "root > c36",
-      "Click_c48": "root > c48",
-      "Click_c79": "root > c79",
-      "Click_c110": "root > c110",
-      "Click_c111": "root > c111",
-      "Click_c112": "root > c112",
-      "Click_c113": "root > c113",
-      "Click_c114": "root > c114",
-      "Click_c127": "root > c127"
+    "root > vis": {
+      "Click_background": "root",
+      "Click_vis": "root",
+      "Click_animate": "root > animate",
+      "Click_query": "root > query",
+      "Click_analytics": "root > analytics",
+      "Click_scale": "root > scale",
+      "Click_physics": "root > physics",
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root > vis > axis",
+      "Click_events": "root > vis > events",
+      "Click_interpolate": "root > animate > interpolate",
+      "Click_methods": "root > query > methods",
+      "Click_optimization": "root > analytics > optimization",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter",
+      "Click_render": "root > vis > data > render"
     },
-    "root > c2": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c1": "root > c1",
-      "Click_c2": "root",
-      "Click_c5": "root > c5",
-      "Click_c9": "root > c9",
-      "Click_c11": "root > c11",
-      "Click_c36": "root > c36"
+    "root > animate": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_util": "root > util",
+      "Click_animate": "root",
+      "Click_scale": "root > scale",
+      "Click_flex": "root > flex",
+      "Click_vis/data": "root > vis > data",
+      "Click_interpolate": "root > animate > interpolate"
     },
-    "root > c1": {
-      "Click_c251": "root",
-      "Click_c1": "root",
-      "Click_c2": "root > c2",
-      "Click_c3": "root > c3",
-      "Click_c6": "root > c6",
-      "Click_c21": "root > c21",
-      "Click_c23": "root > c23",
-      "Click_c25": "root > c25"
+    "root > util": {
+      "Click_background": "root",
+      "Click_util": "root",
+      "Click_animate": "root > animate",
+      "Click_query": "root > query",
+      "Click_data": "root > data",
+      "Click_palette": "root > util > palette",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math"
     },
-    "root > c3": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c1": "root > c1",
-      "Click_c3": "root",
-      "Click_c4": "root > c4",
-      "Click_c48": "root > c48",
-      "Click_c78": "root > c78"
+    "root > query": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_util": "root > util",
+      "Click_query": "root",
+      "Click_analytics": "root > analytics",
+      "Click_methods": "root > query > methods",
+      "Click_cluster": "root > analytics > cluster"
     },
-    "root > c4": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c3": "root > c3",
-      "Click_c4": "root",
-      "Click_c48": "root > c48",
-      "Click_c77": "root > c77",
-      "Click_c78": "root > c78",
-      "Click_c79": "root > c79"
+    "root > analytics": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_query": "root > query",
+      "Click_analytics": "root",
+      "Click_methods": "root > query > methods",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_optimization": "root > analytics > optimization"
     },
-    "root > c48": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c3": "root > c3",
-      "Click_c4": "root > c4",
-      "Click_c48": "root"
+    "root > query > methods": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_query": "root > query",
+      "Click_analytics": "root > analytics",
+      "Click_methods": "root"
     },
-    "root > c77": {
-      "Click_c251": "root",
-      "Click_c4": "root > c4",
-      "Click_c77": "root",
-      "Click_c79": "root > c79"
+    "root > analytics > graph": {
+      "Click_background": "root",
+      "Click_analytics": "root > analytics",
+      "Click_graph": "root",
+      "Click_optimization": "root > analytics > optimization"
     },
-    "root > c79": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c4": "root > c4",
-      "Click_c77": "root > c77",
-      "Click_c78": "root > c78",
-      "Click_c79": "root"
+    "root > analytics > optimization": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_analytics": "root > analytics",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_optimization": "root"
     },
-    "root > c78": {
-      "Click_c251": "root",
-      "Click_c3": "root > c3",
-      "Click_c78": "root",
-      "Click_c79": "root > c79"
+    "root > analytics > cluster": {
+      "Click_background": "root",
+      "Click_query": "root > query",
+      "Click_cluster": "root",
+      "Click_optimization": "root > analytics > optimization"
     },
-    "root > c6": {
-      "Click_c251": "root",
-      "Click_c1": "root > c1",
-      "Click_c6": "root",
-      "Click_c90": "root > c90"
+    "root > data": {
+      "Click_background": "root",
+      "Click_util": "root > util",
+      "Click_data": "root",
+      "Click_converters": "root > data > converters"
     },
-    "root > c90": {
-      "Click_c251": "root",
-      "Click_c6": "root > c6",
-      "Click_c90": "root"
+    "root > data > converters": {
+      "Click_background": "root",
+      "Click_data": "root > data",
+      "Click_converters": "root"
     },
-    "root > c21": {
-      "Click_c251": "root",
-      "Click_c21": "root",
-      "Click_c25": "root > c25"
+    "root > util > palette": {
+      "Click_background": "root",
+      "Click_palette": "root",
+      "Click_math": "root > util > math"
     },
-    "root > c25": {
-      "Click_c251": "root",
-      "Click_c21": "root > c21",
-      "Click_c25": "root"
+    "root > util > math": {
+      "Click_background": "root",
+      "Click_palette": "root > util > palette",
+      "Click_math": "root"
     },
-    "root > c23": {
-      "Click_c251": "root",
-      "Click_c23": "root"
+    "root > util > heap": {
+      "Click_background": "root",
+      "Click_heap": "root"
     },
-    "root > c5": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c2": "root > c2",
-      "Click_c5": "root",
-      "Click_c7": "root > c7",
-      "Click_c36": "root > c36"
+    "root > scale": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_animate": "root > animate",
+      "Click_scale": "root",
+      "Click_physics": "root > physics",
+      "Click_interpolate": "root > animate > interpolate"
     },
-    "root > c7": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c5": "root > c5",
-      "Click_c7": "root"
+    "root > physics": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_scale": "root > scale",
+      "Click_physics": "root"
     },
-    "root > c36": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c2": "root > c2",
-      "Click_c5": "root > c5",
-      "Click_c36": "root"
+    "root > animate > interpolate": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_animate": "root > animate",
+      "Click_scale": "root > scale",
+      "Click_interpolate": "root"
     },
-    "root > c9": {
-      "Click_c251": "root",
-      "Click_c2": "root > c2",
-      "Click_c9": "root"
+    "root > flex": {
+      "Click_background": "root",
+      "Click_animate": "root > animate",
+      "Click_flex": "root"
     },
-    "root > c11": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c2": "root > c2",
-      "Click_c11": "root",
-      "Click_c12": "root > c12",
-      "Click_c13": "root > c13",
-      "Click_c127": "root > c127"
+    "root > vis > data": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_animate": "root > animate",
+      "Click_vis/data": "root",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_render": "root > vis > data > render"
     },
-    "root > c12": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c10": "root > c10",
-      "Click_c11": "root > c11",
-      "Click_c12": "root",
-      "Click_c112": "root > c112",
-      "Click_c127": "root > c127"
+    "root > vis > controls": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_controls": "root",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_render": "root > vis > data > render"
     },
-    "root > c10": {
-      "Click_c251": "root",
-      "Click_c10": "root",
-      "Click_c12": "root > c12",
-      "Click_c13": "root > c13",
-      "Click_c14": "root > c14",
-      "Click_c110": "root > c110",
-      "Click_c111": "root > c111",
-      "Click_c112": "root > c112",
-      "Click_c113": "root > c113",
-      "Click_c114": "root > c114"
+    "root > vis > operator": {
+      "Click_background": "root",
+      "Click_operator": "root",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root > vis > axis",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter"
     },
-    "root > c13": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c10": "root > c10",
-      "Click_c11": "root > c11",
-      "Click_c13": "root",
-      "Click_c14": "root > c14"
+    "root > vis > legend": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_legend": "root",
+      "Click_axis": "root > vis > axis"
     },
-    "root > c14": {
-      "Click_c251": "root",
-      "Click_c10": "root > c10",
-      "Click_c13": "root > c13",
-      "Click_c14": "root",
-      "Click_c114": "root > c114"
+    "root > vis > axis": {
+      "Click_background": "root",
+      "Click_operator": "root > vis > operator",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root",
+      "Click_filter": "root > vis > operator > filter"
     },
-    "root > c114": {
-      "Click_c251": "root",
-      "Click_c14": "root > c14",
-      "Click_c110": "root > c110",
-      "Click_c113": "root > c113",
-      "Click_c114": "root"
+    "root > vis > operator > filter": {
+      "Click_background": "root",
+      "Click_axis": "root > vis > axis",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root"
     },
-    "root > c110": {
-      "Click_c251": "root",
-      "Click_c10": "root > c10",
-      "Click_c110": "root",
-      "Click_c112": "root > c112",
-      "Click_c113": "root > c113",
-      "Click_c114": "root > c114"
+    "root > vis > operator > layout": {
+      "Click_background": "root",
+      "Click_operator": "root > vis > operator",
+      "Click_layout": "root",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter"
     },
-    "root > c112": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c12": "root > c12",
-      "Click_c110": "root > c110",
-      "Click_c111": "root > c111",
-      "Click_c112": "root"
+    "root > vis > operator > encoder": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_controls": "root > vis > controls",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root"
     },
-    "root > c111": {
-      "Click_c251": "root",
-      "Click_c111": "root",
-      "Click_c112": "root > c112",
-      "Click_c113": "root > c113"
+    "root > vis > operator > label": {
+      "Click_background": "root",
+      "Click_label": "root",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion"
     },
-    "root > c113": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c110": "root > c110",
-      "Click_c111": "root > c111",
-      "Click_c113": "root",
-      "Click_c114": "root > c114"
+    "root > vis > operator > distortion": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_distortion": "root",
+      "Click_filter": "root > vis > operator > filter"
     },
-    "root > c127": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c12": "root > c12",
-      "Click_c127": "root"
+    "root > vis > data > render": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_controls": "root > vis > controls",
+      "Click_render": "root"
     },
-    "root > c16": {
-      "Click_c251": "root",
-      "Click_c0": "root > c0",
-      "Click_c16": "root"
+    "root > vis > events": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_events": "root"
     },
-    "root > c8": {
-      "Click_c251": "root",
-      "Click_c8": "root"
+    "root > display": {
+      "Click_background": "root",
+      "Click_display": "root"
     }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "language": null,
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": null,
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas",
+    "languageOmitted": "omitido: el regex supera 500000 caracteres (crece exponencialmente al eliminar los estados del núcleo denso: root, root > vis, root > vis > operator, root > vis > operator > layout, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). La tabla de transiciones y la comparación contra un regex esperado no se ven afectadas. Ver regex.explosion en transitions.json.",
+    "completeInteractionsOmitted": "omitido: el regex supera 500000 caracteres (crece exponencialmente al eliminar los estados del núcleo denso: root, root > vis, root > vis > operator, root > vis > operator > layout, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). La tabla de transiciones y la comparación contra un regex esperado no se ven afectadas. Ver regex.explosion en transitions.json.",
+    "explosion": {
+      "language": {
+        "maxLength": 500000,
+        "abortedAtStep": 25,
+        "totalSteps": 32,
+        "sizeWhenAborted": 862105,
+        "growth": [
+          {
+            "step": 14,
+            "state": "root > scale",
+            "totalSize": 8579,
+            "factor": 1.18
+          },
+          {
+            "step": 15,
+            "state": "root > animate > interpolate",
+            "totalSize": 10584,
+            "factor": 1.23
+          },
+          {
+            "step": 16,
+            "state": "root > animate",
+            "totalSize": 24555,
+            "factor": 2.32
+          },
+          {
+            "step": 17,
+            "state": "root > query > methods",
+            "totalSize": 24905,
+            "factor": 1.01
+          },
+          {
+            "step": 18,
+            "state": "root > analytics",
+            "totalSize": 27432,
+            "factor": 1.1
+          },
+          {
+            "step": 19,
+            "state": "root > analytics > optimization",
+            "totalSize": 32374,
+            "factor": 1.18
+          },
+          {
+            "step": 20,
+            "state": "root > query",
+            "totalSize": 64330,
+            "factor": 1.99
+          },
+          {
+            "step": 21,
+            "state": "root > vis > data",
+            "totalSize": 162961,
+            "factor": 2.53
+          },
+          {
+            "step": 22,
+            "state": "root > vis > operator > label",
+            "totalSize": 163364,
+            "factor": 1
+          },
+          {
+            "step": 23,
+            "state": "root > vis > axis",
+            "totalSize": 163809,
+            "factor": 1
+          },
+          {
+            "step": 24,
+            "state": "root > vis > controls",
+            "totalSize": 351790,
+            "factor": 2.15
+          },
+          {
+            "step": 25,
+            "state": "root > vis > legend",
+            "totalSize": 862105,
+            "factor": 2.45
+          }
+        ],
+        "denseCore": [
+          "root",
+          "root > vis",
+          "root > vis > operator",
+          "root > vis > operator > layout",
+          "root > vis > operator > encoder",
+          "root > vis > operator > distortion",
+          "root > vis > operator > filter"
+        ],
+        "denseCoreTransitions": 39,
+        "denseCorePartiallyVisibleClicks": 11
+      },
+      "completeInteractions": {
+        "maxLength": 500000,
+        "abortedAtStep": 25,
+        "totalSteps": 32,
+        "sizeWhenAborted": 664498,
+        "growth": [
+          {
+            "step": 14,
+            "state": "root > vis > operator > label",
+            "totalSize": 6270,
+            "factor": 1.06
+          },
+          {
+            "step": 15,
+            "state": "root > scale",
+            "totalSize": 7310,
+            "factor": 1.17
+          },
+          {
+            "step": 16,
+            "state": "root > animate > interpolate",
+            "totalSize": 8762,
+            "factor": 1.2
+          },
+          {
+            "step": 17,
+            "state": "root > animate",
+            "totalSize": 19311,
+            "factor": 2.2
+          },
+          {
+            "step": 18,
+            "state": "root > query > methods",
+            "totalSize": 19597,
+            "factor": 1.01
+          },
+          {
+            "step": 19,
+            "state": "root > analytics",
+            "totalSize": 21620,
+            "factor": 1.1
+          },
+          {
+            "step": 20,
+            "state": "root > analytics > optimization",
+            "totalSize": 25236,
+            "factor": 1.17
+          },
+          {
+            "step": 21,
+            "state": "root > query",
+            "totalSize": 47618,
+            "factor": 1.89
+          },
+          {
+            "step": 22,
+            "state": "root > vis > data",
+            "totalSize": 120966,
+            "factor": 2.54
+          },
+          {
+            "step": 23,
+            "state": "root > vis > axis",
+            "totalSize": 121344,
+            "factor": 1
+          },
+          {
+            "step": 24,
+            "state": "root > vis > controls",
+            "totalSize": 266191,
+            "factor": 2.19
+          },
+          {
+            "step": 25,
+            "state": "root > vis > legend",
+            "totalSize": 664498,
+            "factor": 2.5
+          }
+        ],
+        "denseCore": [
+          "root",
+          "root > vis",
+          "root > vis > operator",
+          "root > vis > operator > layout",
+          "root > vis > operator > encoder",
+          "root > vis > operator > distortion",
+          "root > vis > operator > filter"
+        ],
+        "denseCoreTransitions": 39,
+        "denseCorePartiallyVisibleClicks": 11
+      }
+    }
+  },
+  "visibility": {
+    "root > vis": {
+      "Click_animate": 0.33,
+      "Click_query": 0.33,
+      "Click_analytics": 0.14,
+      "Click_scale": 0.38,
+      "Click_physics": 0,
+      "Click_interpolate": 0.62,
+      "Click_methods": 0.38,
+      "Click_optimization": 0.14
+    },
+    "root > animate": {
+      "Click_vis": 0,
+      "Click_util": 0,
+      "Click_scale": 0.14,
+      "Click_flex": 0.62,
+      "Click_vis/data": 0
+    },
+    "root > util": {
+      "Click_animate": 0,
+      "Click_query": 0.1,
+      "Click_data": 0
+    },
+    "root > query": {
+      "Click_vis": 0,
+      "Click_util": 0,
+      "Click_analytics": 0.05,
+      "Click_cluster": 0
+    },
+    "root > analytics": {
+      "Click_vis": 0,
+      "Click_query": 0.05,
+      "Click_methods": 0
+    },
+    "root > query > methods": {
+      "Click_vis": 0,
+      "Click_query": 0.29,
+      "Click_analytics": 0
+    },
+    "root > analytics > graph": {
+      "Click_analytics": 0.43,
+      "Click_optimization": 0.24
+    },
+    "root > analytics > optimization": {
+      "Click_vis": 0,
+      "Click_analytics": 0.1,
+      "Click_graph": 0,
+      "Click_cluster": 0.05
+    },
+    "root > analytics > cluster": {
+      "Click_query": 0,
+      "Click_optimization": 0.1
+    },
+    "root > data": {
+      "Click_util": 0
+    },
+    "root > data > converters": {
+      "Click_data": 0.57
+    },
+    "root > util > palette": {
+      "Click_math": 0.05
+    },
+    "root > util > math": {
+      "Click_palette": 0.05
+    },
+    "root > scale": {
+      "Click_vis": 0,
+      "Click_animate": 0,
+      "Click_physics": 0,
+      "Click_interpolate": 0
+    },
+    "root > physics": {
+      "Click_vis": 0,
+      "Click_scale": 0
+    },
+    "root > animate > interpolate": {
+      "Click_vis": 0,
+      "Click_animate": 0.43,
+      "Click_scale": 0
+    },
+    "root > flex": {
+      "Click_animate": 0
+    },
+    "root > vis > data": {
+      "Click_vis": 0.19,
+      "Click_animate": 0,
+      "Click_controls": 0.1,
+      "Click_legend": 0.1
+    },
+    "root > vis > controls": {
+      "Click_vis": 0.19,
+      "Click_operator": 0,
+      "Click_vis/data": 0.05,
+      "Click_encoder": 0,
+      "Click_render": 0
+    },
+    "root > vis > operator": {
+      "Click_controls": 0.24,
+      "Click_legend": 0.24,
+      "Click_axis": 0
+    },
+    "root > vis > legend": {
+      "Click_vis": 0.1,
+      "Click_operator": 0,
+      "Click_vis/data": 0.05,
+      "Click_axis": 0.05
+    },
+    "root > vis > axis": {
+      "Click_operator": 0,
+      "Click_legend": 0.05,
+      "Click_filter": 0
+    },
+    "root > vis > operator > filter": {
+      "Click_axis": 0,
+      "Click_layout": 0,
+      "Click_distortion": 0.05
+    },
+    "root > vis > operator > layout": {
+      "Click_operator": 0.43,
+      "Click_encoder": 0.1,
+      "Click_distortion": 0.14,
+      "Click_filter": 0.14
+    },
+    "root > vis > operator > encoder": {
+      "Click_vis": 0,
+      "Click_controls": 0,
+      "Click_layout": 0,
+      "Click_label": 0
+    },
+    "root > vis > operator > label": {
+      "Click_encoder": 0,
+      "Click_distortion": 0
+    },
+    "root > vis > operator > distortion": {
+      "Click_vis": 0,
+      "Click_layout": 0.05,
+      "Click_label": 0,
+      "Click_filter": 0.05
+    },
+    "root > vis > data > render": {
+      "Click_vis": 0,
+      "Click_controls": 0
+    },
+    "root > vis > events": {
+      "Click_vis": 0
+    }
+  },
+  "partiallyVisibleClicks": {
+    "meaning": "transiciones cuyo elemento se veía solo en parte al clickearlo (visible: fracción aproximada de su área)",
+    "count": 87,
+    "ofTransitions": 208,
+    "transitions": [
+      {
+        "state": "root > vis",
+        "action": "Click_physics",
+        "to": "root > physics",
+        "visible": 0
+      },
+      {
+        "state": "root > animate",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > animate",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0
+      },
+      {
+        "state": "root > animate",
+        "action": "Click_vis/data",
+        "to": "root > vis > data",
+        "visible": 0
+      },
+      {
+        "state": "root > util",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0
+      },
+      {
+        "state": "root > util",
+        "action": "Click_data",
+        "to": "root > data",
+        "visible": 0
+      },
+      {
+        "state": "root > query",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > query",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0
+      },
+      {
+        "state": "root > query",
+        "action": "Click_cluster",
+        "to": "root > analytics > cluster",
+        "visible": 0
+      },
+      {
+        "state": "root > analytics",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > analytics",
+        "action": "Click_methods",
+        "to": "root > query > methods",
+        "visible": 0
+      },
+      {
+        "state": "root > query > methods",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > query > methods",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0
+      },
+      {
+        "state": "root > analytics > optimization",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > analytics > optimization",
+        "action": "Click_graph",
+        "to": "root > analytics > graph",
+        "visible": 0
+      },
+      {
+        "state": "root > analytics > cluster",
+        "action": "Click_query",
+        "to": "root > query",
+        "visible": 0
+      },
+      {
+        "state": "root > data",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0
+      },
+      {
+        "state": "root > scale",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > scale",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0
+      },
+      {
+        "state": "root > scale",
+        "action": "Click_physics",
+        "to": "root > physics",
+        "visible": 0
+      },
+      {
+        "state": "root > scale",
+        "action": "Click_interpolate",
+        "to": "root > animate > interpolate",
+        "visible": 0
+      },
+      {
+        "state": "root > physics",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > physics",
+        "action": "Click_scale",
+        "to": "root > scale",
+        "visible": 0
+      },
+      {
+        "state": "root > animate > interpolate",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > animate > interpolate",
+        "action": "Click_scale",
+        "to": "root > scale",
+        "visible": 0
+      },
+      {
+        "state": "root > flex",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > data",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_operator",
+        "to": "root > vis > operator",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_encoder",
+        "to": "root > vis > operator > encoder",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_render",
+        "to": "root > vis > data > render",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator",
+        "action": "Click_axis",
+        "to": "root > vis > axis",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > legend",
+        "action": "Click_operator",
+        "to": "root > vis > operator",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > axis",
+        "action": "Click_operator",
+        "to": "root > vis > operator",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > axis",
+        "action": "Click_filter",
+        "to": "root > vis > operator > filter",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > filter",
+        "action": "Click_axis",
+        "to": "root > vis > axis",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > filter",
+        "action": "Click_layout",
+        "to": "root > vis > operator > layout",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > encoder",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > encoder",
+        "action": "Click_controls",
+        "to": "root > vis > controls",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > encoder",
+        "action": "Click_layout",
+        "to": "root > vis > operator > layout",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > encoder",
+        "action": "Click_label",
+        "to": "root > vis > operator > label",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > label",
+        "action": "Click_encoder",
+        "to": "root > vis > operator > encoder",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > label",
+        "action": "Click_distortion",
+        "to": "root > vis > operator > distortion",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > distortion",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > operator > distortion",
+        "action": "Click_label",
+        "to": "root > vis > operator > label",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > data > render",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > data > render",
+        "action": "Click_controls",
+        "to": "root > vis > controls",
+        "visible": 0
+      },
+      {
+        "state": "root > vis > events",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0
+      },
+      {
+        "state": "root > query",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.05
+      },
+      {
+        "state": "root > analytics",
+        "action": "Click_query",
+        "to": "root > query",
+        "visible": 0.05
+      },
+      {
+        "state": "root > analytics > optimization",
+        "action": "Click_cluster",
+        "to": "root > analytics > cluster",
+        "visible": 0.05
+      },
+      {
+        "state": "root > util > palette",
+        "action": "Click_math",
+        "to": "root > util > math",
+        "visible": 0.05
+      },
+      {
+        "state": "root > util > math",
+        "action": "Click_palette",
+        "to": "root > util > palette",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_vis/data",
+        "to": "root > vis > data",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > legend",
+        "action": "Click_vis/data",
+        "to": "root > vis > data",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > legend",
+        "action": "Click_axis",
+        "to": "root > vis > axis",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > axis",
+        "action": "Click_legend",
+        "to": "root > vis > legend",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > operator > filter",
+        "action": "Click_distortion",
+        "to": "root > vis > operator > distortion",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > operator > distortion",
+        "action": "Click_layout",
+        "to": "root > vis > operator > layout",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis > operator > distortion",
+        "action": "Click_filter",
+        "to": "root > vis > operator > filter",
+        "visible": 0.05
+      },
+      {
+        "state": "root > util",
+        "action": "Click_query",
+        "to": "root > query",
+        "visible": 0.1
+      },
+      {
+        "state": "root > analytics > optimization",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.1
+      },
+      {
+        "state": "root > analytics > cluster",
+        "action": "Click_optimization",
+        "to": "root > analytics > optimization",
+        "visible": 0.1
+      },
+      {
+        "state": "root > vis > data",
+        "action": "Click_controls",
+        "to": "root > vis > controls",
+        "visible": 0.1
+      },
+      {
+        "state": "root > vis > data",
+        "action": "Click_legend",
+        "to": "root > vis > legend",
+        "visible": 0.1
+      },
+      {
+        "state": "root > vis > legend",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.1
+      },
+      {
+        "state": "root > vis > operator > layout",
+        "action": "Click_encoder",
+        "to": "root > vis > operator > encoder",
+        "visible": 0.1
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.14
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_optimization",
+        "to": "root > analytics > optimization",
+        "visible": 0.14
+      },
+      {
+        "state": "root > animate",
+        "action": "Click_scale",
+        "to": "root > scale",
+        "visible": 0.14
+      },
+      {
+        "state": "root > vis > operator > layout",
+        "action": "Click_distortion",
+        "to": "root > vis > operator > distortion",
+        "visible": 0.14
+      },
+      {
+        "state": "root > vis > operator > layout",
+        "action": "Click_filter",
+        "to": "root > vis > operator > filter",
+        "visible": 0.14
+      },
+      {
+        "state": "root > vis > data",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.19
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.19
+      },
+      {
+        "state": "root > analytics > graph",
+        "action": "Click_optimization",
+        "to": "root > analytics > optimization",
+        "visible": 0.24
+      },
+      {
+        "state": "root > vis > operator",
+        "action": "Click_controls",
+        "to": "root > vis > controls",
+        "visible": 0.24
+      },
+      {
+        "state": "root > vis > operator",
+        "action": "Click_legend",
+        "to": "root > vis > legend",
+        "visible": 0.24
+      },
+      {
+        "state": "root > query > methods",
+        "action": "Click_query",
+        "to": "root > query",
+        "visible": 0.29
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0.33
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_query",
+        "to": "root > query",
+        "visible": 0.33
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_scale",
+        "to": "root > scale",
+        "visible": 0.38
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_methods",
+        "to": "root > query > methods",
+        "visible": 0.38
+      },
+      {
+        "state": "root > analytics > graph",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.43
+      },
+      {
+        "state": "root > animate > interpolate",
+        "action": "Click_animate",
+        "to": "root > animate",
+        "visible": 0.43
+      },
+      {
+        "state": "root > vis > operator > layout",
+        "action": "Click_operator",
+        "to": "root > vis > operator",
+        "visible": 0.43
+      },
+      {
+        "state": "root > data > converters",
+        "action": "Click_data",
+        "to": "root > data",
+        "visible": 0.57
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_interpolate",
+        "to": "root > animate > interpolate",
+        "visible": 0.62
+      },
+      {
+        "state": "root > animate",
+        "action": "Click_flex",
+        "to": "root > flex",
+        "visible": 0.62
+      }
+    ]
   }
 }

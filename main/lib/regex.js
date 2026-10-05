@@ -290,6 +290,25 @@ function keyOf(n) {
   return n._k;
 }
 
+// Largo aproximado de print(n) sin imprimirlo: el AST es un DAG (la
+// eliminación reusa subexpresiones), así que imprimir para medir costaría
+// justo lo que queremos evitar cuando el regex explota.
+function sizeOf(n) {
+  if (n._n !== undefined) return n._n;
+  let s;
+  switch (n.type) {
+    case 'empty': s = 1; break;
+    case 'epsilon': s = 0; break;
+    case 'literal': s = n.token.length; break;
+    case 'star': s = sizeOf(n.node) + 3; break;
+    case 'concat': s = n.parts.reduce((a, p) => a + sizeOf(p) + 1, -1); break;
+    case 'union': s = n.branches.reduce((a, b) => a + sizeOf(b) + 3, -1); break;
+    default: s = 0;
+  }
+  n._n = s;
+  return s;
+}
+
 function nullable(n) {
   switch (n.type) {
     case 'epsilon': case 'star': return true;
@@ -422,8 +441,36 @@ function print(n, prec = 0) {
  * DFA: las secuencias de símbolos que, desde el estado inicial, terminan
  * en un estado aceptante. `exclude` permite dejar afuera estados (p.ej.
  * __ERROR__ del crawler).
+ *
+ * Devuelve null si el regex supera `maxLength` caracteres (ver
+ * dfaToRegexTrace para saber dónde explotó).
  */
-function dfaToRegex(dfa, { exclude = [] } = {}) {
+function dfaToRegex(dfa, opts = {}) {
+  return dfaToRegexTrace(dfa, opts).regex;
+}
+
+/**
+ * Igual que dfaToRegex, pero además devuelve la traza de la eliminación.
+ *
+ * Por qué hace falta: en un grafo denso (muchos estados que se alcanzan
+ * entre sí, p.ej. un circle pack donde se pueden clickear los círculos
+ * vecinos que asoman en las esquinas) el regex crece EXPONENCIALMENTE --
+ * cada estado eliminado copia su bucle en cada par predecesor/sucesor, y
+ * los que se eliminan primero terminan copiados cientos de miles de
+ * veces. No es un error del autómata: es un límite inherente de pasar un
+ * grafo denso a regex. Por eso se corta al pasar `maxLength` (medido como
+ * la suma de todas las aristas que quedan, que en la práctica coincide
+ * con el largo del regex final) y se informa qué estados quedaban: esos
+ * son el núcleo denso que lo hace explotar.
+ *
+ * @returns {{
+ *   regex: string|null,
+ *   aborted: boolean,
+ *   steps: {step: number, state: string, preds: number, succs: number, loopSize: number, totalSize: number}[],
+ *   remaining: string[],
+ * }} remaining: estados sin eliminar al cortar (vacío si no se cortó)
+ */
+function dfaToRegexTrace(dfa, { exclude = [], maxLength = Infinity } = {}) {
   const START = '\u0000start', FINAL = '\u0000final';
   const skip = new Set(exclude);
 
@@ -470,6 +517,7 @@ function dfaToRegex(dfa, { exclude = [] } = {}) {
   }
 
   const remaining = new Set(reachable);
+  const steps = [];
   while (remaining.size) {
     // eliminar primero el estado más barato (menos caminos que se
     // combinan); a igualdad, el más profundo -- así el resultado queda
@@ -496,10 +544,17 @@ function dfaToRegex(dfa, { exclude = [] } = {}) {
     }
     out.delete(s); inc.delete(s);
     remaining.delete(s);
+
+    let totalSize = 0;
+    for (const m of out.values()) for (const ast of m.values()) totalSize += sizeOf(ast);
+    steps.push({ step: steps.length + 1, state: s, preds: preds.length, succs: succs.length, loopSize: loop ? sizeOf(loop) : 0, totalSize });
+    if (totalSize > maxLength) return { regex: null, aborted: true, steps, remaining: [...remaining] };
   }
 
   const result = (out.get(START) && out.get(START).get(FINAL)) || EMPTY;
-  return print(result, 0);
+  const regex = print(result, 0);
+  if (regex.length > maxLength) return { regex: null, aborted: true, steps, remaining: [] };
+  return { regex, aborted: false, steps, remaining: [] };
 }
 
-module.exports = { compileRegex, dfaToRegex, parse, tokenize, literalsOf };
+module.exports = { compileRegex, dfaToRegex, dfaToRegexTrace, parse, tokenize, literalsOf };

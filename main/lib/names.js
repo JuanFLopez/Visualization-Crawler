@@ -25,11 +25,11 @@ function stripNumber(action) {
 }
 
 /**
- * @param {{initialState: string, transitions: Object}} data
- * @returns {{initialState: string, transitions: Object, renamed: Object}}
+ * @param {{initialState: string, transitions: Object, visibility?: Object}} data
+ * @returns {{initialState: string, transitions: Object, renamed: Object, visibility?: Object}}
  *   renamed: acción vieja -> nueva (solo las que cambiaron)
  */
-function cleanNames({ initialState, transitions }) {
+function cleanNames({ initialState, transitions, visibility = null }) {
   // orden de primera aparición, para que la desambiguación sea estable
   const actions = [];
   const seen = new Set();
@@ -69,7 +69,16 @@ function cleanNames({ initialState, transitions }) {
 
   const renamed = {};
   for (const [a, b] of rename) if (a !== b) renamed[a] = b;
-  return { initialState: renameState(initialState), transitions: out, renamed };
+  const result = { initialState: renameState(initialState), transitions: out, renamed };
+  if (visibility) {
+    result.visibility = {};
+    for (const [state, byAction] of Object.entries(visibility)) {
+      const v = {};
+      for (const [a, frac] of Object.entries(byAction)) v[rename.get(a) ?? a] = frac;
+      result.visibility[renameState(state)] = v;
+    }
+  }
+  return result;
 }
 
 module.exports = { cleanNames };

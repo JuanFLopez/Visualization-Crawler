@@ -2,10 +2,10 @@
   "initialState": "root",
   "transitions": {
     "root > flex": {
-      "Click_c31": "root"
+      "Click_circle": "root"
     },
     "root > physics": {
-      "Click_c31": "root"
+      "Click_circle": "root"
     },
     "root": {
       "Click_vis": "root > vis",
@@ -18,143 +18,143 @@
       "Click_physics": "root > physics",
       "Click_display": "root > display",
       "Click_flex": "root > flex",
-      "Click_operator": "root > operator",
-      "Click_vis/data": "root > vis/data",
-      "Click_controls": "root > controls",
-      "Click_legend": "root > legend",
-      "Click_axis": "root > axis",
-      "Click_events": "root > events",
-      "Click_palette": "root > palette",
-      "Click_heap": "root > heap",
-      "Click_math": "root > math",
-      "Click_interpolate": "root > interpolate",
-      "Click_methods": "root > methods",
-      "Click_graph": "root > graph",
-      "Click_cluster": "root > cluster",
-      "Click_optimization": "root > optimization",
-      "Click_converters": "root > converters",
-      "Click_c31": "root"
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root > vis > axis",
+      "Click_events": "root > vis > events",
+      "Click_palette": "root > util > palette",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math",
+      "Click_interpolate": "root > animate > interpolate",
+      "Click_methods": "root > query > methods",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_optimization": "root > analytics > optimization",
+      "Click_converters": "root > data > converters",
+      "Click_circle": "root"
     },
     "root > vis": {
-      "Click_operator": "root > operator",
-      "Click_vis/data": "root > vis/data",
-      "Click_controls": "root > controls",
-      "Click_legend": "root > legend",
-      "Click_axis": "root > axis",
-      "Click_events": "root > events",
-      "Click_layout": "root > vis > layout",
-      "Click_label": "root > vis > label",
-      "Click_encoder": "root > vis > encoder",
-      "Click_distortion": "root > vis > distortion",
-      "Click_filter": "root > vis > filter",
-      "Click_render": "root > vis > render",
-      "Click_c31": "root"
+      "Click_operator": "root > vis > operator",
+      "Click_vis/data": "root > vis > data",
+      "Click_controls": "root > vis > controls",
+      "Click_legend": "root > vis > legend",
+      "Click_axis": "root > vis > axis",
+      "Click_events": "root > vis > events",
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter",
+      "Click_render": "root > vis > data > render",
+      "Click_circle": "root"
     },
-    "root > operator": {
-      "Click_layout": "root > vis > layout",
-      "Click_label": "root > vis > label",
-      "Click_encoder": "root > vis > encoder",
-      "Click_distortion": "root > vis > distortion",
-      "Click_filter": "root > vis > filter",
-      "Click_c31": "root > vis"
+    "root > vis > operator": {
+      "Click_layout": "root > vis > operator > layout",
+      "Click_label": "root > vis > operator > label",
+      "Click_encoder": "root > vis > operator > encoder",
+      "Click_distortion": "root > vis > operator > distortion",
+      "Click_filter": "root > vis > operator > filter",
+      "Click_circle": "root > vis"
     },
-    "root > vis > layout": {
-      "Click_c31": "root > operator"
+    "root > vis > operator > layout": {
+      "Click_circle": "root > vis > operator"
     },
-    "root > vis > label": {
-      "Click_c31": "root > operator"
+    "root > vis > operator > label": {
+      "Click_circle": "root > vis > operator"
     },
-    "root > vis > encoder": {
-      "Click_c31": "root > operator"
+    "root > vis > operator > encoder": {
+      "Click_circle": "root > vis > operator"
     },
-    "root > vis > distortion": {
-      "Click_c31": "root > operator"
+    "root > vis > operator > distortion": {
+      "Click_circle": "root > vis > operator"
     },
-    "root > vis > filter": {
-      "Click_c31": "root > operator"
+    "root > vis > operator > filter": {
+      "Click_circle": "root > vis > operator"
     },
-    "root > vis/data": {
-      "Click_render": "root > vis > render",
-      "Click_c31": "root > vis"
+    "root > vis > data": {
+      "Click_render": "root > vis > data > render",
+      "Click_circle": "root > vis"
     },
-    "root > vis > render": {
-      "Click_c31": "root > vis/data"
+    "root > vis > data > render": {
+      "Click_circle": "root > vis > data"
     },
-    "root > controls": {
-      "Click_c31": "root > vis"
+    "root > vis > controls": {
+      "Click_circle": "root > vis"
     },
-    "root > legend": {
-      "Click_c31": "root > vis"
+    "root > vis > legend": {
+      "Click_circle": "root > vis"
     },
-    "root > axis": {
-      "Click_c31": "root > vis"
+    "root > vis > axis": {
+      "Click_circle": "root > vis"
     },
-    "root > events": {
-      "Click_c31": "root > vis"
+    "root > vis > events": {
+      "Click_circle": "root > vis"
     },
     "root > util": {
-      "Click_palette": "root > palette",
-      "Click_heap": "root > heap",
-      "Click_math": "root > math",
-      "Click_c31": "root"
+      "Click_palette": "root > util > palette",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math",
+      "Click_circle": "root"
     },
-    "root > palette": {
-      "Click_c31": "root > util"
+    "root > util > palette": {
+      "Click_circle": "root > util"
     },
-    "root > heap": {
-      "Click_c31": "root > util"
+    "root > util > heap": {
+      "Click_circle": "root > util"
     },
-    "root > math": {
-      "Click_c31": "root > util"
+    "root > util > math": {
+      "Click_circle": "root > util"
     },
     "root > animate": {
-      "Click_interpolate": "root > interpolate",
-      "Click_c31": "root"
+      "Click_interpolate": "root > animate > interpolate",
+      "Click_circle": "root"
     },
-    "root > interpolate": {
-      "Click_c31": "root > animate"
+    "root > animate > interpolate": {
+      "Click_circle": "root > animate"
     },
     "root > query": {
-      "Click_methods": "root > methods",
-      "Click_c31": "root"
+      "Click_methods": "root > query > methods",
+      "Click_circle": "root"
     },
-    "root > methods": {
-      "Click_c31": "root > query"
+    "root > query > methods": {
+      "Click_circle": "root > query"
     },
     "root > analytics": {
-      "Click_graph": "root > graph",
-      "Click_cluster": "root > cluster",
-      "Click_optimization": "root > optimization",
-      "Click_c31": "root"
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_optimization": "root > analytics > optimization",
+      "Click_circle": "root"
     },
-    "root > graph": {
-      "Click_c31": "root > analytics"
+    "root > analytics > graph": {
+      "Click_circle": "root > analytics"
     },
-    "root > cluster": {
-      "Click_c31": "root > analytics"
+    "root > analytics > cluster": {
+      "Click_circle": "root > analytics"
     },
-    "root > optimization": {
-      "Click_c31": "root > analytics"
+    "root > analytics > optimization": {
+      "Click_circle": "root > analytics"
     },
     "root > scale": {
-      "Click_c31": "root"
+      "Click_circle": "root"
     },
     "root > data": {
-      "Click_converters": "root > converters",
-      "Click_c31": "root"
+      "Click_converters": "root > data > converters",
+      "Click_circle": "root"
     },
-    "root > converters": {
-      "Click_c31": "root > data"
+    "root > data > converters": {
+      "Click_circle": "root > data"
     },
     "root > display": {
-      "Click_c31": "root"
+      "Click_circle": "root"
     }
   },
   "regex": {
     "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
-    "language": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)*)? Click_c31)* (Click_scale | Click_physics | Click_display | Click_flex | Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | Click_vis/data (Click_render Click_c31)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter | Click_render | (Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events)? | Click_palette | Click_heap | Click_math | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* (Click_palette | Click_heap | Click_math)? | Click_interpolate | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* Click_interpolate? | Click_methods | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* Click_methods? | Click_graph | Click_cluster | Click_optimization | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* (Click_graph | Click_cluster | Click_optimization)? | Click_converters | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)* Click_converters?)?",
+    "language": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_circle) ((Click_palette | Click_heap | Click_math) Click_circle)* | (Click_animate | Click_interpolate Click_circle) (Click_interpolate Click_circle)* | (Click_query | Click_methods Click_circle) (Click_methods Click_circle)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph | Click_cluster | Click_optimization) Click_circle)* | (Click_data | Click_converters Click_circle) (Click_converters Click_circle)*)? Click_circle)* (Click_scale | Click_physics | Click_display | Click_flex | Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | Click_vis/data (Click_render Click_circle)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter | Click_render | (Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events)? | Click_palette | Click_heap | Click_math | (Click_util | (Click_palette | Click_heap | Click_math) Click_circle) ((Click_palette | Click_heap | Click_math) Click_circle)* (Click_palette | Click_heap | Click_math)? | Click_interpolate | (Click_animate | Click_interpolate Click_circle) (Click_interpolate Click_circle)* Click_interpolate? | Click_methods | (Click_query | Click_methods Click_circle) (Click_methods Click_circle)* Click_methods? | Click_graph | Click_cluster | Click_optimization | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph | Click_cluster | Click_optimization) Click_circle)* (Click_graph | Click_cluster | Click_optimization)? | Click_converters | (Click_data | Click_converters Click_circle) (Click_converters Click_circle)* Click_converters?)?",
     "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
-    "completeInteractions": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | Click_vis/data (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_c31)* | (Click_vis/data | Click_render Click_c31) (Click_render Click_c31)* | Click_controls | Click_legend | Click_axis | Click_events) Click_c31)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_c31) ((Click_palette | Click_heap | Click_math) Click_c31)* | (Click_animate | Click_interpolate Click_c31) (Click_interpolate Click_c31)* | (Click_query | Click_methods Click_c31) (Click_methods Click_c31)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_c31) ((Click_graph | Click_cluster | Click_optimization) Click_c31)* | (Click_data | Click_converters Click_c31) (Click_converters Click_c31)*)? Click_c31)*",
+    "completeInteractions": "((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* | (Click_util | (Click_palette | Click_heap | Click_math) Click_circle) ((Click_palette | Click_heap | Click_math) Click_circle)* | (Click_animate | Click_interpolate Click_circle) (Click_interpolate Click_circle)* | (Click_query | Click_methods Click_circle) (Click_methods Click_circle)* | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph | Click_cluster | Click_optimization) Click_circle)* | (Click_data | Click_converters Click_circle) (Click_converters Click_circle)*)? Click_circle)*",
     "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
   }
 }

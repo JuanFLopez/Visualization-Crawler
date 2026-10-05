@@ -2,10 +2,11 @@
  * Dibuja un DFA (el mismo objeto que produce automaton.js o regex.js) como
  * SVG, pensado para LEER el autómata de una visualización interactiva:
  *
- *  - Layout en capas de izquierda a derecha: columna = profundidad (BFS)
- *    desde el estado inicial, y dentro de cada columna los estados quedan
- *    agrupados por el estado desde el que se los descubrió. En una
- *    visualización jerárquica (zoom in/out) esto reproduce la jerarquía.
+ *  - Layout en capas de izquierda a derecha: si los nombres de estado
+ *    son caminos de una jerarquía ("root > vis > operator", ver
+ *    lib/labels.js), columna = nivel en la jerarquía y cada estado queda
+ *    junto a su padre; si no, columna = profundidad (BFS) desde el estado
+ *    inicial, agrupando por el estado desde el que se los descubrió.
  *  - Aristas "hacia adelante" (a la columna siguiente): sólidas, con la
  *    etiqueta pegada al destino (no se pisan aunque salgan muchas del
  *    mismo estado).
@@ -28,6 +29,7 @@ const ROW_GAP = 14;
 const COL_GAP = 150;
 const MARGIN = 40;
 const MAX_EDGE_LABEL = 26;
+const LANE_GAP = 16; // separación entre las columnas y el carril de una arista que las saltea
 
 // Estados a dibujar: los que tienen fila en la tabla MÁS los que solo
 // aparecen como destino (p.ej. __ERROR__ del crawler, que nunca se expande).
@@ -96,6 +98,28 @@ function layout(dfa, labelFn) {
       queue.push(to);
     }
   }
+  // Si todos los nombres son caminos que cuelgan del inicial ("root >
+  // vis > operator", ver lib/labels.js), la columna es el NIVEL en ese
+  // camino y no la distancia en clicks: en un sunburst "operator" (nivel
+  // 2) está a un click de la raíz, y por BFS quedaría en la columna de
+  // "vis" -- vis -> operator parecería un movimiento lateral. Los nombres
+  // armados por camino de clicks también cumplen esto, y ahí nivel =
+  // distancia BFS, así que el layout no cambia para ellos.
+  const SEP = ' > ';
+  const named = states.filter((s) => s !== ERROR_STATE);
+  const hierarchical = named.every((s) => s === dfa.initial || s.startsWith(dfa.initial + SEP));
+  if (hierarchical) {
+    const base = dfa.initial.split(SEP).length;
+    const stateSet = new Set(named);
+    for (const s of named) {
+      const segs = s.split(SEP);
+      depth.set(s, segs.length - base);
+      const up = segs.slice(0, -1).join(SEP);
+      if (s !== dfa.initial && stateSet.has(up)) parent.set(s, up);
+      if (!order.has(s)) order.set(s, order.size);
+    }
+  }
+
   // inalcanzables y __ERROR__: columnas propias al final
   let maxDepth = Math.max(0, ...depth.values());
   const unreachable = states.filter((s) => !depth.has(s) && s !== ERROR_STATE);
@@ -116,6 +140,7 @@ function layout(dfa, labelFn) {
 
   const pos = new Map();
   const colX = [];
+  const cols = []; // extensión de cada columna: {left, right, top, bottom}
   let x = MARGIN + 50; // lugar para la flecha de estado inicial
   const tallest = Math.max(...columns.map((c) => c.length));
   const fullHeight = tallest * (NODE_H + ROW_GAP);
@@ -129,6 +154,7 @@ function layout(dfa, labelFn) {
     colX[d] = x;
     const colHeight = col.length * (NODE_H + ROW_GAP);
     let y = MARGIN + (fullHeight - colHeight) / 2;
+    cols[d] = { left: x, right: x + colW, top: y, bottom: y + colHeight - ROW_GAP };
     for (const s of col) {
       const { w, h } = size.get(s);
       pos.set(s, { x: x + (colW - w) / 2, y, w, h, cx: x + colW / 2, cy: y + h / 2, depth: depth.get(s) });
@@ -138,7 +164,37 @@ function layout(dfa, labelFn) {
   }
   const width = x - COL_GAP + MARGIN;
   const height = MARGIN * 2 + fullHeight;
-  return { pos, width, height };
+  return { pos, cols, width, height, hierarchical };
+}
+
+// Arista hacia adelante que SALTA columnas (en la práctica, las que van
+// a __ERROR__, que tiene columna propia al final): una curva directa
+// pasaría por detrás de los estados de las columnas intermedias -- todas
+// están centradas en la misma línea que el origen y el destino, así que
+// parecería salir del estado del medio de cada una. Se la rodea por
+// encima o por debajo de las columnas intermedias (el lado más corto),
+// con esquinas redondeadas.
+function skipEdgePath(pa, pb, cols, offsetX) {
+  const between = cols.slice(pa.depth + 1, pb.depth);
+  const top = Math.min(...between.map((c) => c.top)) - LANE_GAP;
+  const bottom = Math.max(...between.map((c) => c.bottom)) + LANE_GAP;
+  const lane = Math.abs(pa.cy - top) + Math.abs(pb.cy - top) <= Math.abs(pa.cy - bottom) + Math.abs(pb.cy - bottom) ? top : bottom;
+  const x1 = pa.x + pa.w, y1 = pa.cy, x2 = pb.x - 2, y2 = pb.cy;
+  // bajadas verticales justo a la derecha de la columna de origen y a la
+  // izquierda de la de destino (lejos de las etiquetas de las intermedias)
+  const xa = cols[pa.depth].right + offsetX + 12;
+  const xb = cols[pb.depth].left + offsetX - 12;
+  const r = 8;
+  const dir = (from, to) => (to > from ? 1 : -1);
+  const d1 = dir(y1, lane), d2 = dir(lane, y2);
+  return [
+    `M ${x1},${y1}`,
+    `L ${xa - r},${y1} Q ${xa},${y1} ${xa},${y1 + d1 * r}`,
+    `L ${xa},${lane - d1 * r} Q ${xa},${lane} ${xa + r},${lane}`,
+    `L ${xb - r},${lane} Q ${xb},${lane} ${xb},${lane + d2 * r}`,
+    `L ${xb},${y2 - d2 * r} Q ${xb},${y2} ${xb + r},${y2}`,
+    `L ${x2},${y2}`,
+  ].join(' ');
 }
 
 /**
@@ -152,7 +208,7 @@ function layout(dfa, labelFn) {
  */
 function toSVG(dfa, opts = {}) {
   const { labelFn = defaultLabel, highlightPath = [], footer = [], minWidth = 900 } = opts;
-  const { pos, width: graphW, height: graphH } = layout(dfa, labelFn);
+  const { pos, cols, width: graphW, height: graphH, hierarchical } = layout(dfa, labelFn);
   const width = Math.max(minWidth, graphW);
   const offsetX = (width - graphW) / 2;
 
@@ -201,6 +257,7 @@ function toSVG(dfa, opts = {}) {
   const backLabels = new Map(); // from -> Set de símbolos que "vuelven"
   const forwardLabels = new Map(); // to -> Set de símbolos que llegan desde la izquierda
   const sideLabels = new Map(); // from -> Set de símbolos hacia la misma columna
+  const skipLabels = new Map(); // from -> Set de símbolos que saltean columnas (p.ej. a __ERROR__)
 
   for (const { from, to, symbols } of pairs.values()) {
     const isHl = symbols.some((s) => highlighted.has(`${from}\u0000${s}`));
@@ -220,9 +277,15 @@ function toSVG(dfa, opts = {}) {
       // adelante: borde derecho del origen -> borde izquierdo del destino
       const x1 = pa.x + pa.w, y1 = pa.cy, x2 = pb.x - 2, y2 = pb.cy;
       const mx = (x1 + x2) / 2;
+      const skips = pb.depth - pa.depth > 1;
+      const d = skips ? skipEdgePath(pa, pb, cols, offsetX) : `M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`;
       forwardLayer.push(
-        `<path d="M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}" fill="none" stroke="${isHl ? '#d33' : '#777'}" stroke-width="${isHl ? 2.2 : 1.1}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow'})"><title>${escapeXml(tip)}</title></path>`
+        `<path d="${d}" fill="none" stroke="${isHl ? '#d33' : '#777'}" stroke-width="${isHl ? 2.2 : 1.1}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow'})"><title>${escapeXml(tip)}</title></path>`
       );
+      if (skips) {
+        if (!skipLabels.has(from)) skipLabels.set(from, new Set());
+        symbols.forEach((s) => skipLabels.get(from).add(s));
+      }
       if (!forwardLabels.has(to)) forwardLabels.set(to, new Set());
       symbols.forEach((s) => forwardLabels.get(to).add(s));
     } else if (pb.depth === pa.depth) {
@@ -252,11 +315,12 @@ function toSVG(dfa, opts = {}) {
     const p = P(pos.get(to));
     labelLayer.push(`<text x="${p.x - 8}" y="${p.cy - 5}" text-anchor="end" font-size="10" fill="#333">${escapeXml(abbreviate([...syms]))}</text>`);
   }
-  // bajo cada estado, una sola línea con lo que vuelve (↩) y lo que va
-  // a la misma columna (↕)
-  for (const state of new Set([...backLabels.keys(), ...sideLabels.keys()])) {
+  // bajo cada estado, una sola línea con lo que vuelve (↩), lo que va
+  // a la misma columna (↕) y lo que saltea columnas (↷, rodeándolas)
+  for (const state of new Set([...backLabels.keys(), ...sideLabels.keys(), ...skipLabels.keys()])) {
     const p = P(pos.get(state));
     const spans = [];
+    if (skipLabels.has(state)) spans.push(`<tspan fill="#555">↷ ${escapeXml(abbreviate([...skipLabels.get(state)]))}</tspan>`);
     if (backLabels.has(state)) spans.push(`<tspan fill="#999">↩ ${escapeXml(abbreviate([...backLabels.get(state)]))}</tspan>`);
     if (sideLabels.has(state)) spans.push(`<tspan fill="#5b84b1">↕ ${escapeXml(abbreviate([...sideLabels.get(state)]))}</tspan>`);
     labelLayer.push(`<text x="${p.cx - 8}" y="${p.y + p.h + 10}" font-size="9">${spans.join('  ')}</text>`);
@@ -301,7 +365,7 @@ function toSVG(dfa, opts = {}) {
     `<text x="${MARGIN + 324}" y="${y + 3}">acción que vuelve (↩ bajo el origen)</text>`,
     `<line x1="${MARGIN + 530}" y1="${y}" x2="${MARGIN + 558}" y2="${y}" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>`,
     `<text x="${MARGIN + 564}" y="${y + 3}">a la misma columna (↕ bajo el origen)</text>`,
-    `<text x="${MARGIN}" y="${y + 20}">acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>`,
+    `<text x="${MARGIN}" y="${y + 20}">${hierarchical ? 'columnas = nivel en el nombre del estado (root = 0) · ' : 'columnas = clicks desde el estado inicial · '}↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>`,
     `</g>`
   );
   y += legendH;

@@ -11,11 +11,15 @@
  * pasar, ya que cada estado tiene un solo camino más corto registrado,
  * pero por las dudas).
  *
- * @param {{initialState: string, transitions: Object}} data
+ * Si además vienen `data.labels` (nombres legibles por estado y acción,
+ * ver crawler.js) y describen una jerarquía, los nombres salen de la
+ * jerarquía de datos y no del camino de clicks (ver hierarchyLabels).
+ *
+ * @param {{initialState: string, transitions: Object, visibility?: Object, labels?: Object}} data
  * @param {Object} [opts]
  * @param {string} [opts.rootLabel='root']
  * @param {string} [opts.separator=' > ']
- * @returns {{initialState: string, transitions: Object, labelOf: Object}}
+ * @returns {{initialState: string, transitions: Object, labelOf: Object, hierarchical: boolean, visibility?: Object}}
  *   labelOf mapea el hash original -> nombre legible, por si hace falta
  *   correlacionar con checkpoints o logs previos.
  */
@@ -23,8 +27,9 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
   const { initialState, transitions } = data;
   const ERROR_STATE = '__ERROR__';
 
-  const labelOf = new Map([[initialState, rootLabel]]);
-  const queue = [initialState];
+  const hierarchy = hierarchyLabels(data, { rootLabel, separator });
+  const labelOf = hierarchy || new Map([[initialState, rootLabel]]);
+  const queue = hierarchy ? [] : [initialState];
 
   while (queue.length > 0) {
     const state = queue.shift();
@@ -51,11 +56,103 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
     renamedTransitions[newState] = renamedActions;
   }
 
-  return {
+  const result = {
     initialState: labelOf.get(initialState),
     transitions: renamedTransitions,
     labelOf: Object.fromEntries(labelOf),
+    hierarchical: !!hierarchy,
   };
+  if (data.visibility) {
+    result.visibility = {};
+    for (const [state, byAction] of Object.entries(data.visibility)) result.visibility[labelOf.get(state) ?? state] = byAction;
+  }
+  return result;
 }
 
-module.exports = { prettifyStates };
+/**
+ * Nombres por JERARQUÍA de datos ("root > vis > operator") en vez de por
+ * camino de clicks. Hace falta porque el camino de clicks más corto no
+ * dice en qué nivel está un estado: un sunburst muestra dos anillos, así
+ * que desde la raíz se clickea "operator" (nivel 2) directo, y por BFS
+ * quedaría como "root > operator", a la par de "vis" -- y el diagrama
+ * dibujaría vis -> operator como un movimiento lateral.
+ *
+ * Cada acción trae el nombre legible completo del elemento clickeado EN el
+ * estado de origen (`data.labels`, ver crawler.js), que en una
+ * visualización jerárquica es un camino ("flare/vis/operator", del
+ * <title> o del dato D3). El camino de un estado es el prefijo común más
+ * largo (por segmentos) de los caminos de todas las acciones que entran a
+ * él: entrar a "animate" en un icicle es clickear animate
+ * (flare/animate) o clickear un hijo enfocado (flare/animate/Easing, que
+ * sube al padre); el prefijo común es flare/animate.
+ *
+ * Todo o nada: si algún estado queda sin camino, dos estados comparten
+ * camino, o alguno no cuelga del camino del inicial, devuelve null y se
+ * usa el nombre por camino de clicks (visualizaciones no jerárquicas).
+ *
+ * @returns {Map<string, string> | null} estado -> nombre
+ */
+function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'root', separator = ' > ' } = {}) {
+  if (!labels) return null;
+  const ERROR_STATE = '__ERROR__';
+
+  const reachable = new Set([initialState]);
+  const queue = [initialState];
+  while (queue.length) {
+    for (const next of Object.values(transitions[queue.shift()] || {})) {
+      if (next !== ERROR_STATE && !reachable.has(next)) { reachable.add(next); queue.push(next); }
+    }
+  }
+
+  const incoming = new Map();
+  for (const state of reachable) {
+    for (const [action, next] of Object.entries(transitions[state] || {})) {
+      const readable = labels[state] && labels[state][action];
+      if (next === ERROR_STATE || typeof readable !== 'string') continue;
+      const segments = readable.split('/').map((s) => s.trim()).filter(Boolean);
+      if (segments.length === 0) continue;
+      if (!incoming.has(next)) incoming.set(next, []);
+      incoming.get(next).push(segments);
+    }
+  }
+
+  const commonPrefix = (paths) => {
+    let prefix = paths[0];
+    for (const p of paths.slice(1)) {
+      let k = 0;
+      while (k < prefix.length && k < p.length && prefix[k] === p[k]) k++;
+      prefix = prefix.slice(0, k);
+    }
+    return prefix;
+  };
+
+  const pathOf = new Map();
+  for (const state of reachable) {
+    if (state === initialState) continue;
+    const paths = incoming.get(state);
+    if (!paths) return null;
+    const path = commonPrefix(paths);
+    if (path.length === 0) return null;
+    pathOf.set(state, path);
+  }
+  // el inicial puede no tener acciones que entren a él (nada "vuelve")
+  const rootPath = incoming.has(initialState)
+    ? commonPrefix(incoming.get(initialState))
+    : commonPrefix([...pathOf.values()]);
+  if (!rootPath || rootPath.length === 0) return null;
+
+  const out = new Map([[initialState, rootLabel]]);
+  const used = new Set([rootLabel]);
+  for (const [state, path] of pathOf) {
+    const hangsFromRoot = path.length > rootPath.length && rootPath.every((seg, i) => path[i] === seg);
+    const rest = path.slice(rootPath.length);
+    if (!hangsFromRoot || rest.some((seg) => seg.includes(separator.trim()))) return null;
+    const label = [rootLabel, ...rest].join(separator);
+    if (used.has(label)) return null;
+    used.add(label);
+    out.set(state, label);
+  }
+  return out;
+}
+
+module.exports = { prettifyStates, hierarchyLabels };

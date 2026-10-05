@@ -90,6 +90,9 @@ function loadVizConfig(vizDir) {
  * @param {string} [opts.regex] - regex esperado a comparar (opcional)
  * @param {boolean} [opts.regexPrefixes=false] - comparar contra los prefijos del regex
  * @param {number} [opts.diffLimit=10] - contraejemplos por dirección
+ * @param {number} [opts.maxRegexLength=500000] - regex más largos se omiten (null) y se
+ *   informa dónde explotaron (regex.explosion); Infinity = sin tope
+ * @param {boolean} [opts.traceRegex=false] - loguear la traza de la eliminación de estados
  * @param {boolean} [opts.resume=true] - retomar checkpoint.json si existe; false lo descarta
  * @param {boolean} [opts.includeLinks=false] - detectar también <a>/[href] como clickeables
  * @param {Object} [opts.crawler] - pisa config.js: settleMs, discoverySettleMs, maxStates,
@@ -101,8 +104,10 @@ function loadVizConfig(vizDir) {
  *   mode: 'crawl' | 'transitions',
  *   initialState: string,
  *   transitions: Object,
- *   regex: { language: string, completeInteractions: string, ... },
+ *   regex: { language: string|null, completeInteractions: string|null,
+ *            languageOmitted?: string, completeInteractionsOmitted?: string, explosion?: Object, ... },
  *   comparison: null | { equivalent: boolean, onlyInCrawler: string[], onlyInExpected: string[], ... },
+ *   partiallyVisibleClicks: null | { count: number, ofTransitions: number, transitions: Object[] },
  *   svg: string,
  *   stats: { states: number, errorTransitions: {state, action}[], truncated: boolean, elapsedMs: number },
  *   files: null | { transitions: string, svg: string },
@@ -117,6 +122,8 @@ async function run(opts = {}) {
     regex = null,
     regexPrefixes = false,
     diffLimit = 10,
+    maxRegexLength,
+    traceRegex = false,
     resume: allowResume = true,
     includeLinks = false,
     crawler: crawlerOverrides = {},
@@ -144,9 +151,10 @@ async function run(opts = {}) {
     let input = path.resolve(fromTransitions);
     if (fs.existsSync(input) && fs.statSync(input).isDirectory()) input = path.join(input, 'transitions.json');
     if (!fs.existsSync(input)) throw new Error(`no se encontró ${input}`);
-    const { initialState, transitions } = JSON.parse(fs.readFileSync(input, 'utf8'));
+    const { initialState, transitions, visibility } = JSON.parse(fs.readFileSync(input, 'utf8'));
     if (!initialState || !transitions) throw new Error(`${input} no tiene el formato de transitions.json (faltan initialState/transitions)`);
     data = { initialState, transitions };
+    if (visibility) data.visibility = visibility;
     outDir = outDirIn ? path.resolve(outDirIn) : path.dirname(input);
     onLog(`re-analizando ${input} (sin crawlear)`);
     stats = { truncated: false };
@@ -160,7 +168,7 @@ async function run(opts = {}) {
     stats = crawled.stats;
   }
 
-  const report = buildReport(data, { expectedRegex: regex, prefixes: regexPrefixes, limit: diffLimit });
+  const report = buildReport(data, { expectedRegex: regex, prefixes: regexPrefixes, limit: diffLimit, maxRegexLength, traceRegex });
   report.log.forEach((l) => onLog(l));
 
   const errorTransitions = [];
@@ -186,6 +194,7 @@ async function run(opts = {}) {
     transitions: report.json.transitions,
     regex: report.json.regex,
     comparison: report.json.comparison || null,
+    partiallyVisibleClicks: report.json.partiallyVisibleClicks || null,
     svg: report.svg,
     stats: {
       ...stats,
@@ -234,7 +243,7 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
   const server = await startServer(vizDir);
   const chromePath = await resolveChromePath();
   try {
-    const { transitions, initialState, usedManualState, truncated } = await crawl({
+    const { transitions, initialState, visibility, labels, renamed, usedManualState, truncated } = await crawl({
       fixtureUrl: `http://127.0.0.1:${server.address().port}/index.html`,
       chromePath,
       initScripts,
@@ -251,11 +260,17 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
     onLog(truncated
       ? `CRAWL INCOMPLETO: se alcanzó maxStates con estados sin expandir -- el autómata es PARCIAL, subí maxStates`
       : 'CRAWL COMPLETO');
+    for (const [from, to] of Object.entries(renamed)) {
+      onLog(`acción renombrada: "${from}" -> "${to}" (el elemento muestra un nombre distinto según el estado, p.ej. un dato que se re-liga en cada click)`);
+    }
 
-    let data = { initialState, transitions };
+    let data = { initialState, transitions, visibility };
     if (!usedManualState) {
-      const pretty = prettifyStates(data);
-      data = { initialState: pretty.initialState, transitions: pretty.transitions };
+      const pretty = prettifyStates({ ...data, labels });
+      onLog(pretty.hierarchical
+        ? 'estados nombrados por su lugar en la jerarquía de datos (columnas del diagrama = niveles)'
+        : 'estados nombrados por el camino de clicks que los descubrió (no se detectó una jerarquía)');
+      data = { initialState: pretty.initialState, transitions: pretty.transitions, visibility: pretty.visibility };
     }
     if (checkpointPath && fs.existsSync(checkpointPath)) fs.unlinkSync(checkpointPath);
     return { data, stats: { truncated, usedManualState } };
@@ -276,15 +291,20 @@ function usage() {
 
 Ejemplos:
   node run.js examples/sunburst-amplio
-  node run.js examples/sunburst-amplio --regex "((vis | util) c31)*" --regexPrefixes
+  node run.js examples/sunburst-amplio --regex "((vis | util) circle)*" --regexPrefixes
   node run.js --from examples/sunburst-amplio --regexFile esperado.txt
 
 Comparación (opcional; sin --regex solo se genera el regex observado):
   --regex "<expr>"          regex esperado: tokens separados por espacio, | * + ? {n,m} ( );
-                            el prefijo Click_ es opcional ("vis c31" = "Click_vis Click_c31")
+                            el prefijo Click_ es opcional ("vis circle" = "Click_vis Click_circle")
   --regexFile <archivo>     igual, leído de un archivo (evita escapar | y * en la consola)
   --regexPrefixes           comparar contra los PREFIJOS del regex (si describe interacciones completas)
   --diffLimit <n>           contraejemplos a mostrar por dirección (default 10)
+
+Regex observado:
+  --maxRegexLength <n>      omitir el regex si supera n caracteres e informar dónde explota
+                            (default 500000; 0 = sin tope)
+  --traceRegex              loguear la traza de la eliminación de estados (tamaño paso a paso)
 
 Salida:
   --out <carpeta>           dónde guardar transitions.json/automaton.svg (default: la carpeta de origen)
@@ -324,6 +344,8 @@ function parseArgs(argv) {
       case '--regexFile': opts.regex = fs.readFileSync(need(i, a), 'utf8').trim(); i++; break;
       case '--regexPrefixes': opts.regexPrefixes = true; break;
       case '--diffLimit': opts.diffLimit = num(need(i, a), a); i++; break;
+      case '--maxRegexLength': opts.maxRegexLength = num(need(i, a), a) || Infinity; i++; break;
+      case '--traceRegex': opts.traceRegex = true; break;
       case '--no-write': opts.writeFiles = false; break;
       case '--json': opts.json = true; break;
       case '--include-links': opts.includeLinks = true; break;
@@ -367,7 +389,7 @@ async function main() {
       process.stdout.write(JSON.stringify(rest, null, 2) + '\n');
     } else {
       log(`\nestados: ${result.stats.states} · transiciones a ERROR: ${result.stats.errorTransitions.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);
-      log(`regex (interacciones completas): ${result.regex.completeInteractions}`);
+      log(`regex (interacciones completas): ${result.regex.completeInteractions ?? result.regex.completeInteractionsOmitted}`);
     }
     if (result.comparison && !result.comparison.equivalent) process.exitCode = 2;
   } catch (e) {

@@ -4,20 +4,20 @@
     "root": {
       "Click_A": "root > A",
       "Click_B": "root > B",
-      "Click_c2": "root"
+      "Click_root": "root"
     },
     "root > A": {
-      "Click_c2": "root"
+      "Click_root": "root"
     },
     "root > B": {
-      "Click_c2": "root"
+      "Click_root": "root"
     }
   },
   "regex": {
     "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
-    "language": "((Click_A | Click_B)? Click_c2)* (Click_A | Click_B)?",
+    "language": "((Click_A | Click_B)? Click_root)* (Click_A | Click_B)?",
     "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
-    "completeInteractions": "((Click_A | Click_B)? Click_c2)*",
+    "completeInteractions": "((Click_A | Click_B)? Click_root)*",
     "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
   }
 }
