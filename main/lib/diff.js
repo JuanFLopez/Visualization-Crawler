@@ -24,12 +24,17 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
 
   const onlyInA = [], onlyInB = [];
   let truncated = false;
+  // Un lado que ya rechazó (null) se distingue además por DÓNDE rechazó
+  // (estado del lado que cayó + símbolo): si no, dos errores distintos
+  // que siguen hasta el mismo estado del otro lado se fusionan en uno
+  // (p.ej. dos opciones que faltan en el regex y vuelven al mismo lugar).
   const visited = new Set();
-  const queue = [{ a: dfaA.initial, b: dfaB.initial, path: [] }];
-  visited.add(`${dfaA.initial}\u0000${dfaB.initial}`);
+  const keyOf = (a, b, deadA, deadB) => `${a}\u0000${b}\u0000${a === null ? deadA : ''}\u0000${b === null ? deadB : ''}`;
+  const queue = [{ a: dfaA.initial, b: dfaB.initial, path: [], deadA: null, deadB: null }];
+  visited.add(keyOf(dfaA.initial, dfaB.initial));
 
   while (queue.length) {
-    const { a, b, path } = queue.shift();
+    const { a, b, path, deadA, deadB } = queue.shift();
     const accA = acc(dfaA, a), accB = acc(dfaB, b);
 
     if (accA !== accB) {
@@ -46,10 +51,12 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
     for (const sym of alphabet) {
       const na = step(dfaA, a, sym), nb = step(dfaB, b, sym);
       if (na === null && nb === null) continue;
-      const k = `${na}\u0000${nb}`;
+      const nDeadA = a !== null && na === null ? `${a}\u0000${sym}` : deadA;
+      const nDeadB = b !== null && nb === null ? `${a}\u0000${sym}` : deadB;
+      const k = keyOf(na, nb, nDeadA, nDeadB);
       if (visited.has(k)) continue;
       visited.add(k);
-      queue.push({ a: na, b: nb, path: [...path, sym] });
+      queue.push({ a: na, b: nb, path: [...path, sym], deadA: nDeadA, deadB: nDeadB });
     }
   }
 

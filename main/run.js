@@ -104,9 +104,12 @@ function loadVizConfig(vizDir) {
  *   mode: 'crawl' | 'transitions',
  *   initialState: string,
  *   transitions: Object,
- *   regex: { language: string|null, completeInteractions: string|null,
- *            languageOmitted?: string, completeInteractionsOmitted?: string, explosion?: Object, ... },
+ *   regex: { cycleCut: string|null, cycles: {tree, back, shortcuts, shortcutTransitions},
+ *            language: string|null, completeInteractions: string|null,
+ *            cycleCutOmitted?: string, languageOmitted?: string, completeInteractionsOmitted?: string, explosion?: Object, ... },
  *   comparison: null | { equivalent: boolean, onlyInCrawler: string[], onlyInExpected: string[], ... },
+ *   issues: { kind: 'error'|'faltante'|'noEsperado', message: string, detail: string, sequence: string[],
+ *             events: {step, state, action, to, edge}[], failingStep: number, occurrences: number }[],
  *   partiallyVisibleClicks: null | { count: number, ofTransitions: number, transitions: Object[] },
  *   svg: string,
  *   stats: { states: number, errorTransitions: {state, action}[], truncated: boolean, elapsedMs: number },
@@ -194,6 +197,7 @@ async function run(opts = {}) {
     transitions: report.json.transitions,
     regex: report.json.regex,
     comparison: report.json.comparison || null,
+    issues: report.json.issues,
     partiallyVisibleClicks: report.json.partiallyVisibleClicks || null,
     svg: report.svg,
     stats: {
@@ -294,14 +298,22 @@ Ejemplos:
   node run.js examples/sunburst-amplio --regex "((vis | util) circle)*" --regexPrefixes
   node run.js --from examples/sunburst-amplio --regexFile esperado.txt
 
-Comparación (opcional; sin --regex solo se genera el regex observado):
+Regex observado: el diagrama muestra el regex con los CICLOS CORTADOS (jerarquía + volver hacia
+arriba; los atajos a otra rama van aparte en regex.cycles). transitions.json trae además los dos
+regex exactos (language, completeInteractions), que en grafos densos pueden quedar omitidos.
+
+Comparación (opcional; sin --regex solo se genera el regex observado). El regex esperado se
+compara contra el autómata completo y contra el de ciclos cortados (cada uno como todo prefijo
+realizable y como interacciones completas): pasa si coincide exactamente con alguno. Cada diferencia, y cada
+click que rompe la página, se informa como "comportamiento inesperado": la serie de eventos
+(estado, click, estado siguiente) que lo reproduce desde el estado inicial.
   --regex "<expr>"          regex esperado: tokens separados por espacio, | * + ? {n,m} ( );
                             el prefijo Click_ es opcional ("vis circle" = "Click_vis Click_circle")
   --regexFile <archivo>     igual, leído de un archivo (evita escapar | y * en la consola)
   --regexPrefixes           comparar contra los PREFIJOS del regex (si describe interacciones completas)
   --diffLimit <n>           contraejemplos a mostrar por dirección (default 10)
 
-Regex observado:
+Tamaño del regex:
   --maxRegexLength <n>      omitir el regex si supera n caracteres e informar dónde explota
                             (default 500000; 0 = sin tope)
   --traceRegex              loguear la traza de la eliminación de estados (tamaño paso a paso)
@@ -320,7 +332,8 @@ Crawler (pisan config.js de la visualización):
   --include-links           no excluir <a>/[href] de la detección automática
   --fresh                   ignorar (y borrar) un checkpoint.json previo
 
-Código de salida: 0 ok / equivalentes, 1 error, 2 el regex esperado difiere de lo observado.`);
+Código de salida: 0 ok / equivalentes, 1 error, 2 el regex esperado difiere de lo observado
+o algún click rompe la página.`);
 }
 
 function parseArgs(argv) {
@@ -388,10 +401,10 @@ async function main() {
       const { svg, ...rest } = result; // el SVG ya está en files.svg; no inflar stdout
       process.stdout.write(JSON.stringify(rest, null, 2) + '\n');
     } else {
-      log(`\nestados: ${result.stats.states} · transiciones a ERROR: ${result.stats.errorTransitions.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);
-      log(`regex (interacciones completas): ${result.regex.completeInteractions ?? result.regex.completeInteractionsOmitted}`);
+      log(`\nestados: ${result.stats.states} · transiciones a ERROR: ${result.stats.errorTransitions.length} · comportamientos inesperados: ${result.issues.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);
+      log(`regex (ciclos cortados): ${result.regex.cycleCut ?? result.regex.cycleCutOmitted}`);
     }
-    if (result.comparison && !result.comparison.equivalent) process.exitCode = 2;
+    if ((result.comparison && !result.comparison.equivalent) || result.issues.some((i) => i.kind === 'error')) process.exitCode = 2;
   } catch (e) {
     console.error(`ERROR: ${e.message || e}`);
     process.exitCode = 1;

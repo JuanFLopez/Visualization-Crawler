@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900.4000000000001" height="1431" viewBox="0 0 900.4000000000001 1431" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="900.4000000000001" height="870" viewBox="0 0 900.4000000000001 870" font-family="Helvetica, Arial, sans-serif" font-size="11">
 <title>Autómata (32 estados)</title>
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
@@ -6,7 +6,7 @@
   <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
   <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
 </defs>
-<rect width="900.4000000000001" height="1431" fill="white"/>
+<rect width="900.4000000000001" height="870" fill="white"/>
 <g class="back-edges">
 <path d="M 335.8,526 C 335.8,568.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; flex  —[circle]→  root</title></path>
 <path d="M 335.8,446 C 335.8,488.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; physics  —[circle]→  root</title></path>
@@ -418,51 +418,13 @@
 <text x="40" y="708">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
 </g>
 <line x1="40" y1="732" x2="860.4000000000001" y2="732" stroke="#ddd"/>
-<text x="40" y="752" font-weight="bold" fill="#222">Regex (interacciones completas: vuelven al estado inicial)</text>
+<text x="40" y="752" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 21 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="770">((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label |</tspan>
-<tspan x="40" y="785">Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* |</tspan>
-<tspan x="40" y="800">Click_controls | Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label |</tspan>
-<tspan x="40" y="815">Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder |</tspan>
-<tspan x="40" y="830">Click_distortion | Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)*</tspan>
-<tspan x="40" y="845">| Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* | (Click_util | (Click_palette | Click_heap |</tspan>
-<tspan x="40" y="860">Click_math) Click_circle) ((Click_palette | Click_heap | Click_math) Click_circle)* | (Click_animate | Click_interpolate</tspan>
-<tspan x="40" y="875">Click_circle) (Click_interpolate Click_circle)* | (Click_query | Click_methods Click_circle) (Click_methods Click_circle)* |</tspan>
-<tspan x="40" y="890">(Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph | Click_cluster |</tspan>
-<tspan x="40" y="905">Click_optimization) Click_circle)* | (Click_data | Click_converters Click_circle) (Click_converters Click_circle)*)?</tspan>
-<tspan x="40" y="920">Click_circle)*</tspan>
-</text>
-<text x="40" y="953" font-weight="bold" fill="#222">Regex (lenguaje exacto: toda secuencia de clicks realizable)</text>
-<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="971">((Click_scale | Click_physics | Click_display | Click_flex | (Click_vis | (Click_operator ((Click_layout | Click_label |</tspan>
-<tspan x="40" y="986">Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* |</tspan>
-<tspan x="40" y="1001">Click_controls | Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label |</tspan>
-<tspan x="40" y="1016">Click_encoder | Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder |</tspan>
-<tspan x="40" y="1031">Click_distortion | Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)*</tspan>
-<tspan x="40" y="1046">| Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* | (Click_util | (Click_palette | Click_heap |</tspan>
-<tspan x="40" y="1061">Click_math) Click_circle) ((Click_palette | Click_heap | Click_math) Click_circle)* | (Click_animate | Click_interpolate</tspan>
-<tspan x="40" y="1076">Click_circle) (Click_interpolate Click_circle)* | (Click_query | Click_methods Click_circle) (Click_methods Click_circle)* |</tspan>
-<tspan x="40" y="1091">(Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph | Click_cluster |</tspan>
-<tspan x="40" y="1106">Click_optimization) Click_circle)* | (Click_data | Click_converters Click_circle) (Click_converters Click_circle)*)?</tspan>
-<tspan x="40" y="1121">Click_circle)* (Click_scale | Click_physics | Click_display | Click_flex | Click_operator ((Click_layout | Click_label |</tspan>
-<tspan x="40" y="1136">Click_encoder | Click_distortion | Click_filter) Click_circle)* (Click_layout | Click_label | Click_encoder |</tspan>
-<tspan x="40" y="1151">Click_distortion | Click_filter)? | Click_vis/data (Click_render Click_circle)* Click_render? | Click_controls |</tspan>
-<tspan x="40" y="1166">Click_legend | Click_axis | Click_events | (Click_vis | (Click_operator ((Click_layout | Click_label | Click_encoder |</tspan>
-<tspan x="40" y="1181">Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render Click_circle)* | Click_controls |</tspan>
-<tspan x="40" y="1196">Click_legend | Click_axis | Click_events) Click_circle) (((Click_operator | (Click_layout | Click_label | Click_encoder |</tspan>
-<tspan x="40" y="1211">Click_distortion | Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion |</tspan>
-<tspan x="40" y="1226">Click_filter) Click_circle)* | (Click_vis/data | Click_render Click_circle) (Click_render Click_circle)* | Click_controls |</tspan>
-<tspan x="40" y="1241">Click_legend | Click_axis | Click_events) Click_circle)* (Click_layout | Click_label | Click_encoder | Click_distortion |</tspan>
-<tspan x="40" y="1256">Click_filter | Click_render | (Click_operator | (Click_layout | Click_label | Click_encoder | Click_distortion |</tspan>
-<tspan x="40" y="1271">Click_filter) Click_circle) ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)*</tspan>
-<tspan x="40" y="1286">(Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter)? | (Click_vis/data | Click_render</tspan>
-<tspan x="40" y="1301">Click_circle) (Click_render Click_circle)* Click_render? | Click_controls | Click_legend | Click_axis | Click_events)? |</tspan>
-<tspan x="40" y="1316">Click_palette | Click_heap | Click_math | (Click_util | (Click_palette | Click_heap | Click_math) Click_circle)</tspan>
-<tspan x="40" y="1331">((Click_palette | Click_heap | Click_math) Click_circle)* (Click_palette | Click_heap | Click_math)? | Click_interpolate |</tspan>
-<tspan x="40" y="1346">(Click_animate | Click_interpolate Click_circle) (Click_interpolate Click_circle)* Click_interpolate? | Click_methods |</tspan>
-<tspan x="40" y="1361">(Click_query | Click_methods Click_circle) (Click_methods Click_circle)* Click_methods? | Click_graph | Click_cluster |</tspan>
-<tspan x="40" y="1376">Click_optimization | (Click_analytics | (Click_graph | Click_cluster | Click_optimization) Click_circle) ((Click_graph |</tspan>
-<tspan x="40" y="1391">Click_cluster | Click_optimization) Click_circle)* (Click_graph | Click_cluster | Click_optimization)? | Click_converters |</tspan>
-<tspan x="40" y="1406">(Click_data | Click_converters Click_circle) (Click_converters Click_circle)* Click_converters?)?</tspan>
+<tspan x="40" y="770">((Click_vis ((Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)*</tspan>
+<tspan x="40" y="785">| Click_vis/data (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* |</tspan>
+<tspan x="40" y="800">Click_util ((Click_palette | Click_heap | Click_math) Click_circle)* | Click_animate (Click_interpolate Click_circle)* |</tspan>
+<tspan x="40" y="815">Click_query (Click_methods Click_circle)* | Click_analytics ((Click_graph | Click_cluster | Click_optimization)</tspan>
+<tspan x="40" y="830">Click_circle)* | Click_scale | Click_data (Click_converters Click_circle)* | Click_physics | Click_display | Click_flex)?</tspan>
+<tspan x="40" y="845">Click_circle)*</tspan>
 </text>
 </svg>
