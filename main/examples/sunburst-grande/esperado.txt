@@ -1,0 +1,6 @@
+( circle
+| (A | A1 circle) (A1 circle)* circle
+| (B | B2 circle) (B2 circle)* circle
+| C circle
+| (D | D2 circle | D1 (D1a circle)* circle) (D2 circle | (D1 | D1a circle) (D1a circle)* circle)* circle
+)*
