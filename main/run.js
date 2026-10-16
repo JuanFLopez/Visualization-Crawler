@@ -27,7 +27,7 @@ const { compileRegex } = require('./lib/regex');
 const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json', '.css': 'text/css', '.csv': 'text/csv', '.svg': 'image/svg+xml' };
 
 // opciones del crawler que se pueden pisar (sobre config.js de la viz)
-const CRAWLER_OPTIONS = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps', 'containerSelector', 'backSelector', 'clickableSelector'];
+const CRAWLER_OPTIONS = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps', 'containerSelector', 'backSelector', 'clickableSelector', 'hover', 'hoverableSelector', 'nativeTooltips', 'maxDelegated'];
 
 // puerto 0 = el sistema elige uno libre: varias corridas (o una GUI con
 // varias pestañas) no se pisan entre sí
@@ -96,7 +96,8 @@ function loadVizConfig(vizDir) {
  * @param {boolean} [opts.resume=true] - retomar checkpoint.json si existe; false lo descarta
  * @param {boolean} [opts.includeLinks=false] - detectar también <a>/[href] como clickeables
  * @param {Object} [opts.crawler] - pisa config.js: settleMs, discoverySettleMs, maxStates,
- *   maxSteps, containerSelector, backSelector, clickableSelector
+ *   maxSteps, containerSelector, backSelector, clickableSelector, hover (false: solo clicks),
+ *   hoverableSelector, nativeTooltips (true: los <title> son hovers), maxDelegated
  * @param {(msg: string) => void} [opts.onLog]
  * @param {(p: {elapsedMs: number, state: string, actions: number, knownStates: number}) => void} [opts.onProgress]
  *
@@ -111,6 +112,8 @@ function loadVizConfig(vizDir) {
  *   issues: { kind: 'error'|'faltante'|'noEsperado', message: string, detail: string, sequence: string[],
  *             events: {step, state, action, to, edge}[], failingStep: number, occurrences: number }[],
  *   partiallyVisibleClicks: null | { count: number, ofTransitions: number, transitions: Object[] },
+ *   hovers: null | { transient: number, structural: number, actions: Object, ignored?: Object[] } - las acciones de hover
+ *             (con su efecto anotado) y los hovers que se descartaron por no hacer nada visible
  *   svg: string,
  *   stats: { states: number, errorTransitions: {state, action}[], truncated: boolean, elapsedMs: number },
  *   files: null | { transitions: string, svg: string },
@@ -154,10 +157,11 @@ async function run(opts = {}) {
     let input = path.resolve(fromTransitions);
     if (fs.existsSync(input) && fs.statSync(input).isDirectory()) input = path.join(input, 'transitions.json');
     if (!fs.existsSync(input)) throw new Error(`no se encontró ${input}`);
-    const { initialState, transitions, visibility } = JSON.parse(fs.readFileSync(input, 'utf8'));
+    const { initialState, transitions, visibility, hovers } = JSON.parse(fs.readFileSync(input, 'utf8'));
     if (!initialState || !transitions) throw new Error(`${input} no tiene el formato de transitions.json (faltan initialState/transitions)`);
     data = { initialState, transitions };
     if (visibility) data.visibility = visibility;
+    if (hovers) data.hovers = hovers; // ya resumido: re-analizar no tiene que perder las notas
     outDir = outDirIn ? path.resolve(outDirIn) : path.dirname(input);
     onLog(`re-analizando ${input} (sin crawlear)`);
     stats = { truncated: false };
@@ -199,6 +203,7 @@ async function run(opts = {}) {
     comparison: report.json.comparison || null,
     issues: report.json.issues,
     partiallyVisibleClicks: report.json.partiallyVisibleClicks || null,
+    hovers: report.json.hovers || null,
     svg: report.svg,
     stats: {
       ...stats,
@@ -247,12 +252,13 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
   const server = await startServer(vizDir);
   const chromePath = await resolveChromePath();
   try {
-    const { transitions, initialState, visibility, labels, renamed, usedManualState, truncated } = await crawl({
+    const { transitions, initialState, visibility, labels, effects, ignoredHovers, renamed, usedManualState, truncated } = await crawl({
       fixtureUrl: `http://127.0.0.1:${server.address().port}/index.html`,
       chromePath,
       initScripts,
       resume,
       ...config,
+      onLog,
       onStateExpanded: (state, trans, snapshot) => {
         const progress = { elapsedMs: Date.now() - t0, state, actions: Object.keys(trans).length, knownStates: snapshot.graph.length };
         onProgress(progress);
@@ -268,13 +274,13 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
       onLog(`acción renombrada: "${from}" -> "${to}" (el elemento muestra un nombre distinto según el estado, p.ej. un dato que se re-liga en cada click)`);
     }
 
-    let data = { initialState, transitions, visibility };
+    let data = { initialState, transitions, visibility, effects, ignoredHovers };
     if (!usedManualState) {
       const pretty = prettifyStates({ ...data, labels });
       onLog(pretty.hierarchical
         ? 'estados nombrados por su lugar en la jerarquía de datos (columnas del diagrama = niveles)'
         : 'estados nombrados por el camino de clicks que los descubrió (no se detectó una jerarquía)');
-      data = { initialState: pretty.initialState, transitions: pretty.transitions, visibility: pretty.visibility };
+      data = { initialState: pretty.initialState, transitions: pretty.transitions, visibility: pretty.visibility, effects: pretty.effects, ignoredHovers };
     }
     if (checkpointPath && fs.existsSync(checkpointPath)) fs.unlinkSync(checkpointPath);
     return { data, stats: { truncated, usedManualState } };
@@ -301,6 +307,19 @@ Ejemplos:
 Regex observado: el diagrama muestra el regex con los CICLOS CORTADOS (jerarquía + volver hacia
 arriba; los atajos a otra rama van aparte en regex.cycles). transitions.json trae además los dos
 regex exactos (language, completeInteractions), que en grafos densos pueden quedar omitidos.
+
+Hover: además de clickear, el crawler prueba poner el puntero sobre cada elemento que reacciona a
+mouseover/mouseenter. Un hover entra al regex como Hover_<elemento> solo si cambia algo visible -- aunque
+sea un resaltado, y el efecto queda anotado en transitions.json (hovers). Los que no hacen nada visible
+no son acciones: se listan en hovers.ignored. Si el hover abre algo (un menú) lleva a otro estado, y su
+vuelta es Unhover_<elemento>. Con --no-hover se prueban solo los clicks.
+  Se ven los hovers hechos con addEventListener (lo que hace selection.on de D3), con handlers en la propiedad o
+  el atributo (el.onmouseover = fn, onmouseover="..."), con :hover de CSS (se fuerza el estado en el navegador,
+  sin mover ningún mouse), y los de movimiento (mousemove/pointermove: se prueban en el centro y en el borde, y
+  se avisa si el efecto depende de dónde se apunta). Un listener delegado en un contenedor (que mira
+  event.target) se prueba sobre las marcas de D3 que tiene adentro, hasta --maxDelegated.
+  El tooltip nativo del navegador (un <title>) no cambia el DOM y no se puede verificar: con --native-tooltips
+  cada elemento con <title> pasa a ser una acción Hover_<elemento> (una por marca: en un icicle son cientos).
 
 Comparación (opcional; sin --regex solo se genera el regex observado). El regex esperado se
 compara contra el autómata completo y contra el de ciclos cortados (cada uno como todo prefijo
@@ -330,6 +349,9 @@ Crawler (pisan config.js de la visualización):
   --maxSteps <n>            tope duro de interacciones totales
   --containerSelector <css> acotar detección y estado a este contenedor (ej. "#sb")
   --include-links           no excluir <a>/[href] de la detección automática
+  --no-hover                no probar hovers (solo clicks)
+  --native-tooltips         contar el <title> (tooltip nativo) como un hover; una acción por elemento con <title>
+  --maxDelegated <n>        tope de marcas a probar por listener delegado (default 50; 0 = no probar delegados)
   --fresh                   ignorar (y borrar) un checkpoint.json previo
 
 Código de salida: 0 ok / equivalentes, 1 error, 2 el regex esperado difiere de lo observado
@@ -362,8 +384,10 @@ function parseArgs(argv) {
       case '--no-write': opts.writeFiles = false; break;
       case '--json': opts.json = true; break;
       case '--include-links': opts.includeLinks = true; break;
+      case '--no-hover': opts.crawler.hover = false; break;
+      case '--native-tooltips': opts.crawler.nativeTooltips = true; break;
       case '--fresh': opts.resume = false; break;
-      case '--settleMs': case '--discoverySettleMs': case '--maxStates': case '--maxSteps':
+      case '--settleMs': case '--discoverySettleMs': case '--maxStates': case '--maxSteps': case '--maxDelegated':
         opts.crawler[a.slice(2)] = num(need(i, a), a); i++; break;
       case '--containerSelector': opts.crawler.containerSelector = need(i, a); i++; break;
       case '-h': case '--help': opts.help = true; break;

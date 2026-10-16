@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Menú que se abre con hover</title>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="d3.min.js"></script>
+  <script>
+    /*
+      Un menú desplegable hecho con D3: sus opciones solo se ven mientras el puntero está
+      sobre el menú. Sin explorar el hover no hay nada que clickear; con el hover, el usuario
+      puede elegir A o B, y "reset" vuelve al principio. Ver esperado.txt.
+    */
+    const width = 420;
+    const height = 200;
+    const rowHeight = 28;
+    const options = [
+      { name: "optionA", label: "Opción A", color: "#2a9d8f" },
+      { name: "optionB", label: "Opción B", color: "#e76f51" },
+    ];
+
+    const svg = d3.create("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .style("font", "12px sans-serif");
+
+    // el menú es un grupo: el hover vale para el botón y para las opciones juntos
+    const menu = svg.append("g")
+        .attr("class", "menu")
+        .attr("transform", "translate(20,20)");
+    menu.append("title").text("menu");
+    menu.append("rect")
+        .attr("width", 120)
+        .attr("height", 30)
+        .attr("fill", "#ddd")
+        .attr("stroke", "#999");
+    menu.append("text")
+        .attr("x", 12)
+        .attr("y", 20)
+        .text("Menú");
+
+    // las opciones, una por dato; arrancan ocultas
+    const items = menu.append("g")
+        .attr("class", "items")
+        .style("display", "none");
+    const option = items.selectAll("g")
+      .data(options)
+      .join("g")
+        .attr("class", "option")
+        .attr("transform", (d, i) => `translate(0,${30 + i * rowHeight})`);
+    option.append("title").text((d) => d.name);
+    option.append("rect")
+        .attr("width", 120)
+        .attr("height", rowHeight)
+        .attr("fill", "#eef");
+    option.append("text")
+        .attr("x", 12)
+        .attr("y", 19)
+        .text((d) => d.label);
+
+    // lo que queda después de elegir: un círculo del color de la opción, y "reset"
+    const chosen = svg.append("circle")
+        .attr("cx", 300)
+        .attr("cy", 35)
+        .attr("r", 14)
+        .style("display", "none");
+    const reset = svg.append("g")
+        .attr("class", "reset")
+        .attr("transform", "translate(260,70)")
+        .style("display", "none");
+    reset.append("title").text("reset");
+    reset.append("rect")
+        .attr("width", 80)
+        .attr("height", 26)
+        .attr("fill", "#fee")
+        .attr("stroke", "#c99");
+    reset.append("text")
+        .attr("x", 18)
+        .attr("y", 18)
+        .text("Reset");
+
+    // el menú se abre al entrar y se cierra al salir
+    menu
+        .on("mouseenter", () => items.style("display", null))
+        .on("mouseleave", () => items.style("display", "none"));
+
+    // elegir una opción cierra el menú y muestra el resultado
+    option.on("click", (event, d) => {
+      menu.style("display", "none");
+      chosen.style("display", null).attr("fill", d.color);
+      reset.style("display", null);
+    });
+
+    reset.on("click", () => {
+      chosen.style("display", "none");
+      reset.style("display", "none");
+      menu.style("display", null);
+    });
+
+    document.querySelector("#chart").append(svg.node());
+  </script>
+</body>
+</html>

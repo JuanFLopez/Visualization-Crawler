@@ -13,11 +13,13 @@
  *  - Aristas "hacia atrás" o dentro de la misma columna (volver, zoom
  *    out): punteadas y tenues, con la etiqueta debajo del ORIGEN -- son
  *    muchas y casi siempre la misma acción, no deberían tapar al resto.
- *  - Nombres de acción sin el prefijo "Click_"; si una arista agrupa
- *    muchas acciones se abrevia, y el detalle completo queda en el
- *    tooltip (<title>) de cada estado y arista.
+ *  - Nombres de acción sin el prefijo "Click_" (las de hover lo conservan y
+ *    van en verde); si una arista agrupa muchas acciones se abrevia, y el
+ *    detalle completo queda en el tooltip (<title>) de cada estado y arista.
  *  - Al pie, bloques de texto opcionales (p.ej. el regex equivalente).
  */
+
+const { displayAction, verbOf } = require('./actions');
 
 const ERROR_STATE = '__ERROR__';
 
@@ -50,14 +52,12 @@ function defaultLabel(state) {
   return last.length > 24 ? last.slice(0, 23) + '…' : last;
 }
 
-const shortAction = (s) => s.replace(/^Click_/, '');
-
 function escapeXml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
 }
 
 function abbreviate(symbols) {
-  const names = symbols.map(shortAction);
+  const names = symbols.map(displayAction);
   const full = names.join(', ');
   if (full.length <= MAX_EDGE_LABEL || names.length === 1) return full;
   let out = names[0];
@@ -203,12 +203,18 @@ function skipEdgePath(pa, pb, cols, offsetX) {
  * @param {(state:string)=>string} [opts.labelFn] - texto dentro del estado (default: último segmento de la ruta)
  * @param {string[]} [opts.highlightPath] - secuencia de símbolos (p.ej. un contraejemplo de diff.js) a resaltar en rojo
  * @param {{title: string, text: string, color?: string}[]} [opts.footer] - bloques de texto al pie (p.ej. el regex)
+ * @param {Object<string, string>} [opts.notes] - acción -> lo que hace (el efecto de un hover), para el tooltip de sus aristas
  * @param {number} [opts.minWidth=900]
  * @returns {string} SVG completo, listo para escribir a un archivo .svg
  */
 function toSVG(dfa, opts = {}) {
-  const { labelFn = defaultLabel, highlightPath = [], footer = [], minWidth = 900 } = opts;
-  const { pos, cols, width: graphW, height: graphH, hierarchical } = layout(dfa, labelFn);
+  const { labelFn = defaultLabel, highlightPath = [], footer = [], notes = {}, minWidth = 900 } = opts;
+  const { pos, cols, width: layoutW, height: graphH, hierarchical } = layout(dfa, labelFn);
+  // el rótulo de un bucle de hover va a la derecha de su nodo: en la última
+  // columna se saldría del dibujo, así que se deja lugar
+  const loopsOnEdge = [...dfa.transitions].some(([from, m]) => pos.get(from) && pos.get(from).depth === cols.length - 1
+    && [...m].some(([symbol, to]) => to === from && verbOf(symbol) !== 'click'));
+  const graphW = layoutW + (loopsOnEdge ? 170 : 0);
   const width = Math.max(minWidth, graphW);
   const offsetX = (width - graphW) / 2;
 
@@ -222,21 +228,26 @@ function toSVG(dfa, opts = {}) {
     cur = next;
   }
 
-  // agrupar transiciones por par (from,to)
+  // agrupar transiciones por par (from,to); las del puntero (Hover_/Unhover_)
+  // en su propia arista, para dibujarlas distinto de los clicks
   const pairs = new Map();
   for (const [from, symbolMap] of dfa.transitions) {
     for (const [symbol, to] of symbolMap) {
-      const key = `${from}\u0000${to}`;
-      if (!pairs.has(key)) pairs.set(key, { from, to, symbols: [] });
+      const pointer = verbOf(symbol) !== 'click';
+      const key = `${from}\u0000${to}\u0000${pointer ? 1 : 0}`;
+      if (!pairs.has(key)) pairs.set(key, { from, to, symbols: [], pointer });
       pairs.get(key).symbols.push(symbol);
     }
   }
+  const hasPointer = [...pairs.values()].some((p) => p.pointer);
+  // verde: hover (un color más, no el único aviso: el nombre lleva su prefijo)
+  const HOVER = { edge: '#1b8a82', side: '#7fc4be', back: '#8fcac5', text: '#1b7f79' };
 
   // --- pie: bloques de texto envueltos ---
   const maxChars = Math.floor((width - 2 * MARGIN) / MONO_CHAR_W);
   const footerBlocks = footer.map((b) => ({ ...b, lines: b.text.split('\n').flatMap((l) => wrapText(l, maxChars)) }));
   const footerH = footerBlocks.reduce((h, b) => h + 26 + b.lines.length * 15 + 10, footer.length ? 20 : 0);
-  const legendH = 44;
+  const legendH = hasPointer ? 62 : 44;
   const height = graphH + legendH + footerH;
 
   const P = (p) => ({ ...p, x: p.x + offsetX, cx: p.cx + offsetX });
@@ -248,7 +259,8 @@ function toSVG(dfa, opts = {}) {
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
   <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
   <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>${hasPointer ? `
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="${HOVER.edge}"/></marker>` : ''}
 </defs>`,
     `<rect width="${width}" height="${height}" fill="white"/>`
   );
@@ -258,18 +270,28 @@ function toSVG(dfa, opts = {}) {
   const forwardLabels = new Map(); // to -> Set de símbolos que llegan desde la izquierda
   const sideLabels = new Map(); // from -> Set de símbolos hacia la misma columna
   const skipLabels = new Map(); // from -> Set de símbolos que saltean columnas (p.ej. a __ERROR__)
+  const loopsDrawn = new Map(); // estado -> cuántos autobucles lleva dibujados
 
-  for (const { from, to, symbols } of pairs.values()) {
+  for (const { from, to, symbols, pointer } of pairs.values()) {
     const isHl = symbols.some((s) => highlighted.has(`${from}\u0000${s}`));
     const pa = P(pos.get(from)), pb = P(pos.get(to));
-    const tip = `${from}  —[${symbols.map(shortAction).join(', ')}]→  ${to}`;
+    // al tooltip de un hover se le suma lo que hace
+    const tip = [
+      `${from}  —[${symbols.map(displayAction).join(', ')}]→  ${to}`,
+      ...symbols.filter((s) => notes[s]).map((s) => `${displayAction(s)}: ${notes[s]}`),
+    ].join('\n');
+    // color y flecha: rojo si está resaltada, verde si es del puntero
+    const marker = (normal) => (isHl ? 'arrow-hl' : pointer ? 'arrow-hover' : normal);
 
     if (from === to) {
-      // autobucle arriba a la derecha del nodo
+      // autobucle arriba a la derecha del nodo; si ya tiene otro (uno de clicks
+      // y uno de hovers), este va más arriba para no pisarle el rótulo
+      const lift = (loopsDrawn.get(from) || 0) * 14;
+      loopsDrawn.set(from, (loopsDrawn.get(from) || 0) + 1);
       const x0 = pa.x + pa.w - 14, y0 = pa.y;
-      const d = `M ${x0},${y0} C ${x0 - 6},${y0 - 24} ${x0 + 26},${y0 - 24} ${x0 + 12},${y0 + 2}`;
-      backLayer.push(`<path d="${d}" fill="none" stroke="${isHl ? '#d33' : '#888'}" stroke-width="${isHl ? 2.2 : 1}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow'})"><title>${escapeXml(tip)}</title></path>`);
-      labelLayer.push(`<text x="${x0 + 22}" y="${y0 - 14}" font-size="10" fill="#555">${escapeXml(abbreviate(symbols))}</text>`);
+      const d = `M ${x0},${y0} C ${x0 - 6},${y0 - 24 - lift} ${x0 + 26},${y0 - 24 - lift} ${x0 + 12},${y0 + 2}`;
+      backLayer.push(`<path d="${d}" fill="none" stroke="${isHl ? '#d33' : pointer ? HOVER.edge : '#888'}" stroke-width="${isHl ? 2.2 : 1}" marker-end="url(#${marker('arrow')})"><title>${escapeXml(tip)}</title></path>`);
+      labelLayer.push(`<text x="${x0 + 22}" y="${y0 - 14 - lift}" font-size="10" fill="${pointer ? HOVER.text : '#555'}">${escapeXml(abbreviate(symbols))}</text>`);
       continue;
     }
 
@@ -280,7 +302,7 @@ function toSVG(dfa, opts = {}) {
       const skips = pb.depth - pa.depth > 1;
       const d = skips ? skipEdgePath(pa, pb, cols, offsetX) : `M ${x1},${y1} C ${mx},${y1} ${mx},${y2} ${x2},${y2}`;
       forwardLayer.push(
-        `<path d="${d}" fill="none" stroke="${isHl ? '#d33' : '#777'}" stroke-width="${isHl ? 2.2 : 1.1}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow'})"><title>${escapeXml(tip)}</title></path>`
+        `<path d="${d}" fill="none" stroke="${isHl ? '#d33' : pointer ? HOVER.edge : '#777'}" stroke-width="${isHl ? 2.2 : 1.1}" marker-end="url(#${marker('arrow')})"><title>${escapeXml(tip)}</title></path>`
       );
       if (skips) {
         if (!skipLabels.has(from)) skipLabels.set(from, new Set());
@@ -294,7 +316,7 @@ function toSVG(dfa, opts = {}) {
       const bulge = Math.min(50, 12 + Math.abs(y2 - y1) * 0.05);
       const xr = Math.max(x1, x2) + bulge;
       backLayer.push(
-        `<path d="M ${x1},${y1} C ${xr},${y1} ${xr},${y2} ${x2},${y2}" fill="none" stroke="${isHl ? '#d33' : '#9bb7d4'}" stroke-opacity="${isHl ? 1 : 0.75}" stroke-width="${isHl ? 2.2 : 1}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow-side'})"><title>${escapeXml(tip)}</title></path>`
+        `<path d="M ${x1},${y1} C ${xr},${y1} ${xr},${y2} ${x2},${y2}" fill="none" stroke="${isHl ? '#d33' : pointer ? HOVER.side : '#9bb7d4'}" stroke-opacity="${isHl ? 1 : 0.75}" stroke-width="${isHl ? 2.2 : 1}" marker-end="url(#${marker('arrow-side')})"><title>${escapeXml(tip)}</title></path>`
       );
       if (!sideLabels.has(from)) sideLabels.set(from, new Set());
       symbols.forEach((s) => sideLabels.get(from).add(s));
@@ -304,7 +326,7 @@ function toSVG(dfa, opts = {}) {
       const x1 = pa.cx, y1 = pa.y + pa.h, x2 = pb.cx + Math.min(10, pb.w / 4), y2 = pb.y + pb.h + 1;
       const bow = 18 + Math.abs(x1 - x2) * 0.12;
       backLayer.push(
-        `<path d="M ${x1},${y1} C ${x1},${y1 + bow} ${x2},${y2 + bow} ${x2},${y2}" fill="none" stroke="${isHl ? '#d33' : '#c4c4c4'}" stroke-width="${isHl ? 2.2 : 1}" stroke-dasharray="${isHl ? '' : '4 3'}" marker-end="url(#${isHl ? 'arrow-hl' : 'arrow-back'})"><title>${escapeXml(tip)}</title></path>`
+        `<path d="M ${x1},${y1} C ${x1},${y1 + bow} ${x2},${y2 + bow} ${x2},${y2}" fill="none" stroke="${isHl ? '#d33' : pointer ? HOVER.back : '#c4c4c4'}" stroke-width="${isHl ? 2.2 : 1}" stroke-dasharray="${isHl ? '' : '4 3'}" marker-end="url(#${marker('arrow-back')})"><title>${escapeXml(tip)}</title></path>`
       );
       if (!backLabels.has(from)) backLabels.set(from, new Set());
       symbols.forEach((s) => backLabels.get(from).add(s));
@@ -343,7 +365,7 @@ function toSVG(dfa, opts = {}) {
     const fill = isError ? '#fde8e8' : isInitial ? '#e6f1fb' : '#f7f7f7';
     const stroke = isError ? '#c33' : '#333';
     const outgoing = [...(dfa.transitions.get(state) || new Map()).entries()]
-      .map(([a, to]) => `  ${shortAction(a)} → ${to}`).join('\n');
+      .map(([a, to]) => `  ${displayAction(a)} → ${to}`).join('\n');
     parts.push(
       `<g>`,
       `<title>${escapeXml(state + (outgoing ? '\n' + outgoing : ''))}</title>`,
@@ -366,6 +388,10 @@ function toSVG(dfa, opts = {}) {
     `<line x1="${MARGIN + 530}" y1="${y}" x2="${MARGIN + 558}" y2="${y}" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>`,
     `<text x="${MARGIN + 564}" y="${y + 3}">a la misma columna (↕ bajo el origen)</text>`,
     `<text x="${MARGIN}" y="${y + 20}">${hierarchical ? 'columnas = nivel en el nombre del estado (root = 0) · ' : 'columnas = clicks desde el estado inicial · '}↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>`,
+    ...(hasPointer ? [
+      `<line x1="${MARGIN}" y1="${y + 36}" x2="${MARGIN + 28}" y2="${y + 36}" stroke="${HOVER.edge}" marker-end="url(#arrow-hover)"/>`,
+      `<text x="${MARGIN + 34}" y="${y + 39}">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>`,
+    ] : []),
     `</g>`
   );
   y += legendH;

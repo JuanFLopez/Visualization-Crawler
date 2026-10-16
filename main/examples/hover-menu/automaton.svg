@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="395" viewBox="0 0 900 395" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<title>Autómata (4 estados)</title>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
+</defs>
+<rect width="900" height="395" fill="white"/>
+<g class="back-edges">
+<path d="M 469.6,86 C 469.6,129.32 258.6,130.32 258.6,87" fill="none" stroke="#8fcac5" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-hover)"><title>root &gt; Hover_menu  —[Unhover_menu]→  root</title></path>
+<path d="M 696,66 C 696,136.488 258.6,157.488 258.6,87" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; Hover_menu &gt; optionA  —[reset]→  root</title></path>
+<path d="M 696,106 C 696,176.488 258.6,157.488 258.6,87" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; Hover_menu &gt; optionB  —[reset]→  root</title></path>
+</g>
+<g class="forward-edges">
+<path d="M 512.6,73 C 586.6,73 586.6,53 660.6,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; Hover_menu  —[optionA]→  root &gt; Hover_menu &gt; optionA</title></path>
+<path d="M 512.6,73 C 586.6,73 586.6,93 660.6,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; Hover_menu  —[optionB]→  root &gt; Hover_menu &gt; optionB</title></path>
+<path d="M 276.6,73 C 350.6,73 350.6,73 424.6,73" fill="none" stroke="#1b8a82" stroke-width="1.1" marker-end="url(#arrow-hover)"><title>root  —[Hover_menu]→  root &gt; Hover_menu
+Hover_menu: g.items: se muestra; habilita: Click_optionA, Click_optionB</title></path>
+</g>
+<line x1="180.60000000000002" y1="73" x2="218.60000000000002" y2="73" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<g class="states">
+<g>
+<title>root &gt; Hover_menu
+  Unhover_menu → root
+  optionA → root &gt; Hover_menu &gt; optionA
+  optionB → root &gt; Hover_menu &gt; optionB</title>
+<rect x="426.6" y="60" width="86" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
+<text x="469.6" y="73" text-anchor="middle" dominant-baseline="central">Hover_menu</text>
+</g>
+<g>
+<title>root &gt; Hover_menu &gt; optionA
+  reset → root</title>
+<rect x="662.6" y="40" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
+<text x="696" y="53" text-anchor="middle" dominant-baseline="central">optionA</text>
+</g>
+<g>
+<title>root
+  Hover_menu → root &gt; Hover_menu</title>
+<rect x="220.60000000000002" y="60" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
+<text x="248.60000000000002" y="73" text-anchor="middle" dominant-baseline="central">root</text>
+</g>
+<g>
+<title>root &gt; Hover_menu &gt; optionB
+  reset → root</title>
+<rect x="662.6" y="80" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
+<text x="696" y="93" text-anchor="middle" dominant-baseline="central">optionB</text>
+</g>
+</g>
+<g class="labels">
+<text x="654.6" y="48" text-anchor="end" font-size="10" fill="#333">optionA</text>
+<text x="654.6" y="88" text-anchor="end" font-size="10" fill="#333">optionB</text>
+<text x="418.6" y="68" text-anchor="end" font-size="10" fill="#333">Hover_menu</text>
+<text x="461.6" y="96" font-size="9"><tspan fill="#999">↩ Unhover_menu</tspan></text>
+<text x="688" y="76" font-size="9"><tspan fill="#999">↩ reset</tspan></text>
+<text x="688" y="116" font-size="9"><tspan fill="#999">↩ reset</tspan></text>
+</g>
+<g font-size="10" fill="#666">
+<line x1="40" y1="168" x2="68" y2="168" stroke="#777" marker-end="url(#arrow)"/>
+<text x="74" y="171">acción que avanza (etiqueta junto al destino)</text>
+<line x1="330" y1="168" x2="358" y2="168" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
+<text x="364" y="171">acción que vuelve (↩ bajo el origen)</text>
+<line x1="570" y1="168" x2="598" y2="168" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
+<text x="604" y="171">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="188">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="204" x2="68" y2="204" stroke="#1b8a82" marker-end="url(#arrow-hover)"/>
+<text x="74" y="207">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+</g>
+<line x1="40" y1="230" x2="860" y2="230" stroke="#ddd"/>
+<text x="40" y="250" font-weight="bold" fill="#1a7f37">Comparación con: ( Hover_menu ( Unhover_menu | (optionA | optionB) reset ) )*</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#1a7f37">
+<tspan x="40" y="268">EQUIVALENTES (autómata cortado · interacciones completas)</tspan>
+</text>
+<text x="40" y="301" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="319">(Hover_menu (Unhover_menu | (Click_optionA | Click_optionB) Click_reset))*</tspan>
+</text>
+<text x="40" y="352" font-weight="bold" fill="#222">Hover (1 acción con efecto visible)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="370">Hover_menu (1; cambia de estado): g.items: se muestra; habilita: Click_optionA, Click_optionB</tspan>
+</text>
+</svg>

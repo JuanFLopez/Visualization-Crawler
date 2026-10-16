@@ -1,3 +1,5 @@
+const { displayAction, verbOf } = require('./actions');
+
 /**
  * El crawler identifica cada estado con un fingerprint (hash) para poder
  * comparar igualdad -- pero ese hash no dice nada a simple vista. Esta
@@ -29,18 +31,20 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
 
   const hierarchy = hierarchyLabels(data, { rootLabel, separator });
   const labelOf = hierarchy || new Map([[initialState, rootLabel]]);
-  const queue = hierarchy ? [] : [initialState];
+  // con jerarquía ya están nombrados los alcanzables haciendo clicks; los que
+  // solo se alcanzan con un hover ("root > Hover_menu") se nombran desde su origen
+  const queue = hierarchy ? [...hierarchy.keys()] : [initialState];
 
   while (queue.length > 0) {
     const state = queue.shift();
     const actions = transitions[state] || {};
     for (const [action, next] of Object.entries(actions)) {
       if (next === ERROR_STATE || labelOf.has(next)) continue;
-      const shortAction = action.replace(/^Click_/, '');
-      let label = `${labelOf.get(state)}${separator}${shortAction}`;
+      const short = displayAction(action);
+      let label = `${labelOf.get(state)}${separator}${short}`;
       const existing = new Set(labelOf.values());
       let suffix = 2;
-      while (existing.has(label)) label = `${labelOf.get(state)}${separator}${shortAction}#${suffix++}`;
+      while (existing.has(label)) label = `${labelOf.get(state)}${separator}${short}#${suffix++}`;
       labelOf.set(next, label);
       queue.push(next);
     }
@@ -65,6 +69,10 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
   if (data.visibility) {
     result.visibility = {};
     for (const [state, byAction] of Object.entries(data.visibility)) result.visibility[labelOf.get(state) ?? state] = byAction;
+  }
+  if (data.effects) {
+    result.effects = {};
+    for (const [state, byAction] of Object.entries(data.effects)) result.effects[labelOf.get(state) ?? state] = byAction;
   }
   return result;
 }
@@ -96,11 +104,15 @@ function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'r
   if (!labels) return null;
   const ERROR_STATE = '__ERROR__';
 
+  // Solo cuentan los clicks: son los que bajan por la jerarquía de datos. Un
+  // hover sobre "flare/vis" que no cambia de estado (o la vuelta de un hover)
+  // también "entra" a un estado con ese camino, y ensuciaría el nombre.
+  const isClick = (action) => verbOf(action) === 'click';
   const reachable = new Set([initialState]);
   const queue = [initialState];
   while (queue.length) {
-    for (const next of Object.values(transitions[queue.shift()] || {})) {
-      if (next !== ERROR_STATE && !reachable.has(next)) { reachable.add(next); queue.push(next); }
+    for (const [action, next] of Object.entries(transitions[queue.shift()] || {})) {
+      if (isClick(action) && next !== ERROR_STATE && !reachable.has(next)) { reachable.add(next); queue.push(next); }
     }
   }
 
@@ -108,7 +120,7 @@ function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'r
   for (const state of reachable) {
     for (const [action, next] of Object.entries(transitions[state] || {})) {
       const readable = labels[state] && labels[state][action];
-      if (next === ERROR_STATE || typeof readable !== 'string') continue;
+      if (!isClick(action) || next === ERROR_STATE || typeof readable !== 'string') continue;
       const segments = readable.split('/').map((s) => s.trim()).filter(Boolean);
       if (segments.length === 0) continue;
       if (!incoming.has(next)) incoming.set(next, []);

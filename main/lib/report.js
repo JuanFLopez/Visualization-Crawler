@@ -10,10 +10,12 @@
 const { fromTransitionsJson, prefixClosure, DFA, ERROR_STATE } = require('./automaton');
 const { compileRegex, dfaToRegexTrace, tokenize, literalsOf } = require('./regex');
 const { diff } = require('./diff');
-const { cleanNames } = require('./names');
+const { cleanNames, stripNumber } = require('./names');
 const { toSVG } = require('./diagram');
 const { classifyEdges, cutDfa } = require('./cycles');
 const { buildIssues, issuesLog } = require('./issues');
+const { DEFAULT_KIND, actionName, verbOf } = require('./actions');
+const { summarizeHovers, hoverNotes, hoverLines } = require('./hovers');
 
 // Regex con las interacciones "completas": las que terminan de vuelta en
 // el estado inicial (o en un estado desde el que ya no se puede volver).
@@ -118,6 +120,18 @@ function partiallyVisibleClicks(transitions, visibility) {
   return list.sort((a, b) => a.visible - b.visible);
 }
 
+// Los hovers que el crawler descartó, con los nombres ya limpios (los que no
+// están en la tabla no pasaron por cleanNames) y juntando los repetidos.
+function mergeIgnored(list, renamed) {
+  const merged = new Map();
+  for (const { action, reason, states } of list) {
+    const name = renamed[action] ?? stripNumber(action);
+    const key = `${name}\u0000${reason}`;
+    merged.set(key, { action: name, reason, states: (merged.has(key) ? merged.get(key).states : 0) + states });
+  }
+  return [...merged.values()];
+}
+
 // Permite escribir el regex esperado sin el prefijo "Click_" ("vis c31"
 // en vez de "Click_vis Click_c31"): un token que no está en el alfabeto
 // pero sí con el prefijo, se completa.
@@ -125,9 +139,10 @@ function normalizeExpected(src, alphabet) {
   const literals = literalsOf(src);
   const completed = {};
   const toks = tokenize(src).map((t) => {
-    if (literals.has(t) && !alphabet.has(t) && alphabet.has(`Click_${t}`)) {
-      completed[t] = `Click_${t}`;
-      return `Click_${t}`;
+    const full = actionName(DEFAULT_KIND, t);
+    if (literals.has(t) && !alphabet.has(t) && alphabet.has(full)) {
+      completed[t] = full;
+      return full;
     }
     return t;
   });
@@ -155,6 +170,7 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
 
   const dfa = fromTransitionsJson(clean);
   const visibility = clean.visibility || {};
+  const hasPointer = [...dfa.alphabet].some((a) => verbOf(a) !== 'click');
   const cls = classifyEdges(dfa);
   const cut = cutDfa(dfa, cls);
   const cycleCut = completeInteractionsRegex(cut, maxRegexLength);
@@ -181,7 +197,7 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
         shortcutTransitions: cls.shortcuts,
       },
       language: exact,
-      languageMeaning: 'semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)',
+      languageMeaning: `semántica estándar: matchea EXACTAMENTE las secuencias de ${hasPointer ? 'interacciones (clicks y hovers)' : 'clicks'} realizables desde el estado inicial (sin las que rompen la página)`,
       completeInteractions: completeRegex,
       completeInteractionsMeaning: complete.stronglyConnected
         ? 'secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas'
@@ -218,6 +234,20 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
     partial.slice(0, 5).forEach((p) => log.push(`    ${p.state} --${p.action}--> ${p.to}  (≈${Math.round(p.visible * 100)}% visible)`));
   }
 
+  // Hovers: los que cambian algo visible son acciones (un bucle del estado,
+  // o un estado propio si abren algo); los que no, se listan aparte como lo
+  // que NO es una acción. En modo --from llega ya resumido.
+  const hovers = data.hovers || summarizeHovers({
+    transitions: clean.transitions,
+    effects: clean.effects || {},
+    ignored: mergeIgnored(data.ignoredHovers || [], clean.renamed),
+  });
+  if (hovers) {
+    json.hovers = hovers;
+    log.push('', `hover: ${hovers.transient} transitorios (un bucle del estado), ${hovers.structural} estructurales (cambian de estado)${hovers.broken ? `, ${hovers.broken} que rompen la página` : ''}`,
+      ...hoverLines(hovers).map((l) => `    ${l}`));
+  }
+
   log.push('', `ciclos: ${cls.counts.back} transiciones vuelven a un ancestro (cierran un ciclo), ${cls.counts.shortcut} son atajos a otra rama`
     + ` -- el regex con ciclos cortados tiene ${cycleCutRegex == null ? 'OMITIDO' : `${cycleCutRegex.length} caracteres`}`
     + ` (exacto: ${completeRegex == null ? 'OMITIDO' : `${completeRegex.length} caracteres`})`);
@@ -230,6 +260,13 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
       color: cycleCutRegex == null ? '#a15c00' : undefined,
     },
   ];
+  if (hovers) {
+    const n = hovers.transient + hovers.structural + (hovers.broken || 0);
+    footer.push({
+      title: `Hover (${n} ${n === 1 ? 'acción con efecto visible' : 'acciones con efecto visible'})`,
+      text: hoverLines(hovers).join('\n'),
+    });
+  }
   let highlightPath = [];
   let expected = null, d = null, target = null;
 
@@ -329,7 +366,7 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
     footer.unshift({ title: `Comparación con: ${expectedRegex}`, text: `EQUIVALENTES (${matchedName})`, color: '#1a7f37' });
   }
 
-  const svg = toSVG(dfa, { footer, highlightPath });
+  const svg = toSVG(dfa, { footer, highlightPath, notes: hoverNotes(hovers) });
   return { json, svg, log };
 }
 

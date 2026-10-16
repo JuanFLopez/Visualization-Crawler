@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Un listener delegado en el svg</title>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="d3.min.js"></script>
+  <script>
+    /*
+      Un solo listener de hover, en el <svg>, que mira event.target.__data__ (la forma delegada de
+      escribirlo con D3). Probado sobre el propio <svg> no hace nada: el target es el svg. Las marcas
+      (markA..markD, con datos que son objetos) resaltan; los textos de la leyenda tienen datos que
+      son strings y el handler los ignora: no son acciones. Ver esperado.txt.
+    */
+    const base = "steelblue";
+
+    const svg = d3.create("svg")
+        .attr("width", 420)
+        .attr("height", 200)
+        .style("font", "12px sans-serif");
+
+    // las marcas: un círculo por dato
+    const mark = svg.append("g").attr("class", "marks").selectAll("circle")
+      .data([{ name: "markA", x: 50 }, { name: "markB", x: 120 }, { name: "markC", x: 190 }, { name: "markD", x: 260 }])
+      .join("circle")
+        .attr("cx", (d) => d.x)
+        .attr("cy", 60)
+        .attr("r", 26)
+        .attr("fill", base);
+    mark.append("title").text((d) => d.name);
+
+    // la leyenda: textos con datos que son strings
+    svg.append("g").attr("class", "legend").selectAll("text")
+      .data(["Leyenda 1", "Leyenda 2"])
+      .join("text")
+        .attr("x", 20)
+        .attr("y", (d, i) => 140 + i * 20)
+        .text((d) => d);
+
+    // el listener delegado: mira a qué se le puso el puntero encima, y solo actúa si es una marca
+    const isMark = (target) => target.__data__ != null && typeof target.__data__ === "object";
+    svg
+        .on("mouseover", (event) => { if (isMark(event.target)) d3.select(event.target).attr("fill", "orange"); })
+        .on("mouseout", (event) => { if (isMark(event.target)) d3.select(event.target).attr("fill", base); });
+
+    document.querySelector("#chart").append(svg.node());
+  </script>
+</body>
+</html>

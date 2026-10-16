@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="445" viewBox="0 0 900 445" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<title>Autómata (1 estados)</title>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
+</defs>
+<rect width="900" height="445" fill="white"/>
+<g class="back-edges">
+<path d="M 404,40 C 398,16 430,16 416,42" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root  —[Hover_dotA, Hover_dotB, Hover_overlay]→  root
+Hover_dotA: div#tip: se muestra (texto &quot;dotA&quot;); depende de dónde se apunta (probado en el centro y en el borde)
+Hover_dotB: div#tip: se muestra (texto &quot;dotB&quot;); depende de dónde se apunta (probado en el centro y en el borde)
+Hover_overlay: line.guide: se muestra; text.readout: se muestra (texto &quot;140&quot;); depende de dónde se apunta (probado en el centro y en el borde)</title></path>
+</g>
+<g class="forward-edges">
+</g>
+<line x1="322" y1="53" x2="360" y2="53" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<g class="states">
+<g>
+<title>root
+  Hover_dotA → root
+  Hover_dotB → root
+  Hover_overlay → root</title>
+<rect x="362" y="40" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
+<text x="390" y="53" text-anchor="middle" dominant-baseline="central">root</text>
+</g>
+</g>
+<g class="labels">
+<text x="426" y="26" font-size="10" fill="#1b7f79">Hover_dotA +2</text>
+</g>
+<g font-size="10" fill="#666">
+<line x1="40" y1="128" x2="68" y2="128" stroke="#777" marker-end="url(#arrow)"/>
+<text x="74" y="131">acción que avanza (etiqueta junto al destino)</text>
+<line x1="330" y1="128" x2="358" y2="128" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
+<text x="364" y="131">acción que vuelve (↩ bajo el origen)</text>
+<line x1="570" y1="128" x2="598" y2="128" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
+<text x="604" y="131">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="148">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="164" x2="68" y2="164" stroke="#1b8a82" marker-end="url(#arrow-hover)"/>
+<text x="74" y="167">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+</g>
+<line x1="40" y1="190" x2="860" y2="190" stroke="#ddd"/>
+<text x="40" y="210" font-weight="bold" fill="#1a7f37">Comparación con: (Hover_dotA | Hover_dotB | Hover_overlay)*</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#1a7f37">
+<tspan x="40" y="228">EQUIVALENTES (autómata cortado · interacciones completas)</tspan>
+</text>
+<text x="40" y="261" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="279">(Hover_dotA | Hover_dotB | Hover_overlay)*</tspan>
+</text>
+<text x="40" y="312" font-weight="bold" fill="#222">Hover (3 acciones con efecto visible)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="330">Hover_dotA (1; bucle en el estado): div#tip: se muestra (texto &quot;dotA&quot;); depende de dónde se apunta (probado en el centro y</tspan>
+<tspan x="40" y="345">en el borde)</tspan>
+<tspan x="40" y="360">Hover_dotB (1; bucle en el estado): div#tip: se muestra (texto &quot;dotB&quot;); depende de dónde se apunta (probado en el centro y</tspan>
+<tspan x="40" y="375">en el borde)</tspan>
+<tspan x="40" y="390">Hover_overlay (1; bucle en el estado): line.guide: se muestra; text.readout: se muestra (texto &quot;140&quot;); depende de dónde se</tspan>
+<tspan x="40" y="405">apunta (probado en el centro y en el borde)</tspan>
+<tspan x="40" y="420">NO son acciones (sin efecto visible): Hover_recorder (1 estado)</tspan>
+</text>
+</svg>

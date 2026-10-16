@@ -1,0 +1,141 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_toggle": "root > toggle",
+      "Hover_barA": "root",
+      "Hover_barB": "root",
+      "Hover_barC": "root",
+      "Hover_node": "root"
+    },
+    "root > toggle": {
+      "Click_toggle": "root",
+      "Hover_barB": "root > toggle",
+      "Hover_barC": "root > toggle",
+      "Hover_barD": "root > toggle",
+      "Hover_node": "root > toggle"
+    }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "cycleCut": "(Hover_barA | Hover_barB | Hover_barC | Hover_node | Click_toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* Click_toggle)*",
+    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycles": {
+      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "tree": 1,
+      "back": 9,
+      "shortcuts": 0,
+      "shortcutTransitions": []
+    },
+    "language": "(Hover_barA | Hover_barB | Hover_barC | Hover_node | Click_toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* Click_toggle)* (Click_toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)*)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "(Hover_barA | Hover_barB | Hover_barC | Hover_node | Click_toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* Click_toggle)*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+  },
+  "hovers": {
+    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "transient": 5,
+    "structural": 0,
+    "actions": {
+      "Hover_barA": {
+        "type": "transient",
+        "states": 1,
+        "changes": [
+          "fill (CSS): rgb(70, 130, 180) -> rgb(255, 165, 0)"
+        ]
+      },
+      "Hover_barB": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "fill (CSS): rgb(70, 130, 180) -> rgb(255, 165, 0)"
+        ]
+      },
+      "Hover_barC": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "fill (CSS): rgb(70, 130, 180) -> rgb(255, 165, 0)"
+        ]
+      },
+      "Hover_node": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "circle: stroke (CSS): none -> rgb(0, 0, 0)",
+          "circle: stroke-width (CSS): 1px -> 3px"
+        ]
+      },
+      "Hover_barD": {
+        "type": "transient",
+        "states": 1,
+        "changes": [
+          "fill (CSS): rgb(70, 130, 180) -> rgb(255, 165, 0)"
+        ]
+      }
+    },
+    "ignored": [
+      {
+        "action": "Hover_locked",
+        "reason": "sin efecto visible",
+        "states": 2
+      }
+    ]
+  },
+  "comparison": {
+    "expected": "( (Hover_barA | Hover_barB | Hover_barC | Hover_node)* toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* toggle )* (Hover_barA | Hover_barB | Hover_barC | Hover_node)*",
+    "mode": "semántica estándar (secuencias completas)",
+    "equivalent": true,
+    "matched": {
+      "automaton": "cortado",
+      "form": "completeInteractions"
+    },
+    "targets": [
+      {
+        "automaton": "cortado",
+        "form": "completeInteractions",
+        "equivalent": true,
+        "onlyInCrawler": 0,
+        "onlyInExpected": 0,
+        "truncated": false
+      },
+      {
+        "automaton": "cortado",
+        "form": "language",
+        "equivalent": false,
+        "onlyInCrawler": 5,
+        "onlyInExpected": 0,
+        "truncated": false
+      },
+      {
+        "automaton": "completo",
+        "form": "completeInteractions",
+        "equivalent": true,
+        "onlyInCrawler": 0,
+        "onlyInExpected": 0,
+        "truncated": false
+      },
+      {
+        "automaton": "completo",
+        "form": "language",
+        "equivalent": false,
+        "onlyInCrawler": 5,
+        "onlyInExpected": 0,
+        "truncated": false
+      }
+    ],
+    "reportedAgainst": {
+      "automaton": "cortado",
+      "form": "completeInteractions"
+    },
+    "onlyInCrawler": [],
+    "onlyInExpected": [],
+    "truncated": false,
+    "unknownSymbols": [],
+    "symbolsNotInExpected": [],
+    "completedTokens": {
+      "toggle": "Click_toggle"
+    }
+  },
+  "issues": []
+}

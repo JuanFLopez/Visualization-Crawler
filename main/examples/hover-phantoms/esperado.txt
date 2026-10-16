@@ -1,0 +1,1 @@
+( (Hover_real | Hover_tip | Hover_delayed)* toggle (Hover_tip | Hover_delayed | Hover_late)* toggle )* (Hover_real | Hover_tip | Hover_delayed)*

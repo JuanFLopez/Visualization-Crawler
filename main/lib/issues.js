@@ -19,9 +19,9 @@
  */
 
 const { ERROR_STATE } = require('./automaton');
+const { displayAction, shortAction, verbOf } = require('./actions');
 
 const HEADLINE = 'Hay un comportamiento inesperado cuando ocurre esta serie de eventos';
-const shortAction = (s) => s.replace(/^Click_/, '');
 
 /**
  * Recorre `seq` sobre el autómata observado.
@@ -74,9 +74,10 @@ function shortestPath(dfa, target) {
 }
 
 function describe(kind, failingStep, event, { incomplete = false, alsoExpected = false, reason = null, form = 'language' } = {}) {
-  const a = `"${shortAction(event.action)}"`;
+  const a = `"${shortAction(event.action)}"`; // con el verbo delante ("hover"), el prefijo sobra
+  const verb = verbOf(event.action);
   if (kind === 'error') {
-    return `la página tira una excepción al hacer click ${a} en "${event.state}" (paso ${failingStep})` +
+    return `la página tira una excepción al hacer ${verb} ${a} en "${event.state}" (paso ${failingStep})` +
       (alsoExpected ? '; el regex esperado admite esta secuencia' : '');
   }
   if (kind === 'faltante') {
@@ -86,7 +87,7 @@ function describe(kind, failingStep, event, { incomplete = false, alsoExpected =
     if (reason === 'sinVolver') {
       return `el regex esperado da la interacción por terminada en "${event.to}", pero desde ahí la visualización todavía no volvió al estado inicial`;
     }
-    return `el regex esperado admite click ${a} en el paso ${failingStep}, pero en "${event.state}" la visualización no lo ofrece`;
+    return `el regex esperado admite ${verb} ${a} en el paso ${failingStep}, pero en "${event.state}" la visualización no lo ofrece`;
   }
   if (incomplete) {
     return form === 'completeInteractions'
@@ -94,7 +95,7 @@ function describe(kind, failingStep, event, { incomplete = false, alsoExpected =
       : 'la visualización permite terminar acá, pero el regex esperado no acepta la secuencia como completa' +
         ' (si el regex describe interacciones completas, compará con --regexPrefixes)';
   }
-  return `la visualización permite click ${a} en "${event.state}" (paso ${failingStep}), pero el regex esperado no lo admite`;
+  return `la visualización permite ${verb} ${a} en "${event.state}" (paso ${failingStep}), pero el regex esperado no lo admite`;
 }
 
 /**
@@ -169,13 +170,13 @@ function buildIssues({ dfa, cls, expected = null, diff = null, target = null }) 
       const detail = failing
         ? describe(kind, failingStep, failing, opts)
         : describe(kind, 0, { action: '', state: dfa.initial }, { ...opts, incomplete: true });
-      const series = sequence.length ? sequence.map(shortAction).join(' → ') : '(ninguno: no hacer nada)';
+      const series = sequence.length ? sequence.map(displayAction).join(' → ') : '(ninguno: no hacer nada)';
       return { kind, message: `${HEADLINE}: ${series}`, detail, sequence, events, failingStep, occurrences };
     });
 }
 
 function eventLine(e, failingStep) {
-  const head = `${e.step}. en "${e.state}": click "${shortAction(e.action)}"`;
+  const head = `${e.step}. en "${e.state}": ${verbOf(e.action)} "${shortAction(e.action)}"`;
   let tail;
   if (e.to === null) tail = '-> no disponible en este estado';
   else if (e.to === ERROR_STATE) tail = '-> ERROR: la página tiró una excepción';

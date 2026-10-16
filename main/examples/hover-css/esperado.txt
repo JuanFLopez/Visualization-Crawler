@@ -1,0 +1,1 @@
+( (Hover_barA | Hover_barB | Hover_barC | Hover_node)* toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* toggle )* (Hover_barA | Hover_barB | Hover_barC | Hover_node)*

@@ -1,6 +1,6 @@
 /**
  * Se inyecta ANTES de que corra el código de la visualización del usuario
- * (vía page.addInitScript). Hace tres cosas, sin requerir que el usuario
+ * (vía page.addInitScript). Hace cuatro cosas, sin requerir que el usuario
  * toque una sola línea de su código D3:
  *
  * 1. DETECTA elementos clickeables de verdad: parchea addEventListener
@@ -9,7 +9,9 @@
  *    listener de "click". D3 v6+ usa addEventListener por debajo en
  *    selection.on(), así que esto agarra cualquier .on("click", ...) sin
  *    que el usuario tenga que distinguir a mano los elementos realmente
- *    interactivos de los decorativos.
+ *    interactivos de los decorativos. Igual con los que reaccionan a que
+ *    el puntero entre (mouseover/mouseenter/pointerover/pointerenter),
+ *    marcados con data-crawler-hoverable.
  *
  *    Los <a> (y cualquier elemento con href) se EXCLUYEN por defecto: en
  *    una página real (no un fixture aislado) es común que haya links de
@@ -31,9 +33,20 @@
  * 3. EXPONE window.__crawlerActivity(): frames de animación y requests
  *    en vuelo, para esperar a que la página se asiente (ver más abajo).
  *
+ * 4. EXPONE window.__crawlerEffects(): una instantánea de todo lo visible
+ *    del documento, para ver si un hover cambió algo (ver más abajo).
+ *
  * Limitación conocida: solo ve DOM real (SVG/HTML). Visualizaciones
  * basadas en <canvas> no exponen atributos para fingerprintear -- para
  * esas hace falta un window.__testState manual.
+ *
+ * Los hovers que no pasan por addEventListener sobre el propio elemento los
+ * encuentra crawler.js por otro lado (handlers en la propiedad o en un
+ * atributo inline, :hover de las hojas de estilo, listeners delegados en un
+ * contenedor: ver __crawlerCandidates y __crawlerMarks). Lo que sigue sin
+ * ver: listeners en window/document, efectos sobre pseudo-elementos (::after),
+ * :hover de hojas de estilo de OTRO origen (el navegador no deja leerlas) y
+ * efectos que no pasan por el DOM (un <canvas>).
  */
 (function () {
    
@@ -46,14 +59,26 @@
     return el.tagName === 'A' || el.hasAttribute('href');
   }
 
+  // Los eventos con los que una visualización reacciona a que el puntero
+  // ENTRE a un elemento.
+  const HOVER_ENTER = new Set(['mouseover', 'mouseenter', 'pointerover', 'pointerenter']);
+  // Los de MOVIMIENTO también cuentan, pero su efecto suele depender de DÓNDE
+  // está el puntero (un tooltip que lo sigue, una línea guía): el crawler los
+  // prueba en dos puntos y avisa si el efecto cambia (ver observeHover en
+  // crawler.js); no enumera posiciones.
+  const HOVER_MOVE = new Set(['mousemove', 'pointermove']);
+
   EventTarget.prototype.addEventListener = function (type, listener, options) {
-    if (type === 'click' && this && this.nodeType === 1) {
+    const attr = type === 'click' ? 'data-crawler-clickable'
+      : HOVER_ENTER.has(type) || HOVER_MOVE.has(type) ? 'data-crawler-hoverable' : null;
+    if (attr && this && this.nodeType === 1) {
       const includeLinks = window.__crawlerIncludeLinks === true;
       if (includeLinks || !isLink(this)) {
         if (!this.hasAttribute('data-crawler-id')) {
           this.setAttribute('data-crawler-id', 'c' + counter++);
         }
-        this.setAttribute('data-crawler-clickable', '1');
+        this.setAttribute(attr, '1');
+        if (HOVER_MOVE.has(type)) this.setAttribute('data-crawler-moves', '1');
       }
     }
     return origAdd.call(this, type, listener, options);
@@ -176,7 +201,7 @@
     if (!root) throw new Error('contenedor no encontrado: ' + sel);
     let buf = '';
     const svgRects = new Map();
-    root.querySelectorAll('svg, svg *, [data-crawler-clickable]').forEach((el) => {
+    root.querySelectorAll('svg, svg *, [data-crawler-clickable], [data-crawler-hoverable]').forEach((el) => {
       buf += el.tagName;
       if (isInvisible(el, svgRects)) {
         buf += '|hidden;';
@@ -189,5 +214,97 @@
       buf += ';';
     });
     return buf;
+  };
+
+  // 4. INSTANTÁNEA DE EFECTOS: lo visible de TODO el documento, no solo del
+  //    <svg> como el fingerprint de estado. Comparando la de antes con la de
+  //    después de un hover se ve si cambió algo -- p.ej. un tooltip HTML --
+  //    y qué. Es el efecto NETO: lo que un handler pone y saca en el mismo
+  //    paso no deja rastro. Lo oculto cuenta solo como "oculto": cambiar
+  //    algo que el usuario no ve no es un efecto.
+  //    CSS: un :hover de una hoja de estilos cambia cómo se ve algo sin tocar
+  //    ningún atributo, así que cuando la página tiene reglas :hover (lo avisa
+  //    el crawler en window.__crawlerCssHover) la instantánea suma un
+  //    subconjunto de estilos CALCULADOS. Para no mandar cientos de valores por
+  //    el cable, solo viajan los que CAMBIARON respecto de la instantánea de
+  //    referencia (la que se pide con baseline = true).
+  const CS_PROPS = [
+    'fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'opacity', 'display', 'visibility',
+    'transform', 'color', 'background-color', 'font-weight', 'font-size', 'text-decoration-line', 'filter',
+    'r', 'rx', 'ry', 'width', 'height', 'box-shadow', 'outline-color', 'border-top-color',
+  ];
+  let csBaseline = null;
+
+  // Las transiciones y animaciones CSS no siguen al reloj falso de la página
+  // (page.clock): sin esto se leería un valor a mitad de camino. Se las lleva a
+  // su estado final; las que no terminan nunca (infinitas) se congelan.
+  function settleAnimations() {
+    for (const animation of document.getAnimations()) {
+      try { animation.finish(); } catch (e) { animation.pause(); }
+    }
+  }
+
+  window.__crawlerEffects = function (baseline) {
+    const css = window.__crawlerCssHover === true;
+    if (css) settleAnimations();
+    const computed = css ? new Map() : null;
+    const pointerNode = window.__crawlerPointerNode || null;
+    let selfKey = null;
+    const out = [];
+    const svgRects = new Map();
+    const keys = new Map();
+    const siblingCount = new Map(); // padre -> { etiqueta -> cuántas van }
+    for (const el of [document.body, ...document.body.querySelectorAll('*')]) {
+      const tag = el.tagName.toLowerCase();
+      if (tag === 'script' || tag === 'style' || tag === 'noscript') continue;
+      // la clave de un elemento con id del crawler es ese id (no cambia si
+      // aparece un hermano); el resto, su posición entre los de su etiqueta
+      let key = el.getAttribute('data-crawler-id');
+      if (key) {
+        key = 'id:' + key;
+      } else {
+        const counts = siblingCount.get(el.parentElement) || {};
+        counts[tag] = (counts[tag] || 0) + 1;
+        siblingCount.set(el.parentElement, counts);
+        key = (keys.get(el.parentElement) || '') + '/' + tag + counts[tag];
+      }
+      keys.set(el, key);
+      if (el === pointerNode) selfKey = key;
+      const p = keys.get(el.parentElement) || null; // para agrupar lo que aparece junto con su padre
+
+      if (isInvisible(el, svgRects)) {
+        out.push({ k: key, p, t: tag, h: 1 });
+        continue;
+      }
+      const a = {};
+      for (const name of el.getAttributeNames().sort()) {
+        if (!name.startsWith('data-crawler-')) a[name] = roundNumbers(el.getAttribute(name));
+      }
+      let x = '';
+      for (const n of el.childNodes) if (n.nodeType === 3) x += n.nodeValue;
+      out.push({ k: key, p, t: tag, a, x: x.replace(/\s+/g, ' ').trim().slice(0, 200) });
+      if (css) {
+        const style = getComputedStyle(el);
+        const values = {};
+        for (const prop of CS_PROPS) values[prop] = style.getPropertyValue(prop);
+        computed.set(key, values);
+      }
+    }
+    if (css) {
+      const was = baseline === true ? null : csBaseline;
+      if (!was) {
+        csBaseline = computed;
+      } else {
+        for (const rec of out) {
+          const before = was.get(rec.k), now = computed.get(rec.k);
+          if (rec.h || !before || !now) continue;
+          const diff = {};
+          for (const prop of CS_PROPS) if (before[prop] !== now[prop]) diff[prop] = [before[prop], now[prop]];
+          if (Object.keys(diff).length) rec.cs = diff;
+        }
+      }
+    }
+    window.__crawlerSelfKey = selfKey; // canal lateral: no forma parte de lo que se compara
+    return out;
   };
 })();

@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Handlers en la propiedad y en el atributo</title>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="d3.min.js"></script>
+  <script>
+    /*
+      Handlers que NO pasan por addEventListener, hechos con D3: selection.property("onmouseover", fn)
+      deja el handler en la propiedad del elemento, y selection.attr("onmouseover", "...") en un
+      atributo en línea. "prop" y "attr" son hovers reales; "quiet" tiene un handler que no cambia
+      nada que se vea: no es una acción. "clickable" se clickea por la propiedad onclick y cambia de
+      estado. Ver esperado.txt.
+    */
+    const base = "steelblue";
+    let remembered = null;
+
+    const svg = d3.create("svg")
+        .attr("width", 420)
+        .attr("height", 140)
+        .style("font", "12px sans-serif");
+
+    const dot = svg.selectAll("circle")
+      .data([{ name: "prop", x: 50 }, { name: "attr", x: 130 }, { name: "quiet", x: 210 }, { name: "clickable", x: 310 }])
+      .join("circle")
+        .attr("cx", (d) => d.x)
+        .attr("cy", 70)
+        .attr("r", 28)
+        .attr("fill", base);
+    dot.append("title").text((d) => d.name);
+
+    // el handler en la PROPIEDAD del elemento (el.onmouseover = fn). Ojo: en D3, selection.property(nombre,
+    // función) EVALÚA la función por cada elemento y guarda lo que devuelve, así que para dejar un handler
+    // hay que devolverlo: () => handler
+    const highlight = function () { d3.select(this).attr("fill", "orange"); };
+    const restore = function () { d3.select(this).attr("fill", base); };
+    dot.filter((d) => d.name === "prop")
+        .property("onmouseover", () => highlight)
+        .property("onmouseout", () => restore);
+
+    // el handler en un ATRIBUTO en línea (onmouseover="...")
+    dot.filter((d) => d.name === "attr")
+        .attr("onmouseover", "this.setAttribute('fill', 'orange')")
+        .attr("onmouseout", "this.setAttribute('fill', 'steelblue')");
+
+    // FALSO: un handler en la propiedad que no cambia nada que se vea
+    dot.filter((d) => d.name === "quiet")
+        .property("onmouseover", () => function () { remembered = "quiet"; });
+
+    // un click por la propiedad onclick: cambia de estado
+    dot.filter((d) => d.name === "clickable")
+        .attr("fill", "dimgray")
+        .property("onclick", () => function () {
+          const on = d3.select(this).attr("fill") === "seagreen";
+          d3.select(this).attr("fill", on ? "dimgray" : "seagreen");
+        });
+
+    document.querySelector("#chart").append(svg.node());
+  </script>
+</body>
+</html>

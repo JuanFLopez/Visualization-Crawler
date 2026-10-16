@@ -13,23 +13,25 @@
  * Idempotente: sobre nombres ya limpios no cambia nada.
  */
 
+const { isInternalName, isBarePrefix, displayAction } = require('./actions');
+
 const ERROR_STATE = '__ERROR__';
 
 // número al final, tal como lo deja d3.format: "432,629", "989", "1.5", "12%"
 const NUMERIC_SUFFIX = /_[-+]?\d[\d.,]*%?$/;
 
 function stripNumber(action) {
-  if (/^Click_unknown_\d+$/.test(action)) return action; // id interno, no un valor
+  if (isInternalName(action)) return action; // id interno, no un valor
   const stripped = action.replace(NUMERIC_SUFFIX, '');
-  return stripped === 'Click_' || stripped === 'Click' ? action : stripped;
+  return isBarePrefix(stripped) ? action : stripped;
 }
 
 /**
- * @param {{initialState: string, transitions: Object, visibility?: Object}} data
- * @returns {{initialState: string, transitions: Object, renamed: Object, visibility?: Object}}
+ * @param {{initialState: string, transitions: Object, visibility?: Object, effects?: Object}} data
+ * @returns {{initialState: string, transitions: Object, renamed: Object, visibility?: Object, effects?: Object}}
  *   renamed: acción vieja -> nueva (solo las que cambiaron)
  */
-function cleanNames({ initialState, transitions, visibility = null }) {
+function cleanNames({ initialState, transitions, visibility = null, effects = null }) {
   // orden de primera aparición, para que la desambiguación sea estable
   const actions = [];
   const seen = new Set();
@@ -51,10 +53,11 @@ function cleanNames({ initialState, transitions, visibility = null }) {
   }
 
   // estados: los nombres legibles (lib/labels.js) son caminos de acciones
-  // sin el "Click_" -- se renombra segmento por segmento con el mismo mapa
+  // sin el "Click_" (los hovers conservan su prefijo) -- se renombra
+  // segmento por segmento con el mismo mapa
   const SEP = ' > ';
   const segRename = new Map();
-  for (const [from, to] of rename) segRename.set(from.replace(/^Click_/, ''), to.replace(/^Click_/, ''));
+  for (const [from, to] of rename) segRename.set(displayAction(from), displayAction(to));
   const renameState = (s) => {
     if (s === ERROR_STATE || !s.includes(SEP)) return s;
     return s.split(SEP).map((seg) => segRename.get(seg) ?? seg).join(SEP);
@@ -78,7 +81,22 @@ function cleanNames({ initialState, transitions, visibility = null }) {
       result.visibility[renameState(state)] = v;
     }
   }
+  if (effects) {
+    // acción de hover -> qué cambia; `reveals`/`hides` nombran otras acciones
+    const renameAll = (list) => list.map((a) => rename.get(a) ?? stripNumber(a));
+    result.effects = {};
+    for (const [state, byAction] of Object.entries(effects)) {
+      const e = {};
+      for (const [a, effect] of Object.entries(byAction)) {
+        const copy = { ...effect };
+        if (copy.reveals) copy.reveals = renameAll(copy.reveals);
+        if (copy.hides) copy.hides = renameAll(copy.hides);
+        e[rename.get(a) ?? a] = copy;
+      }
+      result.effects[renameState(state)] = e;
+    }
+  }
   return result;
 }
 
-module.exports = { cleanNames };
+module.exports = { cleanNames, stripNumber };

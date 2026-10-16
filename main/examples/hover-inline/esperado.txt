@@ -1,0 +1,1 @@
+( (Hover_prop | Hover_attr)* clickable (Hover_prop | Hover_attr)* clickable )* (Hover_prop | Hover_attr)*

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Hovers reales y falsos</title>
+</head>
+<body>
+  <div id="chart"></div>
+  <script src="d3.min.js"></script>
+  <script>
+    /*
+      Hovers reales y hovers que NO lo son, todo hecho con D3: un círculo por caso, descripto
+      por un dato. Los reales (real, tip, delayed, y late en el segundo estado) tienen que
+      aparecer en el autómata; ninguno de los otros. Ver esperado.txt.
+    */
+    const base = "steelblue";
+    let remembered = null;
+    let second = false;
+
+    const svg = d3.create("svg")
+        .attr("width", 620)
+        .attr("height", 210)
+        .style("font", "12px sans-serif");
+
+    // el tooltip HTML, fuera del <svg> (el patrón habitual de D3)
+    const tip = d3.select("body").append("div")
+        .attr("id", "tip")
+        .style("position", "absolute")
+        .style("left", "10px")
+        .style("top", "230px")
+        .style("padding", "4px 8px")
+        .style("background", "#333")
+        .style("color", "#fff")
+        .style("opacity", 0)
+        .style("pointer-events", "none");
+
+    // un elemento que solo existe para que un handler le toque algo, y está oculto
+    const ghost = svg.append("text")
+        .attr("x", 340)
+        .attr("y", 140)
+        .style("display", "none")
+        .text("ghost");
+
+    const cases = [
+      // REAL: resaltado
+      { name: "real", x: 40, y: 60,
+        over() { d3.select(this).attr("fill", "orange"); },
+        out() { d3.select(this).attr("fill", base); } },
+
+      // REAL: tooltip
+      { name: "tip", x: 100, y: 60,
+        over() { tip.style("opacity", 1).text("info"); },
+        out() { tip.style("opacity", 0); } },
+
+      // REAL: el efecto llega 300 ms después
+      { name: "delayed", x: 160, y: 60,
+        over() { const el = this; setTimeout(() => d3.select(el).attr("fill", "orange"), 300); },
+        out() { d3.select(this).attr("fill", base); } },
+
+      // FALSO: el handler solo guarda algo en una variable, no cambia nada que se vea
+      { name: "inert", x: 220, y: 60,
+        over() { remembered = "inert"; } },
+
+      // FALSO: cambia y vuelve en el mismo paso; el efecto neto es nulo
+      { name: "flash", x: 280, y: 60,
+        over() { d3.select(this).attr("stroke", "red"); d3.select(this).attr("stroke", null); } },
+
+      // FALSO: lo único que toca está oculto
+      { name: "hiddenEffect", x: 340, y: 60,
+        over() { ghost.attr("data-poked", "1"); } },
+
+      // FALSO: tapado por otro elemento (ver el rect de más abajo); ningún puntero llega hasta él
+      { name: "covered", x: 400, y: 60,
+        over() { d3.select(this).attr("fill", "orange"); } },
+
+      // FALSO: pointer-events: none, no se puede apuntar
+      { name: "noPointer", x: 460, y: 60, pointerEvents: "none",
+        over() { d3.select(this).attr("fill", "orange"); } },
+
+      // FALSO: no se ve
+      { name: "hidden", x: 520, y: 60, hidden: true,
+        over() { d3.select(this).attr("fill", "orange"); } },
+
+      // REAL, pero solo en el segundo estado: aparece cuando se clickea "toggle"
+      { name: "late", x: 40, y: 150, hidden: true,
+        over() { d3.select(this).attr("fill", "orange"); },
+        out() { d3.select(this).attr("fill", base); } },
+
+      // FALSO: solo se le puede hacer click; que un usuario lo vaya a apuntar antes de
+      // clickearlo no lo vuelve un hover. El click cambia de estado: aparece "late" y
+      // desaparece "real".
+      { name: "toggle", x: 100, y: 150, fill: "gray",
+        click() {
+          second = !second;
+          dot.filter((d) => d.name === "late").style("display", second ? null : "none");
+          dot.filter((d) => d.name === "real").style("display", second ? "none" : null);
+        } },
+    ];
+
+    const dot = svg.selectAll("circle")
+      .data(cases)
+      .join("circle")
+        .attr("cx", (d) => d.x)
+        .attr("cy", (d) => d.y)
+        .attr("r", 20)
+        .attr("fill", (d) => d.fill || base)
+        .style("pointer-events", (d) => d.pointerEvents || null)
+        .style("display", (d) => (d.hidden ? "none" : null));
+    dot.append("title").text((d) => d.name);
+
+    // un listener solo en los que lo tienen: "toggle" no tiene ninguno de hover
+    dot.filter((d) => d.over).on("mouseover", function (event, d) { d.over.call(this, event, d); });
+    dot.filter((d) => d.out).on("mouseout", function (event, d) { d.out.call(this, event, d); });
+    dot.filter((d) => d.click).on("click", function (event, d) { d.click.call(this, event, d); });
+
+    // el que tapa a "covered": se dibuja después, así que queda encima
+    svg.append("rect")
+        .attr("x", 370)
+        .attr("y", 30)
+        .attr("width", 60)
+        .attr("height", 60)
+        .attr("fill", "white");
+
+    document.querySelector("#chart").append(svg.node());
+  </script>
+</body>
+</html>
