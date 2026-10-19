@@ -1,10 +1,9 @@
 /**
- * Todo lo que se arma DESPUÉS del crawl, a partir de la tabla de
- * transiciones: nombres limpios, regex con los ciclos cortados (y los
- * exactos), comparación contra un regex esperado (opcional), los
- * comportamientos inesperados como series de eventos y el diagrama. Lo
- * usa run.js, tanto al terminar un crawl como sobre un transitions.json
- * ya generado.
+ * Everything built AFTER the crawl, from the transition table: clean names,
+ * the regex with cycles cut (and the exact ones), the comparison against an
+ * expected regex (optional), the unexpected behaviors as series of events,
+ * and the diagram. run.js uses it both at the end of a crawl and on an
+ * already generated transitions.json.
  */
 
 const { fromTransitionsJson, prefixClosure, DFA, ERROR_STATE } = require('./automaton');
@@ -17,17 +16,19 @@ const { buildIssues, issuesLog } = require('./issues');
 const { DEFAULT_KIND, actionName, verbOf } = require('./actions');
 const { summarizeHovers, hoverNotes, hoverLines } = require('./hovers');
 
-// Regex con las interacciones "completas": las que terminan de vuelta en
-// el estado inicial (o en un estado desde el que ya no se puede volver).
-// Toda secuencia válida es prefijo de alguna de estas -- suele ser mucho
-// más corto y legible que el lenguaje exacto, que además tiene que
-// describir cada interacción "a medio hacer".
+/**
+ * Regex of the "complete" interactions: the ones that end back at the initial
+ * state (or in a state from which there is no way back). Every valid sequence
+ * is a prefix of one of these. It is usually much shorter and more readable
+ * than the exact language, which also has to describe every half-done
+ * interaction.
+ */
 function completeInteractionsRegex(dfa, maxLength) {
   const loops = completeInteractionsDfa(dfa);
   return { trace: dfaToRegexTrace(loops, { exclude: [ERROR_STATE], maxLength }), stronglyConnected: loops.accepting.size === 1 };
 }
 
-// El mismo autómata, aceptando solo las interacciones completas.
+/** The same automaton, accepting only the complete interactions. */
 function completeInteractionsDfa(dfa) {
   const preds = new Map();
   for (const [from, m] of dfa.transitions) {
@@ -48,16 +49,18 @@ function completeInteractionsDfa(dfa) {
   return new DFA({ initial: dfa.initial, transitions: dfa.transitions, alphabet: dfa.alphabet, accepting });
 }
 
-// Default de maxRegexLength: el icicle de flare (252 estados) da ~87.000
-// caracteres; por encima de esto el regex ya no se puede leer, y en un
-// grafo denso el siguiente estado eliminado lo multiplica.
+// Default maxRegexLength: the flare icicle (252 states) gives ~87,000
+// characters; above this the regex can no longer be read, and in a dense
+// graph the next eliminated state multiplies it.
 const DEFAULT_MAX_REGEX_LENGTH = 500000;
 
-// Diagnóstico de un regex cortado por tamaño: en qué paso explotó, cómo
-// venía creciendo, qué estados quedaban (el núcleo denso) y cuántas de
-// las transiciones dentro de ese núcleo son clicks sobre elementos
-// visibles solo en parte -- la causa típica de que un grafo jerárquico se
-// vuelva denso (círculos vecinos que asoman en las esquinas de un zoom).
+/**
+ * Diagnosis of a regex that was cut for size: the step where it blew up, how
+ * it had been growing, which states were left (the dense core), and how many
+ * of the transitions inside that core are clicks on partially visible
+ * elements, the typical reason a hierarchical graph becomes dense
+ * (neighbouring circles peeking out of the corners of a zoom).
+ */
 function explosionInfo(trace, dfa, visibility, maxLength) {
   const steps = trace.steps;
   const last = steps[steps.length - 1];
@@ -107,8 +110,10 @@ function traceLog(name, trace) {
   ];
 }
 
-// Transiciones cuyo elemento clickeado se veía solo en parte al
-// descubrirlo (ver visibleFrac en crawler.js), de la menos visible a la más.
+/**
+ * Transitions whose clicked element was only partly visible when it was
+ * discovered (see visibleFrac in crawler.js), from the least visible to the most.
+ */
 function partiallyVisibleClicks(transitions, visibility) {
   const list = [];
   for (const [state, byAction] of Object.entries(visibility)) {
@@ -120,8 +125,10 @@ function partiallyVisibleClicks(transitions, visibility) {
   return list.sort((a, b) => a.visible - b.visible);
 }
 
-// Los hovers que el crawler descartó, con los nombres ya limpios (los que no
-// están en la tabla no pasaron por cleanNames) y juntando los repetidos.
+/**
+ * The hovers the crawler discarded, with clean names (the ones that are not
+ * in the table did not go through cleanNames), repeated entries merged.
+ */
 function mergeIgnored(list, renamed) {
   const merged = new Map();
   for (const { action, reason, states } of list) {
@@ -132,9 +139,11 @@ function mergeIgnored(list, renamed) {
   return [...merged.values()];
 }
 
-// Permite escribir el regex esperado sin el prefijo "Click_" ("vis c31"
-// en vez de "Click_vis Click_c31"): un token que no está en el alfabeto
-// pero sí con el prefijo, se completa.
+/**
+ * Lets the expected regex be written without the "Click_" prefix ("vis c31"
+ * instead of "Click_vis Click_c31"): a token that is not in the alphabet but
+ * is with the prefix gets completed.
+ */
 function normalizeExpected(src, alphabet) {
   const literals = literalsOf(src);
   const completed = {};
@@ -150,16 +159,16 @@ function normalizeExpected(src, alphabet) {
 }
 
 /**
- * @param {{initialState: string, transitions: Object}} data - tabla tal como la deja el crawler
+ * @param {{initialState: string, transitions: Object}} data - table as the crawler leaves it
  * @param {Object} [opts]
- * @param {string} [opts.expectedRegex] - regex a comparar con lo observado
- * @param {boolean} [opts.prefixes=false] - comparar contra los PREFIJOS de lo
- *   que describe expectedRegex (útil si el regex describe interacciones completas)
- * @param {number} [opts.limit=10] - contraejemplos a reportar por dirección
- * @param {number} [opts.maxRegexLength=500000] - un regex más largo se omite
- *   (null en el JSON) y se informa dónde explotó; Infinity = sin tope
- * @param {boolean} [opts.traceRegex=false] - loguear la traza completa de la
- *   eliminación de estados, aunque no se haya cortado
+ * @param {string} [opts.expectedRegex] - regex to compare with what was observed
+ * @param {boolean} [opts.prefixes=false] - compare against the PREFIXES of what
+ *   expectedRegex describes (useful when the regex describes complete interactions)
+ * @param {number} [opts.limit=10] - counterexamples to report per direction
+ * @param {number} [opts.maxRegexLength=500000] - a longer regex is omitted
+ *   (null in the JSON) and where it blew up is reported; Infinity = no limit
+ * @param {boolean} [opts.traceRegex=false] - log the full state-elimination
+ *   trace, even when nothing was cut
  * @returns {{ json: Object, svg: string, log: string[] }}
  */
 function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10, maxRegexLength = DEFAULT_MAX_REGEX_LENGTH, traceRegex = false } = {}) {
@@ -230,13 +239,14 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
       transitions: partial,
     };
     log.push('', `${partial.length} de ${nTransitions} transiciones clickean elementos visibles solo en parte; las menos visibles:`);
-    // ≈: se mide con una grilla de 5x5 puntos; 0 = ningún punto cayó en la parte visible
+    // ≈: measured with a 5x5 grid of points; 0 = no point fell in the visible part
     partial.slice(0, 5).forEach((p) => log.push(`    ${p.state} --${p.action}--> ${p.to}  (≈${Math.round(p.visible * 100)}% visible)`));
   }
 
-  // Hovers: los que cambian algo visible son acciones (un bucle del estado,
-  // o un estado propio si abren algo); los que no, se listan aparte como lo
-  // que NO es una acción. En modo --from llega ya resumido.
+  // Hovers: the ones that change something visible are actions (a loop of the
+  // state, or a state of their own when they open something); the rest are
+  // listed apart as what is NOT an action. In --from mode they arrive already
+  // summarized.
   const hovers = data.hovers || summarizeHovers({
     transitions: clean.transitions,
     effects: clean.effects || {},
@@ -252,7 +262,7 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
     + ` -- el regex con ciclos cortados tiene ${cycleCutRegex == null ? 'OMITIDO' : `${cycleCutRegex.length} caracteres`}`
     + ` (exacto: ${completeRegex == null ? 'OMITIDO' : `${completeRegex.length} caracteres`})`);
 
-  // el diagrama muestra solo el regex cortado; los exactos quedan en el JSON
+  // the diagram shows only the cut regex; the exact ones stay in the JSON
   const footer = [
     {
       title: `Regex con los ciclos cortados (interacciones completas; ${cls.counts.shortcut} atajos aparte, ver regex.cycles en transitions.json)`,
@@ -275,11 +285,11 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
     expected = compileRegex(src, dfa.alphabet);
     if (prefixes) expected = prefixClosure(expected);
 
-    // El regex esperado puede describir el autómata completo o el de
-    // ciclos cortados (el que muestra el diagrama), y cada uno como todo
-    // prefijo realizable o como interacciones completas: alcanza con que
-    // coincida exactamente con alguno. Con --regexPrefixes el esperado ya
-    // es una clausura por prefijos, y solo tiene sentido contra "lenguaje".
+    // The expected regex may describe the full automaton or the cut one (the
+    // one the diagram shows), and each either as every realizable prefix or as
+    // complete interactions: matching any of them exactly is enough. With
+    // --regexPrefixes the expected one is already a prefix closure, and only
+    // makes sense against "language".
     const forms = prefixes ? ['language'] : ['completeInteractions', 'language'];
     const rankLimit = Math.max(limit, 50);
     const targets = [];
@@ -289,8 +299,8 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
         targets.push({ automaton, form, dfa: tdfa, diff: diff(tdfa, expected, { limit: rankLimit }) });
       }
     }
-    // el más cercano: menos diferencias; a igualdad, gana el orden de
-    // arriba (cortado antes que completo, interacciones antes que lenguaje)
+    // The closest one: fewest differences; on a tie the order above wins (cut
+    // before full, interactions before language).
     const size = (t) => t.diff.onlyInA.length + t.diff.onlyInB.length;
     const matched = targets.find((t) => t.diff.equivalent) || null;
     target = matched || targets.reduce((best, t) => (size(t) < size(best) ? t : best));
@@ -342,8 +352,8 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
     if (unusedSymbols.length) log.push(`  acciones observadas que el regex no menciona: ${unusedSymbols.join(', ')}`);
   }
 
-  // los eventos se reconstruyen siempre sobre el autómata COMPLETO (lo que
-  // pasa de verdad en la visualización), aunque se compare contra el cortado
+  // Events are always rebuilt over the FULL automaton (what really happens in
+  // the visualization), even when the comparison was against the cut one.
   const issues = buildIssues({ dfa, cls, expected, diff: d, target });
   json.issues = issues;
   if (issues.length) log.push('', ...issuesLog(issues));

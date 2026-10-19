@@ -1,113 +1,113 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900.4000000000001" height="870" viewBox="0 0 900.4000000000001 870" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="1179" height="1080" viewBox="0 0 1179 1080" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <title>Autómata (32 estados)</title>
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
-  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
-  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
 </defs>
-<rect width="900.4000000000001" height="870" fill="white"/>
+<rect width="1179" height="1080" fill="white"/>
 <g class="back-edges">
-<path d="M 335.8,526 C 335.8,568.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; flex  —[circle]→  root</title></path>
-<path d="M 335.8,446 C 335.8,488.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; physics  —[circle]→  root</title></path>
-<path d="M 132,320 C 126,296 158,296 144,322" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"><title>root  —[circle]→  root</title></path>
-<path d="M 335.8,166 C 335.8,208.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis  —[circle]→  root</title></path>
-<path d="M 575,66 C 575,111.50399999999999 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator  —[circle]→  root &gt; vis</title></path>
-<path d="M 817.4000000000001,246 C 817.4000000000001,291.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[circle]→  root &gt; vis &gt; operator</title></path>
-<path d="M 817.4000000000001,286 C 817.4000000000001,331.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; label  —[circle]→  root &gt; vis &gt; operator</title></path>
-<path d="M 817.4000000000001,326 C 817.4000000000001,371.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[circle]→  root &gt; vis &gt; operator</title></path>
-<path d="M 817.4000000000001,366 C 817.4000000000001,411.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[circle]→  root &gt; vis &gt; operator</title></path>
-<path d="M 817.4000000000001,406 C 817.4000000000001,451.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[circle]→  root &gt; vis &gt; operator</title></path>
-<path d="M 575,106 C 575,151.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[circle]→  root &gt; vis</title></path>
-<path d="M 817.4000000000001,446 C 817.4000000000001,491.88800000000003 585,152.888 585,107" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[circle]→  root &gt; vis &gt; data</title></path>
-<path d="M 575,146 C 575,191.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[circle]→  root &gt; vis</title></path>
-<path d="M 575,186 C 575,231.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[circle]→  root &gt; vis</title></path>
-<path d="M 575,226 C 575,271.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis  —[circle]→  root &gt; vis</title></path>
-<path d="M 575,266 C 575,311.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[circle]→  root &gt; vis</title></path>
-<path d="M 335.8,206 C 335.8,248.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util  —[circle]→  root</title></path>
-<path d="M 575,306 C 575,351.504 345.8,252.504 345.8,207" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[circle]→  root &gt; util</title></path>
-<path d="M 575,346 C 575,391.504 345.8,252.504 345.8,207" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[circle]→  root &gt; util</title></path>
-<path d="M 575,386 C 575,431.504 345.8,252.504 345.8,207" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[circle]→  root &gt; util</title></path>
-<path d="M 335.8,246 C 335.8,288.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate  —[circle]→  root</title></path>
-<path d="M 575,426 C 575,471.504 345.8,292.504 345.8,247" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[circle]→  root &gt; animate</title></path>
-<path d="M 335.8,286 C 335.8,328.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query  —[circle]→  root</title></path>
-<path d="M 575,466 C 575,511.504 345.8,332.504 345.8,287" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[circle]→  root &gt; query</title></path>
-<path d="M 335.8,326 C 335.8,368.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[circle]→  root</title></path>
-<path d="M 575,506 C 575,551.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[circle]→  root &gt; analytics</title></path>
-<path d="M 575,546 C 575,591.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[circle]→  root &gt; analytics</title></path>
-<path d="M 575,586 C 575,631.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[circle]→  root &gt; analytics</title></path>
-<path d="M 335.8,366 C 335.8,408.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; scale  —[circle]→  root</title></path>
-<path d="M 335.8,406 C 335.8,448.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; data  —[circle]→  root</title></path>
-<path d="M 575,626 C 575,671.504 345.8,452.504 345.8,407" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[circle]→  root &gt; data</title></path>
-<path d="M 335.8,486 C 335.8,528.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; display  —[circle]→  root</title></path>
+<path d="M 438.5,716 C 438.5,774.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; flex  —[circle]→  root</title></path>
+<path d="M 438.5,604 C 438.5,662.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; physics  —[circle]→  root</title></path>
+<path d="M 148,432 C 138,396 184,396 164,435" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[circle]→  root</title></path>
+<path d="M 438.5,212 C 438.5,270.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis  —[circle]→  root</title></path>
+<path d="M 764,72 C 764,133.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator  —[circle]→  root &gt; vis</title></path>
+<path d="M 1093,324 C 1093,386.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[circle]→  root &gt; vis &gt; operator</title></path>
+<path d="M 1093,380 C 1093,442.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; label  —[circle]→  root &gt; vis &gt; operator</title></path>
+<path d="M 1093,436 C 1093,498.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[circle]→  root &gt; vis &gt; operator</title></path>
+<path d="M 1093,492 C 1093,554.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[circle]→  root &gt; vis &gt; operator</title></path>
+<path d="M 1093,548 C 1093,610.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[circle]→  root &gt; vis &gt; operator</title></path>
+<path d="M 764,128 C 764,189.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[circle]→  root &gt; vis</title></path>
+<path d="M 1093,604 C 1093,666.28 774,191.28 774,129" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[circle]→  root &gt; vis &gt; data</title></path>
+<path d="M 764,184 C 764,245.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[circle]→  root &gt; vis</title></path>
+<path d="M 764,240 C 764,301.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[circle]→  root &gt; vis</title></path>
+<path d="M 764,296 C 764,357.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis  —[circle]→  root &gt; vis</title></path>
+<path d="M 764,352 C 764,413.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[circle]→  root &gt; vis</title></path>
+<path d="M 438.5,268 C 438.5,326.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util  —[circle]→  root</title></path>
+<path d="M 764,408 C 764,469.86 448.5,330.86 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[circle]→  root &gt; util</title></path>
+<path d="M 764,464 C 764,525.86 448.5,330.86 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[circle]→  root &gt; util</title></path>
+<path d="M 764,520 C 764,581.86 448.5,330.86 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[circle]→  root &gt; util</title></path>
+<path d="M 438.5,324 C 438.5,382.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate  —[circle]→  root</title></path>
+<path d="M 764,576 C 764,637.86 448.5,386.86 448.5,325" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[circle]→  root &gt; animate</title></path>
+<path d="M 438.5,380 C 438.5,438.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query  —[circle]→  root</title></path>
+<path d="M 764,632 C 764,693.86 448.5,442.86 448.5,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[circle]→  root &gt; query</title></path>
+<path d="M 438.5,436 C 438.5,494.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[circle]→  root</title></path>
+<path d="M 764,688 C 764,749.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[circle]→  root &gt; analytics</title></path>
+<path d="M 764,744 C 764,805.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[circle]→  root &gt; analytics</title></path>
+<path d="M 764,800 C 764,861.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[circle]→  root &gt; analytics</title></path>
+<path d="M 438.5,492 C 438.5,550.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; scale  —[circle]→  root</title></path>
+<path d="M 438.5,548 C 438.5,606.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; data  —[circle]→  root</title></path>
+<path d="M 764,856 C 764,917.86 448.5,610.86 448.5,549" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[circle]→  root &gt; data</title></path>
+<path d="M 438.5,660 C 438.5,718.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; display  —[circle]→  root</title></path>
 </g>
 <g class="forward-edges">
-<path d="M 146,333 C 225.9,333 225.9,153 305.8,153" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
-<path d="M 146,333 C 225.9,333 225.9,193 305.8,193" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
-<path d="M 146,333 C 223.2,333 223.2,233 300.4,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[animate]→  root &gt; animate</title></path>
-<path d="M 146,333 C 225.9,333 225.9,273 305.8,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[query]→  root &gt; query</title></path>
-<path d="M 146,333 C 220,333 220,313 294,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 146,333 C 225.9,333 225.9,353 305.8,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[scale]→  root &gt; scale</title></path>
-<path d="M 146,333 C 225.9,333 225.9,393 305.8,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[data]→  root &gt; data</title></path>
-<path d="M 146,333 C 223.2,333 223.2,433 300.4,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[physics]→  root &gt; physics</title></path>
-<path d="M 146,333 C 223.2,333 223.2,473 300.4,473" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[display]→  root &gt; display</title></path>
-<path d="M 146,333 C 225.9,333 225.9,513 305.8,513" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[flex]→  root &gt; flex</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,116 L 513.6,61 Q 513.6,53 521.6,53 L 536.4,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,116 L 513.6,101 Q 513.6,93 521.6,93 L 545,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,125 Q 513.6,133 521.6,133 L 536.4,133" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,165 Q 513.6,173 521.6,173 L 542.8000000000001,173" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,205 Q 513.6,213 521.6,213 L 545,213" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,245 Q 513.6,253 521.6,253 L 542.8000000000001,253" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[events]→  root &gt; vis &gt; events</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,285 Q 513.6,293 521.6,293 L 539.6,293" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,325 Q 513.6,333 521.6,333 L 545,333" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[heap]→  root &gt; util &gt; heap</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,381 Q 513.6,373 521.6,373 L 545,373" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[math]→  root &gt; util &gt; math</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,421 Q 513.6,413 521.6,413 L 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,461 Q 513.6,453 521.6,453 L 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,501 Q 513.6,493 521.6,493 L 545,493" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,541 Q 513.6,533 521.6,533 L 539.6,533" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,550 L 513.6,565 Q 513.6,573 521.6,573 L 523.6,573" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,550 L 513.6,605 Q 513.6,613 521.6,613 L 530,613" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[converters]→  root &gt; data &gt; converters</title></path>
-<path d="M 363.8,153 C 450.1,153 450.1,53 536.4,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 363.8,153 C 454.4,153 454.4,93 545,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 363.8,153 C 450.1,153 450.1,133 536.4,133" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 363.8,153 C 453.30000000000007,153 453.30000000000007,173 542.8000000000001,173" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 363.8,153 C 454.4,153 454.4,213 545,213" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 363.8,153 C 453.30000000000007,153 453.30000000000007,253 542.8000000000001,253" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[events]→  root &gt; vis &gt; events</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,225 Q 762.4000000000001,233 770.4000000000001,233 L 785.2,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,265 Q 762.4000000000001,273 770.4000000000001,273 L 787.4000000000001,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,305 Q 762.4000000000001,313 770.4000000000001,313 L 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,345 Q 762.4000000000001,353 770.4000000000001,353 L 772.4000000000001,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,385 Q 762.4000000000001,393 770.4000000000001,393 L 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,425 Q 762.4000000000001,433 770.4000000000001,433 L 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 611.6,53 C 698.4000000000001,53 698.4000000000001,233 785.2,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 611.6,53 C 699.5,53 699.5,273 787.4000000000001,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 611.6,53 C 696.8000000000001,53 696.8000000000001,313 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 611.6,53 C 692,53 692,353 772.4000000000001,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 611.6,53 C 698.4000000000001,53 698.4000000000001,393 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 603,93 C 694.1,93 694.1,433 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; data  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 363.8,193 C 451.70000000000005,193 451.70000000000005,293 539.6,293" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
-<path d="M 363.8,193 C 454.4,193 454.4,333 545,333" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[heap]→  root &gt; util &gt; heap</title></path>
-<path d="M 363.8,193 C 454.4,193 454.4,373 545,373" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[math]→  root &gt; util &gt; math</title></path>
-<path d="M 369.2,233 C 448,233 448,413 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; animate  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 363.8,273 C 451.70000000000005,273 451.70000000000005,453 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; query  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 375.6,313 C 460.3,313 460.3,493 545,493" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
-<path d="M 375.6,313 C 457.6,313 457.6,533 539.6,533" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 375.6,313 C 449.6,313 449.6,573 523.6,573" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 363.8,393 C 446.9,393 446.9,613 530,613" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; data  —[converters]→  root &gt; data &gt; converters</title></path>
+<path d="M 166,448 C 287.25,448 287.25,196 408.5,196" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
+<path d="M 166,448 C 287.25,448 287.25,252 408.5,252" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
+<path d="M 166,448 C 283.5,448 283.5,308 401,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[animate]→  root &gt; animate</title></path>
+<path d="M 166,448 C 287,448 287,364 408,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[query]→  root &gt; query</title></path>
+<path d="M 166,448 C 280,448 280,420 394,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 166,448 C 287,448 287,476 408,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[scale]→  root &gt; scale</title></path>
+<path d="M 166,448 C 287.25,448 287.25,532 408.5,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[data]→  root &gt; data</title></path>
+<path d="M 166,448 C 283.5,448 283.5,588 401,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[physics]→  root &gt; physics</title></path>
+<path d="M 166,448 C 283.5,448 283.5,644 401,644" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[display]→  root &gt; display</title></path>
+<path d="M 166,448 C 287.25,448 287.25,700 408.5,700" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[flex]→  root &gt; flex</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,146 L 607,66 Q 607,56 617,56 L 723,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,146 L 607,122 Q 607,112 617,112 L 734,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,158 Q 607,168 617,168 L 723,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,214 Q 607,224 617,224 L 730,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,270 Q 607,280 617,280 L 734,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,326 Q 607,336 617,336 L 730,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[events]→  root &gt; vis &gt; events</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,382 Q 607,392 617,392 L 726.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,438 Q 607,448 617,448 L 734,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,514 Q 607,504 617,504 L 734,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,570 Q 607,560 617,560 L 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,626 Q 607,616 617,616 L 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,682 Q 607,672 617,672 L 733.5,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,738 Q 607,728 617,728 L 726.5,728" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,750 L 607,774 Q 607,784 617,784 L 709,784" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,750 L 607,830 Q 607,840 617,840 L 716,840" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[converters]→  root &gt; data &gt; converters</title></path>
+<path d="M 466.5,196 C 594.75,196 594.75,56 723,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 466.5,196 C 600.25,196 600.25,112 734,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 466.5,196 C 594.75,196 594.75,168 723,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 466.5,196 C 598.25,196 598.25,224 730,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 466.5,196 C 600.25,196 600.25,280 734,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 466.5,196 C 598.25,196 598.25,336 730,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[events]→  root &gt; vis &gt; events</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,298 Q 955,308 965,308 L 1059,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,354 Q 955,364 965,364 L 1062.5,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,410 Q 955,420 965,420 L 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,466 Q 955,476 965,476 L 1045,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,522 Q 955,532 965,532 L 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,578 Q 955,588 965,588 L 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 803,56 C 931,56 931,308 1059,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 803,56 C 932.75,56 932.75,364 1062.5,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 803,56 C 929.25,56 929.25,420 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 803,56 C 924,56 924,476 1045,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 803,56 C 931,56 931,532 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 792,112 C 925.5,112 925.5,588 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; data  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 466.5,252 C 596.5,252 596.5,392 726.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 466.5,252 C 600.25,252 600.25,448 734,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 466.5,252 C 600.25,252 600.25,504 734,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 474,308 C 593.25,308 593.25,560 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; animate  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 467,364 C 596.75,364 596.75,616 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; query  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 481,420 C 607.25,420 607.25,672 733.5,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 481,420 C 603.75,420 603.75,728 726.5,728" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 481,420 C 595,420 595,784 709,784" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 466.5,532 C 591.25,532 591.25,840 716,840" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; data  —[converters]→  root &gt; data &gt; converters</title></path>
 </g>
-<line x1="50" y1="333" x2="88" y2="333" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="52" y1="448" x2="108" y2="448" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
 <g class="states">
 <g>
 <title>root &gt; flex
   circle → root</title>
-<rect x="307.8" y="500" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="513" text-anchor="middle" dominant-baseline="central">flex</text>
+<rect x="410.5" y="684" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="700" text-anchor="middle" dominant-baseline="central">flex</text>
 </g>
 <g>
 <title>root &gt; physics
   circle → root</title>
-<rect x="302.4" y="420" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="433" text-anchor="middle" dominant-baseline="central">physics</text>
+<rect x="403" y="572" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="588" text-anchor="middle" dominant-baseline="central">physics</text>
 </g>
 <g>
 <title>root
@@ -137,8 +137,8 @@
   optimization → root &gt; analytics &gt; optimization
   converters → root &gt; data &gt; converters
   circle → root</title>
-<rect x="90" y="320" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
-<text x="118" y="333" text-anchor="middle" dominant-baseline="central">root</text>
+<rect x="110" y="432" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="138" y="448" text-anchor="middle" dominant-baseline="central">root</text>
 </g>
 <g>
 <title>root &gt; vis
@@ -155,8 +155,8 @@
   filter → root &gt; vis &gt; operator &gt; filter
   render → root &gt; vis &gt; data &gt; render
   circle → root</title>
-<rect x="307.8" y="140" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="153" text-anchor="middle" dominant-baseline="central">vis</text>
+<rect x="410.5" y="180" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="196" text-anchor="middle" dominant-baseline="central">vis</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator
@@ -166,75 +166,75 @@
   distortion → root &gt; vis &gt; operator &gt; distortion
   filter → root &gt; vis &gt; operator &gt; filter
   circle → root &gt; vis</title>
-<rect x="538.4" y="40" width="73.2" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="53" text-anchor="middle" dominant-baseline="central">operator</text>
+<rect x="725" y="40" width="78" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="56" text-anchor="middle" dominant-baseline="central">operator</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; layout
   circle → root &gt; vis &gt; operator</title>
-<rect x="787.2" y="220" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="233" text-anchor="middle" dominant-baseline="central">layout</text>
+<rect x="1061" y="292" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="308" text-anchor="middle" dominant-baseline="central">layout</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; label
   circle → root &gt; vis &gt; operator</title>
-<rect x="789.4000000000001" y="260" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="273" text-anchor="middle" dominant-baseline="central">label</text>
+<rect x="1064.5" y="348" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="364" text-anchor="middle" dominant-baseline="central">label</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; encoder
   circle → root &gt; vis &gt; operator</title>
-<rect x="784.0000000000001" y="300" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="313" text-anchor="middle" dominant-baseline="central">encoder</text>
+<rect x="1057.5" y="404" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="420" text-anchor="middle" dominant-baseline="central">encoder</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; distortion
   circle → root &gt; vis &gt; operator</title>
-<rect x="774.4000000000001" y="340" width="86" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="353" text-anchor="middle" dominant-baseline="central">distortion</text>
+<rect x="1047" y="460" width="92" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="476" text-anchor="middle" dominant-baseline="central">distortion</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; filter
   circle → root &gt; vis &gt; operator</title>
-<rect x="787.2" y="380" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="393" text-anchor="middle" dominant-baseline="central">filter</text>
+<rect x="1061" y="516" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="532" text-anchor="middle" dominant-baseline="central">filter</text>
 </g>
 <g>
 <title>root &gt; vis &gt; data
   render → root &gt; vis &gt; data &gt; render
   circle → root &gt; vis</title>
-<rect x="547" y="80" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="93" text-anchor="middle" dominant-baseline="central">data</text>
+<rect x="736" y="96" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="112" text-anchor="middle" dominant-baseline="central">data</text>
 </g>
 <g>
 <title>root &gt; vis &gt; data &gt; render
   circle → root &gt; vis &gt; data</title>
-<rect x="787.2" y="420" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="433" text-anchor="middle" dominant-baseline="central">render</text>
+<rect x="1061" y="572" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="588" text-anchor="middle" dominant-baseline="central">render</text>
 </g>
 <g>
 <title>root &gt; vis &gt; controls
   circle → root &gt; vis</title>
-<rect x="538.4" y="120" width="73.2" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="133" text-anchor="middle" dominant-baseline="central">controls</text>
+<rect x="725" y="152" width="78" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="168" text-anchor="middle" dominant-baseline="central">controls</text>
 </g>
 <g>
 <title>root &gt; vis &gt; legend
   circle → root &gt; vis</title>
-<rect x="544.8000000000001" y="160" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="173" text-anchor="middle" dominant-baseline="central">legend</text>
+<rect x="732" y="208" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="224" text-anchor="middle" dominant-baseline="central">legend</text>
 </g>
 <g>
 <title>root &gt; vis &gt; axis
   circle → root &gt; vis</title>
-<rect x="547" y="200" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="213" text-anchor="middle" dominant-baseline="central">axis</text>
+<rect x="736" y="264" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="280" text-anchor="middle" dominant-baseline="central">axis</text>
 </g>
 <g>
 <title>root &gt; vis &gt; events
   circle → root &gt; vis</title>
-<rect x="544.8000000000001" y="240" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="253" text-anchor="middle" dominant-baseline="central">events</text>
+<rect x="732" y="320" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="336" text-anchor="middle" dominant-baseline="central">events</text>
 </g>
 <g>
 <title>root &gt; util
@@ -242,52 +242,52 @@
   heap → root &gt; util &gt; heap
   math → root &gt; util &gt; math
   circle → root</title>
-<rect x="307.8" y="180" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="193" text-anchor="middle" dominant-baseline="central">util</text>
+<rect x="410.5" y="236" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="252" text-anchor="middle" dominant-baseline="central">util</text>
 </g>
 <g>
 <title>root &gt; util &gt; palette
   circle → root &gt; util</title>
-<rect x="541.6" y="280" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="293" text-anchor="middle" dominant-baseline="central">palette</text>
+<rect x="728.5" y="376" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="392" text-anchor="middle" dominant-baseline="central">palette</text>
 </g>
 <g>
 <title>root &gt; util &gt; heap
   circle → root &gt; util</title>
-<rect x="547" y="320" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="333" text-anchor="middle" dominant-baseline="central">heap</text>
+<rect x="736" y="432" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="448" text-anchor="middle" dominant-baseline="central">heap</text>
 </g>
 <g>
 <title>root &gt; util &gt; math
   circle → root &gt; util</title>
-<rect x="547" y="360" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="373" text-anchor="middle" dominant-baseline="central">math</text>
+<rect x="736" y="488" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="504" text-anchor="middle" dominant-baseline="central">math</text>
 </g>
 <g>
 <title>root &gt; animate
   interpolate → root &gt; animate &gt; interpolate
   circle → root</title>
-<rect x="302.4" y="220" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="233" text-anchor="middle" dominant-baseline="central">animate</text>
+<rect x="403" y="292" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="308" text-anchor="middle" dominant-baseline="central">animate</text>
 </g>
 <g>
 <title>root &gt; animate &gt; interpolate
   circle → root &gt; animate</title>
-<rect x="528.8000000000001" y="400" width="92.4" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="413" text-anchor="middle" dominant-baseline="central">interpolate</text>
+<rect x="714.5" y="544" width="99" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="560" text-anchor="middle" dominant-baseline="central">interpolate</text>
 </g>
 <g>
 <title>root &gt; query
   methods → root &gt; query &gt; methods
   circle → root</title>
-<rect x="307.8" y="260" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="273" text-anchor="middle" dominant-baseline="central">query</text>
+<rect x="410" y="348" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="364" text-anchor="middle" dominant-baseline="central">query</text>
 </g>
 <g>
 <title>root &gt; query &gt; methods
   circle → root &gt; query</title>
-<rect x="541.6" y="440" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="453" text-anchor="middle" dominant-baseline="central">methods</text>
+<rect x="728.5" y="600" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="616" text-anchor="middle" dominant-baseline="central">methods</text>
 </g>
 <g>
 <title>root &gt; analytics
@@ -295,136 +295,134 @@
   cluster → root &gt; analytics &gt; cluster
   optimization → root &gt; analytics &gt; optimization
   circle → root</title>
-<rect x="296" y="300" width="79.6" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="313" text-anchor="middle" dominant-baseline="central">analytics</text>
+<rect x="396" y="404" width="85" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="420" text-anchor="middle" dominant-baseline="central">analytics</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; graph
   circle → root &gt; analytics</title>
-<rect x="547" y="480" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="493" text-anchor="middle" dominant-baseline="central">graph</text>
+<rect x="735.5" y="656" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="672" text-anchor="middle" dominant-baseline="central">graph</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; cluster
   circle → root &gt; analytics</title>
-<rect x="541.6" y="520" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="533" text-anchor="middle" dominant-baseline="central">cluster</text>
+<rect x="728.5" y="712" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="728" text-anchor="middle" dominant-baseline="central">cluster</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; optimization
   circle → root &gt; analytics</title>
-<rect x="525.6" y="560" width="98.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="573" text-anchor="middle" dominant-baseline="central">optimization</text>
+<rect x="711" y="768" width="106" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="784" text-anchor="middle" dominant-baseline="central">optimization</text>
 </g>
 <g>
 <title>root &gt; scale
   circle → root</title>
-<rect x="307.8" y="340" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="353" text-anchor="middle" dominant-baseline="central">scale</text>
+<rect x="410" y="460" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="476" text-anchor="middle" dominant-baseline="central">scale</text>
 </g>
 <g>
 <title>root &gt; data
   converters → root &gt; data &gt; converters
   circle → root</title>
-<rect x="307.8" y="380" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="393" text-anchor="middle" dominant-baseline="central">data</text>
+<rect x="410.5" y="516" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="532" text-anchor="middle" dominant-baseline="central">data</text>
 </g>
 <g>
 <title>root &gt; data &gt; converters
   circle → root &gt; data</title>
-<rect x="532" y="600" width="86" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="613" text-anchor="middle" dominant-baseline="central">converters</text>
+<rect x="718" y="824" width="92" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="840" text-anchor="middle" dominant-baseline="central">converters</text>
 </g>
 <g>
 <title>root &gt; display
   circle → root</title>
-<rect x="302.4" y="460" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="473" text-anchor="middle" dominant-baseline="central">display</text>
+<rect x="403" y="628" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="644" text-anchor="middle" dominant-baseline="central">display</text>
 </g>
 </g>
 <g class="labels">
-<text x="154" y="306" font-size="10" fill="#555">circle</text>
-<text x="299.8" y="148" text-anchor="end" font-size="10" fill="#333">vis</text>
-<text x="299.8" y="188" text-anchor="end" font-size="10" fill="#333">util</text>
-<text x="294.4" y="228" text-anchor="end" font-size="10" fill="#333">animate</text>
-<text x="299.8" y="268" text-anchor="end" font-size="10" fill="#333">query</text>
-<text x="288" y="308" text-anchor="end" font-size="10" fill="#333">analytics</text>
-<text x="299.8" y="348" text-anchor="end" font-size="10" fill="#333">scale</text>
-<text x="299.8" y="388" text-anchor="end" font-size="10" fill="#333">data</text>
-<text x="294.4" y="428" text-anchor="end" font-size="10" fill="#333">physics</text>
-<text x="294.4" y="468" text-anchor="end" font-size="10" fill="#333">display</text>
-<text x="299.8" y="508" text-anchor="end" font-size="10" fill="#333">flex</text>
-<text x="530.4" y="48" text-anchor="end" font-size="10" fill="#333">operator</text>
-<text x="539" y="88" text-anchor="end" font-size="10" fill="#333">vis/data</text>
-<text x="530.4" y="128" text-anchor="end" font-size="10" fill="#333">controls</text>
-<text x="536.8000000000001" y="168" text-anchor="end" font-size="10" fill="#333">legend</text>
-<text x="539" y="208" text-anchor="end" font-size="10" fill="#333">axis</text>
-<text x="536.8000000000001" y="248" text-anchor="end" font-size="10" fill="#333">events</text>
-<text x="533.6" y="288" text-anchor="end" font-size="10" fill="#333">palette</text>
-<text x="539" y="328" text-anchor="end" font-size="10" fill="#333">heap</text>
-<text x="539" y="368" text-anchor="end" font-size="10" fill="#333">math</text>
-<text x="520.8000000000001" y="408" text-anchor="end" font-size="10" fill="#333">interpolate</text>
-<text x="533.6" y="448" text-anchor="end" font-size="10" fill="#333">methods</text>
-<text x="539" y="488" text-anchor="end" font-size="10" fill="#333">graph</text>
-<text x="533.6" y="528" text-anchor="end" font-size="10" fill="#333">cluster</text>
-<text x="517.6" y="568" text-anchor="end" font-size="10" fill="#333">optimization</text>
-<text x="524" y="608" text-anchor="end" font-size="10" fill="#333">converters</text>
-<text x="779.2" y="228" text-anchor="end" font-size="10" fill="#333">layout</text>
-<text x="781.4000000000001" y="268" text-anchor="end" font-size="10" fill="#333">label</text>
-<text x="776.0000000000001" y="308" text-anchor="end" font-size="10" fill="#333">encoder</text>
-<text x="766.4000000000001" y="348" text-anchor="end" font-size="10" fill="#333">distortion</text>
-<text x="779.2" y="388" text-anchor="end" font-size="10" fill="#333">filter</text>
-<text x="779.2" y="428" text-anchor="end" font-size="10" fill="#333">render</text>
-<text x="327.8" y="536" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="456" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="176" font-size="9"><tspan fill="#555">↷ layout, label +4</tspan>  <tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="76" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="256" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="296" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="336" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="376" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="416" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="116" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="809.4000000000001" y="456" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="156" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="196" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="236" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="276" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="216" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="316" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="356" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="396" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="256" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="436" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="296" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="476" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="336" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="516" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="556" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="596" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="376" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="416" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="567" y="636" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="327.8" y="496" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="110" y="356" font-size="9"><tspan fill="#555">↷ operator, vis/data +13</tspan></text>
+<text x="176" y="412" font-size="11" fill="#555">circle</text>
+<text x="392.5" y="187" text-anchor="end" font-size="11" fill="#333">vis</text>
+<text x="392.5" y="243" text-anchor="end" font-size="11" fill="#333">util</text>
+<text x="385" y="299" text-anchor="end" font-size="11" fill="#333">animate</text>
+<text x="392" y="355" text-anchor="end" font-size="11" fill="#333">query</text>
+<text x="378" y="411" text-anchor="end" font-size="11" fill="#333">analytics</text>
+<text x="392" y="467" text-anchor="end" font-size="11" fill="#333">scale</text>
+<text x="392.5" y="523" text-anchor="end" font-size="11" fill="#333">data</text>
+<text x="385" y="579" text-anchor="end" font-size="11" fill="#333">physics</text>
+<text x="385" y="635" text-anchor="end" font-size="11" fill="#333">display</text>
+<text x="392.5" y="691" text-anchor="end" font-size="11" fill="#333">flex</text>
+<text x="707" y="47" text-anchor="end" font-size="11" fill="#333">operator</text>
+<text x="718" y="103" text-anchor="end" font-size="11" fill="#333">vis/data</text>
+<text x="707" y="159" text-anchor="end" font-size="11" fill="#333">controls</text>
+<text x="714" y="215" text-anchor="end" font-size="11" fill="#333">legend</text>
+<text x="718" y="271" text-anchor="end" font-size="11" fill="#333">axis</text>
+<text x="714" y="327" text-anchor="end" font-size="11" fill="#333">events</text>
+<text x="710.5" y="383" text-anchor="end" font-size="11" fill="#333">palette</text>
+<text x="718" y="439" text-anchor="end" font-size="11" fill="#333">heap</text>
+<text x="718" y="495" text-anchor="end" font-size="11" fill="#333">math</text>
+<text x="696.5" y="551" text-anchor="end" font-size="11" fill="#333">interpolate</text>
+<text x="710.5" y="607" text-anchor="end" font-size="11" fill="#333">methods</text>
+<text x="717.5" y="663" text-anchor="end" font-size="11" fill="#333">graph</text>
+<text x="710.5" y="719" text-anchor="end" font-size="11" fill="#333">cluster</text>
+<text x="693" y="775" text-anchor="end" font-size="11" fill="#333">optimization</text>
+<text x="700" y="831" text-anchor="end" font-size="11" fill="#333">converters</text>
+<text x="1043" y="299" text-anchor="end" font-size="11" fill="#333">layout</text>
+<text x="1046.5" y="355" text-anchor="end" font-size="11" fill="#333">label</text>
+<text x="1039.5" y="411" text-anchor="end" font-size="11" fill="#333">encoder</text>
+<text x="1029" y="467" text-anchor="end" font-size="11" fill="#333">distortion</text>
+<text x="1043" y="523" text-anchor="end" font-size="11" fill="#333">filter</text>
+<text x="1043" y="579" text-anchor="end" font-size="11" fill="#333">render</text>
+<text x="430.5" y="730" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="618" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="226" font-size="10"><tspan fill="#555">↷ layout, label +4</tspan>  <tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="86" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="338" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="394" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="450" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="506" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="562" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="142" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="1085" y="618" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="198" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="254" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="310" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="366" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="282" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="422" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="478" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="534" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="338" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="590" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="394" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="646" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="450" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="702" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="758" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="814" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="506" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="562" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="756" y="870" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="674" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="130" y="478" font-size="10"><tspan fill="#555">↷ operator, vis/data +13</tspan></text>
 </g>
 <g font-size="10" fill="#666">
-<line x1="40" y1="688" x2="68" y2="688" stroke="#777" marker-end="url(#arrow)"/>
-<text x="74" y="691">acción que avanza (etiqueta junto al destino)</text>
-<line x1="330" y1="688" x2="358" y2="688" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
-<text x="364" y="691">acción que vuelve (↩ bajo el origen)</text>
-<line x1="570" y1="688" x2="598" y2="688" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
-<text x="604" y="691">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="708">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="928" x2="80" y2="928" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="931">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="928" x2="400" y2="928" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="931">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="928" x2="670" y2="928" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="931">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="948">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
 </g>
-<line x1="40" y1="732" x2="860.4000000000001" y2="732" stroke="#ddd"/>
-<text x="40" y="752" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 21 atajos aparte, ver regex.cycles en transitions.json)</text>
+<line x1="40" y1="972" x2="1139" y2="972" stroke="#ddd"/>
+<text x="40" y="992" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 21 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="770">((Click_vis ((Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)*</tspan>
-<tspan x="40" y="785">| Click_vis/data (Click_render Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* |</tspan>
-<tspan x="40" y="800">Click_util ((Click_palette | Click_heap | Click_math) Click_circle)* | Click_animate (Click_interpolate Click_circle)* |</tspan>
-<tspan x="40" y="815">Click_query (Click_methods Click_circle)* | Click_analytics ((Click_graph | Click_cluster | Click_optimization)</tspan>
-<tspan x="40" y="830">Click_circle)* | Click_scale | Click_data (Click_converters Click_circle)* | Click_physics | Click_display | Click_flex)?</tspan>
-<tspan x="40" y="845">Click_circle)*</tspan>
+<tspan x="40" y="1010">((Click_vis ((Click_operator ((Click_layout | Click_label | Click_encoder | Click_distortion | Click_filter) Click_circle)* | Click_vis/data (Click_render</tspan>
+<tspan x="40" y="1025">Click_circle)* | Click_controls | Click_legend | Click_axis | Click_events) Click_circle)* | Click_util ((Click_palette | Click_heap | Click_math) Click_circle)* |</tspan>
+<tspan x="40" y="1040">Click_animate (Click_interpolate Click_circle)* | Click_query (Click_methods Click_circle)* | Click_analytics ((Click_graph | Click_cluster | Click_optimization)</tspan>
+<tspan x="40" y="1055">Click_circle)* | Click_scale | Click_data (Click_converters Click_circle)* | Click_physics | Click_display | Click_flex)? Click_circle)*</tspan>
 </text>
 </svg>

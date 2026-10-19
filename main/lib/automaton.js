@@ -1,15 +1,15 @@
 /**
- * Un DFA parcial sobre un alfabeto de acciones (los "Click_X" que descubre
- * el crawler). Parcial: si un estado no tiene transición definida para un
- * símbolo, esa cadena queda RECHAZADA desde ahí (no hay un estado "trampa"
- * explícito -- lo tratamos como null/undefined y listo).
+ * A partial DFA over an alphabet of actions (the "Click_X" symbols the
+ * crawler discovers). Partial: a state with no transition for a symbol
+ * REJECTS the string from there; there is no explicit trap state, a missing
+ * transition is just null.
  *
- * En el autómata OBSERVADO (el del crawler) todo estado alcanzable es
- * aceptante, salvo __ERROR__: no estamos modelando "¿terminó bien la
- * ejecución?" sino "¿esta secuencia de clicks es realizable?" -- por eso
- * su lenguaje es exactamente el conjunto de secuencias de acciones que se
- * pueden ejecutar de verdad desde el estado inicial. El que sale de un
- * regex (lib/regex.js) sí tiene aceptación propia (semántica estándar).
+ * In the OBSERVED automaton (the crawler's) every reachable state is
+ * accepting except __ERROR__. It does not model "did the run end well" but
+ * "can this sequence of actions be performed", so its language is exactly the
+ * set of action sequences that can really be executed from the initial
+ * state. The automaton built from a regex (lib/regex.js) has acceptance of
+ * its own (standard semantics).
  */
 
 const ERROR_STATE = '__ERROR__';
@@ -18,9 +18,9 @@ class DFA {
   /**
    * @param {Object} opts
    * @param {string} opts.initial
-   * @param {Map<string, Map<string, string>>} opts.transitions - estado -> (símbolo -> estado)
-   * @param {Set<string>} [opts.alphabet] - si se omite, se infiere de `transitions`.
-   * @param {Set<string>} [opts.accepting] - si se omite, todo estado es aceptante.
+   * @param {Map<string, Map<string, string>>} opts.transitions - state -> (symbol -> state)
+   * @param {Set<string>} [opts.alphabet] - inferred from `transitions` when omitted
+   * @param {Set<string>} [opts.accepting] - every state accepts when omitted
    */
   constructor({ initial, transitions, alphabet, accepting = null }) {
     this.initial = initial;
@@ -41,7 +41,7 @@ class DFA {
     return alphabet;
   }
 
-  /** @returns {string|null} el estado destino, o null si la transición no existe (cadena rechazada) */
+  /** @returns {string|null} the target state, or null when there is no such transition (string rejected) */
   step(state, symbol) {
     const symbolMap = this.transitions.get(state);
     if (!symbolMap) return null;
@@ -54,9 +54,9 @@ class DFA {
 }
 
 /**
- * Convierte el transitions.json que produce el crawler (formato:
- * { initialState, transitions: { estado: { accion: estadoDestino } } })
- * en un DFA. Este es el autómata OBSERVADO.
+ * Builds a DFA from the transitions.json the crawler writes
+ * ({ initialState, transitions: { state: { action: targetState } } }).
+ * This is the OBSERVED automaton.
  */
 function fromTransitionsJson({ initialState, transitions }) {
   const map = new Map();
@@ -70,10 +70,10 @@ function fromTransitionsJson({ initialState, transitions }) {
 }
 
 /**
- * Clausura por prefijos: acepta toda secuencia que pueda EXTENDERSE hasta
- * una aceptada. Para comparar con un regex que describe interacciones
- * completas (p.ej. "(Click_A Click_BACK)*") sin tener que escribir a mano
- * cada interacción a medio hacer.
+ * Prefix closure: accepts every sequence that can be EXTENDED to an accepted
+ * one. Lets an expected regex that describes complete interactions (such as
+ * "(Click_A Click_BACK)*") be compared without spelling out every
+ * half-finished interaction.
  */
 function prefixClosure(dfa) {
   const preds = new Map();

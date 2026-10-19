@@ -1,26 +1,25 @@
 /**
- * Regex sobre un ALFABETO DE TOKENS (nombres de acción completos, p.ej.
- * "Click_A", no caracteres sueltos), con semántica ESTÁNDAR: el lenguaje
- * del regex es exactamente el conjunto de secuencias que matchea entero.
- * Los tokens se separan con espacios (como los caracteres en un regex
- * clásico, pero de varias letras). Gramática:
+ * Regex over an ALPHABET OF TOKENS (whole action names such as "Click_A",
+ * not single characters), with STANDARD semantics: the regex's language is
+ * exactly the set of sequences it matches in full. Tokens are separated by
+ * spaces (like the characters of a classic regex, but multi-letter).
+ * Grammar:
  *
  *   Regex   := Union
  *   Union   := Concat ('|' Concat)*
- *   Concat  := Postfix*                (yuxtaposición = concatenación)
+ *   Concat  := Postfix*                (juxtaposition = concatenation)
  *   Postfix := Atom ('*' | '+' | '?' | '{n}' | '{n,}' | '{n,m}')*
- *   Atom    := '(' Union ')'           -- '()' es la cadena vacía
- *            | '.'                     -- cualquier símbolo del alfabeto
+ *   Atom    := '(' Union ')'           -- '()' is the empty string
+ *            | '.'                     -- any symbol of the alphabet
  *            | TOKEN
  *
- * Ejemplo: "(Click_A | Click_B) Click_BACK" describe "entrar a una rama
- * cualquiera y volver". Con '*': "((Click_A | Click_B) Click_BACK)*"
- * describe "repetir esa secuencia cualquier cantidad de veces (incluido
- * cero)".
+ * Example: "(Click_A | Click_B) Click_BACK" describes "enter any branch and
+ * come back". With '*': "((Click_A | Click_B) Click_BACK)*" describes "repeat
+ * that sequence any number of times (zero included)".
  *
- * Además del parser/compilador, este módulo hace el camino inverso:
- * dfaToRegex() convierte un DFA (p.ej. el observado por el crawler) en
- * un regex, por eliminación de estados.
+ * Besides the parser / compiler, this module does the reverse trip:
+ * dfaToRegex() turns a DFA (such as the one the crawler observed) into a
+ * regex by state elimination.
  */
 
 const SPECIAL = '()|*+?{},.';
@@ -80,7 +79,7 @@ function parse(src, alphabet) {
         eat();
         node = { type: op === '*' ? 'star' : op === '+' ? 'plus' : 'optional', node };
       } else if (op === '{') {
-        // repetición acotada estándar: {n}, {n,}, {n,m}
+        // standard bounded repetition: {n}, {n,}, {n,m}
         eat('{');
         const min = eatInt();
         let max = min;
@@ -119,23 +118,25 @@ function parse(src, alphabet) {
   return ast;
 }
 
-// Tokens literales que aparecen en el regex (para saber, al comparar,
-// qué símbolos menciona que el crawler nunca vio -- típicamente typos).
+/**
+ * The literal tokens that appear in the regex, so that a comparison can tell
+ * which symbols it mentions that the crawler never saw (typically typos).
+ */
 function literalsOf(src) {
   const out = new Set();
   const toks = tokenize(src);
   for (let i = 0; i < toks.length; i++) {
     const t = toks[i];
     if (SPECIAL.includes(t)) continue;
-    // números dentro de {n,m} no son símbolos
+    // numbers inside {n,m} are not symbols
     if (/^\d+$/.test(t) && (toks[i - 1] === '{' || toks[i - 1] === ',')) continue;
     out.add(t);
   }
   return out;
 }
 
-// --- Thompson: AST -> NFA con transiciones epsilon ---
-// Representación: lista de estados (índices), cada uno con
+// --- Thompson: AST -> NFA with epsilon transitions ---
+// Representation: a list of states (indices), each one
 // { symbolEdges: Map<symbol, Set<state>>, epsilonEdges: Set<state> }.
 
 function astToNfa(ast) {
@@ -150,7 +151,7 @@ function astToNfa(ast) {
   function build(node) {
     switch (node.type) {
       case 'empty': {
-        return { start: newState(), end: newState() }; // sin camino entre ambos
+        return { start: newState(), end: newState() }; // no path between the two
       }
       case 'epsilon': {
         const s = newState(), e = newState();
@@ -194,7 +195,7 @@ function astToNfa(ast) {
       case 'optional':
         return build({ type: 'union', branches: [node.node, { type: 'epsilon' }] });
       case 'repeat': {
-        // X{n,m} = X...X (n veces) seguido de (m-n) X? -- o X* si m = ∞
+        // X{n,m} = X...X (n times) followed by (m-n) X? -- or X* when m = infinity
         const parts = [];
         for (let k = 0; k < node.min; k++) parts.push(node.node);
         if (node.max === Infinity) parts.push({ type: 'star', node: node.node });
@@ -222,7 +223,7 @@ function epsilonClosure(states, stateSet) {
   return closure;
 }
 
-// --- subconjuntos: NFA -> DFA (parcial: sin trampa explícita) ---
+// --- subset construction: NFA -> DFA (partial: no explicit trap state) ---
 function nfaToDfa(nfa, alphabet) {
   const key = (set) => [...set].sort((a, b) => a - b).join(',');
   const startSet = epsilonClosure(nfa.states, new Set([nfa.start]));
@@ -259,9 +260,9 @@ function nfaToDfa(nfa, alphabet) {
 }
 
 /**
- * Compila un regex (string) en un DFA con estados de aceptación (semántica
- * estándar). `alphabet` hace falta para expandir '.' a "cualquier
- * símbolo"; los tokens que el regex menciona se agregan solos.
+ * Compiles a regex (string) into a DFA with accepting states (standard
+ * semantics). `alphabet` is needed to expand '.' to "any symbol"; the tokens
+ * the regex mentions are added on their own.
  */
 function compileRegex(src, alphabet = []) {
   const fullAlphabet = new Set([...alphabet, ...literalsOf(src)]);
@@ -271,16 +272,16 @@ function compileRegex(src, alphabet = []) {
 }
 
 // ---------------------------------------------------------------------
-// DFA -> regex (eliminación de estados)
+// DFA -> regex (state elimination)
 // ---------------------------------------------------------------------
 //
-// Las expresiones intermedias se arman con constructores que simplifican
-// en el momento (si no, el resultado crece de forma explosiva y es
-// ilegible): uniones planas sin duplicados y con prefijos/sufijos comunes
-// factorizados ("a b | a c" -> "a (b | c)"), ε absorbido por ramas que
-// ya aceptan la cadena vacía, estrellas de estrellas colapsadas, etc.
-// Internamente solo existen empty/epsilon/literal/concat/union/star; '?'
-// y '+' aparecen recién al imprimir ("(ε | X)" -> "X?", "X X*" -> "X+").
+// Intermediate expressions are built with constructors that simplify on the
+// spot (otherwise the result grows explosively and is unreadable): flat
+// unions without duplicates and with common prefixes / suffixes factored out
+// ("a b | a c" -> "a (b | c)"), epsilon absorbed by branches that already
+// accept the empty string, stars of stars collapsed, and so on. Internally
+// only empty / epsilon / literal / concat / union / star exist; '?' and '+'
+// appear only when printing ("(ε | X)" -> "X?", "X X*" -> "X+").
 
 const EMPTY = { type: 'empty' };
 const EPS = { type: 'epsilon' };
@@ -290,9 +291,9 @@ function keyOf(n) {
   return n._k;
 }
 
-// Largo aproximado de print(n) sin imprimirlo: el AST es un DAG (la
-// eliminación reusa subexpresiones), así que imprimir para medir costaría
-// justo lo que queremos evitar cuando el regex explota.
+// Approximate length of print(n) without printing it: the AST is a DAG
+// (elimination reuses subexpressions), so printing to measure would cost
+// exactly what we want to avoid when the regex explodes.
 function sizeOf(n) {
   if (n._n !== undefined) return n._n;
   let s;
@@ -362,8 +363,8 @@ function mkUnion(list) {
   return { type: 'union', branches };
 }
 
-// "a b | a c | d" -> "a (b | c) | d" (o el análogo por sufijo). Mantiene
-// el orden de aparición para que la salida sea estable.
+// "a b | a c | d" -> "a (b | c) | d" (or the analogue by suffix). Keeps the
+// order of appearance so the output is stable.
 function factor(branches, side) {
   const groups = new Map();
   for (const b of branches) {
@@ -400,7 +401,7 @@ function mkStar(n) {
   return { type: 'star', node: n };
 }
 
-// precedencia: 0 = unión, 1 = concatenación, 2 = postfijo/átomo
+// precedence: 0 = union, 1 = concatenation, 2 = postfix / atom
 function print(n, prec = 0) {
   const wrap = (s, p) => (prec > p ? `(${s})` : s);
   switch (n.type) {
@@ -437,44 +438,43 @@ function print(n, prec = 0) {
 }
 
 /**
- * Regex (string, semántica estándar) cuyo lenguaje es exactamente el del
- * DFA: las secuencias de símbolos que, desde el estado inicial, terminan
- * en un estado aceptante. `exclude` permite dejar afuera estados (p.ej.
- * __ERROR__ del crawler).
+ * Regex (string, standard semantics) whose language is exactly the DFA's:
+ * the symbol sequences that end in an accepting state starting from the
+ * initial one. `exclude` leaves states out (such as the crawler's __ERROR__).
  *
- * Devuelve null si el regex supera `maxLength` caracteres (ver
- * dfaToRegexTrace para saber dónde explotó).
+ * Returns null when the regex is longer than `maxLength` characters (see
+ * dfaToRegexTrace to find out where it blew up).
  */
 function dfaToRegex(dfa, opts = {}) {
   return dfaToRegexTrace(dfa, opts).regex;
 }
 
 /**
- * Igual que dfaToRegex, pero además devuelve la traza de la eliminación.
+ * Same as dfaToRegex, but also returns the elimination trace.
  *
- * Por qué hace falta: en un grafo denso (muchos estados que se alcanzan
- * entre sí, p.ej. un circle pack donde se pueden clickear los círculos
- * vecinos que asoman en las esquinas) el regex crece EXPONENCIALMENTE --
- * cada estado eliminado copia su bucle en cada par predecesor/sucesor, y
- * los que se eliminan primero terminan copiados cientos de miles de
- * veces. No es un error del autómata: es un límite inherente de pasar un
- * grafo denso a regex. Por eso se corta al pasar `maxLength` (medido como
- * la suma de todas las aristas que quedan, que en la práctica coincide
- * con el largo del regex final) y se informa qué estados quedaban: esos
- * son el núcleo denso que lo hace explotar.
+ * Why it is needed: in a dense graph (many states that reach one another,
+ * for example a circle pack where the neighbouring circles peeking out of
+ * the corners can be clicked) the regex grows EXPONENTIALLY: each eliminated
+ * state copies its loop into every predecessor / successor pair, and the ones
+ * eliminated first end up copied hundreds of thousands of times. It is not an
+ * error of the automaton but an inherent limit of turning a dense graph into
+ * a regex. So elimination stops once `maxLength` is exceeded (measured as the
+ * sum of all remaining edges, which in practice matches the length of the
+ * final regex) and reports which states were left: they are the dense core
+ * that makes it explode.
  *
  * @returns {{
  *   regex: string|null,
  *   aborted: boolean,
  *   steps: {step: number, state: string, preds: number, succs: number, loopSize: number, totalSize: number}[],
  *   remaining: string[],
- * }} remaining: estados sin eliminar al cortar (vacío si no se cortó)
+ * }} remaining: states not eliminated when it stopped (empty if it did not stop)
  */
 function dfaToRegexTrace(dfa, { exclude = [], maxLength = Infinity } = {}) {
   const START = '\u0000start', FINAL = '\u0000final';
   const skip = new Set(exclude);
 
-  // aristas: from -> Map(to -> ast), con uniones fusionadas
+  // edges: from -> Map(to -> ast), with unions merged
   const out = new Map();
   const inc = new Map();
   const ensure = (s) => {
@@ -489,7 +489,7 @@ function dfaToRegexTrace(dfa, { exclude = [], maxLength = Infinity } = {}) {
     inc.get(to).set(from, merged);
   };
 
-  // solo estados alcanzables desde el inicial (y no excluidos)
+  // only states reachable from the initial one (and not excluded)
   const reachable = new Set([dfa.initial]);
   const depth = new Map([[dfa.initial, 0]]);
   const q = [dfa.initial];
@@ -519,9 +519,8 @@ function dfaToRegexTrace(dfa, { exclude = [], maxLength = Infinity } = {}) {
   const remaining = new Set(reachable);
   const steps = [];
   while (remaining.size) {
-    // eliminar primero el estado más barato (menos caminos que se
-    // combinan); a igualdad, el más profundo -- así el resultado queda
-    // anidado como la jerarquía de la visualización
+    // Eliminate the cheapest state first (fewest paths to combine); on a tie,
+    // the deepest one, so the result nests like the visualization's hierarchy.
     let best = null, bestCost = Infinity;
     for (const s of remaining) {
       const ins = [...inc.get(s).keys()].filter((p) => p !== s).length;

@@ -9,10 +9,10 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Hovers cuyo efecto depende de DÓNDE está el puntero, hechos con D3: un tooltip que sigue al
-      cursor (el patrón de mouseover + mousemove + mouseout) y una línea guía con su lectura que
-      solo escucha pointermove. Los dos tienen que aparecer, avisando que dependen de la posición.
-      "recorder" escucha mousemove pero no cambia nada que se vea: no es una acción. Ver esperado.txt.
+      Hovers whose effect depends on WHERE the pointer is, built with D3: a tooltip that follows the
+      cursor (the mouseover + mousemove + mouseout pattern) and a guide line with its readout that
+      only listens to pointermove. Both have to show up, flagged as position-dependent.
+      "recorder" listens to mousemove but changes nothing visible: it is not an action. See esperado.txt.
     */
     const base = "steelblue";
     let lastPointer = null;
@@ -22,7 +22,7 @@
         .attr("height", 220)
         .style("font", "12px sans-serif");
 
-    // el tooltip HTML, fuera del <svg>
+    // the HTML tooltip, outside the <svg>
     const tip = d3.select("body").append("div")
         .attr("id", "tip")
         .style("position", "absolute")
@@ -32,7 +32,7 @@
         .style("opacity", 0)
         .style("pointer-events", "none");
 
-    // 1. un tooltip que sigue al puntero: mouseover lo muestra, mousemove lo lleva, mouseout lo saca
+    // 1. a tooltip that follows the pointer: mouseover shows it, mousemove moves it, mouseout removes it
     const dot = svg.selectAll("circle.dot")
       .data([{ name: "dotA", x: 60 }, { name: "dotB", x: 160 }])
       .join("circle")
@@ -47,7 +47,7 @@
         .on("mousemove", (event) => tip.style("left", `${event.pageX + 12}px`).style("top", `${event.pageY + 12}px`))
         .on("mouseout", () => tip.style("opacity", 0));
 
-    // 2. una línea guía con su lectura, solo con pointermove / pointerleave
+    // 2. a guide line with its readout, with only pointermove / pointerleave
     const chart = svg.append("g").attr("class", "chart").attr("transform", "translate(300,20)");
     const overlay = chart.append("rect")
         .attr("class", "overlay")
@@ -78,7 +78,7 @@
           readout.style("display", "none");
         });
 
-    // FALSO: escucha mousemove pero solo se acuerda de dónde estuvo el puntero, no cambia nada que se vea
+    // FALSE: listens to mousemove but only remembers where the pointer was, nothing visible changes
     svg.append("circle")
         .attr("class", "recorder")
         .attr("cx", 60)

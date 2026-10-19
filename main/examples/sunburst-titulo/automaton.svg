@@ -1,67 +1,63 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="326" viewBox="0 0 900 326" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="307" viewBox="0 0 900 307" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <title>Autómata (3 estados)</title>
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
-  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
-  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
 </defs>
-<rect width="900" height="326" fill="white"/>
+<rect width="900" height="307" fill="white"/>
 <g class="back-edges">
-<path d="M 386,60 C 380,36 412,36 398,62" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"><title>root  —[root]→  root</title></path>
-<path d="M 578,66 C 578,107.52 382,128.51999999999998 382,87" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; A  —[root]→  root</title></path>
-<path d="M 578,106 C 578,147.51999999999998 382,128.51999999999998 382,87" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; B  —[root]→  root</title></path>
+<path d="M 352,68 C 342,32 388,32 368,71" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[root]→  root</title></path>
+<path d="M 628,72 C 628,129.12 352,158.12 352,101" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; A  —[root]→  root</title></path>
+<path d="M 628,128 C 628,185.12 352,158.12 352,101" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; B  —[root]→  root</title></path>
 </g>
 <g class="forward-edges">
-<path d="M 400,73 C 474,73 474,53 548,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[A]→  root &gt; A</title></path>
-<path d="M 400,73 C 474,73 474,93 548,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[B]→  root &gt; B</title></path>
+<path d="M 370,84 C 484,84 484,56 598,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[A]→  root &gt; A</title></path>
+<path d="M 370,84 C 484,84 484,112 598,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[B]→  root &gt; B</title></path>
 </g>
-<line x1="304" y1="73" x2="342" y2="73" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="256" y1="84" x2="312" y2="84" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
 <g class="states">
 <g>
 <title>root
   A → root &gt; A
   B → root &gt; B
   root → root</title>
-<rect x="344" y="60" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
-<text x="372" y="73" text-anchor="middle" dominant-baseline="central">root</text>
+<rect x="314" y="68" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="342" y="84" text-anchor="middle" dominant-baseline="central">root</text>
 </g>
 <g>
 <title>root &gt; A
   root → root</title>
-<rect x="550" y="40" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="578" y="53" text-anchor="middle" dominant-baseline="central">A</text>
+<rect x="600" y="40" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="628" y="56" text-anchor="middle" dominant-baseline="central">A</text>
 </g>
 <g>
 <title>root &gt; B
   root → root</title>
-<rect x="550" y="80" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="578" y="93" text-anchor="middle" dominant-baseline="central">B</text>
+<rect x="600" y="96" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="628" y="112" text-anchor="middle" dominant-baseline="central">B</text>
 </g>
 </g>
 <g class="labels">
-<text x="408" y="46" font-size="10" fill="#555">root</text>
-<text x="542" y="48" text-anchor="end" font-size="10" fill="#333">A</text>
-<text x="542" y="88" text-anchor="end" font-size="10" fill="#333">B</text>
-<text x="570" y="76" font-size="9"><tspan fill="#999">↩ root</tspan></text>
-<text x="570" y="116" font-size="9"><tspan fill="#999">↩ root</tspan></text>
+<text x="380" y="48" font-size="11" fill="#555">root</text>
+<text x="582" y="47" text-anchor="end" font-size="11" fill="#333">A</text>
+<text x="582" y="103" text-anchor="end" font-size="11" fill="#333">B</text>
+<text x="620" y="86" font-size="10"><tspan fill="#999">↩ root</tspan></text>
+<text x="620" y="142" font-size="10"><tspan fill="#999">↩ root</tspan></text>
 </g>
 <g font-size="10" fill="#666">
-<line x1="40" y1="168" x2="68" y2="168" stroke="#777" marker-end="url(#arrow)"/>
-<text x="74" y="171">acción que avanza (etiqueta junto al destino)</text>
-<line x1="330" y1="168" x2="358" y2="168" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
-<text x="364" y="171">acción que vuelve (↩ bajo el origen)</text>
-<line x1="570" y1="168" x2="598" y2="168" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
-<text x="604" y="171">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="188">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="200" x2="80" y2="200" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="203">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="200" x2="400" y2="200" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="203">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="200" x2="670" y2="200" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="203">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="220">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
 </g>
-<line x1="40" y1="212" x2="860" y2="212" stroke="#ddd"/>
-<text x="40" y="232" font-weight="bold" fill="#222">Regex (interacciones completas: vuelven al estado inicial)</text>
+<line x1="40" y1="244" x2="860" y2="244" stroke="#ddd"/>
+<text x="40" y="264" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="250">((Click_A | Click_B)? Click_root)*</tspan>
-</text>
-<text x="40" y="283" font-weight="bold" fill="#222">Regex (lenguaje exacto: toda secuencia de clicks realizable)</text>
-<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="301">((Click_A | Click_B)? Click_root)* (Click_A | Click_B)?</tspan>
+<tspan x="40" y="282">((Click_A | Click_B)? Click_root)*</tspan>
 </text>
 </svg>

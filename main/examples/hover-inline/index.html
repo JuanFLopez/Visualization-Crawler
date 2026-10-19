@@ -9,11 +9,11 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Handlers que NO pasan por addEventListener, hechos con D3: selection.property("onmouseover", fn)
-      deja el handler en la propiedad del elemento, y selection.attr("onmouseover", "...") en un
-      atributo en línea. "prop" y "attr" son hovers reales; "quiet" tiene un handler que no cambia
-      nada que se vea: no es una acción. "clickable" se clickea por la propiedad onclick y cambia de
-      estado. Ver esperado.txt.
+      Handlers that do NOT go through addEventListener, built with D3: selection.property("onmouseover", fn)
+      leaves the handler in the element's property, and selection.attr("onmouseover", "...") in an
+      inline attribute. "prop" and "attr" are real hovers; "quiet" has a handler that changes
+      nothing visible: it is not an action. "clickable" is clicked through the onclick property and
+      changes state. See esperado.txt.
     */
     const base = "steelblue";
     let remembered = null;
@@ -32,25 +32,25 @@
         .attr("fill", base);
     dot.append("title").text((d) => d.name);
 
-    // el handler en la PROPIEDAD del elemento (el.onmouseover = fn). Ojo: en D3, selection.property(nombre,
-    // función) EVALÚA la función por cada elemento y guarda lo que devuelve, así que para dejar un handler
-    // hay que devolverlo: () => handler
+    // the handler in the element's PROPERTY (el.onmouseover = fn). Careful: in D3, selection.property(name,
+    // function) EVALUATES the function for each element and stores what it returns, so to leave a handler
+    // it has to be returned: () => handler
     const highlight = function () { d3.select(this).attr("fill", "orange"); };
     const restore = function () { d3.select(this).attr("fill", base); };
     dot.filter((d) => d.name === "prop")
         .property("onmouseover", () => highlight)
         .property("onmouseout", () => restore);
 
-    // el handler en un ATRIBUTO en línea (onmouseover="...")
+    // the handler in an inline ATTRIBUTE (onmouseover="...")
     dot.filter((d) => d.name === "attr")
         .attr("onmouseover", "this.setAttribute('fill', 'orange')")
         .attr("onmouseout", "this.setAttribute('fill', 'steelblue')");
 
-    // FALSO: un handler en la propiedad que no cambia nada que se vea
+    // FALSE: a handler in the property that changes nothing visible
     dot.filter((d) => d.name === "quiet")
         .property("onmouseover", () => function () { remembered = "quiet"; });
 
-    // un click por la propiedad onclick: cambia de estado
+    // a click through the onclick property: it changes state
     dot.filter((d) => d.name === "clickable")
         .attr("fill", "dimgray")
         .property("onclick", () => function () {

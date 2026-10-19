@@ -1,55 +1,56 @@
 /**
- * Se inyecta ANTES de que corra el código de la visualización del usuario
- * (vía page.addInitScript). Hace cuatro cosas, sin requerir que el usuario
- * toque una sola línea de su código D3:
+ * Injected BEFORE the user's visualization code runs (through
+ * page.addInitScript). It does four things without requiring the user to
+ * touch a single line of their D3 code:
  *
- * 1. DETECTA elementos clickeables de verdad: parchea addEventListener
- *    para marcar (con data-crawler-clickable + un id estable
- *    data-crawler-id) cualquier elemento al que se le registre un
- *    listener de "click". D3 v6+ usa addEventListener por debajo en
- *    selection.on(), así que esto agarra cualquier .on("click", ...) sin
- *    que el usuario tenga que distinguir a mano los elementos realmente
- *    interactivos de los decorativos. Igual con los que reaccionan a que
- *    el puntero entre (mouseover/mouseenter/pointerover/pointerenter),
- *    marcados con data-crawler-hoverable.
+ * 1. DETECTS really clickable elements: it patches addEventListener to mark
+ *    (with data-crawler-clickable plus a stable data-crawler-id) every element
+ *    that gets a "click" listener. D3 v6+ uses addEventListener underneath
+ *    selection.on(), so this catches any .on("click", ...) without the user
+ *    having to tell the truly interactive elements from the decorative ones.
+ *    The same goes for elements that react to the pointer entering
+ *    (mouseover / mouseenter / pointerover / pointerenter), marked with
+ *    data-crawler-hoverable.
  *
- *    Los <a> (y cualquier elemento con href) se EXCLUYEN por defecto: en
- *    una página real (no un fixture aislado) es común que haya links de
- *    navegación con su propio listener de click (tracking, ruteo SPA,
- *    etc.) que casi nunca son parte del vocabulario interactivo de la
- *    visualización en sí -- y si el crawler llega a clickear uno de
- *    verdad, puede navegar la página entera y tirar abajo el crawl. Para
- *    incluirlos de nuevo (si tu visualización SÍ usa <a> como parte de su
- *    interacción), seteá window.__crawlerIncludeLinks = true antes de que
- *    corra este script (vía un initScript propio, antes de este).
+ *    <a> elements (and anything with an href) are EXCLUDED by default: on a
+ *    real page (not an isolated fixture) navigation links often have their own
+ *    click listener (tracking, SPA routing, ...) and are almost never part of
+ *    the visualization's own interactive vocabulary, and if the crawler really
+ *    clicks one it may navigate the whole page and bring the crawl down. To
+ *    include them again (if your visualization does use <a> as part of its
+ *    interaction), set window.__crawlerIncludeLinks = true before this script
+ *    runs (through an init script of your own, before this one).
  *
- * 2. EXPONE window.__crawlerState(): un fingerprint (hash corto) de los
- *    atributos visualmente relevantes de todo el DOM bajo <svg> (o de
- *    cualquier elemento clickeable, aunque esté fuera de un <svg>). Sirve
- *    como "estado" genérico cuando el usuario no define su propio
- *    window.__testState -- que sigue teniendo prioridad si existe, para
- *    quien prefiera instrumentar a mano con más precisión.
+ * 2. EXPOSES window.__crawlerState(): a fingerprint (a short hash) of the
+ *    visually relevant attributes of everything under <svg> (or of any
+ *    clickable element, even outside an <svg>). It serves as a generic "state"
+ *    when the user does not define their own window.__testState, which still
+ *    takes priority if it exists, for whoever prefers to instrument by hand
+ *    with more precision.
  *
- * 3. EXPONE window.__crawlerActivity(): frames de animación y requests
- *    en vuelo, para esperar a que la página se asiente (ver más abajo).
+ * 3. EXPOSES window.__crawlerActivity(): animation frames and in-flight
+ *    requests, to wait for the page to settle (see below).
  *
- * 4. EXPONE window.__crawlerEffects(): una instantánea de todo lo visible
- *    del documento, para ver si un hover cambió algo (ver más abajo).
+ * 4. EXPOSES window.__crawlerEffects(): a snapshot of everything visible in
+ *    the document, to see whether a hover changed anything (see below).
  *
- * Limitación conocida: solo ve DOM real (SVG/HTML). Visualizaciones
- * basadas en <canvas> no exponen atributos para fingerprintear -- para
- * esas hace falta un window.__testState manual.
+ * Known limitation: it only sees real DOM (SVG / HTML). <canvas>-based
+ * visualizations expose no attributes to fingerprint; those need a manual
+ * window.__testState.
  *
- * Los hovers que no pasan por addEventListener sobre el propio elemento los
- * encuentra crawler.js por otro lado (handlers en la propiedad o en un
- * atributo inline, :hover de las hojas de estilo, listeners delegados en un
- * contenedor: ver __crawlerCandidates y __crawlerMarks). Lo que sigue sin
- * ver: listeners en window/document, efectos sobre pseudo-elementos (::after),
- * :hover de hojas de estilo de OTRO origen (el navegador no deja leerlas) y
- * efectos que no pasan por el DOM (un <canvas>).
+ * Hovers that do not go through addEventListener on the element itself are
+ * found by crawler.js in other ways (handlers in a property or an inline
+ * attribute, stylesheet :hover rules, listeners delegated on a container: see
+ * __crawlerCandidates and __crawlerMarks). Still not seen: listeners on
+ * window / document, effects on pseudo-elements (::after), :hover rules from a
+ * stylesheet of ANOTHER origin (the browser does not let them be read), and
+ * effects that do not go through the DOM (a <canvas>).
+ *
+ * Native browser tooltips (an SVG <title> child or a title="" attribute) are
+ * not hovers either: the browser draws them with no listener and no DOM change,
+ * so no effect can be observed (see the HOVER paragraph in crawler.js).
  */
 (function () {
-   
   try { localStorage.clear(); } catch (e) {}
   try { sessionStorage.clear(); } catch (e) {}
   let counter = 0;
@@ -59,13 +60,12 @@
     return el.tagName === 'A' || el.hasAttribute('href');
   }
 
-  // Los eventos con los que una visualización reacciona a que el puntero
-  // ENTRE a un elemento.
+  // The events a visualization uses to react to the pointer ENTERING an element.
   const HOVER_ENTER = new Set(['mouseover', 'mouseenter', 'pointerover', 'pointerenter']);
-  // Los de MOVIMIENTO también cuentan, pero su efecto suele depender de DÓNDE
-  // está el puntero (un tooltip que lo sigue, una línea guía): el crawler los
-  // prueba en dos puntos y avisa si el efecto cambia (ver observeHover en
-  // crawler.js); no enumera posiciones.
+  // MOVE events count too, but their effect often depends on WHERE the pointer
+  // is (a tooltip that follows it, a guide line): the crawler probes them at two
+  // points and warns when the effect changes (see observeHover in crawler.js);
+  // it does not enumerate positions.
   const HOVER_MOVE = new Set(['mousemove', 'pointermove']);
 
   EventTarget.prototype.addEventListener = function (type, listener, options) {
@@ -84,15 +84,15 @@
     return origAdd.call(this, type, listener, options);
   };
 
-  // 3. ACTIVIDAD de la página, para que el crawler espere "hasta que se
-  //    quede quieta" en vez de un settleMs fijo. Dos señales genéricas:
-  //    - requestAnimationFrame: d3-timer (y por ende toda transición D3,
-  //      y casi cualquier animación JS) pide un frame por cuadro mientras
-  //      anima y deja de pedirlos al terminar.
-  //    - fetch/XHR en vuelo: d3.json/d3.csv cargan datos después del
-  //      evento load; hasta que no vuelven, la visualización ni existe.
-  //    Limitación: una transición con .delay() largo duerme vía
-  //    setTimeout sin pedir frames -- para esas, pasar --settleMs fijo.
+  // 3. Page ACTIVITY, so the crawler can wait "until it goes quiet" instead of
+  //    a fixed settleMs. Two generic signals:
+  //    - requestAnimationFrame: d3-timer (and so every D3 transition, and
+  //      almost any JS animation) asks for one frame per tick while it
+  //      animates and stops asking when it ends.
+  //    - in-flight fetch / XHR: d3.json / d3.csv load data after the load
+  //      event; until they return the visualization does not even exist.
+  //    Limitation: a transition with a long .delay() sleeps through setTimeout
+  //    without asking for frames; for those, pass a fixed --settleMs.
   let lastFrameRequest = -Infinity;
   let pendingRequests = 0;
 
@@ -138,29 +138,27 @@
     return (h >>> 0).toString(16);
   }
 
-  // Redondeo de todos los números de un atributo: interpolaciones D3 que
-  // "vuelven" al mismo lugar dejan ruido de punto flotante en los últimos
-  // dígitos (rotate(97.4140204930506) vs rotate(97.41402049305063)), y sin
-  // esto el mismo estado lógico da fingerprints distintos según el camino.
-  // También normaliza separadores: el mismo transform puede venir escrito
-  // "translate(0,12.3)" (el código del usuario) o "translate(0, 12.3)"
-  // (d3.interpolateTransformSvg al terminar una transición) según el
-  // camino por el que se llegó.
+  // Rounds every number in an attribute: D3 interpolations that "come back" to
+  // the same place leave floating-point noise in the last digits
+  // (rotate(97.4140204930506) vs rotate(97.41402049305063)), and without this
+  // the same logical state gets different fingerprints depending on the path.
+  // It also normalizes separators: the same transform may be written
+  // "translate(0,12.3)" (user code) or "translate(0, 12.3)"
+  // (d3.interpolateTransformSvg when it finishes) depending on how it was reached.
   function roundNumbers(v) {
     return v
       .replace(/-?\d*\.\d+(e[-+]?\d+)?/gi, (m) => {
         const r = Math.round(parseFloat(m) * 100) / 100;
-        return String(r === 0 ? 0 : r); // evita "-0"
+        return String(r === 0 ? 0 : r); // avoids "-0"
       })
       .replace(/\s*,\s*/g, ',')
       .replace(/\s+/g, ' ')
       .trim();
   }
 
-  // Un elemento invisible no aporta su geometría al estado: D3 suele
-  // dejar de actualizar los elementos ocultos (p.ej. clicked() del
-  // sunburst solo transiciona arcos/labels visibles), así que sus
-  // atributos quedan "viejos" y dependen del camino recorrido.
+  // An invisible element contributes no geometry to the state: D3 often stops
+  // updating hidden elements (e.g. the sunburst's clicked() only transitions
+  // visible arcs / labels), so their attributes go stale and depend on the path.
   function isInvisible(el, svgRects) {
     const cs = getComputedStyle(el);
     if (cs.display === 'none' || cs.visibility === 'hidden' || parseFloat(cs.opacity) === 0) return true;
@@ -172,11 +170,11 @@
     return isOutsideSvg(el, svgRects);
   }
 
-  // Lo mismo para lo que quedó entero FUERA del área visible del <svg>
-  // (p.ej. los nodos fuera de foco de un icicle zoomable, trasladados más
-  // allá del viewBox): no se ve, y su posición exacta depende del camino
-  // -- justo en el borde, 890.935 vs 890.93499 redondean distinto. La
-  // comparación es booleana con medio px de tolerancia, sin redondeo.
+  // Same for whatever ended up entirely OUTSIDE the visible area of the <svg>
+  // (e.g. the out-of-focus nodes of a zoomable icicle, translated past the
+  // viewBox): it cannot be seen, and its exact position depends on the path
+  // (right at the edge, 890.935 and 890.93499 round differently). The
+  // comparison is boolean with half a pixel of tolerance, no rounding.
   function isOutsideSvg(el, svgRects) {
     if (!(el instanceof SVGGraphicsElement) || el instanceof SVGSVGElement) return false;
     let svg = el.ownerSVGElement;
@@ -192,11 +190,10 @@
     return fnv1a(window.__crawlerStateDebug());
   };
 
-  // versión sin hashear, solo para diagnóstico (ver diagnose.js): permite
-  // ver EXACTAMENTE qué atributo cambió entre dos lecturas que deberían
-  // ser idénticas.
+  // Unhashed version, for diagnosis only (see diagnose.js): it shows EXACTLY
+  // which attribute changed between two reads that should be identical.
   window.__crawlerStateDebug = function () {
-   const sel = window.__crawlerContainerSelector;
+    const sel = window.__crawlerContainerSelector;
     const root = sel ? document.querySelector(sel) : document;
     if (!root) throw new Error('contenedor no encontrado: ' + sel);
     let buf = '';
@@ -216,18 +213,18 @@
     return buf;
   };
 
-  // 4. INSTANTÁNEA DE EFECTOS: lo visible de TODO el documento, no solo del
-  //    <svg> como el fingerprint de estado. Comparando la de antes con la de
-  //    después de un hover se ve si cambió algo -- p.ej. un tooltip HTML --
-  //    y qué. Es el efecto NETO: lo que un handler pone y saca en el mismo
-  //    paso no deja rastro. Lo oculto cuenta solo como "oculto": cambiar
-  //    algo que el usuario no ve no es un efecto.
-  //    CSS: un :hover de una hoja de estilos cambia cómo se ve algo sin tocar
-  //    ningún atributo, así que cuando la página tiene reglas :hover (lo avisa
-  //    el crawler en window.__crawlerCssHover) la instantánea suma un
-  //    subconjunto de estilos CALCULADOS. Para no mandar cientos de valores por
-  //    el cable, solo viajan los que CAMBIARON respecto de la instantánea de
-  //    referencia (la que se pide con baseline = true).
+  // 4. EFFECTS SNAPSHOT: what is visible in the WHOLE document, not just the
+  //    <svg> like the state fingerprint. Comparing the one from before a hover
+  //    with the one from after shows whether something changed (an HTML
+  //    tooltip, say) and what. It is the NET effect: whatever a handler sets
+  //    and unsets in the same step leaves no trace. Hidden elements count only
+  //    as "hidden": changing something the user cannot see is not an effect.
+  //    CSS: a stylesheet :hover changes how something looks without touching
+  //    any attribute, so when the page has :hover rules (the crawler reports it
+  //    in window.__crawlerCssHover) the snapshot also takes a subset of
+  //    COMPUTED styles. To avoid sending hundreds of values over the wire, only
+  //    the ones that CHANGED relative to the reference snapshot travel (the
+  //    one requested with baseline = true).
   const CS_PROPS = [
     'fill', 'fill-opacity', 'stroke', 'stroke-width', 'stroke-opacity', 'opacity', 'display', 'visibility',
     'transform', 'color', 'background-color', 'font-weight', 'font-size', 'text-decoration-line', 'filter',
@@ -235,9 +232,9 @@
   ];
   let csBaseline = null;
 
-  // Las transiciones y animaciones CSS no siguen al reloj falso de la página
-  // (page.clock): sin esto se leería un valor a mitad de camino. Se las lleva a
-  // su estado final; las que no terminan nunca (infinitas) se congelan.
+  // CSS transitions and animations do not follow the page's fake clock
+  // (page.clock): without this a mid-way value would be read. They are taken to
+  // their final state; the ones that never end (infinite) are frozen.
   function settleAnimations() {
     for (const animation of document.getAnimations()) {
       try { animation.finish(); } catch (e) { animation.pause(); }
@@ -253,12 +250,12 @@
     const out = [];
     const svgRects = new Map();
     const keys = new Map();
-    const siblingCount = new Map(); // padre -> { etiqueta -> cuántas van }
+    const siblingCount = new Map(); // parent -> { tag -> how many so far }
     for (const el of [document.body, ...document.body.querySelectorAll('*')]) {
       const tag = el.tagName.toLowerCase();
       if (tag === 'script' || tag === 'style' || tag === 'noscript') continue;
-      // la clave de un elemento con id del crawler es ese id (no cambia si
-      // aparece un hermano); el resto, su posición entre los de su etiqueta
+      // The key of an element with a crawler id is that id (it does not change
+      // if a sibling appears); for the rest, its position among its own tag.
       let key = el.getAttribute('data-crawler-id');
       if (key) {
         key = 'id:' + key;
@@ -270,7 +267,7 @@
       }
       keys.set(el, key);
       if (el === pointerNode) selfKey = key;
-      const p = keys.get(el.parentElement) || null; // para agrupar lo que aparece junto con su padre
+      const p = keys.get(el.parentElement) || null; // to group what appears together with its parent
 
       if (isInvisible(el, svgRects)) {
         out.push({ k: key, p, t: tag, h: 1 });
@@ -304,7 +301,7 @@
         }
       }
     }
-    window.__crawlerSelfKey = selfKey; // canal lateral: no forma parte de lo que se compara
+    window.__crawlerSelfKey = selfKey; // side channel: not part of what gets compared
     return out;
   };
 })();

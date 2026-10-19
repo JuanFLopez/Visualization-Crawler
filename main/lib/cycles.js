@@ -1,31 +1,30 @@
 /**
- * Detección de ciclos en el autómata observado, para cortar el regex.
+ * Cycle detection in the observed automaton, used to cut the regex.
  *
- * El regex exacto explota en grafos densos (ver dfaToRegexTrace en
- * lib/regex.js): lo que lo hace explotar no son los ciclos "de ida y
- * vuelta" de una jerarquía (entrar a una rama y volver con zoom out) sino
- * los ATAJOS -- saltar a un estado fuera de la propia rama (un anillo
- * profundo del sunburst clickeado desde la raíz, un círculo vecino que
- * asoma en la esquina de un zoom). Cada atajo conecta subárboles entre sí
- * y la eliminación de estados termina copiando bucles en cada par.
+ * The exact regex blows up on dense graphs (see dfaToRegexTrace in
+ * lib/regex.js). What makes it blow up is not the "there and back" cycles of
+ * a hierarchy (entering a branch and zooming back out) but SHORTCUTS: jumps
+ * to a state outside the current branch (a deep sunburst ring clicked from
+ * the root, a neighbouring circle peeking out of a zoomed circle pack). Each
+ * shortcut ties subtrees together and state elimination ends up copying loops
+ * into every pair.
  *
- * Se arma un árbol generador desde el estado inicial y se clasifica cada
- * transición:
- *   - tree:     del padre al hijo en el árbol
- *   - back:     a un ancestro (o a sí mismo): CIERRA UN CICLO
- *   - shortcut: a cualquier otro estado ya alcanzado por otra rama
+ * A spanning tree is built from the initial state and every transition is
+ * classified:
+ *   - tree:     parent -> child in the tree
+ *   - back:     to an ancestor (or to itself): CLOSES A CYCLE
+ *   - shortcut: to any other state already reached through another branch
  *
- * El autómata "cortado" (tree + back) tiene todos los estados y todos los
- * ciclos de volver hacia arriba, y su regex queda anidado como la
- * jerarquía; los atajos se informan aparte. Regex cortado + lista de
- * atajos = autómata completo.
+ * The "cut" automaton (tree + back) keeps every state and every cycle that
+ * goes back up, and its regex nests like the hierarchy; shortcuts are
+ * reported separately. Cut regex + list of shortcuts = the full automaton.
  *
- * Árbol: si los nombres de estado son caminos de la jerarquía ("root >
- * vis > operator", ver lib/labels.js), el padre es el prefijo del nombre
- * -- un DFS o BFS sobre un sunburst toma por padre a quien lo descubrió
- * primero, y en un circle pack eso encadena hermanos (vis -> animate ->
- * flex) como si fueran niveles. Si no hay jerarquía en los nombres (o al
- * padre le falta la transición al hijo), el padre es el de un BFS.
+ * Tree: when state names are hierarchy paths ("root > vis > operator", see
+ * lib/labels.js) the parent is the name's prefix. A DFS or BFS over a sunburst
+ * takes whoever discovered a state first as its parent, and on a circle pack
+ * that chains siblings (vis -> animate -> flex) as if they were levels. With
+ * no hierarchy in the names (or when the parent has no transition to the
+ * child) the parent is the BFS one.
  */
 
 const { DFA, ERROR_STATE } = require('./automaton');
@@ -56,9 +55,9 @@ function classifyEdges(dfa) {
     const hasEdge = hierarchical && reachable.has(up) && [...succ(up).values()].includes(s);
     parent.set(s, hasEdge ? up : bfsParent.get(s));
   }
-  // mezclar padres por nombre y por BFS podría, en un caso patológico,
-  // armar un ciclo de padres: ahí ese estado vuelve a su padre BFS (las
-  // cadenas solo-BFS siempre terminan en el inicial)
+  // Mixing name-based and BFS parents could, in a pathological case, build a
+  // parent cycle; such a state falls back to its BFS parent (BFS-only chains
+  // always end at the initial state).
   for (let changed = true; changed;) {
     changed = false;
     for (const s of parent.keys()) {
@@ -92,12 +91,12 @@ function classifyEdges(dfa) {
     hierarchical,
     counts,
     shortcuts,
-    /** @returns {'tree'|'back'|'shortcut'|null} null: a __ERROR__ o desde un estado inalcanzable */
+    /** @returns {'tree'|'back'|'shortcut'|null} null for __ERROR__ or a transition from an unreachable state */
     kindOf: (state, action) => kinds.get(`${state}\u0000${action}`) || null,
   };
 }
 
-/** El DFA con solo las transiciones tree y back (mismo alfabeto y aceptación). */
+/** The DFA with only its tree and back transitions (same alphabet and acceptance). */
 function cutDfa(dfa, cls) {
   const transitions = new Map();
   for (const [s, m] of dfa.transitions) {

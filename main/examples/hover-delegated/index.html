@@ -9,10 +9,10 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Un solo listener de hover, en el <svg>, que mira event.target.__data__ (la forma delegada de
-      escribirlo con D3). Probado sobre el propio <svg> no hace nada: el target es el svg. Las marcas
-      (markA..markD, con datos que son objetos) resaltan; los textos de la leyenda tienen datos que
-      son strings y el handler los ignora: no son acciones. Ver esperado.txt.
+      A single hover listener, on the <svg>, that looks at event.target.__data__ (the delegated way of
+      writing it with D3). Probed on the <svg> itself it does nothing: the target is the svg. The marks
+      (markA..markD, with object data) highlight; the legend texts have string data and the handler
+      ignores them: they are not actions. See esperado.txt.
     */
     const base = "steelblue";
 
@@ -21,7 +21,7 @@
         .attr("height", 200)
         .style("font", "12px sans-serif");
 
-    // las marcas: un círculo por dato
+    // the marks: one circle per datum
     const mark = svg.append("g").attr("class", "marks").selectAll("circle")
       .data([{ name: "markA", x: 50 }, { name: "markB", x: 120 }, { name: "markC", x: 190 }, { name: "markD", x: 260 }])
       .join("circle")
@@ -31,7 +31,7 @@
         .attr("fill", base);
     mark.append("title").text((d) => d.name);
 
-    // la leyenda: textos con datos que son strings
+    // the legend: texts with string data
     svg.append("g").attr("class", "legend").selectAll("text")
       .data(["Leyenda 1", "Leyenda 2"])
       .join("text")
@@ -39,7 +39,7 @@
         .attr("y", (d, i) => 140 + i * 20)
         .text((d) => d);
 
-    // el listener delegado: mira a qué se le puso el puntero encima, y solo actúa si es una marca
+    // the delegated listener: it looks at what the pointer was put over, and only acts if it is a mark
     const isMark = (target) => target.__data__ != null && typeof target.__data__ === "object";
     svg
         .on("mouseover", (event) => { if (isMark(event.target)) d3.select(event.target).attr("fill", "orange"); })

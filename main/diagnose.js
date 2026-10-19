@@ -1,3 +1,12 @@
+/**
+ * Diagnoses why the crawler cannot converge on a visualization:
+ *   phase 1  reloads the page several times without clicking anything and
+ *            compares the state fingerprints (is the starting state stable?);
+ *   phase 2  clicks the first candidate that changes something and measures
+ *            how long the page takes to settle (or whether it never does).
+ *
+ * Usage: node diagnose.js <folder-with-index.html> [waitMs=500] [rounds=5] [--containerSelector <css>]
+ */
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
@@ -32,9 +41,8 @@ async function resolveChromePath() {
   }
 }
 
-// primer punto donde dos lecturas (separadas por ';' = un elemento por
-// fragmento) difieren, con contexto, para no tener que leer miles de
-// caracteres a mano.
+// First point where two readings differ (';' separates one element per
+// fragment), with context, so thousands of characters need not be read by hand.
 function firstDifference(a, b) {
   const partsA = a.split(';');
   const partsB = b.split(';');
@@ -109,11 +117,10 @@ function firstDifference(a, b) {
     }
   }
 
-  // Fase 2: la carga inicial puede ser estable, pero lo interesante suele
-  // pasar DESPUÉS de un click (una transición D3, una simulación de
-  // fuerzas que arranca ahí). Clickeamos el primer candidato una sola vez
-  // y medimos el fingerprint en el tiempo, para ver si en algún momento
-  // dos lecturas consecutivas coinciden (se "asienta") o si nunca lo hace.
+  // Phase 2: the initial load may be stable, yet what matters usually happens
+  // AFTER a click (a D3 transition, a force simulation that starts there). The
+  // first candidate is clicked once and the fingerprint is measured over time,
+  // to see whether two consecutive readings ever match (it "settles") or never do.
   console.log('\n--- Fase 2: ¿se asienta después de un click? ---\n');
 
   const browser2 = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
@@ -138,8 +145,8 @@ function firstDifference(a, b) {
   if (actionable.length === 0) {
     console.log('No se detectó ningún elemento clickeable interactuable (¿el selector automático no encontró listeners de click?). Salteando fase 2.');
   } else {
-    // el primer candidato puede ser un no-op (o romper: el rect raíz de
-    // un icicle en el estado raíz) -- probamos hasta que alguno cambie algo
+    // The first candidate may be a no-op (or may break: the root rect of an
+    // icicle in the root state), so try until one changes something.
     const maxMs = 6000;
     const maxTries = Math.min(actionable.length, 10);
     let settledAt = 0;

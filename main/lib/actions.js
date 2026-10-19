@@ -1,21 +1,22 @@
 /**
- * Cómo se NOMBRAN las acciones, los símbolos del alfabeto del autómata:
- * "<Tipo>_<elemento>" ("Click_vis"). El prefijo dice qué tipo de
- * interacción es y el resto sobre qué elemento. Todo lo que arma o muestra
- * nombres (el crawler, los nombres limpios, el diagrama, el regex
- * esperado) pasa por acá en vez de asumir "Click_".
+ * Action naming. An action is a symbol of the automaton's alphabet, written
+ * "<Kind>_<element>" (for example "Click_vis"): the prefix says what kind of
+ * interaction it is and the rest says which element it is done on. Everything
+ * that builds or shows names (the crawler, the clean-up in names.js, the
+ * diagram, the expected regex) goes through this module instead of assuming
+ * "Click_".
  *
- *   click    clickear el elemento
- *   hover    poner el puntero encima (mouseover/mouseenter)
- *   unhover  sacarlo; solo existe como la vuelta de un hover que cambia
- *            qué se puede hacer (un menú que se abre), no para los que son
- *            un resaltado: esos no cambian de estado
+ *   click    click the element
+ *   hover    put the pointer over it (mouseover / mouseenter)
+ *   unhover  take it away; it exists only as the way back from a hover that
+ *            changes what can be done (an opened menu), never for a plain
+ *            highlight, which does not change state
  */
 
-// tipo de interacción -> prefijo del nombre de sus acciones
+/** Interaction kind -> prefix of its action names. */
 const PREFIXES = { click: 'Click_', hover: 'Hover_', unhover: 'Unhover_' };
 
-// tipo que se asume para un nombre escrito sin prefijo (el regex esperado)
+/** Kind assumed for a name written without a prefix (the expected regex). */
 const DEFAULT_KIND = 'click';
 
 const UNKNOWN = 'unknown_';
@@ -29,46 +30,46 @@ function actionName(kind, base) {
   return PREFIXES[kind] + base;
 }
 
-// nombre para un elemento sin identidad legible (ver createNaming en crawler.js)
+/** Name for an element with no readable identity (see createNaming in crawler.js). */
 function internalName(kind, n) {
   return actionName(kind, `${UNKNOWN}${n}`);
 }
 
-// ese nombre es un id interno, no un valor
+/** True when the name is such an internal id rather than a real value. */
 function isInternalName(action) {
   return INTERNAL_RE.test(action);
 }
 
-// "Click_vis" -> "click" (null si el nombre no lleva ningún prefijo conocido)
+/** "Click_vis" -> "click" (null when the name has no known prefix). */
 function kindOfAction(action) {
   return Object.keys(PREFIXES).find((kind) => action.startsWith(PREFIXES[kind])) ?? null;
 }
 
-// "Click_vis" -> "vis"
+/** "Click_vis" -> "vis". */
 function shortAction(action) {
   return action.replace(PREFIX_RE, '');
 }
 
-// El nombre tal como se lo muestra, o se lo usa dentro del nombre de un
-// estado: los clicks sin prefijo ("vis"), el resto con él ("Hover_vis") --
-// sin el prefijo, un hover sobre "vis" y un click sobre "vis" se leerían igual.
+/**
+ * The name as it is displayed, or used inside a state name: clicks without
+ * the prefix ("vis"), everything else with it ("Hover_vis"). Without the
+ * prefix a hover on "vis" and a click on "vis" would read the same.
+ */
 function displayAction(action) {
   return kindOfAction(action) === 'click' ? shortAction(action) : action;
 }
 
-// el verbo para hablar de la acción en un mensaje; un nombre sin prefijo
-// (una tabla escrita a mano) se lee como click
+/** The verb to use for the action in a message; an unprefixed name (a hand-written table) reads as a click. */
 function verbOf(action) {
   return kindOfAction(action) ?? 'click';
 }
 
-// "Hover_vis" -> "Unhover_vis": el hover y su vuelta se nombran en par
+/** "Hover_vis" -> "Unhover_vis": a hover and its way back are named as a pair. */
 function unhoverOf(hoverAction) {
   return actionName('unhover', shortAction(hoverAction));
 }
 
-// el prefijo solo, con o sin el "_" final: lo que queda de un nombre al
-// sacarle todo lo demás
+/** A prefix on its own, with or without the trailing "_": what is left of a name once everything else is stripped. */
 function isBarePrefix(s) {
   return Object.values(PREFIXES).some((p) => s === p || s === p.slice(0, -1));
 }

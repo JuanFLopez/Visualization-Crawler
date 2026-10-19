@@ -1,20 +1,20 @@
 /**
- * Punto de entrada del crawler. Dos formas de usarlo:
+ * Entry point of the crawler. Two ways to use it:
  *
- *  - Como MÓDULO (pensado para una GUI): `const { run } = require('./run')`
- *    y `await run({ vizDir, regex, onLog, onProgress })`. No escribe a la
- *    consola ni termina el proceso: avisa por callbacks, devuelve un
- *    resultado estructurado y, ante un problema, tira un Error.
+ *  - As a MODULE (meant for a GUI): `const { run } = require('./run')` and
+ *    `await run({ vizDir, regex, onLog, onProgress })`. It writes nothing to
+ *    the console and does not end the process: it reports through callbacks,
+ *    returns a structured result and throws an Error on a problem.
  *
- *  - Por LÍNEA DE COMANDOS: `node run.js <carpeta> [opciones]` (ver
- *    usage()). Es un envoltorio fino sobre run().
+ *  - From the COMMAND LINE: `node run.js <folder> [options]` (see usage()).
+ *    It is a thin wrapper around run().
  *
- * En los dos casos hay dos modos de origen:
- *   - crawl:       se explora la visualización (carpeta con index.html).
- *   - transitions: se re-analiza un transitions.json ya generado, sin
- *                  abrir el browser (para comparar contra otro regex, o
- *                  regenerar el diagrama).
- * y la comparación contra un regex esperado es opcional en ambos.
+ * Either way there are two source modes:
+ *   - crawl:       the visualization is explored (a folder with index.html).
+ *   - transitions: an already generated transitions.json is re-analyzed
+ *                  without opening the browser (to compare against another
+ *                  regex, or to regenerate the diagram).
+ * and the comparison against an expected regex is optional in both.
  */
 const fs = require('fs');
 const path = require('path');
@@ -26,11 +26,11 @@ const { compileRegex } = require('./lib/regex');
 
 const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json', '.css': 'text/css', '.csv': 'text/csv', '.svg': 'image/svg+xml' };
 
-// opciones del crawler que se pueden pisar (sobre config.js de la viz)
-const CRAWLER_OPTIONS = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps', 'containerSelector', 'backSelector', 'clickableSelector', 'hover', 'hoverableSelector', 'nativeTooltips', 'maxDelegated'];
+// crawler options that can be overridden (on top of the visualization's config.js)
+const CRAWLER_OPTIONS = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps', 'containerSelector', 'backSelector', 'clickableSelector', 'hover', 'hoverableSelector', 'maxDelegated'];
 
-// puerto 0 = el sistema elige uno libre: varias corridas (o una GUI con
-// varias pestañas) no se pisan entre sí
+// Port 0 lets the system pick a free one, so several runs (or a GUI with
+// several tabs) do not step on each other.
 function startServer(dir) {
   return new Promise((resolve, reject) => {
     const server = http.createServer((req, res) => {
@@ -59,8 +59,8 @@ async function resolveChromePath() {
 }
 
 /**
- * Valida un regex sin correr nada (para que una GUI marque errores de
- * sintaxis mientras se escribe).
+ * Validates a regex without running anything (so a GUI can flag syntax errors
+ * while the user types).
  * @returns {{ ok: true } | { ok: false, error: string }}
  */
 function validateRegex(src) {
@@ -75,29 +75,29 @@ function validateRegex(src) {
 function loadVizConfig(vizDir) {
   const configPath = path.join(vizDir, 'config.js');
   if (!fs.existsSync(configPath)) return {};
-  delete require.cache[require.resolve(configPath)]; // releer si cambió entre corridas
+  delete require.cache[require.resolve(configPath)]; // re-read it if it changed between runs
   return require(configPath);
 }
 
 /**
  * @param {Object} opts
- * @param {string} [opts.vizDir] - carpeta con index.html (modo crawl)
- * @param {string} [opts.fromTransitions] - transitions.json (o su carpeta) ya generado (modo sin crawl).
- *   Exactamente uno de vizDir / fromTransitions.
- * @param {string} [opts.outDir] - dónde escribir transitions.json y automaton.svg
- *   (default: vizDir, o la carpeta de fromTransitions)
- * @param {boolean} [opts.writeFiles=true] - false: solo devolver el resultado
- * @param {string} [opts.regex] - regex esperado a comparar (opcional)
- * @param {boolean} [opts.regexPrefixes=false] - comparar contra los prefijos del regex
- * @param {number} [opts.diffLimit=10] - contraejemplos por dirección
- * @param {number} [opts.maxRegexLength=500000] - regex más largos se omiten (null) y se
- *   informa dónde explotaron (regex.explosion); Infinity = sin tope
- * @param {boolean} [opts.traceRegex=false] - loguear la traza de la eliminación de estados
- * @param {boolean} [opts.resume=true] - retomar checkpoint.json si existe; false lo descarta
- * @param {boolean} [opts.includeLinks=false] - detectar también <a>/[href] como clickeables
- * @param {Object} [opts.crawler] - pisa config.js: settleMs, discoverySettleMs, maxStates,
- *   maxSteps, containerSelector, backSelector, clickableSelector, hover (false: solo clicks),
- *   hoverableSelector, nativeTooltips (true: los <title> son hovers), maxDelegated
+ * @param {string} [opts.vizDir] - folder with index.html (crawl mode)
+ * @param {string} [opts.fromTransitions] - an already generated transitions.json (or its folder), no crawl.
+ *   Exactly one of vizDir / fromTransitions.
+ * @param {string} [opts.outDir] - where to write transitions.json and automaton.svg
+ *   (default: vizDir, or the folder of fromTransitions)
+ * @param {boolean} [opts.writeFiles=true] - false: only return the result
+ * @param {string} [opts.regex] - expected regex to compare against (optional)
+ * @param {boolean} [opts.regexPrefixes=false] - compare against the regex's prefixes
+ * @param {number} [opts.diffLimit=10] - counterexamples per direction
+ * @param {number} [opts.maxRegexLength=500000] - longer regexes are omitted (null) and where they
+ *   blew up is reported (regex.explosion); Infinity = no limit
+ * @param {boolean} [opts.traceRegex=false] - log the state-elimination trace
+ * @param {boolean} [opts.resume=true] - resume checkpoint.json when it exists; false discards it
+ * @param {boolean} [opts.includeLinks=false] - also detect <a> / [href] as clickable
+ * @param {Object} [opts.crawler] - overrides config.js: settleMs, discoverySettleMs, maxStates,
+ *   maxSteps, containerSelector, backSelector, clickableSelector, hover (false: clicks only),
+ *   hoverableSelector, maxDelegated
  * @param {(msg: string) => void} [opts.onLog]
  * @param {(p: {elapsedMs: number, state: string, actions: number, knownStates: number}) => void} [opts.onProgress]
  *
@@ -112,8 +112,8 @@ function loadVizConfig(vizDir) {
  *   issues: { kind: 'error'|'faltante'|'noEsperado', message: string, detail: string, sequence: string[],
  *             events: {step, state, action, to, edge}[], failingStep: number, occurrences: number }[],
  *   partiallyVisibleClicks: null | { count: number, ofTransitions: number, transitions: Object[] },
- *   hovers: null | { transient: number, structural: number, actions: Object, ignored?: Object[] } - las acciones de hover
- *             (con su efecto anotado) y los hovers que se descartaron por no hacer nada visible
+ *   hovers: null | { transient: number, structural: number, actions: Object, ignored?: Object[] } - the hover actions
+ *             (with their effect noted) and the hovers discarded for doing nothing visible
  *   svg: string,
  *   stats: { states: number, errorTransitions: {state, action}[], truncated: boolean, elapsedMs: number },
  *   files: null | { transitions: string, svg: string },
@@ -141,8 +141,8 @@ async function run(opts = {}) {
     throw new Error('indicá exactamente uno de: vizDir (crawlear una visualización) o fromTransitions (re-analizar un transitions.json)');
   }
 
-  // validar el regex ANTES de crawlear: un error de sintaxis no debería
-  // descubrirse recién al final de un crawl largo
+  // Validate the regex BEFORE crawling: a syntax error should not be found
+  // only at the end of a long crawl.
   if (regex) {
     const v = validateRegex(regex);
     if (!v.ok) throw new Error(`el regex esperado no es válido: ${v.error}`);
@@ -161,7 +161,7 @@ async function run(opts = {}) {
     if (!initialState || !transitions) throw new Error(`${input} no tiene el formato de transitions.json (faltan initialState/transitions)`);
     data = { initialState, transitions };
     if (visibility) data.visibility = visibility;
-    if (hovers) data.hovers = hovers; // ya resumido: re-analizar no tiene que perder las notas
+    if (hovers) data.hovers = hovers; // already summarized: re-analyzing must not lose the notes
     outDir = outDirIn ? path.resolve(outDirIn) : path.dirname(input);
     onLog(`re-analizando ${input} (sin crawlear)`);
     stats = { truncated: false };
@@ -235,7 +235,7 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
   }
   initScripts.push(fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8'));
 
-  // el checkpoint vive junto a la salida; sin escritura de archivos no hay checkpoint
+  // The checkpoint lives next to the output; with no file writing there is no checkpoint.
   const checkpointPath = writeFiles ? path.join(outDir, 'checkpoint.json') : null;
   let resume = null;
   if (checkpointPath && fs.existsSync(checkpointPath)) {
@@ -294,6 +294,7 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
     server.close();
   }
 }
+
 function usage() {
   console.error(`Uso:
   node run.js <carpeta-con-index.html> [opciones]     crawlea la visualización
@@ -318,8 +319,9 @@ vuelta es Unhover_<elemento>. Con --no-hover se prueban solo los clicks.
   sin mover ningún mouse), y los de movimiento (mousemove/pointermove: se prueban en el centro y en el borde, y
   se avisa si el efecto depende de dónde se apunta). Un listener delegado en un contenedor (que mira
   event.target) se prueba sobre las marcas de D3 que tiene adentro, hasta --maxDelegated.
-  El tooltip nativo del navegador (un <title>) no cambia el DOM y no se puede verificar: con --native-tooltips
-  cada elemento con <title> pasa a ser una acción Hover_<elemento> (una por marca: en un icicle son cientos).
+  El tooltip nativo del navegador (un <title> o title="") se ignora a propósito y no hay opción para contarlo:
+  D3 no genera tooltips (nunca crea un <title>), lo dibuja el navegador sin listener y sin cambiar el DOM, así que
+  su efecto no se puede observar y sería un hover inventado. El texto del <title> sí se usa para nombrar acciones.
 
 Comparación (opcional; sin --regex solo se genera el regex observado). El regex esperado se
 compara contra el autómata completo y contra el de ciclos cortados (cada uno como todo prefijo
@@ -350,7 +352,6 @@ Crawler (pisan config.js de la visualización):
   --containerSelector <css> acotar detección y estado a este contenedor (ej. "#sb")
   --include-links           no excluir <a>/[href] de la detección automática
   --no-hover                no probar hovers (solo clicks)
-  --native-tooltips         contar el <title> (tooltip nativo) como un hover; una acción por elemento con <title>
   --maxDelegated <n>        tope de marcas a probar por listener delegado (default 50; 0 = no probar delegados)
   --fresh                   ignorar (y borrar) un checkpoint.json previo
 
@@ -385,7 +386,6 @@ function parseArgs(argv) {
       case '--json': opts.json = true; break;
       case '--include-links': opts.includeLinks = true; break;
       case '--no-hover': opts.crawler.hover = false; break;
-      case '--native-tooltips': opts.crawler.nativeTooltips = true; break;
       case '--fresh': opts.resume = false; break;
       case '--settleMs': case '--discoverySettleMs': case '--maxStates': case '--maxSteps': case '--maxDelegated':
         opts.crawler[a.slice(2)] = num(need(i, a), a); i++; break;
@@ -417,12 +417,12 @@ async function main() {
     return;
   }
 
-  // con --json, stdout queda reservado para el resultado
+  // with --json, stdout is reserved for the result
   const log = opts.json ? (m) => console.error(m) : (m) => console.log(m);
   try {
     const result = await run({ ...opts, onLog: log });
     if (opts.json) {
-      const { svg, ...rest } = result; // el SVG ya está en files.svg; no inflar stdout
+      const { svg, ...rest } = result; // the SVG is already in files.svg; do not bloat stdout
       process.stdout.write(JSON.stringify(rest, null, 2) + '\n');
     } else {
       log(`\nestados: ${result.stats.states} · transiciones a ERROR: ${result.stats.errorTransitions.length} · comportamientos inesperados: ${result.issues.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);

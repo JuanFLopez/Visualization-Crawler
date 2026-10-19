@@ -1,38 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="466" viewBox="0 0 900 466" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="1064" height="515" viewBox="0 0 1064 515" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <title>Autómata (9 estados)</title>
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
-  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
-  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
 </defs>
-<rect width="900" height="466" fill="white"/>
+<rect width="1064" height="515" fill="white"/>
 <g class="back-edges">
-<path d="M 180,100 C 174,76 206,76 192,102" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"><title>root  —[circle]→  root</title></path>
-<path d="M 372,66 C 372,107.52 176,168.51999999999998 176,127" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; D  —[circle]→  root</title></path>
-<path d="M 578,86 C 578,127.52 382,108.52 382,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D1  —[circle]→  root &gt; D</title></path>
-<path d="M 784,126 C 784,167.51999999999998 588,128.51999999999998 588,87" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D1 &gt; D1a  —[circle]→  root &gt; D &gt; D1</title></path>
-<path d="M 578,126 C 578,167.51999999999998 382,108.52 382,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D2  —[circle]→  root &gt; D</title></path>
-<path d="M 372,106 C 372,147.51999999999998 176,168.51999999999998 176,127" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; B  —[circle]→  root</title></path>
-<path d="M 372,146 C 372,187.51999999999998 176,168.51999999999998 176,127" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; A  —[circle]→  root</title></path>
-<path d="M 578,166 C 578,207.51999999999998 382,188.51999999999998 382,147" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; A &gt; A1  —[circle]→  root &gt; A</title></path>
-<path d="M 372,186 C 372,227.51999999999998 176,168.51999999999998 176,127" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; C  —[circle]→  root</title></path>
+<path d="M 148,124 C 138,88 184,88 164,127" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[circle]→  root</title></path>
+<path d="M 424,72 C 424,129.12 148,214.12 148,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; D  —[circle]→  root</title></path>
+<path d="M 710,100 C 710,157.12 434,130.12 434,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D1  —[circle]→  root &gt; D</title></path>
+<path d="M 996,156 C 996,213.12 720,158.12 720,101" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D1 &gt; D1a  —[circle]→  root &gt; D &gt; D1</title></path>
+<path d="M 710,156 C 710,213.12 434,130.12 434,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; D &gt; D2  —[circle]→  root &gt; D</title></path>
+<path d="M 424,128 C 424,185.12 148,214.12 148,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; B  —[circle]→  root</title></path>
+<path d="M 424,184 C 424,241.12 148,214.12 148,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; A  —[circle]→  root</title></path>
+<path d="M 710,212 C 710,269.12 434,242.12 434,185" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; A &gt; A1  —[circle]→  root &gt; A</title></path>
+<path d="M 424,240 C 424,297.12 148,214.12 148,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; C  —[circle]→  root</title></path>
 </g>
 <g class="forward-edges">
-<path d="M 194,113 C 268,113 268,53 342,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[D]→  root &gt; D</title></path>
-<path d="M 194,113 C 268,113 268,93 342,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[B]→  root &gt; B</title></path>
-<path d="M 194,113 C 268,113 268,133 342,133" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[A]→  root &gt; A</title></path>
-<path d="M 194,113 C 268,113 268,173 342,173" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[C]→  root &gt; C</title></path>
-<path d="M 194,113 L 198,113 Q 206,113 206,105 L 206,32 Q 206,24 214,24 L 530,24 Q 538,24 538,32 L 538,65 Q 538,73 546,73 L 548,73" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[D1]→  root &gt; D &gt; D1</title></path>
-<path d="M 194,113 L 198,113 Q 206,113 206,105 L 206,32 Q 206,24 214,24 L 530,24 Q 538,24 538,32 L 538,105 Q 538,113 546,113 L 548,113" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[D2]→  root &gt; D &gt; D2</title></path>
-<path d="M 194,113 L 198,113 Q 206,113 206,121 L 206,194 Q 206,202 214,202 L 530,202 Q 538,202 538,194 L 538,161 Q 538,153 546,153 L 548,153" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[A1]→  root &gt; A &gt; A1</title></path>
-<path d="M 400,53 C 474,53 474,73 548,73" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; D  —[D1]→  root &gt; D &gt; D1</title></path>
-<path d="M 400,53 C 474,53 474,113 548,113" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; D  —[D2]→  root &gt; D &gt; D2</title></path>
-<path d="M 400,53 L 404,53 Q 412,53 412,45 L 412,52 Q 412,44 420,44 L 736,44 Q 744,44 744,52 L 744,105 Q 744,113 752,113 L 754,113" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; D  —[D1a]→  root &gt; D &gt; D1 &gt; D1a</title></path>
-<path d="M 606,73 C 680,73 680,113 754,113" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; D &gt; D1  —[D1a]→  root &gt; D &gt; D1 &gt; D1a</title></path>
-<path d="M 400,133 C 474,133 474,153 548,153" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; A  —[A1]→  root &gt; A &gt; A1</title></path>
+<path d="M 166,140 C 280,140 280,56 394,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[D]→  root &gt; D</title></path>
+<path d="M 166,140 C 280,140 280,112 394,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[B]→  root &gt; B</title></path>
+<path d="M 166,140 C 280,140 280,168 394,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[A]→  root &gt; A</title></path>
+<path d="M 166,140 C 280,140 280,224 394,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[C]→  root &gt; C</title></path>
+<path d="M 166,140 L 172,140 Q 182,140 182,130 L 182,26 Q 182,16 192,16 L 628,16 Q 638,16 638,26 L 638,74 Q 638,84 648,84 L 680,84" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[D1]→  root &gt; D &gt; D1</title></path>
+<path d="M 166,140 L 172,140 Q 182,140 182,130 L 182,26 Q 182,16 192,16 L 628,16 Q 638,16 638,26 L 638,130 Q 638,140 648,140 L 680,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[D2]→  root &gt; D &gt; D2</title></path>
+<path d="M 166,140 L 172,140 Q 182,140 182,150 L 182,254 Q 182,264 192,264 L 628,264 Q 638,264 638,254 L 638,206 Q 638,196 648,196 L 680,196" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[A1]→  root &gt; A &gt; A1</title></path>
+<path d="M 452,56 C 566,56 566,84 680,84" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; D  —[D1]→  root &gt; D &gt; D1</title></path>
+<path d="M 452,56 C 566,56 566,140 680,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; D  —[D2]→  root &gt; D &gt; D2</title></path>
+<path d="M 452,56 L 458,56 Q 468,56 468,46 L 468,54 Q 468,44 478,44 L 908,44 Q 918,44 918,54 L 918,130 Q 918,140 928,140 L 966,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; D  —[D1a]→  root &gt; D &gt; D1 &gt; D1a</title></path>
+<path d="M 738,84 C 852,84 852,140 966,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; D &gt; D1  —[D1a]→  root &gt; D &gt; D1 &gt; D1a</title></path>
+<path d="M 452,168 C 566,168 566,196 680,196" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; A  —[A1]→  root &gt; A &gt; A1</title></path>
 </g>
-<line x1="98" y1="113" x2="136" y2="113" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="52" y1="140" x2="108" y2="140" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
 <g class="states">
 <g>
 <title>root
@@ -44,8 +44,8 @@
   D2 → root &gt; D &gt; D2
   A1 → root &gt; A &gt; A1
   circle → root</title>
-<rect x="138" y="100" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
-<text x="166" y="113" text-anchor="middle" dominant-baseline="central">root</text>
+<rect x="110" y="124" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="138" y="140" text-anchor="middle" dominant-baseline="central">root</text>
 </g>
 <g>
 <title>root &gt; D
@@ -53,99 +53,98 @@
   D2 → root &gt; D &gt; D2
   D1a → root &gt; D &gt; D1 &gt; D1a
   circle → root</title>
-<rect x="344" y="40" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="372" y="53" text-anchor="middle" dominant-baseline="central">D</text>
+<rect x="396" y="40" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="424" y="56" text-anchor="middle" dominant-baseline="central">D</text>
 </g>
 <g>
 <title>root &gt; D &gt; D1
   D1a → root &gt; D &gt; D1 &gt; D1a
   circle → root &gt; D</title>
-<rect x="550" y="60" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="578" y="73" text-anchor="middle" dominant-baseline="central">D1</text>
+<rect x="682" y="68" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="710" y="84" text-anchor="middle" dominant-baseline="central">D1</text>
 </g>
 <g>
 <title>root &gt; D &gt; D1 &gt; D1a
   circle → root &gt; D &gt; D1</title>
-<rect x="756" y="100" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="784" y="113" text-anchor="middle" dominant-baseline="central">D1a</text>
+<rect x="968" y="124" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="996" y="140" text-anchor="middle" dominant-baseline="central">D1a</text>
 </g>
 <g>
 <title>root &gt; D &gt; D2
   circle → root &gt; D</title>
-<rect x="550" y="100" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="578" y="113" text-anchor="middle" dominant-baseline="central">D2</text>
+<rect x="682" y="124" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="710" y="140" text-anchor="middle" dominant-baseline="central">D2</text>
 </g>
 <g>
 <title>root &gt; B
   circle → root</title>
-<rect x="344" y="80" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="372" y="93" text-anchor="middle" dominant-baseline="central">B</text>
+<rect x="396" y="96" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="424" y="112" text-anchor="middle" dominant-baseline="central">B</text>
 </g>
 <g>
 <title>root &gt; A
   A1 → root &gt; A &gt; A1
   circle → root</title>
-<rect x="344" y="120" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="372" y="133" text-anchor="middle" dominant-baseline="central">A</text>
+<rect x="396" y="152" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="424" y="168" text-anchor="middle" dominant-baseline="central">A</text>
 </g>
 <g>
 <title>root &gt; A &gt; A1
   circle → root &gt; A</title>
-<rect x="550" y="140" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="578" y="153" text-anchor="middle" dominant-baseline="central">A1</text>
+<rect x="682" y="180" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="710" y="196" text-anchor="middle" dominant-baseline="central">A1</text>
 </g>
 <g>
 <title>root &gt; C
   circle → root</title>
-<rect x="344" y="160" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="372" y="173" text-anchor="middle" dominant-baseline="central">C</text>
+<rect x="396" y="208" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="424" y="224" text-anchor="middle" dominant-baseline="central">C</text>
 </g>
 </g>
 <g class="labels">
-<text x="202" y="86" font-size="10" fill="#555">circle</text>
-<text x="336" y="48" text-anchor="end" font-size="10" fill="#333">D</text>
-<text x="336" y="88" text-anchor="end" font-size="10" fill="#333">B</text>
-<text x="336" y="128" text-anchor="end" font-size="10" fill="#333">A</text>
-<text x="336" y="168" text-anchor="end" font-size="10" fill="#333">C</text>
-<text x="542" y="68" text-anchor="end" font-size="10" fill="#333">D1</text>
-<text x="542" y="108" text-anchor="end" font-size="10" fill="#333">D2</text>
-<text x="542" y="148" text-anchor="end" font-size="10" fill="#333">A1</text>
-<text x="748" y="108" text-anchor="end" font-size="10" fill="#333">D1a</text>
-<text x="364" y="76" font-size="9"><tspan fill="#555">↷ D1a</tspan>  <tspan fill="#999">↩ circle</tspan></text>
-<text x="570" y="96" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="776" y="136" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="570" y="136" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="364" y="116" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="364" y="156" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="570" y="176" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="364" y="196" font-size="9"><tspan fill="#999">↩ circle</tspan></text>
-<text x="158" y="136" font-size="9"><tspan fill="#555">↷ D1, D2, A1</tspan></text>
+<text x="176" y="104" font-size="11" fill="#555">circle</text>
+<text x="378" y="47" text-anchor="end" font-size="11" fill="#333">D</text>
+<text x="378" y="103" text-anchor="end" font-size="11" fill="#333">B</text>
+<text x="378" y="159" text-anchor="end" font-size="11" fill="#333">A</text>
+<text x="378" y="215" text-anchor="end" font-size="11" fill="#333">C</text>
+<text x="664" y="75" text-anchor="end" font-size="11" fill="#333">D1</text>
+<text x="664" y="131" text-anchor="end" font-size="11" fill="#333">D2</text>
+<text x="664" y="187" text-anchor="end" font-size="11" fill="#333">A1</text>
+<text x="950" y="131" text-anchor="end" font-size="11" fill="#333">D1a</text>
+<text x="416" y="86" font-size="10"><tspan fill="#555">↷ D1a</tspan>  <tspan fill="#999">↩ circle</tspan></text>
+<text x="702" y="114" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="988" y="170" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="702" y="170" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="416" y="142" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="416" y="198" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="702" y="226" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="416" y="254" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="130" y="170" font-size="10"><tspan fill="#555">↷ D1, D2, A1</tspan></text>
 </g>
 <g font-size="10" fill="#666">
-<line x1="40" y1="248" x2="68" y2="248" stroke="#777" marker-end="url(#arrow)"/>
-<text x="74" y="251">acción que avanza (etiqueta junto al destino)</text>
-<line x1="330" y1="248" x2="358" y2="248" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
-<text x="364" y="251">acción que vuelve (↩ bajo el origen)</text>
-<line x1="570" y1="248" x2="598" y2="248" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
-<text x="604" y="251">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="268">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="312" x2="80" y2="312" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="315">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="312" x2="400" y2="312" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="315">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="312" x2="670" y2="312" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="315">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="332">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
 </g>
-<line x1="40" y1="292" x2="860" y2="292" stroke="#ddd"/>
-<text x="40" y="312" font-weight="bold" fill="#c33">Comportamiento inesperado (comparado con: ( circle
+<line x1="40" y1="356" x2="1024" y2="356" stroke="#ddd"/>
+<text x="40" y="376" font-weight="bold" fill="#c33">Comportamiento inesperado (comparado con: ( circle
 | (A | A1 circle) (A1 circle)* circle
 | (B | B2 circle) (B2 circle)* circle
 | C circle
 | (D | D2 circle | D1 (D1a circle)* circle) (D2 circle | (D1 | D1a circle) (D1a circle)* circle)* circle
 )*, contra el autómata completo)   (en rojo: la primera serie de eventos)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#c33">
-<tspan x="40" y="330">Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B2 → circle → circle</tspan>
-<tspan x="40" y="345">    el regex esperado admite click &quot;B2&quot; en el paso 1, pero en &quot;root&quot; la visualización no lo ofrece</tspan>
-<tspan x="40" y="360">Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B → B2 → circle → circle</tspan>
-<tspan x="40" y="375">    el regex esperado admite click &quot;B2&quot; en el paso 2, pero en &quot;root &gt; B&quot; la visualización no lo ofrece</tspan>
+<tspan x="40" y="394">Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B2 → circle → circle</tspan>
+<tspan x="40" y="409">    el regex esperado admite click &quot;B2&quot; en el paso 1, pero en &quot;root&quot; la visualización no lo ofrece</tspan>
+<tspan x="40" y="424">Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B → B2 → circle → circle</tspan>
+<tspan x="40" y="439">    el regex esperado admite click &quot;B2&quot; en el paso 2, pero en &quot;root &gt; B&quot; la visualización no lo ofrece</tspan>
 </text>
-<text x="40" y="408" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 4 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text x="40" y="472" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 4 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="426">((Click_D ((Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle)* | Click_B | Click_A (Click_A1 Click_circle)* |</tspan>
-<tspan x="40" y="441">Click_C)? Click_circle)*</tspan>
+<tspan x="40" y="490">((Click_D ((Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle)* | Click_B | Click_A (Click_A1 Click_circle)* | Click_C)? Click_circle)*</tspan>
 </text>
 </svg>

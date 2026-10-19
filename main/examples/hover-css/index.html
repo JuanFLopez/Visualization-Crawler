@@ -4,21 +4,21 @@
   <meta charset="utf-8">
   <title>Hovers de CSS</title>
   <style>
-    /* REAL: el resaltado de una barra. Con una transición: las de CSS no siguen al reloj de la página */
+    /* REAL: a bar's highlight. With a transition: CSS ones do not follow the page clock */
     .bar { fill: steelblue; transition: fill 300ms; }
     .bar:hover { fill: orange; }
 
-    /* REAL: el hover es del grupo; lo que cambia es el círculo de adentro */
+    /* REAL: the hover belongs to the group; what changes is the circle inside */
     .node circle { fill: gray; stroke: none; }
     .node:hover circle { stroke: black; stroke-width: 3px; }
 
-    /* FALSO: solo cambia el cursor, no se ve nada distinto */
+    /* FALSE: only the cursor changes, nothing looks different */
     .plain:hover { cursor: pointer; }
 
-    /* FALSO: la regla existe, pero el estilo en línea del elemento (con !important) le gana */
+    /* FALSE: the rule exists, but the element's inline style (with !important) wins over it */
     .locked:hover { fill: orange; }
 
-    /* FALSO: el elemento no está a la vista */
+    /* FALSE: the element is not visible */
     .ghost:hover { fill: orange; }
   </style>
 </head>
@@ -27,16 +27,16 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Hovers que son solo CSS: no hay ni un handler de hover, y D3 construye todo lo demás. Los
-      reales (las barras, el grupo "node") tienen que aparecer en el autómata; ninguno de los falsos.
-      Clickear "toggle" cambia de estado: desaparece barA y aparece barD. Ver esperado.txt.
+      Hovers that are CSS only: there is not a single hover handler, and D3 builds everything else. The
+      real ones (the bars, the "node" group) have to show up in the automaton; none of the false ones.
+      Clicking "toggle" changes state: barA disappears and barD appears. See esperado.txt.
     */
     const svg = d3.create("svg")
         .attr("width", 520)
         .attr("height", 220)
         .style("font", "12px sans-serif");
 
-    // las barras, una por dato
+    // the bars, one per datum
     const bar = svg.selectAll("rect.bar")
       .data([{ name: "barA", value: 80 }, { name: "barB", value: 50 }, { name: "barC", value: 65 }, { name: "barD", value: 40 }])
       .join("rect")
@@ -48,7 +48,7 @@
         .style("display", (d) => (d.name === "barD" ? "none" : null));
     bar.append("title").text((d) => d.name);
 
-    // el grupo cuyo hover resalta el círculo
+    // the group whose hover highlights the circle
     const node = svg.append("g").attr("class", "node");
     node.append("title").text("node");
     node.append("circle")
@@ -56,21 +56,21 @@
         .attr("cy", 70)
         .attr("r", 26);
 
-    // FALSO: un rect con una regla :hover que solo declara el cursor
+    // FALSE: a rect with a :hover rule that only declares the cursor
     svg.append("rect").attr("class", "plain").attr("x", 20).attr("y", 140).attr("width", 40).attr("height", 30).attr("fill", "lightgray")
       .append("title").text("plain");
 
-    // FALSO: un rect con una regla :hover que no gana
+    // FALSE: a rect with a :hover rule that does not win
     svg.append("rect").attr("class", "locked").attr("x", 80).attr("y", 140).attr("width", 40).attr("height", 30)
         .style("fill", "steelblue", "important")
       .append("title").text("locked");
 
-    // FALSO: un rect que no se ve
+    // FALSE: a rect that is not visible
     svg.append("rect").attr("class", "ghost").attr("x", 140).attr("y", 140).attr("width", 40).attr("height", 30)
         .style("display", "none")
       .append("title").text("ghost");
 
-    // lo único que se puede clickear: cambia de estado
+    // the only thing that can be clicked: it changes state
     svg.append("circle")
         .attr("cx", 450)
         .attr("cy", 150)

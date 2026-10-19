@@ -9,9 +9,9 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Hovers reales y hovers que NO lo son, todo hecho con D3: un círculo por caso, descripto
-      por un dato. Los reales (real, tip, delayed, y late en el segundo estado) tienen que
-      aparecer en el autómata; ninguno de los otros. Ver esperado.txt.
+      Real hovers and hovers that are NOT, all built with D3: one circle per case, described by a
+      datum. The real ones (real, tip, delayed, and late in the second state) have to show up in the
+      automaton; none of the others. See esperado.txt.
     */
     const base = "steelblue";
     let remembered = null;
@@ -22,7 +22,7 @@
         .attr("height", 210)
         .style("font", "12px sans-serif");
 
-    // el tooltip HTML, fuera del <svg> (el patrón habitual de D3)
+    // the HTML tooltip, outside the <svg> (the usual D3 pattern)
     const tip = d3.select("body").append("div")
         .attr("id", "tip")
         .style("position", "absolute")
@@ -34,7 +34,7 @@
         .style("opacity", 0)
         .style("pointer-events", "none");
 
-    // un elemento que solo existe para que un handler le toque algo, y está oculto
+    // an element that exists only so a handler has something to touch, and it is hidden
     const ghost = svg.append("text")
         .attr("x", 340)
         .attr("y", 140)
@@ -42,7 +42,7 @@
         .text("ghost");
 
     const cases = [
-      // REAL: resaltado
+      // REAL: highlight
       { name: "real", x: 40, y: 60,
         over() { d3.select(this).attr("fill", "orange"); },
         out() { d3.select(this).attr("fill", base); } },
@@ -52,43 +52,42 @@
         over() { tip.style("opacity", 1).text("info"); },
         out() { tip.style("opacity", 0); } },
 
-      // REAL: el efecto llega 300 ms después
+      // REAL: the effect arrives 300 ms later
       { name: "delayed", x: 160, y: 60,
         over() { const el = this; setTimeout(() => d3.select(el).attr("fill", "orange"), 300); },
         out() { d3.select(this).attr("fill", base); } },
 
-      // FALSO: el handler solo guarda algo en una variable, no cambia nada que se vea
+      // FALSE: the handler only stores something in a variable, nothing visible changes
       { name: "inert", x: 220, y: 60,
         over() { remembered = "inert"; } },
 
-      // FALSO: cambia y vuelve en el mismo paso; el efecto neto es nulo
+      // FALSE: it changes and reverts in the same step; the net effect is nil
       { name: "flash", x: 280, y: 60,
         over() { d3.select(this).attr("stroke", "red"); d3.select(this).attr("stroke", null); } },
 
-      // FALSO: lo único que toca está oculto
+      // FALSE: the only thing it touches is hidden
       { name: "hiddenEffect", x: 340, y: 60,
         over() { ghost.attr("data-poked", "1"); } },
 
-      // FALSO: tapado por otro elemento (ver el rect de más abajo); ningún puntero llega hasta él
+      // FALSE: covered by another element (see the rect further down); no pointer reaches it
       { name: "covered", x: 400, y: 60,
         over() { d3.select(this).attr("fill", "orange"); } },
 
-      // FALSO: pointer-events: none, no se puede apuntar
+      // FALSE: pointer-events: none, it cannot be pointed at
       { name: "noPointer", x: 460, y: 60, pointerEvents: "none",
         over() { d3.select(this).attr("fill", "orange"); } },
 
-      // FALSO: no se ve
+      // FALSE: not visible
       { name: "hidden", x: 520, y: 60, hidden: true,
         over() { d3.select(this).attr("fill", "orange"); } },
 
-      // REAL, pero solo en el segundo estado: aparece cuando se clickea "toggle"
+      // REAL, but only in the second state: it appears when "toggle" is clicked
       { name: "late", x: 40, y: 150, hidden: true,
         over() { d3.select(this).attr("fill", "orange"); },
         out() { d3.select(this).attr("fill", base); } },
 
-      // FALSO: solo se le puede hacer click; que un usuario lo vaya a apuntar antes de
-      // clickearlo no lo vuelve un hover. El click cambia de estado: aparece "late" y
-      // desaparece "real".
+      // FALSE: it can only be clicked; a user pointing at it before clicking does not make it
+      // a hover. The click changes state: "late" appears and "real" disappears.
       { name: "toggle", x: 100, y: 150, fill: "gray",
         click() {
           second = !second;
@@ -108,12 +107,12 @@
         .style("display", (d) => (d.hidden ? "none" : null));
     dot.append("title").text((d) => d.name);
 
-    // un listener solo en los que lo tienen: "toggle" no tiene ninguno de hover
+    // a listener only on the ones that have it: "toggle" has no hover one
     dot.filter((d) => d.over).on("mouseover", function (event, d) { d.over.call(this, event, d); });
     dot.filter((d) => d.out).on("mouseout", function (event, d) { d.out.call(this, event, d); });
     dot.filter((d) => d.click).on("click", function (event, d) { d.click.call(this, event, d); });
 
-    // el que tapa a "covered": se dibuja después, así que queda encima
+    // the one covering "covered": drawn later, so it ends up on top
     svg.append("rect")
         .attr("x", 370)
         .attr("y", 30)

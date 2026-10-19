@@ -1,26 +1,25 @@
 /**
- * Qué elementos reaccionan a un :hover de CSS, a partir del texto de las
- * reglas de las hojas de estilo.
+ * Which elements react to a CSS :hover, from the text of the stylesheet rules.
  *
- * Un puntero simulado con eventos no dispara el :hover de CSS, y una regla
- * como `.node:hover circle { stroke: black }` no registra ningún listener
- * que el crawler pueda ver. Lo que sí está a la vista es el texto de la
- * regla: de ahí sale QUIÉN tiene que recibir el :hover (aquí `.node`; el
- * círculo solo cambia como consecuencia).
+ * A pointer simulated with events does not trigger CSS :hover, and a rule
+ * such as `.node:hover circle { stroke: black }` registers no listener the
+ * crawler could see. What is visible is the rule's text, and from it comes WHO
+ * has to receive the :hover (here `.node`; the circle only changes as a
+ * consequence).
  *
- * Las dos funciones son AUTOCONTENIDAS (sin closures ni require): crawler.js
- * las inyecta en la página con toString(), y los tests las usan directo.
+ * Both functions are SELF-CONTAINED (no closures, no require): crawler.js
+ * injects them into the page with toString(), and the tests call them directly.
  */
 
 /**
- * Selectores de los elementos que reciben el :hover en una regla.
- * @param {string} selectorText - selectorText de una regla de estilo (puede ser una lista)
- * @returns {string[]} uno por cada selector complejo que contiene :hover
- *   (`.a:hover, .b > .c:hover` -> [".a", ".b > .c"]); lo que viene después
- *   del compuesto con :hover (`.node:hover circle` -> ".node") no entra
+ * Selectors of the elements that receive the :hover in a rule.
+ * @param {string} selectorText - selectorText of a style rule (may be a list)
+ * @returns {string[]} one per complex selector that contains :hover
+ *   (`.a:hover, .b > .c:hover` -> [".a", ".b > .c"]); whatever follows the
+ *   compound with :hover (`.node:hover circle` -> ".node") is left out
  */
 function hoverTargets(selectorText) {
-  // recorre `text` llamando a visit(char, index, depth) solo fuera de comillas y escapes
+  // walks `text` calling visit(char, index, depth), only outside quotes and escapes
   function scan(text, visit) {
     let depth = 0, quote = null;
     for (let i = 0; i < text.length; i++) {
@@ -34,7 +33,7 @@ function hoverTargets(selectorText) {
     }
   }
 
-  // la lista, partida en las comas de nivel 0 (no las de :is(a, b) ni las de [x="a,b"])
+  // the list, split at top-level commas (not the ones in :is(a, b) or [x="a,b"])
   const complexes = [];
   let from = 0;
   scan(selectorText, (c, i, depth) => {
@@ -42,7 +41,7 @@ function hoverTargets(selectorText) {
   });
   complexes.push(selectorText.slice(from));
 
-  // el compuesto sin su :hover de nivel 0 (un :hover dentro de :not(...) no cuenta: eso es "no está en hover")
+  // the compound without its top-level :hover (a :hover inside :not(...) does not count: that means "not hovered")
   function withoutHover(compound) {
     let found = false;
     let out = '';
@@ -62,7 +61,7 @@ function hoverTargets(selectorText) {
     const complex = raw.trim();
     if (!complex) continue;
 
-    // compuestos y combinadores (espacio, >, +, ~) de nivel 0
+    // top-level compounds and combinators (space, >, +, ~)
     const compounds = [];
     const combinators = [];
     let start = 0;
@@ -88,7 +87,7 @@ function hoverTargets(selectorText) {
     const index = compounds.findIndex((compound) => withoutHover(compound).found);
     if (index === -1) continue;
 
-    // el elemento que recibe el :hover: sin pseudo-elementos (::after, :before...), y `*` si no queda nada
+    // the element that receives the :hover: without pseudo-elements (::after, :before...), and `*` if nothing is left
     let own = withoutHover(compounds[index]).text
       .replace(/::[\w-]+(\([^)]*\))?/g, '')
       .replace(/:(before|after|first-line|first-letter)\b/g, '');
@@ -103,9 +102,9 @@ function hoverTargets(selectorText) {
 }
 
 /**
- * ¿Esta propiedad de una regla :hover cambia cómo se ve algo? `cursor` o
- * `transition` no: una regla que solo declara eso no es un efecto visible, y
- * probarla sería gastar un hover para no encontrar nada.
+ * Does this property of a :hover rule change how something looks? `cursor` or
+ * `transition` do not: a rule that only declares those is not a visible
+ * effect, and probing it would spend a hover to find nothing.
  */
 function isVisualProperty(name) {
   return !/^(cursor|transition|animation|pointer-events|user-select|-webkit-user-select|-webkit-tap-highlight-color|will-change|touch-action|scroll-behavior|caret-color|resize|appearance|-webkit-appearance)/.test(name);

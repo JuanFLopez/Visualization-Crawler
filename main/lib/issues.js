@@ -1,21 +1,22 @@
 /**
- * Comportamientos inesperados, reconstruidos como SERIES DE EVENTOS sobre
- * el autómata observado: desde el estado inicial, qué se clickeó en cada
- * estado, adónde llevó y en qué paso algo no salió como se esperaba.
+ * Unexpected behaviors, rebuilt as SERIES OF EVENTS over the observed
+ * automaton: from the initial state, what was clicked in each state, where it
+ * led and at which step something did not go as expected.
  *
- * Tres orígenes:
- *   - error:      un click rompió la página (transición a __ERROR__). Se
- *                 informa siempre, haya o no regex esperado, con el camino
- *                 más corto para reproducirlo.
- *   - noEsperado: la visualización permite una secuencia que el regex
- *                 esperado no admite (onlyInA de lib/diff.js).
- *   - faltante:   el regex esperado admite una secuencia que la
- *                 visualización no permite (onlyInB): en algún paso el
- *                 click no está disponible, o rompe la página.
+ * Three origins (the `kind` values are Spanish because they end up in the
+ * generated JSON):
+ *   - error:      a click broke the page (a transition to __ERROR__). Always
+ *                 reported, with or without an expected regex, together with
+ *                 the shortest path that reproduces it.
+ *   - noEsperado: the visualization allows a sequence the expected regex does
+ *                 not admit (onlyInA of lib/diff.js).
+ *   - faltante:   the expected regex admits a sequence the visualization does
+ *                 not allow (onlyInB): at some step the click is not
+ *                 available, or it breaks the page.
  *
- * Varios contraejemplos que fallan en el mismo lugar (mismo estado, misma
- * acción) son el mismo problema: se agrupan y se muestra la serie más
- * corta (diff es BFS, así que es la primera).
+ * Several counterexamples that fail in the same place (same state, same
+ * action) are the same problem: they are grouped and the shortest series is
+ * shown (diff is BFS, so that is the first one).
  */
 
 const { ERROR_STATE } = require('./automaton');
@@ -24,9 +25,9 @@ const { displayAction, shortAction, verbOf } = require('./actions');
 const HEADLINE = 'Hay un comportamiento inesperado cuando ocurre esta serie de eventos';
 
 /**
- * Recorre `seq` sobre el autómata observado.
+ * Walks `seq` over the observed automaton.
  * @returns {{ events: Object[], failure: null | {step: number, state: string, action: string, reason: 'noDisponible'|'error'} }}
- *   events incluye el paso que falla (to: null si el click no estaba, __ERROR__ si rompió la página)
+ *   events includes the failing step (to: null when the click was not there, __ERROR__ when it broke the page)
  */
 function replay(dfa, seq, cls) {
   const events = [];
@@ -44,7 +45,7 @@ function replay(dfa, seq, cls) {
   return { events, failure: null };
 }
 
-/** Primer paso (1-based) en que el regex esperado deja de admitir la secuencia, o null si la admite hasta el final. */
+/** First step (1-based) at which the expected regex stops admitting the sequence, or null if it admits it to the end. */
 function expectedDivergence(expected, seq) {
   let cur = expected.initial;
   for (let i = 0; i < seq.length; i++) {
@@ -54,7 +55,7 @@ function expectedDivergence(expected, seq) {
   return null;
 }
 
-// camino más corto (en clicks) desde el inicial hasta `target`
+// shortest path (in clicks) from the initial state to `target`
 function shortestPath(dfa, target) {
   const prev = new Map([[dfa.initial, null]]);
   const queue = [dfa.initial];
@@ -74,7 +75,7 @@ function shortestPath(dfa, target) {
 }
 
 function describe(kind, failingStep, event, { incomplete = false, alsoExpected = false, reason = null, form = 'language' } = {}) {
-  const a = `"${shortAction(event.action)}"`; // con el verbo delante ("hover"), el prefijo sobra
+  const a = `"${shortAction(event.action)}"`; // with the verb in front ("hover") the prefix is redundant
   const verb = verbOf(event.action);
   if (kind === 'error') {
     return `la página tira una excepción al hacer ${verb} ${a} en "${event.state}" (paso ${failingStep})` +
@@ -100,12 +101,12 @@ function describe(kind, failingStep, event, { incomplete = false, alsoExpected =
 
 /**
  * @param {Object} p
- * @param {import('./automaton').DFA} p.dfa - autómata observado (completo, sin cortar)
+ * @param {import('./automaton').DFA} p.dfa - observed automaton (full, uncut)
  * @param {ReturnType<import('./cycles').classifyEdges>} p.cls
- * @param {import('./automaton').DFA} [p.expected] - DFA del regex esperado (ya con prefijos, si corresponde)
- * @param {{onlyInA: string[][], onlyInB: string[][]}} [p.diff] - contra `target`
- * @param {{automaton: 'completo'|'cortado', form: 'language'|'completeInteractions'}} [p.target] - contra qué se comparó;
- *   los eventos se reconstruyen igual sobre `dfa` (el completo)
+ * @param {import('./automaton').DFA} [p.expected] - DFA of the expected regex (already prefix-closed when it applies)
+ * @param {{onlyInA: string[][], onlyInB: string[][]}} [p.diff] - against `target`
+ * @param {{automaton: 'completo'|'cortado', form: 'language'|'completeInteractions'}} [p.target] - what it was compared
+ *   against; the events are rebuilt over `dfa` (the full one) either way
  * @returns {{kind: string, message: string, detail: string, sequence: string[], events: Object[], failingStep: number, occurrences: number}[]}
  */
 function buildIssues({ dfa, cls, expected = null, diff = null, target = null }) {
@@ -133,9 +134,10 @@ function buildIssues({ dfa, cls, expected = null, diff = null, target = null }) 
     for (const seq of diff.onlyInB) {
       const { events, failure } = replay(dfa, seq, cls);
       if (!failure) {
-        // la visualización sí lo permite: la diferencia es del autómata
-        // contra el que se comparó (un atajo que el cortado no tiene, o
-        // una interacción que el regex da por completa sin haber vuelto)
+        // The visualization does allow it: the difference belongs to the
+        // automaton it was compared against (a shortcut the cut one lacks,
+        // or an interaction the regex considers complete without having
+        // returned).
         const shortcut = target.automaton === 'cortado' ? events.find((e) => e.edge === 'shortcut') : null;
         if (shortcut) {
           add(`faltante\u0000${shortcut.state}\u0000${shortcut.action}`, { kind: 'faltante', sequence: seq, events, failingStep: shortcut.step, reason: 'atajo' });
@@ -188,7 +190,7 @@ function eventLine(e, failingStep) {
   return `${head} ${tail}${notes.length ? `   (${notes.join('; ')})` : ''}`;
 }
 
-/** Líneas de log para una lista de issues de buildIssues(). */
+/** Log lines for a list of issues from buildIssues(). */
 function issuesLog(issues) {
   if (!issues.length) return [];
   const lines = [`=== COMPORTAMIENTO INESPERADO (${issues.length}) ===`];

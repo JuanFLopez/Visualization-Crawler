@@ -9,9 +9,9 @@
   <script src="d3.min.js"></script>
   <script>
     /*
-      Un menú desplegable hecho con D3: sus opciones solo se ven mientras el puntero está
-      sobre el menú. Sin explorar el hover no hay nada que clickear; con el hover, el usuario
-      puede elegir A o B, y "reset" vuelve al principio. Ver esperado.txt.
+      A dropdown menu built with D3: its options are only visible while the pointer is over the
+      menu. Without exploring the hover there is nothing to click; with it, the user can pick A or B,
+      and "reset" goes back to the start. See esperado.txt.
     */
     const width = 420;
     const height = 200;
@@ -26,7 +26,7 @@
         .attr("height", height)
         .style("font", "12px sans-serif");
 
-    // el menú es un grupo: el hover vale para el botón y para las opciones juntos
+    // the menu is a group: the hover applies to the button and the options together
     const menu = svg.append("g")
         .attr("class", "menu")
         .attr("transform", "translate(20,20)");
@@ -41,7 +41,7 @@
         .attr("y", 20)
         .text("Menú");
 
-    // las opciones, una por dato; arrancan ocultas
+    // the options, one per datum; they start hidden
     const items = menu.append("g")
         .attr("class", "items")
         .style("display", "none");
@@ -60,7 +60,7 @@
         .attr("y", 19)
         .text((d) => d.label);
 
-    // lo que queda después de elegir: un círculo del color de la opción, y "reset"
+    // what remains after choosing: a circle in the option's color, and "reset"
     const chosen = svg.append("circle")
         .attr("cx", 300)
         .attr("cy", 35)
@@ -81,12 +81,12 @@
         .attr("y", 18)
         .text("Reset");
 
-    // el menú se abre al entrar y se cierra al salir
+    // the menu opens on enter and closes on leave
     menu
         .on("mouseenter", () => items.style("display", null))
         .on("mouseleave", () => items.style("display", "none"));
 
-    // elegir una opción cierra el menú y muestra el resultado
+    // choosing an option closes the menu and shows the result
     option.on("click", (event, d) => {
       menu.style("display", "none");
       chosen.style("display", null).attr("fill", d.color);

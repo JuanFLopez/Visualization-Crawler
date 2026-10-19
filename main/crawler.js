@@ -1,61 +1,68 @@
 /**
- * DOS MODOS de navegación entre estados:
+ * Crawler: explores a D3 visualization by performing gestures (clicks and
+ * hovers) and builds the graph of its states, a DFA whose alphabet is the set
+ * of actions.
  *
- *  - RÁPIDO (con `backSelector`): asume semántica de jerarquía con una
- *    acción determinista de "subir un nivel" (zoom in/out, breadcrumbs).
- *    Navega por ancestro común -- sube al padre común, baja por el resto
- *    del camino -- y nunca recarga la página durante el crawl. Requiere
- *    que el usuario lo indique a mano vía config.js (ver README).
+ * TWO NAVIGATION MODES between states:
  *
- *  - GENÉRICO (sin `backSelector`, modo por defecto): no asume nada sobre
- *    la semántica. Para volver a un estado usa transiciones ya observadas
- *    si las hay; si no, recarga la página y reproduce el camino completo
- *    desde la raíz. Funciona con cualquier visualización, incluidas las
- *    que no tienen un "volver" fijo.
+ *  - FAST (with `backSelector`): assumes hierarchy semantics with a
+ *    deterministic "go up one level" action (zoom in / out, breadcrumbs).
+ *    It navigates through the common ancestor (up to the common parent, then
+ *    down the rest of the path) and never reloads the page during the crawl.
+ *    The user has to provide it by hand through config.js (see the README).
  *
- * EXPLORACIÓN EN PROFUNDIDAD: cada estado nuevo se expande en el momento
- * en que se lo descubre (la página ya está parada ahí, no hay que
- * navegar). Al terminar, sus transiciones ya son conocidas -- y en casi
- * cualquier visualización zoomable alguna lleva "hacia atrás" -- así que
- * volver al estado anterior rara vez requiere recargar.
+ *  - GENERIC (no `backSelector`, the default): assumes nothing about the
+ *    semantics. To get back to a state it uses transitions already observed
+ *    when there are any; otherwise it reloads the page and replays the whole
+ *    path from the root. It works with any visualization, including ones
+ *    with no fixed "back".
  *
- * TIEMPO VIRTUAL (por defecto, sin settleMs): el reloj de la página se
- * reemplaza por uno falso (page.clock de Playwright) y tras cada click se
- * adelanta hasta que la animación termina. Una transición D3 de 750ms se
- * resuelve en unos pocos ms reales, y sin depender de la velocidad de la
- * máquina.
+ * DEPTH-FIRST EXPLORATION: every new state is expanded the moment it is
+ * discovered (the page is already standing there, no navigation needed).
+ * Once done, its transitions are known, and in almost any zoomable
+ * visualization one of them leads "backwards", so returning to the previous
+ * state rarely requires a reload.
  *
- * DETECCIÓN AUTOMÁTICA (por defecto, sin instrumentar nada a mano): si no
- * se pasan `clickableSelector`/`stateKeyFn`, se usan los que arma
- * instrument.js -- `[data-crawler-clickable]` para candidatos y
- * `window.__crawlerState()` (fingerprint del DOM) para el estado. Si el
- * usuario definió su propio `window.__testState`, ese tiene prioridad
- * (instrumentación manual más precisa).
+ * VIRTUAL TIME (the default, with no settleMs): the page clock is replaced
+ * with a fake one (Playwright's page.clock) and after every gesture it is
+ * advanced until the animation ends. A 750 ms D3 transition resolves in a few
+ * real milliseconds, independent of the machine's speed.
  *
- * GRAFO DECORADO: cada estado descubierto se guarda en `graph` junto con
- * su camino desde el estado inicial y una marca `visited`. Un estado
- * jamás se vuelve a expandir una vez visitado -- eso es lo único que hace
- * falta para que el crawl termine incluso si el grafo real tiene ciclos.
- * Como red de seguridad adicional, ante un stateKeyFn/fingerprint
- * inestable hay un tope duro de pasos (maxSteps) que aborta en vez de
- * crecer sin límite.
+ * AUTOMATIC DETECTION (the default, nothing instrumented by hand): when no
+ * `clickableSelector` / `stateKeyFn` is passed, the ones instrument.js sets up
+ * are used: `[data-crawler-clickable]` for candidates and
+ * `window.__crawlerState()` (a DOM fingerprint) for the state. A
+ * `window.__testState` defined by the user takes priority (more precise
+ * manual instrumentation).
  *
- * HOVER: además de los clicks se prueban los elementos que reaccionan a que
- * el puntero entre o se mueva sobre ellos, con un puntero simulado por
- * eventos (como los clicks: no se mueve el mouse del browser). Se los
- * encuentra por un addEventListener (lo que hace selection.on de D3), por un
- * handler en la propiedad o el atributo, por un :hover de las hojas de
- * estilo (el estado se FUERZA por el protocolo de DevTools, ver
- * forceCssHover), y por un listener delegado en un contenedor, probando las
- * marcas de D3 que tiene adentro. Un hover entra al autómata solo si
- * cambia algo visible -- un hover que no hace nada, o sobre algo que un
- * usuario no podría tocar, no es una interacción y no se inventa. Si es un
- * resaltado o un tooltip es una acción más del mismo estado (un bucle) con
- * su efecto anotado; si abre algo o deja un cambio, lleva a otro estado, con
- * su unhover de vuelta. Los de movimiento se prueban en el centro y en el
- * borde, y se avisa si el efecto depende de dónde se apunta. Ver lib/hovers.js.
- * El tooltip nativo del navegador (un <title>) no cambia el DOM, así que no
- * se puede verificar: es opt-in (nativeTooltips).
+ * DECORATED GRAPH: every discovered state is kept in `graph` together with its
+ * path from the initial state and a `visited` mark. A state is never expanded
+ * again once visited, and that alone makes the crawl terminate even when the
+ * real graph has cycles. As an extra safety net, an unstable
+ * stateKeyFn / fingerprint hits a hard step limit (maxSteps) that aborts
+ * instead of growing without bound.
+ *
+ * HOVER: besides clicks, elements that react to the pointer entering or
+ * moving over them are probed, with a pointer simulated through events (like
+ * the clicks, the browser's mouse is never moved). They are found through an
+ * addEventListener (what D3's selection.on does), through a handler in a
+ * property or an attribute, through a stylesheet :hover (the state is FORCED
+ * through the DevTools protocol, see forceCssHover), and through a listener
+ * delegated on a container, probing the D3 marks inside it. A hover enters the
+ * automaton only when it changes something visible: a hover that does nothing,
+ * or that sits on something a user could not touch, is not an interaction and
+ * is not invented. A highlight or a tooltip is one more action of the same
+ * state (a loop) with its effect noted; a hover that opens something or leaves
+ * a change leads to another state, with its unhover back. Move-type hovers are
+ * probed at the center and at the edge, and a warning says when the effect
+ * depends on where the pointer is. See lib/hovers.js.
+ *
+ * Native browser tooltips (an SVG <title> child or a title="" attribute) are
+ * deliberately NOT hover actions, and there is no option to count them. D3
+ * has no tooltip code (7.9.0 never creates a <title>); the browser draws the
+ * tooltip itself, with no listener and no DOM change, so no effect can ever
+ * be observed. A hover that cannot be verified would be a phantom. The <title>
+ * text is still used to NAME actions (see readableOf).
  */
 
 const { chromium } = require('playwright');
@@ -67,25 +74,25 @@ const ERROR_STATE = '__ERROR__';
 
 let _unknownCounter = 0;
 
-// Una ACCIÓN (el símbolo del alfabeto, "Click_vis") se ejecuta con un
-// GESTO: { kind, sel }, el tipo de interacción y el selector del elemento
-// sobre el que se hace. Guardar el tipo es lo que permite que la
-// navegación entre estados solo reproduzca gestos, sin saber de qué clase son.
+// An ACTION (an alphabet symbol, "Click_vis") is performed with a GESTURE:
+// { kind, sel }, the kind of interaction and the selector of the element it is
+// done on. Keeping the kind is what lets navigation between states just replay
+// gestures without knowing what sort they are.
 const click = (sel) => ({ kind: 'click', sel });
 const unhover = (sel) => ({ kind: 'unhover', sel });
 const gestureKey = (g) => `${g.kind}:${g.sel}`;
 
-// El :hover de CSS: un puntero simulado con eventos no lo dispara, así que se
-// lo FUERZA por el protocolo de DevTools (CSS.forcePseudoState) sobre el
-// elemento y todos sus ancestros, como haría un puntero real -- sin mover
-// ningún mouse, así que no queda una posición escondida. Dos cosas que se
-// comprobaron y que importan:
-//  - DOM.getDocument se pide UNA vez por documento: pedirlo de nuevo invalida
-//    los nodeId, el estado forzado queda huérfano y ya no se puede limpiar.
-//  - Por eso se limpia con los nodeId guardados al forzar, no volviendo a buscarlos.
-// Solo corre en páginas con reglas :hover (window.__crawlerCssHover); en el
-// resto no se abre ni la sesión.
-const cssHoverState = new WeakMap(); // page -> { cdp, rootId, forced: nodeId[] } | false (sin CDP)
+// CSS :hover. A pointer simulated with events does not trigger it, so it is
+// FORCED through the DevTools protocol (CSS.forcePseudoState) on the element
+// and all its ancestors, as a real pointer would, without moving any mouse (so
+// no hidden position is left behind). Two verified facts matter here:
+//  - DOM.getDocument is requested ONCE per document: requesting it again
+//    invalidates the nodeIds, the forced state is orphaned and can no longer
+//    be cleared.
+//  - So clearing uses the nodeIds saved when forcing, not a fresh lookup.
+// It only runs on pages with :hover rules (window.__crawlerCssHover); on the
+// rest not even the session is opened.
+const cssHoverState = new WeakMap(); // page -> { cdp, rootId, forced: nodeId[] } | false (no CDP)
 
 async function cssHoverSession(page) {
   if (cssHoverState.has(page)) return cssHoverState.get(page);
@@ -103,7 +110,7 @@ async function cssHoverSession(page) {
   return session;
 }
 
-// fuerza :hover sobre los nodos que __crawlerHover marcó (data-crawler-hover)
+// Forces :hover on the nodes __crawlerHover marked (data-crawler-hover).
 async function forceCssHover(page) {
   const session = await cssHoverSession(page);
   if (!session) return false;
@@ -115,7 +122,7 @@ async function forceCssHover(page) {
   try {
     ({ nodeIds } = await marked());
   } catch (e) {
-    session.rootId = null; // el documento cambió sin avisar: se pide de nuevo (no hay nada forzado todavía)
+    session.rootId = null; // the document changed silently: ask again (nothing is forced yet)
     ({ nodeIds } = await marked());
   }
   for (const nodeId of nodeIds) await session.cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: ['hover'] });
@@ -127,26 +134,26 @@ async function clearCssHover(page) {
   const session = cssHoverState.get(page);
   if (!session || session.forced.length === 0) return;
   for (const nodeId of session.forced) {
-    await session.cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] }).catch(() => {}); // el nodo pudo desaparecer
+    await session.cdp.send('CSS.forcePseudoState', { nodeId, forcedPseudoClasses: [] }).catch(() => {}); // the node may be gone
   }
   session.forced = [];
 }
 
-// una carga nueva borra todo lo forzado y los nodeId
+// A fresh page load wipes everything forced, and the nodeIds.
 function resetCssHover(page) {
   const session = cssHoverState.get(page);
   if (session) { session.rootId = null; session.forced = []; }
 }
 
-// cómo se ejecuta cada tipo de gesto sobre el elemento `sel`. hover da
-// false si el elemento ya no es interactuable (ver __crawlerHover), y acepta
-// { where: 'edge' } para apuntar lejos del centro; unhover no usa `sel`: el
-// puntero sabe dónde está
+// How each kind of gesture is performed on the element `sel`. hover returns
+// false when the element can no longer be interacted with (see
+// __crawlerHover) and accepts { where: 'edge' } to aim away from the center;
+// unhover ignores `sel`: the pointer knows where it is.
 const PERFORM = {
   click: (page, sel) => page.$eval(sel, (el) => { el.dispatchEvent(new MouseEvent('click', { bubbles: true })); return true; }),
   hover: async (page, sel, opts) => {
-    await clearCssHover(page); // si el puntero estaba en otro lado
-    // al reproducir un camino este puede ser el primer hover de la carga: las reglas :hover se miran antes
+    await clearCssHover(page); // in case the pointer was somewhere else
+    // when replaying a path this may be the first hover of the load, so the :hover rules are scanned first
     const ok = await page.evaluate(([s, where]) => {
       window.__crawlerScanCss();
       return window.__crawlerHover(s, where);
@@ -160,8 +167,8 @@ const PERFORM = {
   },
 };
 
-// Los checkpoints anteriores guardaban el camino y los selectores como
-// strings (todo eran clicks). Sobre un nodo ya en el formato nuevo no hace nada.
+// Older checkpoints stored the path and the selectors as strings (everything
+// was a click). A node already in the new format is left untouched.
 function upgradeGestures(node) {
   const asGesture = (g) => (typeof g === 'string' ? click(g) : g);
   node.path = node.path.map(asGesture);
@@ -171,15 +178,15 @@ function upgradeGestures(node) {
   }
 }
 
-// espera en tiempo virtual (cuando no se pasa settleMs fijo): se salta el
-// reloj de a CHUNK_MS y se considera asentado cuando no hay requests en
-// vuelo y no se pidió ningún frame de animación en los últimos QUIET_MS
-// (virtuales). Cada salto es fastForward, no runFor: dispara cada timer
-// vencido UNA vez en lugar de reproducir los ~60 frames intermedios por
-// segundo -- una transición D3 llega a su estado final en 2-3 frames,
-// que es lo único que mira el fingerprint. Una simulación por ticks
-// (d3-force) avanza un tick por salto, de ahí el tope en saltos y no en
-// tiempo. La red sí corre en tiempo real: se sondea cada POLL_MS.
+// Waiting in virtual time (when no fixed settleMs is passed): the clock is
+// jumped CHUNK_MS at a time and the page counts as settled when no requests
+// are in flight and no animation frame was requested in the last QUIET_MS
+// (virtual). Each jump is fastForward, not runFor: it fires every due timer
+// ONCE instead of replaying the ~60 intermediate frames per second. A D3
+// transition reaches its final state in 2-3 frames, which is all the
+// fingerprint looks at. A tick-based simulation (d3-force) advances one tick
+// per jump, hence the cap is on jumps and not on time. The network does run in
+// real time: it is polled every POLL_MS.
 const POLL_MS = 20;
 const CHUNK_MS = 1000;
 const QUIET_MS = 100;
@@ -187,32 +194,36 @@ const MAX_CHUNKS = 1000;
 const NETWORK_MAX_MS = 15000;
 
 /**
- * Helpers que corren DENTRO de la página. Se instalan con
- * page.addInitScript(installPageHelpers) -- una función autocontenida,
- * sin closures de Node -- para que funcionen aunque no se use
- * instrument.js (instrumentación manual con window.__testState).
+ * Helpers that run INSIDE the page. They are installed with
+ * page.addInitScript(installPageHelpers), a self-contained function with no
+ * Node closures, so they work even when instrument.js is not used (manual
+ * instrumentation with window.__testState).
  */
 function installPageHelpers() {
-  // Un elemento es interactuable AHORA si un usuario real podría
-  // clickearlo: no basta con que tenga un listener. Además de
-  // pointer-events/display/visibility, hace un hit-test real
-  // (elementFromPoint) sobre la parte visible del elemento -- recortada
-  // al viewport y al <svg> que lo contiene -- así quedan afuera los
-  // elementos trasladados fuera del viewBox (los nodos fuera de foco de
-  // un icicle/treemap zoomable), los tapados por otro elemento, y los de
-  // área nula, sin que la visualización tenga que marcarlos con
-  // pointer-events:none como hace el sunburst.
-  // Además de si es interactuable, mide `visibleFrac`: qué fracción
-  // (aproximada) del elemento cae dentro del <svg> que lo contiene. Un
-  // elemento clickeable con visibleFrac < 1 es p.ej. un círculo vecino
-  // que asoma en la esquina de un circle pack zoomeado: clickearlo es
-  // legítimo, pero esas transiciones "laterales" vuelven denso el grafo
-  // (y explosivo el regex), así que el reporte las señala. No cuenta lo
-  // que queda fuera de la ventana (se ve scrolleando: un icicle es más
-  // alto que el viewport del crawler) ni lo tapado por otros elementos
-  // (en un circle pack los hijos tapan al padre y eso no es "no verse").
-  // Fuera de un <svg> vale 1. null = no se pudo medir (forma demasiado
-  // fina para la grilla).
+  // An element is actionable NOW if a real user could click it: having a
+  // listener is not enough. Besides pointer-events / display / visibility it
+  // does a real hit test (elementFromPoint) on the visible part of the element,
+  // clipped to the viewport and to the <svg> that contains it. That leaves out
+  // elements translated outside the viewBox (the out-of-focus nodes of a
+  // zoomable icicle / treemap), elements covered by another one, and
+  // zero-area ones, without the visualization having to mark them
+  // pointer-events:none as the sunburst does.
+  //
+  // It also measures `visibleFrac`: the (approximate) fraction of the element
+  // that falls inside its containing <svg>. A clickable element with
+  // visibleFrac < 1 is, say, a neighbouring circle peeking out of the corner of
+  // a zoomed circle pack: clicking it is legitimate, but those "sideways"
+  // transitions make the graph dense (and the regex explosive), so the report
+  // flags them. What falls outside the window does not count (it can be seen by
+  // scrolling: an icicle is taller than the crawler's viewport), nor does what
+  // is covered by other elements (in a circle pack the children cover the
+  // parent, and that is not "not being visible"). Outside an <svg> it is 1.
+  // null = could not be measured (a shape too thin for the grid).
+  //
+  // `point` is where a real user's pointer would be: the point that hits the
+  // element closest to the center of the visible part. With `far`, the farthest
+  // point from the center that still hits the element (the second sample of a
+  // hover whose effect depends on where it is aimed).
   function measure(node, far = false) {
     const no = { actionable: false, visibleFrac: 0 };
     const cs = getComputedStyle(node);
@@ -230,9 +241,9 @@ function installPageHelpers() {
       left = Math.max(left, frame.left); top = Math.max(top, frame.top);
       right = Math.min(right, frame.right); bottom = Math.min(bottom, frame.bottom);
     }
-    // al menos 1x1 px CSS visible: además de no ser clickeable de verdad,
-    // por debajo de eso aparecen "astillas" de redondeo (un rect que
-    // empieza justo en el borde del <svg> deja 0.001px "adentro")
+    // At least 1x1 CSS px visible: besides not being really clickable, below
+    // that rounding "slivers" show up (a rect that starts exactly at the edge of
+    // the <svg> leaves 0.001px "inside").
     if (right - left < 1 || bottom - top < 1) return no;
 
     const { pts: points, total, inFrame } = samplePoints(node, { left, top, right, bottom }, frame);
@@ -244,16 +255,12 @@ function installPageHelpers() {
       const h = Math.min(r.bottom, frame.bottom) - Math.max(r.top, frame.top);
       visibleFrac = (Math.max(w, 0) * Math.max(h, 0)) / Math.max(r.width * r.height, 1e-9);
     }
-    // forma SVG demasiado fina para que caiga algún punto de la grilla
-    // adentro: ya sabemos que es visible y está dentro del recorte, así
-    // que la damos por clickeable en vez de perder la transición
-    // `point`: dónde estaría el puntero de un usuario real, el punto que
-    // da en el elemento más cercano al centro de lo visible
+    // An SVG shape too thin for any grid point to fall inside: we already know
+    // it is visible and within the clip, so it is taken as clickable rather
+    // than losing the transition.
     const cx = (left + right) / 2, cy = (top + bottom) / 2;
     if (points.length === 0) return { actionable: node instanceof SVGGeometryElement, visibleFrac, point: [cx, cy] };
     points.sort(([ax, ay], [bx, by]) => Math.hypot(ax - cx, ay - cy) - Math.hypot(bx - cx, by - cy));
-    // `far`: el punto más lejos del centro que igual da en el elemento, para la
-    // segunda muestra de un hover cuyo efecto depende de dónde se apunta
     for (const [x, y] of far ? points.slice().reverse() : points) {
       const hit = document.elementFromPoint(x, y);
       if (hit && (hit === node || node.contains(hit))) return { actionable: true, visibleFrac, point: [x, y] };
@@ -261,13 +268,12 @@ function installPageHelpers() {
     return no;
   }
 
-  // Puntos de pantalla, dentro de `clip`, donde probar el hit-test. Para
-  // formas SVG, solo puntos que caen DENTRO de la forma (isPointInFill):
-  // el centro de la caja de un arco de sunburst suele caer en el hueco
-  // del anillo, no en el arco; para visibleFrac, `total` cuenta los
-  // puntos de la forma antes de recortar e `inFrame` los que caen dentro
-  // de `frame` (el <svg>, sin importar la ventana). Para el resto (HTML,
-  // <g>), una grilla sobre la parte visible de la caja.
+  // Screen points, inside `clip`, where the hit test is tried. For SVG shapes,
+  // only points that fall INSIDE the shape (isPointInFill): the center of a
+  // sunburst arc's box often falls in the hole of the ring, not on the arc. For
+  // visibleFrac, `total` counts the shape's points before clipping and `inFrame`
+  // the ones that fall inside `frame` (the <svg>, whatever the window). For
+  // everything else (HTML, <g>), a grid over the visible part of the box.
   function samplePoints(node, clip, frame) {
     const N = 5;
     const pts = [];
@@ -298,13 +304,12 @@ function installPageHelpers() {
     return { pts, total: pts.length, inFrame: pts.length };
   }
 
-  // Lo que hace falta para nombrar una acción, leído EN VIVO al momento
-  // de descubrir el candidato (no al momento de detectar el listener),
-  // porque en D3 es común que el <title> se agregue en una línea
-  // posterior a .on("click", ...).
-  // De un <title> solo cuenta la primera línea: el tooltip típico de D3
-  // es "flare/vis\n432,629" (ruta + valor), y el valor no identifica al
-  // nodo -- solo ensucia el nombre de la acción.
+  // What is needed to name an action, read LIVE when the candidate is
+  // discovered (not when its listener is detected), because in D3 the <title>
+  // is often appended on a line after .on("click", ...).
+  // Only the first line of a <title> counts: the typical D3 tooltip is
+  // "flare/vis\n432,629" (path + value), and the value does not identify the
+  // node; it only pollutes the action's name.
   function titleText(t) {
     if (!t) return null;
     const first = t.textContent.split('\n').map((l) => l.trim()).find(Boolean);
@@ -314,9 +319,9 @@ function installPageHelpers() {
   function readableOf(node) {
     const own = titleText(node.querySelector(':scope > title'));
     if (own) return own;
-    // patrón "celda" de D3: <g><rect (clickeable)/><text/><title/></g> --
-    // el tooltip es hermano, no hijo. Solo si el padre es un <g>: más
-    // arriba ya no describe a este elemento en particular.
+    // D3 "cell" pattern: <g><rect (clickable)/><text/><title/></g>, where the
+    // tooltip is a sibling, not a child. Only when the parent is a <g>: further
+    // up it no longer describes this particular element.
     const parent = node.parentElement;
     if (parent && parent.tagName.toLowerCase() === 'g') {
       const pt = titleText(parent.querySelector(':scope > title'));
@@ -331,14 +336,13 @@ function installPageHelpers() {
     return datumText(node);
   }
 
-  // Nombre a partir del dato que D3 ligó al elemento (`__data__`, lo que
-  // setean .data() y .datum()). Hace falta cuando el elemento clickeable
-  // no tiene <title> ni texto propio y la etiqueta visible es OTRO
-  // elemento ligado al mismo dato -- p.ej. el circle pack: los <circle>
-  // y los <text> están en grupos separados, unidos solo por el dato.
-  // Para un nodo de d3.hierarchy se arma el camino de ancestros
-  // ("flare/vis/data"), con la misma forma que los tooltips típicos, así
-  // _nameOptions elige el sufijo más corto que no esté tomado.
+  // A name from the datum D3 bound to the element (`__data__`, what .data() and
+  // .datum() set). Needed when the clickable element has no <title> or text of
+  // its own and the visible label is ANOTHER element bound to the same datum,
+  // as in the circle pack, where <circle>s and <text>s live in separate groups
+  // tied together only by the datum. For a d3.hierarchy node the ancestor path
+  // is built ("flare/vis/data"), in the same shape as typical tooltips, so
+  // _nameOptions picks the shortest suffix that is not taken.
   function datumText(node) {
     const d = node.__data__;
     if (d == null || typeof d !== 'object') return nameOfDatum(d);
@@ -351,7 +355,7 @@ function installPageHelpers() {
       }
       return parts.length ? parts.join('/') : null;
     }
-    // d3.pie y similares envuelven el dato original en .data
+    // d3.pie and similar wrap the original datum in .data
     return nameOfDatum(d) ?? (d.data != null ? nameOfDatum(d.data) : null);
   }
 
@@ -366,12 +370,12 @@ function installPageHelpers() {
     return null;
   }
 
-  // Un selector para un elemento SIN data-crawler-id: los que recién se
-  // encuentran al descubrir candidatos (handlers inline, reglas :hover, marcas
-  // de un listener delegado). Los ids del crawler salen de un contador al
-  // registrar el listener, en el orden de la carga; asignarlos más tarde daría
-  // ids que dependen del camino recorrido y que no existen tras recargar y
-  // reproducir. Este selector, en cambio, depende solo del DOM.
+  // A selector for an element WITHOUT data-crawler-id: the ones only found when
+  // candidates are discovered (inline handlers, :hover rules, marks of a
+  // delegated listener). Crawler ids come from a counter at listener
+  // registration, in load order; assigning them later would give ids that
+  // depend on the path walked and that do not exist after a reload and replay.
+  // This selector, instead, depends on the DOM alone.
   function stableSelector(el) {
     const unique = (sel) => { try { return document.querySelectorAll(sel).length === 1; } catch (e) { return false; } };
     const id = el.getAttribute('data-crawler-id');
@@ -388,14 +392,14 @@ function installPageHelpers() {
     return parts.join(' > ');
   }
 
-  // Las reglas :hover de las hojas de estilo -> qué elementos reciben el hover
-  // (el parser es lib/cssHover.js, inyectado como window.__crawlerHoverTargets).
-  // Una regla que solo declara cursor, transition y similares no cambia cómo
-  // se ve nada, y se descarta acá. Las hojas de otro origen no se pueden leer
-  // (SecurityError): se cuentan en window.__crawlerCssBlocked. Solo se vuelve a
-  // calcular si cambiaron las hojas. Deja window.__crawlerCssHover en true si
-  // hay alguna regla: es lo que le avisa a la instantánea de efectos que mire
-  // también los estilos calculados.
+  // The stylesheet :hover rules -> which elements receive the hover (the
+  // parser is lib/cssHover.js, injected as window.__crawlerHoverTargets). A rule
+  // that only declares cursor, transition and the like changes nothing about how
+  // anything looks, and is dropped here. Cross-origin stylesheets cannot be read
+  // (SecurityError): they are counted in window.__crawlerCssBlocked. The result
+  // is only recomputed when the sheets changed. Leaves window.__crawlerCssHover
+  // true when there is any rule: that is what tells the effects snapshot to also
+  // look at computed styles.
   let cssSignature = null;
   let cssTargets = [];
   window.__crawlerScanCss = function () {
@@ -416,7 +420,7 @@ function installPageHelpers() {
           for (let i = 0; i < rule.style.length && !visual; i++) visual = window.__crawlerIsVisualProperty(rule.style[i]);
           if (visual) for (const target of window.__crawlerHoverTargets(rule.selectorText)) found.add(target);
         } else if (rule.cssRules) {
-          // @media / @supports / @layer: solo si aplica ahora
+          // @media / @supports / @layer: only when it applies now
           if (rule.type === CSSRule.MEDIA_RULE && !window.matchMedia(rule.media.mediaText).matches) continue;
           if (rule.type === CSSRule.SUPPORTS_RULE && !CSS.supports(rule.conditionText)) continue;
           walk(rule.cssRules);
@@ -438,8 +442,7 @@ function installPageHelpers() {
     return ok;
   };
 
-  // La descripción de un candidato: lo que el crawler necesita para nombrarlo
-  // y para volver a encontrarlo.
+  // A candidate's description: what the crawler needs to name it and to find it again.
   function describe(node, visibleFrac) {
     const dataName = node.getAttribute('data-name');
     const cls = node.getAttribute('class') || '';
@@ -450,11 +453,11 @@ function installPageHelpers() {
       crawlerId,
       readable: readableOf(node),
       tag: node.tagName.toLowerCase(),
-      // el <svg> exterior con su propio click: en D3 suele ser "click en
-      // el fondo" (p.ej. alejar el zoom hasta la raíz en el circle pack)
+      // the outer <svg> with a click of its own: in D3 usually "click on the
+      // background" (say, zooming out to the root in the circle pack)
       isRootSvg: node instanceof SVGSVGElement && !node.ownerSVGElement,
-      // solo para los que no tienen otra identidad estable: los que se
-      // encuentran recién al descubrir (ver stableSelector)
+      // only for those with no other stable identity: the ones only found when
+      // discovering (see stableSelector)
       selector: crawlerId || dataName || cls.includes('center-circle') ? null : stableSelector(node),
       moves: node.hasAttribute('data-crawler-moves'),
       visibleFrac,
@@ -463,17 +466,15 @@ function installPageHelpers() {
 
   const HOVER_PROPS = ['onmouseover', 'onmouseenter', 'onpointerover', 'onpointerenter', 'onmousemove', 'onpointermove'];
 
-  // todos los candidatos interactuables en UNA sola ida y vuelta al
-  // browser (con cientos de elementos, consultar uno por uno desde Node
-  // domina el tiempo de cada estado). `selectors`: { click, hover, container,
-  // scan, css, native }. Un elemento puede ser candidato de los dos tipos (un
-  // círculo con mouseover y click) y se lo mide una sola vez; `kinds` dice de
-  // cuáles y `sources` por dónde se lo encontró:
-  //   listener  un addEventListener sobre el elemento (lo marca instrument.js)
-  //   inline    un handler en la propiedad (el.onmouseover = fn) o en el
-  //             atributo (onmouseover="..."): las dos formas se ven en la propiedad
-  //   css       un :hover de las hojas de estilo (ver __crawlerScanCss)
-  //   native    un <title> o title="" (el tooltip nativo del navegador; opt-in)
+  // Every actionable candidate in ONE round trip to the browser (with hundreds
+  // of elements, asking one by one from Node dominates the time of each state).
+  // `selectors`: { click, hover, container, scan, css }. An element can be a
+  // candidate of both kinds (a circle with mouseover and click) and is measured
+  // once; `kinds` says which ones and `sources` where it was found:
+  //   listener  an addEventListener on the element itself (marked by instrument.js)
+  //   inline    a handler in the property (el.onmouseover = fn) or in the
+  //             attribute (onmouseover="..."): both show up in the property
+  //   css       a stylesheet :hover (see __crawlerScanCss)
   window.__crawlerCandidates = function (selectors) {
     const sx = window.scrollX, sy = window.scrollY;
     const nodes = new Set();
@@ -481,8 +482,8 @@ function installPageHelpers() {
       if (sel) for (const node of document.querySelectorAll(sel)) nodes.add(node);
     }
 
-    // los que no pasaron por un addEventListener sobre el propio elemento
-    const extra = new Map(); // nodo -> { kinds: Set, sources: [], moves?, native? }
+    // the ones that did not go through an addEventListener on the element itself
+    const extra = new Map(); // node -> { kinds: Set, sources: [], moves? }
     const addExtra = (node, kind, source, more) => {
       if (node === document.body || node === document.documentElement) return;
       if (window.__crawlerIncludeLinks !== true && (node.tagName === 'A' || node.hasAttribute('href'))) return;
@@ -512,12 +513,6 @@ function installPageHelpers() {
           for (const el of matching) addExtra(el, 'hover', 'css');
         }
       }
-      if (selectors.native) {
-        for (const el of everyone) {
-          const text = titleText(el.querySelector(':scope > title')) || titleText({ textContent: el.getAttribute('title') || '' });
-          if (text) addExtra(el, 'hover', 'native', { native: text });
-        }
-      }
     }
 
     const out = [];
@@ -529,19 +524,18 @@ function installPageHelpers() {
       info.kinds = ['click', 'hover'].filter((kind) => (selectors[kind] && node.matches(selectors[kind])) || (e && e.kinds.has(kind)));
       info.sources = [...(selectors.hover && node.matches(selectors.hover) ? ['listener'] : []), ...(e ? e.sources : [])];
       if (e && e.moves) info.moves = true;
-      info.native = e && e.native ? e.native : null;
       out.push(info);
     }
     window.scrollTo(sx, sy);
     return out;
   };
 
-  // Las marcas de D3 dentro de un contenedor con un listener DELEGADO (uno solo
-  // que mira event.target): los descendientes que llevan su propio dato
-  // (__data__, la firma de D3), que hoy se pueden tocar, que no son candidatos
-  // por sí mismos y de a uno por dato -- D3 le pasa el dato a lo que se le
-  // appendea, así que un <g> y su <circle> lo comparten: vale el de más afuera.
-  // Devuelve a lo sumo `limit`, y cuántas había.
+  // The D3 marks inside a container with a DELEGATED listener (a single one that
+  // looks at event.target): the descendants that carry a datum of their own
+  // (__data__, D3's signature), that can be touched now, that are not candidates
+  // by themselves, and one per datum. D3 hands the datum to whatever is
+  // appended, so a <g> and its <circle> share it: the outermost one is kept.
+  // Returns at most `limit`, and how many there were.
   window.__crawlerMarks = function (selector, limit) {
     const container = document.querySelector(selector);
     if (!container) return { marks: [], total: 0 };
@@ -550,7 +544,7 @@ function installPageHelpers() {
     const marks = [];
     for (const el of container.querySelectorAll('*')) {
       if (!Object.prototype.hasOwnProperty.call(el, '__data__') || el.__data__ == null) continue;
-      if (el.hasAttribute('data-crawler-hoverable')) continue; // ya es candidato
+      if (el.hasAttribute('data-crawler-hoverable')) continue; // already a candidate
       if (accepted.some((a) => a.contains(el) && a.__data__ === el.__data__)) continue;
       const { actionable, visibleFrac } = measure(el);
       if (!actionable) continue;
@@ -566,14 +560,13 @@ function installPageHelpers() {
     return { marks, total: accepted.length };
   };
 
-  // El puntero, simulado con eventos sintéticos como los clicks: no se mueve
-  // el mouse del browser, así que no queda una posición escondida que
-  // contamine el estado. Los eventos salen en el orden en que los dispara un
-  // browser al entrar a un elemento (los de puntero antes que los de mouse;
-  // `over` burbujea, y `enter` va uno por cada ancestro al que se entra) y
-  // al salir, a la inversa. Se entra siempre desde el fondo de la página:
-  // body y html ya "tienen" el puntero.
-  let pointer = null; // { node, chain, x, y } mientras el puntero "está" sobre algo
+  // The pointer, simulated with synthetic events like the clicks: the browser's
+  // mouse is never moved, so no hidden position is left behind to contaminate
+  // the state. Events go out in the order a browser fires them when entering an
+  // element (pointer events before mouse ones; `over` bubbles, and `enter` goes
+  // once per ancestor entered) and, when leaving, the reverse. It always enters
+  // from the page background: body and html already "have" the pointer.
+  let pointer = null; // { node, chain, x, y } while the pointer "is" over something
 
   function fire(target, type, x, y, bubbles) {
     const init = { bubbles, cancelable: bubbles, composed: true, view: window, clientX: x, clientY: y, relatedTarget: document.body };
@@ -582,15 +575,15 @@ function installPageHelpers() {
       : new MouseEvent(type, init));
   }
 
-  // false si el elemento no está o ya no es interactuable: un usuario real
-  // no podría poner el puntero ahí. `where` = 'edge' lo pone en el punto más
-  // lejos del centro, la segunda muestra de un hover que depende de la posición.
+  // false when the element is missing or no longer actionable: a real user
+  // could not put the pointer there. `where` = 'edge' puts it at the point
+  // farthest from the center, the second sample of a position-dependent hover.
   window.__crawlerHover = function (selector, where) {
     const node = document.querySelector(selector);
     if (!node) return false;
     window.__crawlerUnhover();
     const sx = window.scrollX, sy = window.scrollY;
-    const { actionable, point } = measure(node, where === 'edge'); // lo deja a la vista: las coordenadas valen
+    const { actionable, point } = measure(node, where === 'edge'); // leaves it in view, so the coordinates hold
     if (!actionable) { window.scrollTo(sx, sy); return false; }
     const [x, y] = point;
     const chain = [];
@@ -599,20 +592,20 @@ function installPageHelpers() {
     for (const n of chain) fire(n, 'pointerenter', x, y, false);
     fire(node, 'mouseover', x, y, true);
     for (const n of chain) fire(n, 'mouseenter', x, y, false);
-    // un puntero real que entra a un elemento manda también un movimiento en ese punto
+    // a real pointer entering an element also sends a move at that point
     fire(node, 'pointermove', x, y, true);
     fire(node, 'mousemove', x, y, true);
-    // El :hover de CSS lo fuerza el crawler por el protocolo de DevTools, sobre
-    // el elemento y TODOS sus ancestros (como un puntero real); esta marca le
-    // dice sobre cuáles.
+    // The CSS :hover is forced by the crawler through the DevTools protocol, on
+    // the element and ALL its ancestors (like a real pointer); this mark tells
+    // it which ones.
     if (window.__crawlerCssHover === true) for (let n = node; n; n = n.parentElement) n.setAttribute('data-crawler-hover', '1');
     pointer = { node, chain, x, y };
-    window.__crawlerPointerNode = node; // para que la instantánea de efectos sepa cuál es el elemento tocado
+    window.__crawlerPointerNode = node; // so the effects snapshot knows which element was touched
     window.scrollTo(sx, sy);
     return true;
   };
 
-  // false si el puntero no estaba sobre nada
+  // false when the pointer was not over anything
   window.__crawlerUnhover = function () {
     if (!pointer) return false;
     const { node, chain, x, y } = pointer;
@@ -628,7 +621,7 @@ function installPageHelpers() {
   };
 }
 
-// Nombres posibles para la acción, del más corto al más específico.
+// Possible names for the action, from the shortest to the most specific.
 function _nameOptions(info) {
   if (info.dataName) return [info.dataName];
   if (info.cls.includes('center-circle')) return ['BACK'];
@@ -636,9 +629,8 @@ function _nameOptions(info) {
   const options = [];
 
   if (info.readable) {
-
     const segments = info.readable
-      .replace(/\s+[-+]?\d[\d.,]*%?$/, '') 
+      .replace(/\s+[-+]?\d[\d.,]*%?$/, '')
       .split('/')
       .map((s) => s.trim().replace(/\s+/g, '_'))
       .filter(Boolean);
@@ -650,16 +642,15 @@ function _nameOptions(info) {
   return options;
 }
 
-// Un elemento cuyo nombre legible CAMBIA según el estado no puede llevar
-// ninguno de esos nombres: el símbolo es del elemento, no del estado. El
-// caso típico es el círculo central del sunburst, al que cada click le
-// re-liga como dato el padre del foco (parent.datum(p.parent)) -- en cada
-// estado "dice" otro nodo. Al terminar el crawl, esas acciones pasan a
-// llamarse por su etiqueta SVG/HTML ("Click_circle"). Se lee de
-// node.labels, que guarda lo visto en cada estado (y viaja en el
-// checkpoint, así que funciona también al retomar).
+// An element whose readable name CHANGES with the state cannot carry any of
+// those names: the symbol belongs to the element, not to the state. The typical
+// case is the sunburst's center circle, which every click re-binds to the
+// focus's parent (parent.datum(p.parent)), so in each state it "says" a
+// different node. When the crawl ends, those actions are renamed after their
+// SVG / HTML tag ("Click_circle"). It reads node.labels, which keeps what was
+// seen in each state (and travels in the checkpoint, so it also works on resume).
 function renameUnstableActions(graph) {
-  const seen = new Map(); // acción -> { readables: Set, tag }
+  const seen = new Map(); // action -> { readables: Set, tag }
   for (const node of graph.values()) {
     for (const [action, { readable, tag }] of Object.entries(node.labels || {})) {
       if (!seen.has(action)) seen.set(action, { readables: new Set(), tag });
@@ -672,7 +663,7 @@ function renameUnstableActions(graph) {
   const rename = new Map();
   for (const [action, { readables, tag }] of seen) {
     if (readables.size < 2) continue;
-    // '#n' y no '_n': lib/names.js saca los sufijos "_<número>"
+    // '#n' and not '_n': lib/names.js strips "_<number>" suffixes
     const kind = kindOfAction(action);
     let name = actionName(kind, tag);
     for (let k = 2; taken.has(name); k++) name = actionName(kind, `${tag}#${k}`);
@@ -680,8 +671,8 @@ function renameUnstableActions(graph) {
     taken.add(name);
     rename.set(action, name);
   }
-  // la vuelta de un hover (Unhover_X) no es un candidato, no tiene etiqueta
-  // propia: se llama como su hover
+  // The way back of a hover (Unhover_X) is not a candidate and has no label of
+  // its own: it is named after its hover.
   for (const [from, to] of [...rename]) {
     if (kindOfAction(from) !== 'hover' || !taken.has(unhoverOf(from))) continue;
     rename.set(unhoverOf(from), unhoverOf(to));
@@ -712,14 +703,13 @@ function renameUnstableActions(graph) {
   return rename;
 }
 
-// El nombre de una acción es del ELEMENTO, no del estado: el mismo
-// elemento tiene que ser el mismo símbolo del alfabeto en todos los
-// estados (si no, el autómata y su regex no significan nada). Por eso
-// se asigna una sola vez por crawl y se reusa.
+// An action's name belongs to the ELEMENT, not to the state: the same element
+// has to be the same alphabet symbol in every state (otherwise the automaton
+// and its regex mean nothing). So it is assigned once per crawl and reused.
 function createNaming(graph = null) {
   const byGesture = new Map();
   const taken = new Set();
-  // al retomar un checkpoint, respetar los nombres ya usados
+  // when resuming a checkpoint, respect the names already used
   if (graph) {
     for (const [, node] of graph) {
       for (const [action, gesture] of Object.entries(node.gestures || {})) {
@@ -733,7 +723,8 @@ function createNaming(graph = null) {
     if (byGesture.has(key)) return byGesture.get(key);
     let name = null;
     const options = _nameOptions(info);
-    // el hover sobre el <svg> exterior es "el fondo", como su click; sin esto se llamaría por todo el texto que contiene
+    // A hover on the outer <svg> is "the background", like its click; without
+    // this it would be named after all the text it contains.
     if (gesture.kind === 'hover' && info.isRootSvg) options.unshift('background');
     for (const opt of options) {
       const candidate = actionName(gesture.kind, opt);
@@ -750,23 +741,23 @@ function _selectorFor(info) {
   if (info.dataName) return `[data-name="${info.dataName}"]`;
   if (info.cls.includes('center-circle')) return 'circle.center-circle';
   if (info.crawlerId) return `[data-crawler-id="${info.crawlerId}"]`;
-  // los que se encuentran recién al descubrir (handler inline, :hover de CSS,
-  // marca de un listener delegado) no tienen id del crawler: ver stableSelector
+  // Elements only found when discovering (inline handler, CSS :hover, mark of a
+  // delegated listener) have no crawler id: see stableSelector.
   if (info.selector) return info.selector;
   throw new Error('elemento interactuable sin identidad estable');
 }
 
-// Filtro genérico de "interactuable ahora" para un locator suelto (lo usa
-// diagnose.js). Requiere installPageHelpers en la página.
+// Generic "actionable now" filter for a loose locator (used by diagnose.js).
+// Requires installPageHelpers in the page.
 function isActionable(locator) {
   return locator.evaluate((node) => window.__crawlerIsActionable(node));
 }
 
-// Candidatos interactuables del estado actual, ya nombrados:
-// [[accion, gesto, info], ...]. Primero los clicks y después los hovers (un
-// mismo elemento puede estar en los dos), así el orden en que se exploran
-// los clicks no depende de que haya hovers. `selectors`: { click, hover }.
-// Requiere installPageHelpers en la página.
+// The actionable candidates of the current state, already named:
+// [[action, gesture, info], ...]. Clicks first and hovers after (one element
+// can be in both), so the order in which clicks are explored does not depend on
+// whether there are hovers. `selectors`: { click, hover }. Requires
+// installPageHelpers in the page.
 async function discoverCandidates(page, selectors, nameFor) {
   const infos = await page.evaluate((sel) => window.__crawlerCandidates(sel), selectors);
   const found = [];
@@ -781,10 +772,10 @@ async function discoverCandidates(page, selectors, nameFor) {
 }
 
 /**
- * Clickea `sel` y mide cuándo deja de cambiar el estado: lee cada
- * `pollMs` y considera "asentado" cuando pasan `quietMs` sin cambios.
- * Devuelve el instante (ms desde el click) del último cambio observado,
- * o null si sigue cambiando al llegar a `maxMs`. Lo usa diagnose.js.
+ * Clicks `sel` and measures when the state stops changing: it reads every
+ * `pollMs` and counts the page as settled once `quietMs` pass with no change.
+ * Returns the instant (ms since the click) of the last change observed, or
+ * null when it is still changing on reaching `maxMs`. Used by diagnose.js.
  */
 async function measureSettle(page, sel, readFn, { pollMs = 50, quietMs = 400, maxMs = 6000, onChange = null } = {}) {
   let prev = await readFn();
@@ -809,51 +800,48 @@ async function measureSettle(page, sel, readFn, { pollMs = 50, quietMs = 400, ma
 /**
  * @param {Object} opts
  * @param {string} opts.fixtureUrl
- * @param {string} [opts.chromePath] - si se omite, usa el Chromium que trae Playwright.
+ * @param {string} [opts.chromePath] - Playwright's bundled Chromium when omitted.
  * @param {string} [opts.clickableSelector='[data-crawler-clickable]']
- * @param {boolean} [opts.hover=true] - probar también los hovers (elementos con
- *   un listener de mouseover/mouseenter/pointerover/pointerenter). Un hover
- *   solo entra al autómata si cambia algo visible (ver lib/hovers.js).
+ * @param {boolean} [opts.hover=true] - also probe hovers (elements with a
+ *   mouseover / mouseenter / pointerover / pointerenter listener). A hover
+ *   enters the automaton only when it changes something visible (see lib/hovers.js).
  * @param {string} [opts.hoverableSelector='[data-crawler-hoverable]']
- * @param {boolean} [opts.nativeTooltips=false] - contar el tooltip nativo del navegador (un
- *   <title> o title="") como un hover. No cambia el DOM, así que no se verifica: se anota
- *   `native` y se confía en que el elemento lo tiene. Una acción por elemento con <title>.
- * @param {number} [opts.maxDelegated=50] - tope de marcas de D3 a probar por cada listener
- *   delegado (0 = no probar delegados)
- * @param {(msg: string) => void} [opts.onLog] - avisos del crawl (hovers que se omiten)
+ * @param {number} [opts.maxDelegated=50] - cap on the D3 marks probed for each
+ *   delegated listener (0 = do not probe delegated listeners)
+ * @param {(msg: string) => void} [opts.onLog] - crawl warnings (hovers that are skipped)
  * @param {(rawState: any) => string} [opts.stateKeyFn=(raw)=>raw]
- * @param {string[]} [opts.initScripts] - código JS a inyectar antes de que
- *   corra la página del usuario (vía page.addInitScript), p.ej. el
- *   contenido de instrument.js para detección automática.
- * @param {string} [opts.backSelector] - ver modos arriba. Si se omite,
- *   modo genérico (recarga + replay).
- * @param {number} [opts.settleMs] - pausa FIJA tras cada click. Si se
- *   omite (o es null), la espera es adaptativa: después de cada click o
- *   carga se espera hasta que el estado deja de cambiar, no quedan
- *   requests en vuelo y no se piden frames de animación (ver
- *   window.__crawlerActivity en instrument.js) -- así no depende de un
- *   número elegido a ojo, ni de qué elemento se clickee para medirlo.
- * @param {number} [opts.discoverySettleMs] - settle usado específicamente
- *   al re-entrar a un estado antes de listar sus candidatos. Por defecto,
- *   igual al settleMs (fijo o adaptativo).
- * @param {number} [opts.maxStates=1000] - si se alcanza, el resultado se
- *   devuelve con `truncated: true`.
- * @param {number} [opts.maxSteps=20000] - tope duro de interacciones totales.
+ * @param {string[]} [opts.initScripts] - JS code to inject before the user's page
+ *   runs (through page.addInitScript), e.g. the contents of instrument.js for
+ *   automatic detection.
+ * @param {string} [opts.backSelector] - see the modes above. Generic mode
+ *   (reload + replay) when omitted.
+ * @param {number} [opts.settleMs] - FIXED pause after every gesture. When
+ *   omitted (or null) the wait is adaptive: after every gesture or load it waits
+ *   until the state stops changing, no requests are in flight and no animation
+ *   frames are requested (see window.__crawlerActivity in instrument.js), so it
+ *   depends neither on a number picked by eye nor on which element is clicked to
+ *   measure it.
+ * @param {number} [opts.discoverySettleMs] - settle used specifically when
+ *   re-entering a state before listing its candidates. Defaults to settleMs
+ *   (fixed or adaptive).
+ * @param {number} [opts.maxStates=1000] - when reached, the result is returned
+ *   with `truncated: true`.
+ * @param {number} [opts.maxSteps=20000] - hard cap on total interactions.
  * @param {(state, transitions, snapshot) => void} [opts.onStateExpanded] -
- *   hook de progreso/checkpoint.
+ *   progress / checkpoint hook.
  * @param {Object} [opts.resume] - { graph: [[state,node],...], queue: string[], initialState }
- *   generado por un checkpoint previo (ver snapshot en onStateExpanded).
+ *   produced by an earlier checkpoint (see snapshot in onStateExpanded).
  * @returns {Promise<{transitions: Object, initialState: string, visibility: Object, renamed: Object, usedManualState: boolean, truncated: boolean}>}
- *   visibility: estado -> acción -> fracción visible, solo para los clicks sobre
- *   elementos que se veían en parte (ver measure en installPageHelpers)
- *   renamed: acción -> nuevo nombre, para las que mostraban un nombre distinto
- *   según el estado (ver renameUnstableActions)
- *   labels: estado -> acción -> nombre legible completo del elemento EN ese
- *   estado (p.ej. "flare/vis/operator"); lib/labels.js lo usa para nombrar
- *   los estados por su lugar en la jerarquía
- *   effects: estado -> acción de hover -> qué cambia (ver describeEffect en lib/hovers.js)
- *   ignoredHovers: [{ action, reason, states }] hovers con listener que NO
- *   son una acción (no hacen nada visible, no se asientan, la página cambia sola...)
+ *   visibility: state -> action -> visible fraction, only for clicks on
+ *   elements that were partly visible (see measure in installPageHelpers)
+ *   renamed: action -> new name, for the ones that showed a different name
+ *   depending on the state (see renameUnstableActions)
+ *   labels: state -> action -> full readable name of the element IN that state
+ *   (e.g. "flare/vis/operator"); lib/labels.js uses it to name the states by
+ *   their place in the hierarchy
+ *   effects: state -> hover action -> what changes (see describeEffect in lib/hovers.js)
+ *   ignoredHovers: [{ action, reason, states }] hovers with a listener that are
+ *   NOT an action (they do nothing visible, never settle, the page changes by itself...)
  */
 async function crawl(opts) {
   const browser = await chromium.launch({
@@ -874,7 +862,6 @@ async function _crawl(browser, {
   clickableSelector = containerSelector ? `${containerSelector} [data-crawler-clickable]` : '[data-crawler-clickable]',
   hover = true,
   hoverableSelector = containerSelector ? `${containerSelector} [data-crawler-hoverable]` : '[data-crawler-hoverable]',
-  nativeTooltips = false,
   maxDelegated = 50,
   stateKeyFn = (raw) => raw,
   initScripts = [],
@@ -891,7 +878,7 @@ async function _crawl(browser, {
   discoverySettleMs = discoverySettleMs ?? settleMs;
   if (settleMs == null || discoverySettleMs == null) await page.clock.install();
   await page.addInitScript(installPageHelpers);
-  // el parser de las reglas :hover es el mismo que usan los tests (lib/cssHover.js)
+  // the :hover rule parser is the same one the tests use (lib/cssHover.js)
   await page.addInitScript({
     content: `window.__crawlerHoverTargets = ${hoverTargets.toString()}; window.__crawlerIsVisualProperty = ${isVisualProperty.toString()};`,
   });
@@ -899,9 +886,9 @@ async function _crawl(browser, {
 
   let errors = [];
   page.on('pageerror', (e) => errors.push(String(e)));
-  page.on('dialog', (d) => d.dismiss().catch(() => {})); 
+  page.on('dialog', (d) => d.dismiss().catch(() => {}));
 
-  let usedManualState = false; 
+  let usedManualState = false;
 
   async function readState() {
     const state = await page.evaluate(() => {
@@ -910,7 +897,6 @@ async function _crawl(browser, {
         if (typeof window.__crawlerState === 'function') return { raw: window.__crawlerState(), manual: false };
         return null;
       } catch (e) {
-      
         return { raw: `estado ilegible: ${e.message}`, unreadable: true };
       }
     });
@@ -952,7 +938,7 @@ async function _crawl(browser, {
           `correcta: instrumentá window.__testState a mano, capturando solo lo lógicamente relevante ` +
           `(o pasá --settleMs fijo para forzar una corrida en tiempo real).`
         );
-        err.code = 'NO_SETTLE'; // probeHover lo distingue: un hover así se ignora, no tumba el crawl
+        err.code = 'NO_SETTLE'; // probeHover tells it apart: such a hover is ignored, it does not bring the crawl down
         throw err;
       }
       await page.clock.fastForward(CHUNK_MS);
@@ -960,17 +946,16 @@ async function _crawl(browser, {
     }
   }
 
-
   function settle(wait) {
     return wait == null ? virtualSettle() : page.waitForTimeout(wait);
   }
 
-  // Ejecuta un gesto y espera a que la página se asiente. Devuelve lo que
-  // devuelve el gesto (para hover, false si el elemento ya no se podía
-  // tocar). Después de un click el puntero queda afuera: la página puede
-  // llegar con él encima de algo (un hover que abrió un menú) y el estado
-  // que se lee tiene que ser el del click, no el del click con un
-  // resaltado colgado que un usuario real no vería.
+  // Performs a gesture and waits for the page to settle. Returns whatever the
+  // gesture returns (for hover, false when the element could no longer be
+  // touched). After a click the pointer is left outside: the page may arrive
+  // with it over something (a hover that opened a menu), and the state that is
+  // read has to be the click's, not the click's plus a lingering highlight a
+  // real user would not see.
   async function perform(gesture, wait, opts) {
     errors = [];
     const done = await PERFORM[gesture.kind](page, gesture.sel, opts);
@@ -978,7 +963,6 @@ async function _crawl(browser, {
     if (gesture.kind === 'click' && (await PERFORM.unhover(page))) await settle(wait);
     return done;
   }
-
 
   async function initialLoad(wait) {
     errors = [];
@@ -999,9 +983,9 @@ async function _crawl(browser, {
     }
   }
 
-  // grafo decorado: state -> { path: gesto[], visited: bool, transitions: {}, gestures: {} }
-  // (gestures: acción -> gesto, para poder rehacer transiciones ya
-  // conocidas al navegar sin recargar; ver knownRoute)
+  // decorated graph: state -> { path: gesture[], visited: bool, transitions: {}, gestures: {} }
+  // (gestures: action -> gesture, so already known transitions can be redone
+  // when navigating without reloading; see knownRoute)
   let graph, initialState, queue, currentState;
 
   if (resume) {
@@ -1018,7 +1002,6 @@ async function _crawl(browser, {
       );
     }
   } else {
-   
     graph = new Map();
     initialState = await readState();
     graph.set(initialState, { path: [], visited: false, transitions: {}, gestures: {} });
@@ -1030,9 +1013,10 @@ async function _crawl(browser, {
 
   const log = onLog || (() => {});
 
-  // Sin instrument.js (estado manual con window.__testState) no hay cómo ver
-  // si un hover cambió algo, y sin eso no se puede distinguir un hover real
-  // de uno que no hace nada: mejor no probar ninguno que inventarlos.
+  // Without instrument.js (manual state with window.__testState) there is no
+  // way to see whether a hover changed anything, and without that a real hover
+  // cannot be told from one that does nothing: better to probe none than to
+  // invent them.
   if (hover && !(await page.evaluate(() => typeof window.__crawlerEffects === 'function'))) {
     hover = false;
     log('hover: sin instrument.js no se ve qué cambia un hover; no se prueban hovers');
@@ -1041,14 +1025,13 @@ async function _crawl(browser, {
     click: clickableSelector,
     hover: hover ? hoverableSelector : null,
     container: containerSelector,
-    scan: true, // handlers inline (onclick / onmouseover...), que no pasan por addEventListener
-    css: hover, // reglas :hover de las hojas de estilo
-    native: hover && nativeTooltips,
+    scan: true, // inline handlers (onclick / onmouseover...), which do not go through addEventListener
+    css: hover, // stylesheet :hover rules
   };
-  // `baseline`: la instantánea de referencia contra la que la página calcula los
-  // cambios de estilo (ver __crawlerEffects); se pide solo con la de ANTES de un hover
+  // `baseline`: the reference snapshot the page computes style changes against
+  // (see __crawlerEffects); it is requested only with the one taken BEFORE a hover.
   const readEffects = (baseline = false) => page.evaluate((b) => window.__crawlerEffects(b), baseline);
-  // las reglas :hover de la página: se miran tras cada carga, antes de la instantánea de referencia
+  // The page's :hover rules: scanned after every load, before the reference snapshot.
   let cssBlockedWarned = false;
   const scanCss = async () => {
     const blocked = await page.evaluate(() => { window.__crawlerScanCss(); return window.__crawlerCssBlocked || 0; });
@@ -1059,6 +1042,7 @@ async function _crawl(browser, {
   };
   const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
+  // Shortest sequence of already observed gestures from `from` to `to`, or null.
   function knownRoute(from, to) {
     if (!graph.has(from)) return null;
     const prev = new Map([[from, null]]);
@@ -1067,7 +1051,7 @@ async function _crawl(browser, {
       const s = q.shift();
       if (s === to) break;
       const n = graph.get(s);
-      if (!n || !n.gestures) continue; // checkpoints viejos no guardaban selectores
+      if (!n || !n.gestures) continue; // old checkpoints did not store selectors
       for (const [action, next] of Object.entries(n.transitions)) {
         if (next === ERROR_STATE || prev.has(next) || !n.gestures[action]) continue;
         prev.set(next, [s, n.gestures[action]]);
@@ -1079,7 +1063,6 @@ async function _crawl(browser, {
     for (let step = prev.get(to); step; step = prev.get(step[0])) route.unshift(step[1]);
     return route;
   }
-
 
   async function navigateTo(target, wait) {
     if (currentState === target) return;
@@ -1101,7 +1084,7 @@ async function _crawl(browser, {
       return;
     }
 
-    // modo genérico
+    // generic mode
     if (currentState && currentState !== ERROR_STATE) {
       const route = knownRoute(currentState, target);
       if (route && route.length <= targetNode.path.length) {
@@ -1110,7 +1093,6 @@ async function _crawl(browser, {
           currentState = target;
           return;
         }
-
       }
     }
     await initialLoad(wait);
@@ -1118,10 +1100,10 @@ async function _crawl(browser, {
     currentState = target;
   }
 
-  // Reproduce gestos ya conocidos. Un hover que ya no se puede hacer (el
-  // elemento dejó de ser interactuable) es que la página no se comporta como
-  // cuando se descubrió el camino: con `strict` se corta, y si no se avisa
-  // devolviendo false para que quien llama pruebe otro camino.
+  // Replays known gestures. A hover that can no longer be done (the element
+  // stopped being actionable) means the page does not behave as it did when the
+  // path was discovered: with `strict` it aborts, otherwise it returns false so
+  // the caller can try another path.
   async function replay(gestures, wait, { strict = true } = {}) {
     for (const gesture of gestures) {
       if ((await perform(gesture, wait)) !== false || gesture.kind !== 'hover') continue;
@@ -1146,16 +1128,15 @@ async function _crawl(browser, {
   function snapshot() {
     return {
       graph: Array.from(graph.entries()),
-      
       queue: [...graph.keys()].filter((s) => !graph.get(s).expanded),
       initialState,
     };
   }
 
-  // ¿La página cambia sola con el tiempo (un reloj, una animación suelta)?
-  // Si sí, no hay forma de saber si lo que cambió después de un hover fue
-  // por el hover: todos parecerían tener efecto. Se mira dejando pasar el
-  // tiempo sin tocar nada.
+  // Does the page change by itself over time (a clock, a loose animation)? If
+  // so there is no way to know whether what changed after a hover was caused by
+  // the hover: all of them would look effective. It is checked by letting time
+  // pass without touching anything.
   async function pageDrifts(state) {
     await navigateTo(state, settleMs);
     await scanCss();
@@ -1169,14 +1150,14 @@ async function _crawl(browser, {
     return !same(before, await readEffects());
   }
 
-  // Pone el puntero sobre el elemento de `gesture` en `state`, mira qué
-  // cambió y lo saca. `where` = 'edge' apunta lejos del centro. Devuelve lo
-  // observado, o { problem } si el hover no se pudo hacer, o { broke } si tiró
-  // una excepción en la página.
+  // Puts the pointer over the element of `gesture` in `state`, looks at what
+  // changed and takes it off. `where` = 'edge' aims away from the center.
+  // Returns what was observed, or { problem } when the hover could not be done,
+  // or { broke } when it threw an exception in the page.
   async function observeHover(state, gesture, found, where) {
     await navigateTo(state, settleMs);
-    // lo que se observa se compara con lo que había en `state`: si la navegación
-    // no llegó ahí (el modo rápido no la verifica), la comparación no vale
+    // What is observed is compared with what was in `state`: if navigation did
+    // not get there (fast mode does not verify it), the comparison is worthless.
     if ((await readState()) !== state) return { problem: 'la navegación no llegó a este estado' };
     currentState = state;
     await scanCss();
@@ -1185,12 +1166,12 @@ async function _crawl(browser, {
       if ((await perform(gesture, settleMs, { where })) === false) return { problem: 'ya no era interactuable' };
       if (errors.length > 0) return { broke: true };
       const after = await readEffects();
-      // con el puntero encima: la clave del estado y qué se puede hacer, pero
-      // solo si algo cambió (si no, el hover se descarta y no hace falta)
+      // With the pointer over it: the state key and what can be done, but only
+      // if something changed (otherwise the hover is dropped and it is not needed).
       const changed = !same(before, after);
       const hoveredKey = changed ? await readState() : null;
       const whileHovered = changed ? await discoverCandidates(page, selectors, nameFor) : [];
-      // la clave, en la instantánea, del elemento tocado (la dejó __crawlerEffects): sirve para decir que un cambio es "de él"
+      // the snapshot key of the touched element (left by __crawlerEffects): lets a change be reported as "its own"
       const selfKey = changed ? await page.evaluate(() => window.__crawlerSelfKey || null) : null;
       await perform(unhover(gesture.sel), settleMs);
       if (errors.length > 0) return { broke: true };
@@ -1201,18 +1182,19 @@ async function _crawl(browser, {
     }
   }
 
-  let fastModeWarned = false; // el aviso del modo rápido, una sola vez
+  let fastModeWarned = false; // the fast-mode warning, once
 
-  // Prueba el hover `gesture` en `state` y decide qué es (ver lib/hovers.js):
-  //  - si no cambia nada visible, NO es una acción: se descarta;
-  //  - si es un resaltado o un tooltip (no cambia qué se puede hacer), es
-  //    una acción más del mismo estado, con su efecto anotado;
-  //  - si abre algo o deja un cambio, lleva a otro estado, con su vuelta.
-  // Salvo en este último caso, la página queda con el puntero afuera.
-  // `info.moves`: el elemento tiene listeners de movimiento, cuyo efecto puede
-  // depender de dónde está el puntero: se prueba en el centro y lejos de él.
-  // `quiet`: no anotar el "sin efecto" (las marcas de un listener delegado se
-  // cuentan juntas en el contenedor). Devuelve 'effect', 'inert' o 'problem'.
+  // Probes the hover `gesture` in `state` and decides what it is (see lib/hovers.js):
+  //  - if nothing visible changes it is NOT an action and is dropped;
+  //  - if it is a highlight or a tooltip (what can be done does not change) it
+  //    is one more action of the same state, with its effect noted;
+  //  - if it opens something or leaves a change, it leads to another state, with
+  //    its way back.
+  // Except in that last case, the page is left with the pointer outside.
+  // `info.moves`: the element has move listeners, whose effect may depend on
+  // where the pointer is, so it is probed at the center and away from it.
+  // `quiet`: do not note "no effect" (the marks of a delegated listener are
+  // counted together on the container). Returns 'effect', 'inert' or 'problem'.
   async function probeHover(state, node, action, gesture, found, info = {}, { quiet = false } = {}) {
     const ignore = (reason) => {
       if (quiet && reason === 'sin efecto visible') return;
@@ -1230,7 +1212,7 @@ async function _crawl(browser, {
         const nearChanged = !same(seen.before, seen.after);
         const farChanged = !same(far.before, far.after);
         positional = nearChanged !== farChanged || (nearChanged && !same(seen.after, far.after));
-        if (!nearChanged && farChanged) seen = far; // el efecto aparece en otro punto: la acción existe
+        if (!nearChanged && farChanged) seen = far; // the effect shows up at another point: the action exists
       }
     }
 
@@ -1270,14 +1252,14 @@ async function _crawl(browser, {
       node.gestures[action] = gesture;
       node.effects = node.effects || {};
       node.effects[action] = effect;
-      // si no revirtió, la clave puede ser otra (el cambio se ve recién al salir)
+      // if it did not revert, the key may be another one (the change only shows after leaving)
       currentState = verdict.reverted ? state : await readState();
       return 'effect';
     }
 
-    // estructural: otro estado, el del puntero encima
+    // structural: another state, the one with the pointer over it
     if (backSelector) {
-      // el modo rápido navega por ancestro común: no sabe seguir un hover que cambia de estado
+      // fast mode navigates through the common ancestor: it cannot follow a hover that changes state
       ignore('estructural, y el modo rápido (backSelector) no puede seguirlo');
       if (!fastModeWarned) {
         fastModeWarned = true;
@@ -1294,10 +1276,10 @@ async function _crawl(browser, {
     node.effects[action] = effect;
     currentState = leftKey;
 
-    // Si sacar el puntero deja la misma clave, el estado es el mismo con o sin
-    // él (el hover dejó un cambio): no hay "estado con el puntero encima" ni
-    // una vuelta que tomar -- un unhover de un estado a sí mismo sería un
-    // paso que un usuario no puede repetir.
+    // If taking the pointer off leaves the same key, the state is the same with
+    // or without it (the hover left a change): there is no "state with the
+    // pointer over it" and no way back to take; an unhover from a state to
+    // itself would be a step a user cannot repeat.
     const withPointer = leftKey !== hoveredKey;
     let hovered = graph.get(hoveredKey);
     const isNew = !hovered;
@@ -1306,8 +1288,8 @@ async function _crawl(browser, {
       if (withPointer) Object.assign(hovered, { pointer: gesture, enabled: verdict.revealed });
       graph.set(hoveredKey, hovered);
     }
-    // la vuelta existe si ese estado es uno con el puntero encima (si el
-    // mismo aspecto se alcanza haciendo clicks, sacar el puntero no hace nada)
+    // The way back exists when that state is one with the pointer over it (if
+    // the same look is reached by clicking, taking the pointer off does nothing).
     if (withPointer && hovered.pointer) {
       const back = unhoverOf(action);
       hovered.transitions[back] = leftKey;
@@ -1320,24 +1302,12 @@ async function _crawl(browser, {
     return 'effect';
   }
 
-  // El tooltip nativo del navegador (un <title>, un title="") no cambia nada en
-  // el DOM: no hay efecto que mirar, y por eso es opt-in (--native-tooltips).
-  // Se lo anota tal cual, marcado `native` para que se vea que se confía en que
-  // el elemento lo tiene y no en un cambio observado.
-  const nativeNote = (text) => `tooltip nativo: ${JSON.stringify(text)}`;
-  function recordNative(node, state, action, gesture, text) {
-    node.transitions[action] = state;
-    node.gestures[action] = gesture;
-    node.effects = node.effects || {};
-    node.effects[action] = { changes: [nativeNote(text)], native: true };
-  }
-
-  // Un listener DELEGADO (uno solo, en un contenedor, que mira event.target) no
-  // hace nada cuando se lo prueba sobre el propio contenedor: el target es el
-  // contenedor. Para esos se prueban las marcas de D3 que tiene adentro (ver
-  // __crawlerMarks): el evento sale de la marca y burbujea hasta el listener,
-  // con las coordenadas de la marca, así que sirven tanto los handlers que
-  // leen event.target.__data__ como los que miran la posición.
+  // A DELEGATED listener (a single one, on a container, that looks at
+  // event.target) does nothing when probed on the container itself: the target
+  // is the container. For those, the D3 marks inside are probed (see
+  // __crawlerMarks): the event starts at the mark and bubbles up to the
+  // listener, with the mark's coordinates, so it works for handlers that read
+  // event.target.__data__ as well as ones that look at the position.
   async function probeDelegated(state, node, found, containers) {
     for (const [action, gesture] of containers) {
       await navigateTo(state, settleMs);
@@ -1358,34 +1328,34 @@ async function _crawl(browser, {
     }
   }
 
-  // Expande `state` y, en profundidad, cada estado nuevo que descubra.
+  // Expands `state` and, depth-first, every new state it discovers.
   async function expand(state) {
     const node = graph.get(state);
     node.visited = true;
-    // explícito y no `undefined`: JSON no guarda `undefined`, y al retomar
-    // un checkpoint un nodo a medio expandir tiene que verse como NO expandido
+    // Explicit and not `undefined`: JSON does not keep `undefined`, and when
+    // resuming a checkpoint a half-expanded node has to look NOT expanded.
     node.expanded = false;
     node.gestures = node.gestures || {};
 
     await navigateTo(state, discoverySettleMs);
     const found = await discoverCandidates(page, selectors, nameFor);
-    // Con el puntero sobre algo (un estado al que llevó un hover) solo se
-    // siguen los clicks que ese hover habilita y el del propio elemento: para
-    // clickear cualquier otra cosa el usuario tiene que sacar el puntero, y
-    // eso ya es la vuelta (unhover). Tampoco se prueban más hovers desde ahí.
+    // With the pointer over something (a state a hover led to) only the clicks
+    // that hover enables, and the element's own, are followed: to click anything
+    // else the user has to take the pointer off, and that is already the way
+    // back (unhover). No more hovers are probed from there either.
     const candidates = node.pointer
       ? found.filter(([, g]) => g.kind === 'click' && (g.sel === node.pointer.sel || node.enabled.includes(gestureKey(g))))
       : found;
 
-    let drifting = null; // se mira una vez por estado, antes del primer hover
-    const containers = []; // hovers sin efecto por sí mismos: si el listener es de un contenedor, puede ser delegado
+    let drifting = null; // looked at once per state, before the first hover
+    const containers = []; // hovers with no effect of their own: if the listener is a container's, it may be delegated
     for (const [action, gesture, info] of candidates) {
       if (action in node.transitions) continue;
       const { visibleFrac, readable, tag } = info;
       node.labels = node.labels || {};
       node.labels[action] = { readable, tag };
-      // solo las que se ven en parte (redondeadas a 2 decimales): son las
-      // que el reporte señala (ver measure en installPageHelpers)
+      // Only the ones that are partly visible (rounded to 2 decimals): they are
+      // what the report flags (see measure in installPageHelpers).
       if (gesture.kind === 'click' && visibleFrac != null && Math.round(visibleFrac * 100) < 100) {
         node.visibility = node.visibility || {};
         node.visibility[action] = Math.round(visibleFrac * 100) / 100;
@@ -1393,11 +1363,6 @@ async function _crawl(browser, {
       countStep();
 
       if (gesture.kind === 'hover') {
-        // lo único que tiene es un tooltip nativo: no hay nada que probar
-        if (info.native && info.sources.every((s) => s === 'native')) {
-          recordNative(node, state, action, gesture, info.native);
-          continue;
-        }
         if (drifting === null) {
           drifting = await pageDrifts(state);
           if (drifting) log('hover: la página cambia sola con el tiempo; no se puede separar lo que hace un hover de eso, se omiten los hovers de este estado');
@@ -1408,14 +1373,7 @@ async function _crawl(browser, {
           continue;
         }
         const result = await probeHover(state, node, action, gesture, found, info);
-        if (info.native) {
-          // además de su hover, tiene un tooltip nativo: se suma a su efecto; y si el hover no hacía nada, el tooltip es el efecto
-          if (result === 'inert') { delete node.inert[action]; recordNative(node, state, action, gesture, info.native); }
-          else if (result === 'effect' && node.effects && node.effects[action]) {
-            node.effects[action].changes.push(nativeNote(info.native));
-            node.effects[action].native = true;
-          }
-        } else if (result === 'inert' && info.sources.some((s) => s === 'listener' || s === 'inline')) {
+        if (result === 'inert' && info.sources.some((s) => s === 'listener' || s === 'inline')) {
           containers.push([action, gesture]);
         }
         continue;
@@ -1442,7 +1400,6 @@ async function _crawl(browser, {
     if (onStateExpanded) onStateExpanded(state, node.transitions, snapshot());
   }
 
-  
   for (const node of graph.values()) {
     if (node.expanded === undefined) node.expanded = node.visited;
     if (!node.expanded) node.visited = false;
@@ -1452,7 +1409,7 @@ async function _crawl(browser, {
     if (node && !node.visited) await expand(state);
   }
 
-  // quedaron estados descubiertos sin expandir: corte por maxStates
+  // states were discovered but not expanded: cut short by maxStates
   const truncated = [...graph.values()].some((n) => !n.expanded);
   const renamed = Object.fromEntries(renameUnstableActions(graph));
 
@@ -1460,7 +1417,7 @@ async function _crawl(browser, {
   const visibility = {};
   const labels = {};
   const effects = {};
-  const ignored = new Map(); // `acción\0motivo` -> en cuántos estados
+  const ignored = new Map(); // `action\0reason` -> in how many states
   for (const [state, node] of graph) {
     transitions[state] = node.transitions;
     if (node.visibility) visibility[state] = node.visibility;

@@ -1,0 +1,238 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_flare": "__ERROR__",
+      "Click_vis": "root > vis",
+      "Click_analytics": "root > analytics",
+      "Click_util": "root > util",
+      "Click_axis": "root > vis > axis",
+      "Click_legend": "root > vis > legend",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_palette": "root > util > palette",
+      "Click_math": "root > util > math"
+    },
+    "root > vis": {
+      "Click_vis": "root",
+      "Click_axis": "root > vis > axis",
+      "Click_legend": "root > vis > legend",
+      "Click_Axis": "root > vis > axis > Axis",
+      "Click_Axes": "root > vis > axis > Axes",
+      "Click_Legend": "root > vis > legend > Legend",
+      "Click_LegendItem": "root > vis > legend > LegendItem"
+    },
+    "root > vis > axis": {
+      "Click_axis": "root > vis",
+      "Click_Axis": "root > vis > axis > Axis",
+      "Click_Axes": "root > vis > axis > Axes"
+    },
+    "root > vis > axis > Axis": {
+      "Click_Axis": "root > vis > axis"
+    },
+    "root > vis > axis > Axes": {
+      "Click_Axes": "root > vis > axis"
+    },
+    "root > vis > legend": {
+      "Click_legend": "root > vis",
+      "Click_Legend": "root > vis > legend > Legend",
+      "Click_LegendItem": "root > vis > legend > LegendItem"
+    },
+    "root > vis > legend > Legend": {
+      "Click_Legend": "root > vis > legend"
+    },
+    "root > vis > legend > LegendItem": {
+      "Click_LegendItem": "root > vis > legend"
+    },
+    "root > analytics": {
+      "Click_analytics": "root",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_LinkDistance": "root > analytics > graph > LinkDistance",
+      "Click_BetweennessCentrality": "root > analytics > graph > BetweennessCentrality",
+      "Click_AgglomerativeCluster": "root > analytics > cluster > AgglomerativeCluster",
+      "Click_CommunityStructure": "root > analytics > cluster > CommunityStructure"
+    },
+    "root > analytics > graph": {
+      "Click_graph": "root > analytics",
+      "Click_LinkDistance": "root > analytics > graph > LinkDistance",
+      "Click_BetweennessCentrality": "root > analytics > graph > BetweennessCentrality"
+    },
+    "root > analytics > graph > LinkDistance": {
+      "Click_LinkDistance": "root > analytics > graph"
+    },
+    "root > analytics > graph > BetweennessCentrality": {
+      "Click_BetweennessCentrality": "root > analytics > graph"
+    },
+    "root > analytics > cluster": {
+      "Click_cluster": "root > analytics",
+      "Click_AgglomerativeCluster": "root > analytics > cluster > AgglomerativeCluster",
+      "Click_CommunityStructure": "root > analytics > cluster > CommunityStructure"
+    },
+    "root > analytics > cluster > AgglomerativeCluster": {
+      "Click_AgglomerativeCluster": "root > analytics > cluster"
+    },
+    "root > analytics > cluster > CommunityStructure": {
+      "Click_CommunityStructure": "root > analytics > cluster"
+    },
+    "root > util": {
+      "Click_util": "root",
+      "Click_palette": "root > util > palette",
+      "Click_math": "root > util > math",
+      "Click_ColorPalette": "root > util > palette > ColorPalette",
+      "Click_Palette": "root > util > palette > Palette",
+      "Click_DenseMatrix": "root > util > math > DenseMatrix",
+      "Click_IMatrix": "root > util > math > IMatrix"
+    },
+    "root > util > palette": {
+      "Click_palette": "root > util",
+      "Click_ColorPalette": "root > util > palette > ColorPalette",
+      "Click_Palette": "root > util > palette > Palette"
+    },
+    "root > util > palette > ColorPalette": {
+      "Click_ColorPalette": "root > util > palette"
+    },
+    "root > util > palette > Palette": {
+      "Click_Palette": "root > util > palette"
+    },
+    "root > util > math": {
+      "Click_math": "root > util",
+      "Click_DenseMatrix": "root > util > math > DenseMatrix",
+      "Click_IMatrix": "root > util > math > IMatrix"
+    },
+    "root > util > math > DenseMatrix": {
+      "Click_DenseMatrix": "root > util > math"
+    },
+    "root > util > math > IMatrix": {
+      "Click_IMatrix": "root > util > math"
+    }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "cycleCut": "(Click_vis (Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend)* Click_vis | Click_analytics (Click_graph (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster)* Click_analytics | Click_util (Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | Click_math (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math)* Click_util)*",
+    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycles": {
+      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "tree": 21,
+      "back": 21,
+      "shortcuts": 18,
+      "shortcutTransitions": [
+        {
+          "state": "root",
+          "action": "Click_axis",
+          "to": "root > vis > axis"
+        },
+        {
+          "state": "root",
+          "action": "Click_legend",
+          "to": "root > vis > legend"
+        },
+        {
+          "state": "root",
+          "action": "Click_graph",
+          "to": "root > analytics > graph"
+        },
+        {
+          "state": "root",
+          "action": "Click_cluster",
+          "to": "root > analytics > cluster"
+        },
+        {
+          "state": "root",
+          "action": "Click_palette",
+          "to": "root > util > palette"
+        },
+        {
+          "state": "root",
+          "action": "Click_math",
+          "to": "root > util > math"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_Axis",
+          "to": "root > vis > axis > Axis"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_Axes",
+          "to": "root > vis > axis > Axes"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_Legend",
+          "to": "root > vis > legend > Legend"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_LegendItem",
+          "to": "root > vis > legend > LegendItem"
+        },
+        {
+          "state": "root > analytics",
+          "action": "Click_LinkDistance",
+          "to": "root > analytics > graph > LinkDistance"
+        },
+        {
+          "state": "root > analytics",
+          "action": "Click_BetweennessCentrality",
+          "to": "root > analytics > graph > BetweennessCentrality"
+        },
+        {
+          "state": "root > analytics",
+          "action": "Click_AgglomerativeCluster",
+          "to": "root > analytics > cluster > AgglomerativeCluster"
+        },
+        {
+          "state": "root > analytics",
+          "action": "Click_CommunityStructure",
+          "to": "root > analytics > cluster > CommunityStructure"
+        },
+        {
+          "state": "root > util",
+          "action": "Click_ColorPalette",
+          "to": "root > util > palette > ColorPalette"
+        },
+        {
+          "state": "root > util",
+          "action": "Click_Palette",
+          "to": "root > util > palette > Palette"
+        },
+        {
+          "state": "root > util",
+          "action": "Click_DenseMatrix",
+          "to": "root > util > math > DenseMatrix"
+        },
+        {
+          "state": "root > util",
+          "action": "Click_IMatrix",
+          "to": "root > util > math > IMatrix"
+        }
+      ]
+    },
+    "language": "((Click_vis | Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend) ((Click_axis | Click_Axis Click_Axis | Click_Axes Click_Axes) (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | (Click_legend | Click_Legend Click_Legend | Click_LegendItem Click_LegendItem) (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend)* Click_vis | (Click_analytics | Click_graph (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster) ((Click_graph | Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality) (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | (Click_cluster | Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure) (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster)* Click_analytics | (Click_util | Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | Click_math (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math) ((Click_palette | Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette) (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | (Click_math | Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix) (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math)* Click_util)* (Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* (Click_Axis | Click_Axes)? | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* (Click_Legend | Click_LegendItem)? | (Click_vis | Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend) ((Click_axis | Click_Axis Click_Axis | Click_Axes Click_Axes) (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | (Click_legend | Click_Legend Click_Legend | Click_LegendItem Click_LegendItem) (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend)* (Click_Axis | Click_Axes | Click_Legend | Click_LegendItem | (Click_axis | Click_Axis Click_Axis | Click_Axes Click_Axes) (Click_Axis Click_Axis | Click_Axes Click_Axes)* (Click_Axis | Click_Axes)? | (Click_legend | Click_Legend Click_Legend | Click_LegendItem Click_LegendItem) (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* (Click_Legend | Click_LegendItem)?)? | Click_graph (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* (Click_LinkDistance | Click_BetweennessCentrality)? | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* (Click_AgglomerativeCluster | Click_CommunityStructure)? | (Click_analytics | Click_graph (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster) ((Click_graph | Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality) (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | (Click_cluster | Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure) (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster)* (Click_LinkDistance | Click_BetweennessCentrality | Click_AgglomerativeCluster | Click_CommunityStructure | (Click_graph | Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality) (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* (Click_LinkDistance | Click_BetweennessCentrality)? | (Click_cluster | Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure) (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* (Click_AgglomerativeCluster | Click_CommunityStructure)?)? | Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* (Click_ColorPalette | Click_Palette)? | Click_math (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* (Click_DenseMatrix | Click_IMatrix)? | (Click_util | Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | Click_math (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math) ((Click_palette | Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette) (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | (Click_math | Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix) (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math)* (Click_ColorPalette | Click_Palette | Click_DenseMatrix | Click_IMatrix | (Click_palette | Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette) (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* (Click_ColorPalette | Click_Palette)? | (Click_math | Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix) (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* (Click_DenseMatrix | Click_IMatrix)?)?)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "((Click_vis | Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend) ((Click_axis | Click_Axis Click_Axis | Click_Axes Click_Axes) (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | (Click_legend | Click_Legend Click_Legend | Click_LegendItem Click_LegendItem) (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend)* Click_vis | (Click_analytics | Click_graph (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster) ((Click_graph | Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality) (Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | (Click_cluster | Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure) (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure Click_CommunityStructure)* Click_cluster)* Click_analytics | (Click_util | Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | Click_math (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math) ((Click_palette | Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette) (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | (Click_math | Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix) (Click_DenseMatrix Click_DenseMatrix | Click_IMatrix Click_IMatrix)* Click_math)* Click_util)*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+  },
+  "issues": [
+    {
+      "kind": "error",
+      "message": "Hay un comportamiento inesperado cuando ocurre esta serie de eventos: flare",
+      "detail": "la página tira una excepción al hacer click \"flare\" en \"root\" (paso 1)",
+      "sequence": [
+        "Click_flare"
+      ],
+      "events": [
+        {
+          "step": 1,
+          "state": "root",
+          "action": "Click_flare",
+          "to": "__ERROR__",
+          "edge": null
+        }
+      ],
+      "failingStep": 1,
+      "occurrences": 1
+    }
+  ]
+}

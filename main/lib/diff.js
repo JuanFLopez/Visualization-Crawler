@@ -1,20 +1,19 @@
 /**
- * Compara los lenguajes de dos DFA (con aceptación, ver automaton.js)
- * buscando secuencias de símbolos que uno acepta y el otro no.
+ * Compares the languages of two DFAs (with acceptance, see automaton.js),
+ * looking for symbol sequences that one accepts and the other does not.
  *
- * BFS sobre pares (estadoA, estadoB) explorando el alfabeto unión de
- * ambos; null representa "ya rechazó" (el DFA es parcial). Cada vez que
- * un par difiere en aceptación, el camino hasta él es un contraejemplo
- * concreto -- y por ser BFS, de los más cortos. No se reporta uno solo:
- * se juntan hasta `limit` por dirección (cada par se visita una vez, así
- * que son contraejemplos de "lugares" distintos del autómata, no
- * extensiones triviales del mismo).
+ * BFS over pairs (stateA, stateB) exploring the union of both alphabets; null
+ * stands for "already rejected" (the DFA is partial). Whenever a pair differs
+ * in acceptance, the path to it is a concrete counterexample, and being BFS
+ * it is among the shortest. More than one is collected: up to `limit` per
+ * direction (each pair is visited once, so they are counterexamples from
+ * different "places" of the automaton, not trivial extensions of one).
  *
  * @returns {{
  *   equivalent: boolean,
- *   onlyInA: string[][],   // secuencias que A acepta y B no
- *   onlyInB: string[][],   // secuencias que B acepta y A no
- *   truncated: boolean,    // se cortó al llegar a `limit` en alguna dirección
+ *   onlyInA: string[][],   // sequences A accepts and B does not
+ *   onlyInB: string[][],   // sequences B accepts and A does not
+ *   truncated: boolean,    // stopped on reaching `limit` in some direction
  * }}
  */
 function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
@@ -24,10 +23,11 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
 
   const onlyInA = [], onlyInB = [];
   let truncated = false;
-  // Un lado que ya rechazó (null) se distingue además por DÓNDE rechazó
-  // (estado del lado que cayó + símbolo): si no, dos errores distintos
-  // que siguen hasta el mismo estado del otro lado se fusionan en uno
-  // (p.ej. dos opciones que faltan en el regex y vuelven al mismo lugar).
+  // A side that already rejected (null) is also told apart by WHERE it
+  // rejected (the state of the side that fell off, plus the symbol); otherwise
+  // two different errors that continue to the same state on the other side
+  // would merge into one (e.g. two options missing from the regex that return
+  // to the same place).
   const visited = new Set();
   const keyOf = (a, b, deadA, deadB) => `${a}\u0000${b}\u0000${a === null ? deadA : ''}\u0000${b === null ? deadB : ''}`;
   const queue = [{ a: dfaA.initial, b: dfaB.initial, path: [], deadA: null, deadB: null }];
@@ -41,8 +41,8 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
       const list = accA ? onlyInA : onlyInB;
       if (list.length < limit) list.push(path);
       else truncated = true;
-      // si un lado ya rechazó, toda extensión aceptada por el otro es la
-      // misma diferencia "más larga": no aporta nada nuevo seguir
+      // once one side has rejected, every extension the other accepts is the
+      // same difference, only longer: following it adds nothing new
       if (a === null || b === null) continue;
     }
     if (path.length >= maxDepth) continue;

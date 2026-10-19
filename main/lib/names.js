@@ -1,27 +1,27 @@
 /**
- * Limpia los nombres de acción (y de estado) de un transitions.json ya
- * generado: saca el sufijo numérico que se cuela desde el tooltip -- el
- * <title> típico de D3 es "flare/vis\n432,629" (ruta + valor del nodo),
- * y versiones anteriores del crawler lo aplanaban a "Click_vis_432,629".
+ * Cleans the action (and state) names of an already generated transitions.json:
+ * removes the numeric suffix that leaks in from the tooltip. A typical D3
+ * <title> reads "flare/vis\n432,629" (path + node value), and earlier crawler
+ * versions flattened it into "Click_vis_432,629".
  *
  *   "Click_vis_432,629": "root > vis_432,629"  ->  "Click_vis": "root > vis"
  *
- * Si al sacar el número dos acciones distintas quedan con el mismo nombre
- * (p.ej. "data_30,284" y "data_110,583" son dos nodos "data" en ramas
- * distintas), la primera en aparecer se queda con el nombre limpio y las
- * siguientes llevan "#2", "#3"... -- nunca se fusionan dos acciones.
- * Idempotente: sobre nombres ya limpios no cambia nada.
+ * When removing the number leaves two different actions with the same name
+ * (say "data_30,284" and "data_110,583", two "data" nodes in different
+ * branches), the first to appear keeps the clean name and the next ones get
+ * "#2", "#3"...; two actions are never merged. Idempotent: names that are
+ * already clean do not change.
  */
 
 const { isInternalName, isBarePrefix, displayAction } = require('./actions');
 
 const ERROR_STATE = '__ERROR__';
 
-// número al final, tal como lo deja d3.format: "432,629", "989", "1.5", "12%"
+// trailing number as d3.format leaves it: "432,629", "989", "1.5", "12%"
 const NUMERIC_SUFFIX = /_[-+]?\d[\d.,]*%?$/;
 
 function stripNumber(action) {
-  if (isInternalName(action)) return action; // id interno, no un valor
+  if (isInternalName(action)) return action; // an internal id, not a value
   const stripped = action.replace(NUMERIC_SUFFIX, '');
   return isBarePrefix(stripped) ? action : stripped;
 }
@@ -29,10 +29,10 @@ function stripNumber(action) {
 /**
  * @param {{initialState: string, transitions: Object, visibility?: Object, effects?: Object}} data
  * @returns {{initialState: string, transitions: Object, renamed: Object, visibility?: Object, effects?: Object}}
- *   renamed: acción vieja -> nueva (solo las que cambiaron)
+ *   renamed: old action -> new action (only the ones that changed)
  */
 function cleanNames({ initialState, transitions, visibility = null, effects = null }) {
-  // orden de primera aparición, para que la desambiguación sea estable
+  // first-appearance order, so that disambiguation is stable
   const actions = [];
   const seen = new Set();
   for (const trans of Object.values(transitions)) {
@@ -41,7 +41,7 @@ function cleanNames({ initialState, transitions, visibility = null, effects = nu
 
   const rename = new Map();
   const taken = new Set();
-  // primero las que no cambian, para que nunca les "roben" el nombre
+  // the unchanged ones go first so nobody can "steal" their name
   for (const a of actions) if (stripNumber(a) === a) { rename.set(a, a); taken.add(a); }
   for (const a of actions) {
     if (rename.has(a)) continue;
@@ -52,9 +52,9 @@ function cleanNames({ initialState, transitions, visibility = null, effects = nu
     taken.add(name);
   }
 
-  // estados: los nombres legibles (lib/labels.js) son caminos de acciones
-  // sin el "Click_" (los hovers conservan su prefijo) -- se renombra
-  // segmento por segmento con el mismo mapa
+  // States: the readable names (lib/labels.js) are paths of actions without
+  // the "Click_" prefix (hovers keep theirs), so they are renamed segment by
+  // segment with the same map.
   const SEP = ' > ';
   const segRename = new Map();
   for (const [from, to] of rename) segRename.set(displayAction(from), displayAction(to));
@@ -82,7 +82,7 @@ function cleanNames({ initialState, transitions, visibility = null, effects = nu
     }
   }
   if (effects) {
-    // acción de hover -> qué cambia; `reveals`/`hides` nombran otras acciones
+    // hover action -> what changes; `reveals` / `hides` name other actions
     const renameAll = (list) => list.map((a) => rename.get(a) ?? stripNumber(a));
     result.effects = {};
     for (const [state, byAction] of Object.entries(effects)) {

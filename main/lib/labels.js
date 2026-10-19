@@ -1,29 +1,28 @@
 const { displayAction, verbOf } = require('./actions');
 
 /**
- * El crawler identifica cada estado con un fingerprint (hash) para poder
- * comparar igualdad -- pero ese hash no dice nada a simple vista. Esta
- * función arma un nombre humano por estado usando el camino de ACCIONES
- * (ya con nombres legibles, ver _actionName en crawler.js) que lo alcanza
- * por primera vez desde la raíz: "root", "root > A", "root > A > A1", etc.
+ * The crawler identifies each state by a fingerprint (a hash), which is fine
+ * for equality but says nothing to a reader. This builds a human name per
+ * state from the path of ACTIONS (already readable, see createNaming in
+ * crawler.js) that first reaches it from the root: "root", "root > A",
+ * "root > A > A1", and so on.
  *
- * No necesita nada del lado del browser -- opera puro sobre el
- * transitions.json ya generado, haciendo un BFS (mismo orden en que el
- * crawler los descubrió) y numerando en caso de colisión (no debería
- * pasar, ya que cada estado tiene un solo camino más corto registrado,
- * pero por las dudas).
+ * It needs nothing from the browser: it works purely on the generated
+ * transitions.json, running a BFS (the order in which the crawler discovered
+ * the states) and numbering on collisions (which should not happen, since
+ * each state has a single shortest path recorded, but just in case).
  *
- * Si además vienen `data.labels` (nombres legibles por estado y acción,
- * ver crawler.js) y describen una jerarquía, los nombres salen de la
- * jerarquía de datos y no del camino de clicks (ver hierarchyLabels).
+ * When `data.labels` is also present (readable names per state and action,
+ * see crawler.js) and describes a hierarchy, names come from the data
+ * hierarchy instead of the click path (see hierarchyLabels).
  *
  * @param {{initialState: string, transitions: Object, visibility?: Object, labels?: Object}} data
  * @param {Object} [opts]
  * @param {string} [opts.rootLabel='root']
  * @param {string} [opts.separator=' > ']
  * @returns {{initialState: string, transitions: Object, labelOf: Object, hierarchical: boolean, visibility?: Object}}
- *   labelOf mapea el hash original -> nombre legible, por si hace falta
- *   correlacionar con checkpoints o logs previos.
+ *   labelOf maps the original hash -> readable name, in case it has to be
+ *   correlated with earlier checkpoints or logs.
  */
 function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
   const { initialState, transitions } = data;
@@ -31,8 +30,8 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
 
   const hierarchy = hierarchyLabels(data, { rootLabel, separator });
   const labelOf = hierarchy || new Map([[initialState, rootLabel]]);
-  // con jerarquía ya están nombrados los alcanzables haciendo clicks; los que
-  // solo se alcanzan con un hover ("root > Hover_menu") se nombran desde su origen
+  // With a hierarchy, everything reachable by clicks is already named; states
+  // reached only through a hover ("root > Hover_menu") are named from their origin.
   const queue = hierarchy ? [...hierarchy.keys()] : [initialState];
 
   while (queue.length > 0) {
@@ -52,7 +51,7 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
 
   const renamedTransitions = {};
   for (const [state, actions] of Object.entries(transitions)) {
-    const newState = labelOf.get(state) ?? state; // estado inalcanzable desde initialState (no debería darse)
+    const newState = labelOf.get(state) ?? state; // a state unreachable from initialState (should not happen)
     const renamedActions = {};
     for (const [action, next] of Object.entries(actions)) {
       renamedActions[action] = next === ERROR_STATE ? next : (labelOf.get(next) ?? next);
@@ -78,35 +77,34 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
 }
 
 /**
- * Nombres por JERARQUÍA de datos ("root > vis > operator") en vez de por
- * camino de clicks. Hace falta porque el camino de clicks más corto no
- * dice en qué nivel está un estado: un sunburst muestra dos anillos, así
- * que desde la raíz se clickea "operator" (nivel 2) directo, y por BFS
- * quedaría como "root > operator", a la par de "vis" -- y el diagrama
- * dibujaría vis -> operator como un movimiento lateral.
+ * Names by the data HIERARCHY ("root > vis > operator") instead of by click
+ * path. The shortest click path does not say what level a state is at: a
+ * sunburst shows two rings, so from the root "operator" (level 2) is
+ * clicked directly, and BFS would name it "root > operator", level with
+ * "vis", and the diagram would draw vis -> operator as a sideways move.
  *
- * Cada acción trae el nombre legible completo del elemento clickeado EN el
- * estado de origen (`data.labels`, ver crawler.js), que en una
- * visualización jerárquica es un camino ("flare/vis/operator", del
- * <title> o del dato D3). El camino de un estado es el prefijo común más
- * largo (por segmentos) de los caminos de todas las acciones que entran a
- * él: entrar a "animate" en un icicle es clickear animate
- * (flare/animate) o clickear un hijo enfocado (flare/animate/Easing, que
- * sube al padre); el prefijo común es flare/animate.
+ * Each action carries the full readable name of the clicked element IN its
+ * source state (`data.labels`, see crawler.js), which in a hierarchical
+ * visualization is a path ("flare/vis/operator", from the <title> or the D3
+ * datum). A state's path is the longest common prefix (by segments) of the
+ * paths of all actions that enter it: entering "animate" in an icicle is
+ * either clicking animate (flare/animate) or clicking a focused child
+ * (flare/animate/Easing, which goes up to the parent); the common prefix is
+ * flare/animate.
  *
- * Todo o nada: si algún estado queda sin camino, dos estados comparten
- * camino, o alguno no cuelga del camino del inicial, devuelve null y se
- * usa el nombre por camino de clicks (visualizaciones no jerárquicas).
+ * All or nothing: if some state has no path, two states share a path, or one
+ * does not hang from the initial state's path, it returns null and the
+ * click-path names are used (non-hierarchical visualizations).
  *
- * @returns {Map<string, string> | null} estado -> nombre
+ * @returns {Map<string, string> | null} state -> name
  */
 function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'root', separator = ' > ' } = {}) {
   if (!labels) return null;
   const ERROR_STATE = '__ERROR__';
 
-  // Solo cuentan los clicks: son los que bajan por la jerarquía de datos. Un
-  // hover sobre "flare/vis" que no cambia de estado (o la vuelta de un hover)
-  // también "entra" a un estado con ese camino, y ensuciaría el nombre.
+  // Only clicks count: they are what descends the data hierarchy. A hover on
+  // "flare/vis" that does not change state (or the way back from a hover)
+  // would also "enter" a state with that path and pollute the name.
   const isClick = (action) => verbOf(action) === 'click';
   const reachable = new Set([initialState]);
   const queue = [initialState];
@@ -147,7 +145,7 @@ function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'r
     if (path.length === 0) return null;
     pathOf.set(state, path);
   }
-  // el inicial puede no tener acciones que entren a él (nada "vuelve")
+  // the initial state may have no action entering it (nothing "goes back")
   const rootPath = incoming.has(initialState)
     ? commonPrefix(incoming.get(initialState))
     : commonPrefix([...pathOf.values()]);

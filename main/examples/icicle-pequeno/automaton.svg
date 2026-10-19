@@ -1,0 +1,322 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1546" height="978" viewBox="0 0 1546 978" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Autómata (23 estados)</title>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+</defs>
+<rect width="1546" height="978" fill="white"/>
+<g class="back-edges">
+<path d="M 438.5,324 C 438.5,382.86 148,439.86 148,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis  —[vis]→  root</title></path>
+<path d="M 746.5,240 C 746.5,299.76 448.5,384.76 448.5,325" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis  —[axis]→  root &gt; vis</title></path>
+<path d="M 1106.5,72 C 1106.5,138 756.5,307 756.5,241" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis &gt; Axis  —[Axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 1106.5,128 C 1106.5,194 756.5,307 756.5,241" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis &gt; Axes  —[Axes]→  root &gt; vis &gt; axis</title></path>
+<path d="M 746.5,296 C 746.5,355.76 448.5,384.76 448.5,325" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[legend]→  root &gt; vis</title></path>
+<path d="M 1106.5,184 C 1106.5,250 756.5,363 756.5,297" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend &gt; Legend  —[Legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 1106.5,240 C 1106.5,306 756.5,363 756.5,297" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend &gt; LegendItem  —[LegendItem]→  root &gt; vis &gt; legend</title></path>
+<path d="M 438.5,380 C 438.5,438.86 148,439.86 148,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[analytics]→  root</title></path>
+<path d="M 746.5,352 C 746.5,411.76 448.5,440.76 448.5,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[graph]→  root &gt; analytics</title></path>
+<path d="M 1106.5,296 C 1106.5,362 756.5,419 756.5,353" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph &gt; LinkDistance  —[LinkDistance]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 1106.5,352 C 1106.5,418 756.5,419 756.5,353" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph &gt; BetweennessCentrality  —[BetweennessCentrality]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 746.5,408 C 746.5,467.76 448.5,440.76 448.5,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[cluster]→  root &gt; analytics</title></path>
+<path d="M 1106.5,408 C 1106.5,474 756.5,475 756.5,409" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster &gt; AgglomerativeCluster  —[AgglomerativeCluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 1106.5,464 C 1106.5,530 756.5,475 756.5,409" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster &gt; CommunityStructure  —[CommunityStructure]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 438.5,436 C 438.5,494.86 148,439.86 148,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util  —[util]→  root</title></path>
+<path d="M 746.5,464 C 746.5,523.76 448.5,496.76 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[palette]→  root &gt; util</title></path>
+<path d="M 1106.5,520 C 1106.5,586 756.5,531 756.5,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette &gt; ColorPalette  —[ColorPalette]→  root &gt; util &gt; palette</title></path>
+<path d="M 1106.5,576 C 1106.5,642 756.5,531 756.5,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette &gt; Palette  —[Palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 746.5,520 C 746.5,579.76 448.5,496.76 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[math]→  root &gt; util</title></path>
+<path d="M 1106.5,632 C 1106.5,698 756.5,587 756.5,521" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math &gt; DenseMatrix  —[DenseMatrix]→  root &gt; util &gt; math</title></path>
+<path d="M 1106.5,688 C 1106.5,754 756.5,587 756.5,521" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math &gt; IMatrix  —[IMatrix]→  root &gt; util &gt; math</title></path>
+</g>
+<g class="forward-edges">
+<path d="M 166,364 L 172,364 Q 182,364 182,354 L 182,26 Q 182,16 192,16 L 1349,16 Q 1359,16 1359,26 L 1359,354 Q 1359,364 1369,364 L 1419,364" fill="none" stroke="#d33" stroke-width="3" marker-end="url(#arrow-hl)"><title>root  —[flare]→  __ERROR__</title></path>
+<path d="M 166,364 C 287.25,364 287.25,308 408.5,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
+<path d="M 166,364 C 280,364 280,364 394,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 166,364 C 287.25,364 287.25,420 408.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,354 L 182,278 Q 182,268 192,268 L 627,268 Q 637,268 637,258 L 637,234 Q 637,224 647,224 L 716.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,354 L 182,278 Q 182,268 192,268 L 627,268 Q 637,268 637,278 L 637,270 Q 637,280 647,280 L 712.5,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,354 L 182,278 Q 182,268 192,268 L 627,268 Q 637,268 637,278 L 637,326 Q 637,336 647,336 L 716,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,374 L 182,450 Q 182,460 192,460 L 627,460 Q 637,460 637,450 L 637,402 Q 637,392 647,392 L 709,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,374 L 182,450 Q 182,460 192,460 L 627,460 Q 637,460 637,450 L 637,458 Q 637,448 647,448 L 709,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 166,364 L 172,364 Q 182,364 182,374 L 182,450 Q 182,460 192,460 L 627,460 Q 637,460 637,470 L 637,494 Q 637,504 647,504 L 716.5,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 466.5,308 C 591.5,308 591.5,224 716.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 466.5,308 C 589.5,308 589.5,280 712.5,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 466.5,308 L 487,308 Q 497,308 497,298 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,174 L 864,66 Q 864,56 874,56 L 1076.5,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[Axis]→  root &gt; vis &gt; axis &gt; Axis</title></path>
+<path d="M 466.5,308 L 487,308 Q 497,308 497,298 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,174 L 864,122 Q 864,112 874,112 L 1076.5,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[Axes]→  root &gt; vis &gt; axis &gt; Axes</title></path>
+<path d="M 466.5,308 L 487,308 Q 497,308 497,298 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,174 L 864,178 Q 864,168 874,168 L 1072.5,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[Legend]→  root &gt; vis &gt; legend &gt; Legend</title></path>
+<path d="M 466.5,308 L 487,308 Q 497,308 497,298 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,194 L 864,214 Q 864,224 874,224 L 1058.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[LegendItem]→  root &gt; vis &gt; legend &gt; LegendItem</title></path>
+<path d="M 774.5,224 C 925.5,224 925.5,56 1076.5,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; axis  —[Axis]→  root &gt; vis &gt; axis &gt; Axis</title></path>
+<path d="M 774.5,224 C 925.5,224 925.5,112 1076.5,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; axis  —[Axes]→  root &gt; vis &gt; axis &gt; Axes</title></path>
+<path d="M 778.5,280 C 925.5,280 925.5,168 1072.5,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; legend  —[Legend]→  root &gt; vis &gt; legend &gt; Legend</title></path>
+<path d="M 778.5,280 C 918.5,280 918.5,224 1058.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; legend  —[LegendItem]→  root &gt; vis &gt; legend &gt; LegendItem</title></path>
+<path d="M 481,364 C 598.5,364 598.5,336 716,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 481,364 C 595,364 595,392 709,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 481,364 L 487,364 Q 497,364 497,354 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,194 L 864,270 Q 864,280 874,280 L 1051.5,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[LinkDistance]→  root &gt; analytics &gt; graph &gt; LinkDistance</title></path>
+<path d="M 481,364 L 487,364 Q 497,364 497,354 L 497,194 Q 497,184 507,184 L 854,184 Q 864,184 864,194 L 864,326 Q 864,336 874,336 L 1020,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[BetweennessCentrality]→  root &gt; analytics &gt; graph &gt; BetweennessCentrality</title></path>
+<path d="M 481,364 L 487,364 Q 497,364 497,374 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,534 L 864,402 Q 864,392 874,392 L 1023.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[AgglomerativeCluster]→  root &gt; analytics &gt; cluster &gt; AgglomerativeCluster</title></path>
+<path d="M 481,364 L 487,364 Q 497,364 497,374 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,534 L 864,458 Q 864,448 874,448 L 1030.5,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[CommunityStructure]→  root &gt; analytics &gt; cluster &gt; CommunityStructure</title></path>
+<path d="M 775,336 C 913.25,336 913.25,280 1051.5,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics &gt; graph  —[LinkDistance]→  root &gt; analytics &gt; graph &gt; LinkDistance</title></path>
+<path d="M 775,336 C 897.5,336 897.5,336 1020,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics &gt; graph  —[BetweennessCentrality]→  root &gt; analytics &gt; graph &gt; BetweennessCentrality</title></path>
+<path d="M 782,392 C 902.75,392 902.75,392 1023.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics &gt; cluster  —[AgglomerativeCluster]→  root &gt; analytics &gt; cluster &gt; AgglomerativeCluster</title></path>
+<path d="M 782,392 C 906.25,392 906.25,448 1030.5,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics &gt; cluster  —[CommunityStructure]→  root &gt; analytics &gt; cluster &gt; CommunityStructure</title></path>
+<path d="M 466.5,420 C 587.75,420 587.75,448 709,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 466.5,420 C 591.5,420 591.5,504 716.5,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 466.5,420 L 487,420 Q 497,420 497,430 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,534 L 864,514 Q 864,504 874,504 L 1051.5,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[ColorPalette]→  root &gt; util &gt; palette &gt; ColorPalette</title></path>
+<path d="M 466.5,420 L 487,420 Q 497,420 497,430 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,554 L 864,550 Q 864,560 874,560 L 1069,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[Palette]→  root &gt; util &gt; palette &gt; Palette</title></path>
+<path d="M 466.5,420 L 487,420 Q 497,420 497,430 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,554 L 864,606 Q 864,616 874,616 L 1055,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[DenseMatrix]→  root &gt; util &gt; math &gt; DenseMatrix</title></path>
+<path d="M 466.5,420 L 487,420 Q 497,420 497,430 L 497,534 Q 497,544 507,544 L 854,544 Q 864,544 864,554 L 864,662 Q 864,672 874,672 L 1069,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[IMatrix]→  root &gt; util &gt; math &gt; IMatrix</title></path>
+<path d="M 782,448 C 916.75,448 916.75,504 1051.5,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util &gt; palette  —[ColorPalette]→  root &gt; util &gt; palette &gt; ColorPalette</title></path>
+<path d="M 782,448 C 925.5,448 925.5,560 1069,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util &gt; palette  —[Palette]→  root &gt; util &gt; palette &gt; Palette</title></path>
+<path d="M 774.5,504 C 914.75,504 914.75,616 1055,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util &gt; math  —[DenseMatrix]→  root &gt; util &gt; math &gt; DenseMatrix</title></path>
+<path d="M 774.5,504 C 921.75,504 921.75,672 1069,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util &gt; math  —[IMatrix]→  root &gt; util &gt; math &gt; IMatrix</title></path>
+</g>
+<line x1="52" y1="364" x2="108" y2="364" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
+<g class="states">
+<g>
+<title>root
+  flare → __ERROR__
+  vis → root &gt; vis
+  analytics → root &gt; analytics
+  util → root &gt; util
+  axis → root &gt; vis &gt; axis
+  legend → root &gt; vis &gt; legend
+  graph → root &gt; analytics &gt; graph
+  cluster → root &gt; analytics &gt; cluster
+  palette → root &gt; util &gt; palette
+  math → root &gt; util &gt; math</title>
+<rect x="110" y="348" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="138" y="364" text-anchor="middle" dominant-baseline="central">root</text>
+</g>
+<g>
+<title>root &gt; vis
+  vis → root
+  axis → root &gt; vis &gt; axis
+  legend → root &gt; vis &gt; legend
+  Axis → root &gt; vis &gt; axis &gt; Axis
+  Axes → root &gt; vis &gt; axis &gt; Axes
+  Legend → root &gt; vis &gt; legend &gt; Legend
+  LegendItem → root &gt; vis &gt; legend &gt; LegendItem</title>
+<rect x="410.5" y="292" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="308" text-anchor="middle" dominant-baseline="central">vis</text>
+</g>
+<g>
+<title>root &gt; vis &gt; axis
+  axis → root &gt; vis
+  Axis → root &gt; vis &gt; axis &gt; Axis
+  Axes → root &gt; vis &gt; axis &gt; Axes</title>
+<rect x="718.5" y="208" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="224" text-anchor="middle" dominant-baseline="central">axis</text>
+</g>
+<g>
+<title>root &gt; vis &gt; axis &gt; Axis
+  Axis → root &gt; vis &gt; axis</title>
+<rect x="1078.5" y="40" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="56" text-anchor="middle" dominant-baseline="central">Axis</text>
+</g>
+<g>
+<title>root &gt; vis &gt; axis &gt; Axes
+  Axes → root &gt; vis &gt; axis</title>
+<rect x="1078.5" y="96" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="112" text-anchor="middle" dominant-baseline="central">Axes</text>
+</g>
+<g>
+<title>root &gt; vis &gt; legend
+  legend → root &gt; vis
+  Legend → root &gt; vis &gt; legend &gt; Legend
+  LegendItem → root &gt; vis &gt; legend &gt; LegendItem</title>
+<rect x="714.5" y="264" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="280" text-anchor="middle" dominant-baseline="central">legend</text>
+</g>
+<g>
+<title>root &gt; vis &gt; legend &gt; Legend
+  Legend → root &gt; vis &gt; legend</title>
+<rect x="1074.5" y="152" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="168" text-anchor="middle" dominant-baseline="central">Legend</text>
+</g>
+<g>
+<title>root &gt; vis &gt; legend &gt; LegendItem
+  LegendItem → root &gt; vis &gt; legend</title>
+<rect x="1060.5" y="208" width="92" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="224" text-anchor="middle" dominant-baseline="central">LegendItem</text>
+</g>
+<g>
+<title>root &gt; analytics
+  analytics → root
+  graph → root &gt; analytics &gt; graph
+  cluster → root &gt; analytics &gt; cluster
+  LinkDistance → root &gt; analytics &gt; graph &gt; LinkDistance
+  BetweennessCentrality → root &gt; analytics &gt; graph &gt; BetweennessCentrality
+  AgglomerativeCluster → root &gt; analytics &gt; cluster &gt; AgglomerativeCluster
+  CommunityStructure → root &gt; analytics &gt; cluster &gt; CommunityStructure</title>
+<rect x="396" y="348" width="85" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="364" text-anchor="middle" dominant-baseline="central">analytics</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; graph
+  graph → root &gt; analytics
+  LinkDistance → root &gt; analytics &gt; graph &gt; LinkDistance
+  BetweennessCentrality → root &gt; analytics &gt; graph &gt; BetweennessCentrality</title>
+<rect x="718" y="320" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="336" text-anchor="middle" dominant-baseline="central">graph</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; graph &gt; LinkDistance
+  LinkDistance → root &gt; analytics &gt; graph</title>
+<rect x="1053.5" y="264" width="106" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="280" text-anchor="middle" dominant-baseline="central">LinkDistance</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; graph &gt; BetweennessCentrality
+  BetweennessCentrality → root &gt; analytics &gt; graph</title>
+<rect x="1022" y="320" width="169" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="336" text-anchor="middle" dominant-baseline="central">BetweennessCentrality</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; cluster
+  cluster → root &gt; analytics
+  AgglomerativeCluster → root &gt; analytics &gt; cluster &gt; AgglomerativeCluster
+  CommunityStructure → root &gt; analytics &gt; cluster &gt; CommunityStructure</title>
+<rect x="711" y="376" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="392" text-anchor="middle" dominant-baseline="central">cluster</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; cluster &gt; AgglomerativeCluster
+  AgglomerativeCluster → root &gt; analytics &gt; cluster</title>
+<rect x="1025.5" y="376" width="162" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="392" text-anchor="middle" dominant-baseline="central">AgglomerativeCluster</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; cluster &gt; CommunityStructure
+  CommunityStructure → root &gt; analytics &gt; cluster</title>
+<rect x="1032.5" y="432" width="148" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="448" text-anchor="middle" dominant-baseline="central">CommunityStructure</text>
+</g>
+<g>
+<title>root &gt; util
+  util → root
+  palette → root &gt; util &gt; palette
+  math → root &gt; util &gt; math
+  ColorPalette → root &gt; util &gt; palette &gt; ColorPalette
+  Palette → root &gt; util &gt; palette &gt; Palette
+  DenseMatrix → root &gt; util &gt; math &gt; DenseMatrix
+  IMatrix → root &gt; util &gt; math &gt; IMatrix</title>
+<rect x="410.5" y="404" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="420" text-anchor="middle" dominant-baseline="central">util</text>
+</g>
+<g>
+<title>root &gt; util &gt; palette
+  palette → root &gt; util
+  ColorPalette → root &gt; util &gt; palette &gt; ColorPalette
+  Palette → root &gt; util &gt; palette &gt; Palette</title>
+<rect x="711" y="432" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="448" text-anchor="middle" dominant-baseline="central">palette</text>
+</g>
+<g>
+<title>root &gt; util &gt; palette &gt; ColorPalette
+  ColorPalette → root &gt; util &gt; palette</title>
+<rect x="1053.5" y="488" width="106" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="504" text-anchor="middle" dominant-baseline="central">ColorPalette</text>
+</g>
+<g>
+<title>root &gt; util &gt; palette &gt; Palette
+  Palette → root &gt; util &gt; palette</title>
+<rect x="1071" y="544" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="560" text-anchor="middle" dominant-baseline="central">Palette</text>
+</g>
+<g>
+<title>root &gt; util &gt; math
+  math → root &gt; util
+  DenseMatrix → root &gt; util &gt; math &gt; DenseMatrix
+  IMatrix → root &gt; util &gt; math &gt; IMatrix</title>
+<rect x="718.5" y="488" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="746.5" y="504" text-anchor="middle" dominant-baseline="central">math</text>
+</g>
+<g>
+<title>root &gt; util &gt; math &gt; DenseMatrix
+  DenseMatrix → root &gt; util &gt; math</title>
+<rect x="1057" y="600" width="99" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="616" text-anchor="middle" dominant-baseline="central">DenseMatrix</text>
+</g>
+<g>
+<title>root &gt; util &gt; math &gt; IMatrix
+  IMatrix → root &gt; util &gt; math</title>
+<rect x="1071" y="656" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1106.5" y="672" text-anchor="middle" dominant-baseline="central">IMatrix</text>
+</g>
+<g>
+<title>__ERROR__</title>
+<rect x="1421" y="348" width="85" height="32" rx="16" fill="#fde8e8" stroke="#c33" stroke-width="1.4"/>
+<text x="1463.5" y="364" text-anchor="middle" dominant-baseline="central">__ERROR__</text>
+</g>
+</g>
+<g class="labels">
+<text x="1403" y="355" text-anchor="end" font-size="11" fill="#333">flare</text>
+<text x="392.5" y="299" text-anchor="end" font-size="11" fill="#333">vis</text>
+<text x="378" y="355" text-anchor="end" font-size="11" fill="#333">analytics</text>
+<text x="392.5" y="411" text-anchor="end" font-size="11" fill="#333">util</text>
+<text x="700.5" y="215" text-anchor="end" font-size="11" fill="#333">axis</text>
+<text x="696.5" y="271" text-anchor="end" font-size="11" fill="#333">legend</text>
+<text x="700" y="327" text-anchor="end" font-size="11" fill="#333">graph</text>
+<text x="693" y="383" text-anchor="end" font-size="11" fill="#333">cluster</text>
+<text x="693" y="439" text-anchor="end" font-size="11" fill="#333">palette</text>
+<text x="700.5" y="495" text-anchor="end" font-size="11" fill="#333">math</text>
+<text x="1060.5" y="47" text-anchor="end" font-size="11" fill="#333">Axis</text>
+<text x="1060.5" y="103" text-anchor="end" font-size="11" fill="#333">Axes</text>
+<text x="1056.5" y="159" text-anchor="end" font-size="11" fill="#333">Legend</text>
+<text x="1042.5" y="215" text-anchor="end" font-size="11" fill="#333">LegendItem</text>
+<text x="1035.5" y="271" text-anchor="end" font-size="11" fill="#333">LinkDistance</text>
+<text x="1004" y="327" text-anchor="end" font-size="11" fill="#333">BetweennessCentrality</text>
+<text x="1007.5" y="383" text-anchor="end" font-size="11" fill="#333">AgglomerativeCluster</text>
+<text x="1014.5" y="439" text-anchor="end" font-size="11" fill="#333">CommunityStructure</text>
+<text x="1035.5" y="495" text-anchor="end" font-size="11" fill="#333">ColorPalette</text>
+<text x="1053" y="551" text-anchor="end" font-size="11" fill="#333">Palette</text>
+<text x="1039" y="607" text-anchor="end" font-size="11" fill="#333">DenseMatrix</text>
+<text x="1053" y="663" text-anchor="end" font-size="11" fill="#333">IMatrix</text>
+<text x="430.5" y="338" font-size="10"><tspan fill="#555">↷ Axis, Axes, Legend +1</tspan>  <tspan fill="#999">↩ vis</tspan></text>
+<text x="738.5" y="254" font-size="10"><tspan fill="#999">↩ axis</tspan></text>
+<text x="1098.5" y="86" font-size="10"><tspan fill="#999">↩ Axis</tspan></text>
+<text x="1098.5" y="142" font-size="10"><tspan fill="#999">↩ Axes</tspan></text>
+<text x="738.5" y="310" font-size="10"><tspan fill="#999">↩ legend</tspan></text>
+<text x="1098.5" y="198" font-size="10"><tspan fill="#999">↩ Legend</tspan></text>
+<text x="1098.5" y="254" font-size="10"><tspan fill="#999">↩ LegendItem</tspan></text>
+<text x="430.5" y="394" font-size="10"><tspan fill="#555">↷ LinkDistance +3</tspan>  <tspan fill="#999">↩ analytics</tspan></text>
+<text x="738.5" y="366" font-size="10"><tspan fill="#999">↩ graph</tspan></text>
+<text x="1098.5" y="310" font-size="10"><tspan fill="#999">↩ LinkDistance</tspan></text>
+<text x="1098.5" y="366" font-size="10"><tspan fill="#999">↩ BetweennessCentrality</tspan></text>
+<text x="738.5" y="422" font-size="10"><tspan fill="#999">↩ cluster</tspan></text>
+<text x="1098.5" y="422" font-size="10"><tspan fill="#999">↩ AgglomerativeCluster</tspan></text>
+<text x="1098.5" y="478" font-size="10"><tspan fill="#999">↩ CommunityStructure</tspan></text>
+<text x="430.5" y="450" font-size="10"><tspan fill="#555">↷ ColorPalette +3</tspan>  <tspan fill="#999">↩ util</tspan></text>
+<text x="738.5" y="478" font-size="10"><tspan fill="#999">↩ palette</tspan></text>
+<text x="1098.5" y="534" font-size="10"><tspan fill="#999">↩ ColorPalette</tspan></text>
+<text x="1098.5" y="590" font-size="10"><tspan fill="#999">↩ Palette</tspan></text>
+<text x="738.5" y="534" font-size="10"><tspan fill="#999">↩ math</tspan></text>
+<text x="1098.5" y="646" font-size="10"><tspan fill="#999">↩ DenseMatrix</tspan></text>
+<text x="1098.5" y="702" font-size="10"><tspan fill="#999">↩ IMatrix</tspan></text>
+<text x="130" y="394" font-size="10"><tspan fill="#555">↷ flare, axis, legend +4</tspan></text>
+</g>
+<g font-size="10" fill="#666">
+<line x1="40" y1="760" x2="80" y2="760" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="763">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="760" x2="400" y2="760" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="763">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="760" x2="670" y2="760" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="763">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="780">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+</g>
+<line x1="40" y1="804" x2="1506" y2="804" stroke="#ddd"/>
+<text x="40" y="824" font-weight="bold" fill="#c33">Comportamiento inesperado   (en rojo: la primera serie de eventos)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#c33">
+<tspan x="40" y="842">Hay un comportamiento inesperado cuando ocurre esta serie de eventos: flare</tspan>
+<tspan x="40" y="857">    la página tira una excepción al hacer click &quot;flare&quot; en &quot;root&quot; (paso 1)</tspan>
+</text>
+<text x="40" y="890" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 18 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="908">(Click_vis (Click_axis (Click_Axis Click_Axis | Click_Axes Click_Axes)* Click_axis | Click_legend (Click_Legend Click_Legend | Click_LegendItem Click_LegendItem)* Click_legend)* Click_vis | Click_analytics (Click_graph</tspan>
+<tspan x="40" y="923">(Click_LinkDistance Click_LinkDistance | Click_BetweennessCentrality Click_BetweennessCentrality)* Click_graph | Click_cluster (Click_AgglomerativeCluster Click_AgglomerativeCluster | Click_CommunityStructure</tspan>
+<tspan x="40" y="938">Click_CommunityStructure)* Click_cluster)* Click_analytics | Click_util (Click_palette (Click_ColorPalette Click_ColorPalette | Click_Palette Click_Palette)* Click_palette | Click_math (Click_DenseMatrix Click_DenseMatrix</tspan>
+<tspan x="40" y="953">| Click_IMatrix Click_IMatrix)* Click_math)* Click_util)*</tspan>
+</text>
+</svg>

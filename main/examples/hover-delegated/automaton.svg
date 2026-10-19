@@ -1,15 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="900" height="370" viewBox="0 0 900 370" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="386" viewBox="0 0 900 386" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <title>Autómata (1 estados)</title>
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
-  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
-  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
-  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
 </defs>
-<rect width="900" height="370" fill="white"/>
+<rect width="900" height="386" fill="white"/>
 <g class="back-edges">
-<path d="M 404,40 C 398,16 430,16 416,42" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root  —[Hover_markA, Hover_markB, Hover_markC, Hover_markD]→  root
+<path d="M 395,40 C 385,4 431,4 411,43" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root  —[Hover_markA, Hover_markB, Hover_markC, Hover_markD]→  root
 Hover_markA: fill: steelblue -&gt; orange
 Hover_markB: fill: steelblue -&gt; orange
 Hover_markC: fill: steelblue -&gt; orange
@@ -17,7 +17,7 @@ Hover_markD: fill: steelblue -&gt; orange</title></path>
 </g>
 <g class="forward-edges">
 </g>
-<line x1="322" y1="53" x2="360" y2="53" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="299" y1="56" x2="355" y2="56" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
 <g class="states">
 <g>
 <title>root
@@ -25,36 +25,36 @@ Hover_markD: fill: steelblue -&gt; orange</title></path>
   Hover_markB → root
   Hover_markC → root
   Hover_markD → root</title>
-<rect x="362" y="40" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
-<text x="390" y="53" text-anchor="middle" dominant-baseline="central">root</text>
+<rect x="357" y="40" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="385" y="56" text-anchor="middle" dominant-baseline="central">root</text>
 </g>
 </g>
 <g class="labels">
-<text x="426" y="26" font-size="10" fill="#1b7f79">Hover_markA +3</text>
+<text x="423" y="20" font-size="11" fill="#1b7f79">Hover_markA +3</text>
 </g>
 <g font-size="10" fill="#666">
-<line x1="40" y1="128" x2="68" y2="128" stroke="#777" marker-end="url(#arrow)"/>
-<text x="74" y="131">acción que avanza (etiqueta junto al destino)</text>
-<line x1="330" y1="128" x2="358" y2="128" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
-<text x="364" y="131">acción que vuelve (↩ bajo el origen)</text>
-<line x1="570" y1="128" x2="598" y2="128" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
-<text x="604" y="131">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="148">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
-<line x1="40" y1="164" x2="68" y2="164" stroke="#1b8a82" marker-end="url(#arrow-hover)"/>
-<text x="74" y="167">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+<line x1="40" y1="144" x2="80" y2="144" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="147">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="144" x2="400" y2="144" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="147">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="144" x2="670" y2="144" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="147">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="164">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="180" x2="80" y2="180" stroke="#1b8a82" stroke-width="1.6" marker-end="url(#arrow-hover)"/>
+<text x="88" y="183">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
 </g>
-<line x1="40" y1="190" x2="860" y2="190" stroke="#ddd"/>
-<text x="40" y="210" font-weight="bold" fill="#1a7f37">Comparación con: (Hover_markA | Hover_markB | Hover_markC | Hover_markD)*</text>
+<line x1="40" y1="206" x2="860" y2="206" stroke="#ddd"/>
+<text x="40" y="226" font-weight="bold" fill="#1a7f37">Comparación con: (Hover_markA | Hover_markB | Hover_markC | Hover_markD)*</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#1a7f37">
-<tspan x="40" y="228">EQUIVALENTES (autómata cortado · interacciones completas)</tspan>
+<tspan x="40" y="244">EQUIVALENTES (autómata cortado · interacciones completas)</tspan>
 </text>
-<text x="40" y="261" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text x="40" y="277" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="279">(Hover_markA | Hover_markB | Hover_markC | Hover_markD)*</tspan>
+<tspan x="40" y="295">(Hover_markA | Hover_markB | Hover_markC | Hover_markD)*</tspan>
 </text>
-<text x="40" y="312" font-weight="bold" fill="#222">Hover (4 acciones con efecto visible)</text>
+<text x="40" y="328" font-weight="bold" fill="#222">Hover (4 acciones con efecto visible)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="330">Hover_markA, Hover_markB, Hover_markC, Hover_markD (4; bucle en el estado): fill: steelblue -&gt; orange</tspan>
-<tspan x="40" y="345">NO son acciones (sin efecto en sí mismo; se probaron 6 elementos internos (4 con efecto)): Hover_background (1 estado)</tspan>
+<tspan x="40" y="346">Hover_markA, Hover_markB, Hover_markC, Hover_markD (4; bucle en el estado): fill: steelblue -&gt; orange</tspan>
+<tspan x="40" y="361">NO son acciones (sin efecto en sí mismo; se probaron 6 elementos internos (4 con efecto)): Hover_background (1 estado)</tspan>
 </text>
 </svg>

@@ -1,16 +1,16 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1070.4" height="1494" viewBox="0 0 1070.4 1494" font-family="Helvetica, Arial, sans-serif" font-size="11">
+<svg xmlns="http://www.w3.org/2000/svg" width="1379" height="1584" viewBox="0 0 1379 1584" font-family="Helvetica, Arial, sans-serif" font-size="12">
 <title>Autómata (32 estados)</title>
 <defs>
-  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
-  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
-  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
-  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
-  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
 </defs>
-<rect width="1070.4" height="1494" fill="white"/>
+<rect width="1379" height="1584" fill="white"/>
 <g class="back-edges">
-<path d="M 132,320 C 126,296 158,296 144,322" fill="none" stroke="#888" stroke-width="1" marker-end="url(#arrow)"><title>root  —[background]→  root</title></path>
-<path d="M 132,320 C 126,282 158,282 144,322" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root  —[Hover_vis, Hover_util, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_data, Hover_physics, Hover_display, Hover_flex, Hover_operator, Hover_vis/data, Hover_controls, Hover_legend, Hover_axis, Hover_events, Hover_palette, Hover_heap, Hover_math, Hover_interpolate, Hover_methods, Hover_graph, Hover_cluster, Hover_optimization, Hover_converters, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter, Hover_render]→  root
+<path d="M 148,432 C 138,396 184,396 164,435" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[background]→  root</title></path>
+<path d="M 148,432 C 138,378 184,378 164,435" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root  —[Hover_vis, Hover_util, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_data, Hover_physics, Hover_display, Hover_flex, Hover_operator, Hover_vis/data, Hover_controls, Hover_legend, Hover_axis, Hover_events, Hover_palette, Hover_heap, Hover_math, Hover_interpolate, Hover_methods, Hover_graph, Hover_cluster, Hover_optimization, Hover_converters, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter, Hover_render]→  root
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_util: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
@@ -42,13 +42,13 @@ Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000
 Hover_render: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,166 C 335.8,208.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis  —[background, vis]→  root</title></path>
-<path d="M 363.8,157 C 386.8,157 386.8,229 371.2,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis  —[animate]→  root &gt; animate</title></path>
-<path d="M 363.8,157 C 383.40000000000003,157 383.40000000000003,269 365.8,269" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis  —[query]→  root &gt; query</title></path>
-<path d="M 363.8,157 C 397.20000000000005,157 397.20000000000005,309 377.6,309" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 363.8,157 C 387.40000000000003,157 387.40000000000003,349 365.8,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis  —[scale]→  root &gt; scale</title></path>
-<path d="M 363.8,157 C 396.8,157 396.8,429 371.2,429" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis  —[physics]→  root &gt; physics</title></path>
-<path d="M 349.8,140 C 343.8,116 375.8,116 361.8,142" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis  —[Hover_vis, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_physics, Hover_operator, Hover_vis/data, Hover_controls, Hover_legend, Hover_axis, Hover_events, Hover_interpolate, Hover_methods, Hover_optimization, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter, Hover_render]→  root &gt; vis
+<path d="M 438.5,212 C 438.5,270.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis  —[background, vis]→  root</title></path>
+<path d="M 466.5,200 C 499.2,200 499.2,304 476,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[animate]→  root &gt; animate</title></path>
+<path d="M 466.5,200 C 495,200 495,360 469,360" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[query]→  root &gt; query</title></path>
+<path d="M 466.5,200 C 511.8,200 511.8,416 483,416" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 466.5,200 C 500.6,200 500.6,472 469,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[scale]→  root &gt; scale</title></path>
+<path d="M 466.5,200 C 513.2,200 513.2,584 476,584" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[physics]→  root &gt; physics</title></path>
+<path d="M 448.5,180 C 438.5,144 484.5,144 464.5,183" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis  —[Hover_vis, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_physics, Hover_operator, Hover_vis/data, Hover_controls, Hover_legend, Hover_axis, Hover_events, Hover_interpolate, Hover_methods, Hover_optimization, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter, Hover_render]→  root &gt; vis
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_query: stroke: (sin definir) -&gt; #000
@@ -70,12 +70,12 @@ Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000
 Hover_render: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,246 C 335.8,288.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate  —[background, animate]→  root</title></path>
-<path d="M 369.2,237 C 385.59999999999997,237 385.59999999999997,149 365.8,149" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; animate  —[vis]→  root &gt; vis</title></path>
-<path d="M 369.2,237 C 383.59999999999997,237 383.59999999999997,189 365.8,189" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; animate  —[util]→  root &gt; util</title></path>
-<path d="M 369.2,237 C 386.8,237 386.8,349 365.8,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; animate  —[scale]→  root &gt; scale</title></path>
-<path d="M 369.2,237 C 394.8,237 394.8,509 365.8,509" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; animate  —[flex]→  root &gt; flex</title></path>
-<path d="M 355.2,220 C 349.2,196 381.2,196 367.2,222" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; animate  —[Hover_vis, Hover_util, Hover_animate, Hover_scale, Hover_flex, Hover_vis/data, Hover_interpolate]→  root &gt; animate
+<path d="M 438.5,324 C 438.5,382.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate  —[background, animate]→  root</title></path>
+<path d="M 474,312 C 498,312 498,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; animate  —[vis]→  root &gt; vis</title></path>
+<path d="M 474,312 C 495.2,312 495.2,248 468.5,248" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; animate  —[util]→  root &gt; util</title></path>
+<path d="M 474,312 C 500,312 500,472 469,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; animate  —[scale]→  root &gt; scale</title></path>
+<path d="M 474,312 C 511.2,312 511.2,696 468.5,696" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; animate  —[flex]→  root &gt; flex</title></path>
+<path d="M 456,292 C 446,256 492,256 472,295" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; animate  —[Hover_vis, Hover_util, Hover_animate, Hover_scale, Hover_flex, Hover_vis/data, Hover_interpolate]→  root &gt; animate
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_util: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
@@ -83,11 +83,11 @@ Hover_scale: stroke: (sin definir) -&gt; #000
 Hover_flex: stroke: (sin definir) -&gt; #000
 Hover_vis/data: stroke: (sin definir) -&gt; #000
 Hover_interpolate: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,206 C 335.8,248.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util  —[background, util]→  root</title></path>
-<path d="M 363.8,197 C 384.8,197 384.8,229 371.2,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; util  —[animate]→  root &gt; animate</title></path>
-<path d="M 363.8,197 C 381.40000000000003,197 381.40000000000003,269 365.8,269" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; util  —[query]→  root &gt; query</title></path>
-<path d="M 363.8,197 C 387.40000000000003,197 387.40000000000003,389 365.8,389" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; util  —[data]→  root &gt; data</title></path>
-<path d="M 349.8,180 C 343.8,156 375.8,156 361.8,182" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; util  —[Hover_util, Hover_animate, Hover_query, Hover_data, Hover_palette, Hover_heap, Hover_math]→  root &gt; util
+<path d="M 438.5,268 C 438.5,326.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util  —[background, util]→  root</title></path>
+<path d="M 466.5,256 C 496.4,256 496.4,304 476,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util  —[animate]→  root &gt; animate</title></path>
+<path d="M 466.5,256 C 492.2,256 492.2,360 469,360" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util  —[query]→  root &gt; query</title></path>
+<path d="M 466.5,256 C 500.1,256 500.1,528 468.5,528" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util  —[data]→  root &gt; data</title></path>
+<path d="M 448.5,236 C 438.5,200 484.5,200 464.5,239" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util  —[Hover_util, Hover_animate, Hover_query, Hover_data, Hover_palette, Hover_heap, Hover_math]→  root &gt; util
 Hover_util: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_query: stroke: (sin definir) -&gt; #000
@@ -95,21 +95,21 @@ Hover_data: stroke: (sin definir) -&gt; #000
 Hover_palette: stroke: (sin definir) -&gt; #000
 Hover_heap: stroke: (sin definir) -&gt; #000
 Hover_math: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,286 C 335.8,328.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query  —[background, query]→  root</title></path>
-<path d="M 363.8,277 C 384.2,277 384.2,149 365.8,149" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; query  —[vis]→  root &gt; vis</title></path>
-<path d="M 363.8,277 C 382.2,277 382.2,189 365.8,189" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; query  —[util]→  root &gt; util</title></path>
-<path d="M 363.8,277 C 391.20000000000005,277 391.20000000000005,309 377.6,309" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; query  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 349.8,260 C 343.8,236 375.8,236 361.8,262" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; query  —[Hover_vis, Hover_util, Hover_query, Hover_analytics, Hover_methods, Hover_cluster]→  root &gt; query
+<path d="M 438.5,380 C 438.5,438.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query  —[background, query]→  root</title></path>
+<path d="M 467,368 C 495.3,368 495.3,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; query  —[vis]→  root &gt; vis</title></path>
+<path d="M 467,368 C 492.5,368 492.5,248 468.5,248" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; query  —[util]→  root &gt; util</title></path>
+<path d="M 467,368 C 503.4,368 503.4,416 483,416" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; query  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 449,348 C 439,312 485,312 465,351" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; query  —[Hover_vis, Hover_util, Hover_query, Hover_analytics, Hover_methods, Hover_cluster]→  root &gt; query
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_util: stroke: (sin definir) -&gt; #000
 Hover_query: stroke: (sin definir) -&gt; #000
 Hover_analytics: stroke: (sin definir) -&gt; #000
 Hover_methods: stroke: (sin definir) -&gt; #000
 Hover_cluster: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,326 C 335.8,368.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[background, analytics]→  root</title></path>
-<path d="M 375.6,317 C 396,317 396,149 365.8,149" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics  —[vis]→  root &gt; vis</title></path>
-<path d="M 375.6,317 C 390,317 390,269 365.8,269" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics  —[query]→  root &gt; query</title></path>
-<path d="M 361.6,300 C 355.6,276 387.6,276 373.6,302" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; analytics  —[Hover_vis, Hover_query, Hover_analytics, Hover_methods, Hover_graph, Hover_cluster, Hover_optimization]→  root &gt; analytics
+<path d="M 438.5,436 C 438.5,494.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[background, analytics]→  root</title></path>
+<path d="M 481,424 C 510.6,424 510.6,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics  —[vis]→  root &gt; vis</title></path>
+<path d="M 481,424 C 502.2,424 502.2,360 469,360" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics  —[query]→  root &gt; query</title></path>
+<path d="M 463,404 C 453,368 499,368 479,407" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics  —[Hover_vis, Hover_query, Hover_analytics, Hover_methods, Hover_graph, Hover_cluster, Hover_optimization]→  root &gt; analytics
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_query: stroke: (sin definir) -&gt; #000
 Hover_analytics: stroke: (sin definir) -&gt; #000
@@ -117,123 +117,123 @@ Hover_methods: stroke: (sin definir) -&gt; #000
 Hover_graph: stroke: (sin definir) -&gt; #000
 Hover_cluster: stroke: (sin definir) -&gt; #000
 Hover_optimization: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,466 C 575,537.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[background, methods]→  root</title></path>
-<path d="M 575,466 C 575,511.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[vis]→  root &gt; vis</title></path>
-<path d="M 575,466 C 575,511.504 345.8,332.504 345.8,287" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[query]→  root &gt; query</title></path>
-<path d="M 575,466 C 575,511.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 594.4000000000001,440 C 588.4000000000001,416 620.4000000000001,416 606.4000000000001,442" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; query &gt; methods  —[Hover_vis, Hover_query, Hover_analytics, Hover_methods]→  root &gt; query &gt; methods
+<path d="M 764,632 C 764,729.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[background, methods]→  root</title></path>
+<path d="M 764,632 C 764,693.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[vis]→  root &gt; vis</title></path>
+<path d="M 764,632 C 764,693.86 448.5,442.86 448.5,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[query]→  root &gt; query</title></path>
+<path d="M 764,632 C 764,693.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; query &gt; methods  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 781.5,600 C 771.5,564 817.5,564 797.5,603" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; query &gt; methods  —[Hover_vis, Hover_query, Hover_analytics, Hover_methods]→  root &gt; query &gt; methods
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_query: stroke: (sin definir) -&gt; #000
 Hover_analytics: stroke: (sin definir) -&gt; #000
 Hover_methods: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,506 C 575,577.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[background, graph]→  root</title></path>
-<path d="M 575,506 C 575,551.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 603,497 C 642.0000000000001,497 642.0000000000001,569 626.4000000000001,569" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; graph  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 589,480 C 583,456 615,456 601,482" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; graph  —[Hover_analytics, Hover_graph, Hover_optimization]→  root &gt; analytics &gt; graph
+<path d="M 764,688 C 764,785.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[background, graph]→  root</title></path>
+<path d="M 764,688 C 764,749.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 792.5,676 C 842.2,676 842.2,780 819,780" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; graph  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 774.5,656 C 764.5,620 810.5,620 790.5,659" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; graph  —[Hover_analytics, Hover_graph, Hover_optimization]→  root &gt; analytics &gt; graph
 Hover_analytics: stroke: (sin definir) -&gt; #000
 Hover_graph: stroke: (sin definir) -&gt; #000
 Hover_optimization: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,586 C 575,657.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[background, optimization]→  root</title></path>
-<path d="M 575,586 C 575,631.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[vis]→  root &gt; vis</title></path>
-<path d="M 575,586 C 575,631.504 345.8,372.504 345.8,327" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 624.4000000000001,577 C 640.8000000000001,577 640.8000000000001,489 605,489" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; optimization  —[graph]→  root &gt; analytics &gt; graph</title></path>
-<path d="M 624.4000000000001,577 C 638.8000000000001,577 638.8000000000001,529 610.4000000000001,529" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; optimization  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 610.4000000000001,560 C 604.4000000000001,536 636.4000000000001,536 622.4000000000001,562" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; optimization  —[Hover_vis, Hover_analytics, Hover_graph, Hover_cluster, Hover_optimization]→  root &gt; analytics &gt; optimization
+<path d="M 764,800 C 764,897.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[background, optimization]→  root</title></path>
+<path d="M 764,800 C 764,861.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[vis]→  root &gt; vis</title></path>
+<path d="M 764,800 C 764,861.86 448.5,498.86 448.5,437" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; optimization  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 817,788 C 841,788 841,668 794.5,668" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; optimization  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 817,788 C 838.2,788 838.2,724 801.5,724" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; optimization  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 799,768 C 789,732 835,732 815,771" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; optimization  —[Hover_vis, Hover_analytics, Hover_graph, Hover_cluster, Hover_optimization]→  root &gt; analytics &gt; optimization
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_analytics: stroke: (sin definir) -&gt; #000
 Hover_graph: stroke: (sin definir) -&gt; #000
 Hover_cluster: stroke: (sin definir) -&gt; #000
 Hover_optimization: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,546 C 575,617.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[background, cluster]→  root</title></path>
-<path d="M 575,546 C 575,591.504 345.8,332.504 345.8,287" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[query]→  root &gt; query</title></path>
-<path d="M 608.4000000000001,537 C 640.0000000000001,537 640.0000000000001,569 626.4000000000001,569" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; cluster  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 594.4000000000001,520 C 588.4000000000001,496 620.4000000000001,496 606.4000000000001,522" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; cluster  —[Hover_query, Hover_cluster, Hover_optimization]→  root &gt; analytics &gt; cluster
+<path d="M 764,744 C 764,841.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[background, cluster]→  root</title></path>
+<path d="M 764,744 C 764,805.86 448.5,442.86 448.5,381" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[query]→  root &gt; query</title></path>
+<path d="M 799.5,732 C 839.4,732 839.4,780 819,780" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics &gt; cluster  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 781.5,712 C 771.5,676 817.5,676 797.5,715" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; cluster  —[Hover_query, Hover_cluster, Hover_optimization]→  root &gt; analytics &gt; cluster
 Hover_query: stroke: (sin definir) -&gt; #000
 Hover_cluster: stroke: (sin definir) -&gt; #000
 Hover_optimization: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,406 C 335.8,448.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; data  —[background, data]→  root</title></path>
-<path d="M 363.8,397 C 388.2,397 388.2,189 365.8,189" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; data  —[util]→  root &gt; util</title></path>
-<path d="M 349.8,380 C 343.8,356 375.8,356 361.8,382" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; data  —[Hover_util, Hover_data, Hover_converters]→  root &gt; data
+<path d="M 438.5,548 C 438.5,606.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; data  —[background, data]→  root</title></path>
+<path d="M 466.5,536 C 500.9,536 500.9,248 468.5,248" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; data  —[util]→  root &gt; util</title></path>
+<path d="M 448.5,516 C 438.5,480 484.5,480 464.5,519" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; data  —[Hover_util, Hover_data, Hover_converters]→  root &gt; data
 Hover_util: stroke: (sin definir) -&gt; #000
 Hover_data: stroke: (sin definir) -&gt; #000
 Hover_converters: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,626 C 575,697.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[background, converters]→  root</title></path>
-<path d="M 575,626 C 575,671.504 345.8,452.504 345.8,407" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[data]→  root &gt; data</title></path>
-<path d="M 604,600 C 598,576 630,576 616,602" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; data &gt; converters  —[Hover_data, Hover_converters]→  root &gt; data &gt; converters
+<path d="M 764,856 C 764,953.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[background, converters]→  root</title></path>
+<path d="M 764,856 C 764,917.86 448.5,610.86 448.5,549" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; data &gt; converters  —[data]→  root &gt; data</title></path>
+<path d="M 792,824 C 782,788 828,788 808,827" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; data &gt; converters  —[Hover_data, Hover_converters]→  root &gt; data &gt; converters
 Hover_data: stroke: (sin definir) -&gt; #000
 Hover_converters: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,306 C 575,377.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[background, palette]→  root</title></path>
-<path d="M 608.4000000000001,297 C 624.0000000000001,297 624.0000000000001,369 605,369" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; util &gt; palette  —[math]→  root &gt; util &gt; math</title></path>
-<path d="M 594.4000000000001,280 C 588.4000000000001,256 620.4000000000001,256 606.4000000000001,282" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; palette  —[Hover_palette, Hover_math]→  root &gt; util &gt; palette
+<path d="M 764,408 C 764,505.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[background, palette]→  root</title></path>
+<path d="M 799.5,396 C 822.7,396 822.7,500 794,500" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util &gt; palette  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 781.5,376 C 771.5,340 817.5,340 797.5,379" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; palette  —[Hover_palette, Hover_math]→  root &gt; util &gt; palette
 Hover_palette: stroke: (sin definir) -&gt; #000
 Hover_math: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,386 C 575,457.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[background, math]→  root</title></path>
-<path d="M 603,377 C 626.8000000000001,377 626.8000000000001,289 610.4000000000001,289" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; util &gt; math  —[palette]→  root &gt; util &gt; palette</title></path>
-<path d="M 589,360 C 583,336 615,336 601,362" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; math  —[Hover_palette, Hover_math]→  root &gt; util &gt; math
+<path d="M 764,520 C 764,617.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[background, math]→  root</title></path>
+<path d="M 792,508 C 825.5,508 825.5,388 801.5,388" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util &gt; math  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 774,488 C 764,452 810,452 790,491" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; math  —[Hover_palette, Hover_math]→  root &gt; util &gt; math
 Hover_palette: stroke: (sin definir) -&gt; #000
 Hover_math: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,346 C 575,417.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[background, heap]→  root</title></path>
-<path d="M 589,320 C 583,296 615,296 601,322" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; heap  —[Hover_heap]→  root &gt; util &gt; heap
+<path d="M 764,464 C 764,561.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[background, heap]→  root</title></path>
+<path d="M 774,432 C 764,396 810,396 790,435" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; heap  —[Hover_heap]→  root &gt; util &gt; heap
 Hover_heap: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,366 C 335.8,408.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; scale  —[background, scale]→  root</title></path>
-<path d="M 363.8,357 C 388.2,357 388.2,149 365.8,149" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; scale  —[vis]→  root &gt; vis</title></path>
-<path d="M 363.8,357 C 389.59999999999997,357 389.59999999999997,229 371.2,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; scale  —[animate]→  root &gt; animate</title></path>
-<path d="M 363.8,357 C 386.8,357 386.8,429 371.2,429" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; scale  —[physics]→  root &gt; physics</title></path>
-<path d="M 349.8,340 C 343.8,316 375.8,316 361.8,342" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; scale  —[Hover_vis, Hover_animate, Hover_scale, Hover_physics, Hover_interpolate]→  root &gt; scale
+<path d="M 438.5,492 C 438.5,550.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; scale  —[background, scale]→  root</title></path>
+<path d="M 467,480 C 500.9,480 500.9,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; scale  —[vis]→  root &gt; vis</title></path>
+<path d="M 467,480 C 502.8,480 502.8,304 476,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; scale  —[animate]→  root &gt; animate</title></path>
+<path d="M 467,480 C 499.2,480 499.2,584 476,584" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; scale  —[physics]→  root &gt; physics</title></path>
+<path d="M 449,460 C 439,424 485,424 465,463" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; scale  —[Hover_vis, Hover_animate, Hover_scale, Hover_physics, Hover_interpolate]→  root &gt; scale
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_scale: stroke: (sin definir) -&gt; #000
 Hover_physics: stroke: (sin definir) -&gt; #000
 Hover_interpolate: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,446 C 335.8,488.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; physics  —[background, physics]→  root</title></path>
-<path d="M 369.2,437 C 395.59999999999997,437 395.59999999999997,149 365.8,149" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; physics  —[vis]→  root &gt; vis</title></path>
-<path d="M 369.2,437 C 385.59999999999997,437 385.59999999999997,349 365.8,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; physics  —[scale]→  root &gt; scale</title></path>
-<path d="M 355.2,420 C 349.2,396 381.2,396 367.2,422" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; physics  —[Hover_vis, Hover_scale, Hover_physics]→  root &gt; physics
+<path d="M 438.5,604 C 438.5,662.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; physics  —[background, physics]→  root</title></path>
+<path d="M 474,592 C 512,592 512,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; physics  —[vis]→  root &gt; vis</title></path>
+<path d="M 474,592 C 498,592 498,472 469,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; physics  —[scale]→  root &gt; scale</title></path>
+<path d="M 456,572 C 446,536 492,536 472,575" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; physics  —[Hover_vis, Hover_scale, Hover_physics]→  root &gt; physics
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_scale: stroke: (sin definir) -&gt; #000
 Hover_physics: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,426 C 575,497.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[background, interpolate]→  root</title></path>
-<path d="M 575,426 C 575,471.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[vis]→  root &gt; vis</title></path>
-<path d="M 575,426 C 575,471.504 345.8,292.504 345.8,247" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[animate]→  root &gt; animate</title></path>
-<path d="M 575,426 C 575,471.504 345.8,412.504 345.8,367" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[scale]→  root &gt; scale</title></path>
-<path d="M 607.2,400 C 601.2,376 633.2,376 619.2,402" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; animate &gt; interpolate  —[Hover_vis, Hover_animate, Hover_scale, Hover_interpolate]→  root &gt; animate &gt; interpolate
+<path d="M 764,576 C 764,673.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[background, interpolate]→  root</title></path>
+<path d="M 764,576 C 764,637.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[vis]→  root &gt; vis</title></path>
+<path d="M 764,576 C 764,637.86 448.5,386.86 448.5,325" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[animate]→  root &gt; animate</title></path>
+<path d="M 764,576 C 764,637.86 448.5,554.86 448.5,493" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; animate &gt; interpolate  —[scale]→  root &gt; scale</title></path>
+<path d="M 795.5,544 C 785.5,508 831.5,508 811.5,547" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; animate &gt; interpolate  —[Hover_vis, Hover_animate, Hover_scale, Hover_interpolate]→  root &gt; animate &gt; interpolate
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_scale: stroke: (sin definir) -&gt; #000
 Hover_interpolate: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,526 C 335.8,568.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; flex  —[background, flex]→  root</title></path>
-<path d="M 363.8,517 C 397.59999999999997,517 397.59999999999997,229 371.2,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; flex  —[animate]→  root &gt; animate</title></path>
-<path d="M 349.8,500 C 343.8,476 375.8,476 361.8,502" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; flex  —[Hover_animate, Hover_flex]→  root &gt; flex
+<path d="M 438.5,716 C 438.5,774.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; flex  —[background, flex]→  root</title></path>
+<path d="M 466.5,704 C 514,704 514,304 476,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; flex  —[animate]→  root &gt; animate</title></path>
+<path d="M 448.5,684 C 438.5,648 484.5,648 464.5,687" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; flex  —[Hover_animate, Hover_flex]→  root &gt; flex
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_flex: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,106 C 575,177.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[background, vis/data]→  root</title></path>
-<path d="M 575,106 C 575,151.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[vis]→  root &gt; vis</title></path>
-<path d="M 575,106 C 575,151.504 345.8,292.504 345.8,247" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[animate]→  root &gt; animate</title></path>
-<path d="M 603,97 C 627.2,97 627.2,129 613.6,129" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; data  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 603,97 C 622.8000000000001,97 622.8000000000001,169 607.2,169" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; data  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 589,80 C 583,56 615,56 601,82" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; data  —[Hover_vis, Hover_animate, Hover_vis/data, Hover_controls, Hover_legend, Hover_render]→  root &gt; vis &gt; data
+<path d="M 764,128 C 764,225.92000000000002 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[background, vis/data]→  root</title></path>
+<path d="M 764,128 C 764,189.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[vis]→  root &gt; vis</title></path>
+<path d="M 764,128 C 764,189.86 448.5,386.86 448.5,325" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[animate]→  root &gt; animate</title></path>
+<path d="M 792,116 C 825.4,116 825.4,164 805,164" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; data  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 792,116 C 821.2,116 821.2,220 798,220" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; data  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 774,96 C 764,60 810,60 790,99" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; data  —[Hover_vis, Hover_animate, Hover_vis/data, Hover_controls, Hover_legend, Hover_render]→  root &gt; vis &gt; data
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_animate: stroke: (sin definir) -&gt; #000
 Hover_vis/data: stroke: (sin definir) -&gt; #000
 Hover_controls: stroke: (sin definir) -&gt; #000
 Hover_legend: stroke: (sin definir) -&gt; #000
 Hover_render: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,146 C 575,217.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[background, controls]→  root</title></path>
-<path d="M 575,146 C 575,191.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[vis]→  root &gt; vis</title></path>
-<path d="M 611.6,137 C 630,137 630,49 613.6,49" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; controls  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 611.6,137 C 626,137 626,89 605,89" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; controls  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 597.6,120 C 591.6,96 623.6,96 609.6,122" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; controls  —[Hover_vis, Hover_operator, Hover_vis/data, Hover_controls, Hover_encoder, Hover_render]→  root &gt; vis &gt; controls
+<path d="M 764,184 C 764,281.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[background, controls]→  root</title></path>
+<path d="M 764,184 C 764,245.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[vis]→  root &gt; vis</title></path>
+<path d="M 803,172 C 829,172 829,52 805,52" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; controls  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 803,172 C 824.2,172 824.2,108 794,108" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; controls  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 785,152 C 775,116 821,116 801,155" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; controls  —[Hover_vis, Hover_operator, Hover_vis/data, Hover_controls, Hover_encoder, Hover_render]→  root &gt; vis &gt; controls
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_operator: stroke: (sin definir) -&gt; #000
 Hover_vis/data: stroke: (sin definir) -&gt; #000
 Hover_controls: stroke: (sin definir) -&gt; #000
 Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_render: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,66 C 575,137.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator  —[background, operator]→  root</title></path>
-<path d="M 611.6,57 C 629.2,57 629.2,129 613.6,129" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 611.6,57 C 629.2,57 629.2,169 607.2,169" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 611.6,57 C 631.2,57 631.2,209 605,209" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 597.6,40 C 591.6,16 623.6,16 609.6,42" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator  —[Hover_operator, Hover_controls, Hover_legend, Hover_axis, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator
+<path d="M 764,72 C 764,169.92000000000002 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator  —[background, operator]→  root</title></path>
+<path d="M 803,60 C 828.2,60 828.2,164 805,164" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 803,60 C 829,60 829,220 798,220" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 803,60 C 831.8,60 831.8,276 794,276" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 785,40 C 775,4 821,4 801,43" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator  —[Hover_operator, Hover_controls, Hover_legend, Hover_axis, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator
 Hover_operator: stroke: (sin definir) -&gt; #000
 Hover_controls: stroke: (sin definir) -&gt; #000
 Hover_legend: stroke: (sin definir) -&gt; #000
@@ -243,161 +243,161 @@ Hover_label: stroke: (sin definir) -&gt; #000
 Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,186 C 575,257.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[background, legend]→  root</title></path>
-<path d="M 575,186 C 575,231.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[vis]→  root &gt; vis</title></path>
-<path d="M 605.2,177 C 632,177 632,49 613.6,49" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 605.2,177 C 621.6,177 621.6,89 605,89" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 605.2,177 C 618.8000000000001,177 618.8000000000001,209 605,209" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 591.2,160 C 585.2,136 617.2,136 603.2,162" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; legend  —[Hover_vis, Hover_operator, Hover_vis/data, Hover_legend, Hover_axis]→  root &gt; vis &gt; legend
+<path d="M 764,240 C 764,337.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[background, legend]→  root</title></path>
+<path d="M 764,240 C 764,301.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; legend  —[vis]→  root &gt; vis</title></path>
+<path d="M 796,228 C 831.8,228 831.8,52 805,52" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 796,228 C 820,228 820,108 794,108" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 796,228 C 816.4,228 816.4,276 794,276" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; legend  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 778,208 C 768,172 814,172 794,211" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; legend  —[Hover_vis, Hover_operator, Hover_vis/data, Hover_legend, Hover_axis]→  root &gt; vis &gt; legend
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_operator: stroke: (sin definir) -&gt; #000
 Hover_vis/data: stroke: (sin definir) -&gt; #000
 Hover_legend: stroke: (sin definir) -&gt; #000
 Hover_axis: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,226 C 575,297.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis  —[background, axis]→  root</title></path>
-<path d="M 603,217 C 634,217 634,49 613.6,49" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; axis  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 603,217 C 621.6,217 621.6,169 607.2,169" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; axis  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 589,200 C 583,176 615,176 601,202" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; axis  —[Hover_operator, Hover_legend, Hover_axis, Hover_filter]→  root &gt; vis &gt; axis
+<path d="M 764,296 C 764,393.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; axis  —[background, axis]→  root</title></path>
+<path d="M 792,284 C 834.6,284 834.6,52 805,52" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; axis  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 792,284 C 819.2,284 819.2,220 798,220" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; axis  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 774,264 C 764,228 810,228 790,267" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; axis  —[Hover_operator, Hover_legend, Hover_axis, Hover_filter]→  root &gt; vis &gt; axis
 Hover_operator: stroke: (sin definir) -&gt; #000
 Hover_legend: stroke: (sin definir) -&gt; #000
 Hover_axis: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,406 C 817.4000000000001,506.728 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[background, filter]→  root</title></path>
-<path d="M 817.4000000000001,406 C 817.4000000000001,451.88800000000003 585,272.88800000000003 585,227" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 847.6,397 C 870,397 870,229 849.6,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; filter  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 847.6,397 C 876.8000000000001,397 876.8000000000001,349 862.4000000000001,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; filter  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 833.6,380 C 827.6,356 859.6,356 845.6,382" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; filter  —[Hover_axis, Hover_layout, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; filter
+<path d="M 1093,548 C 1093,685.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[background, filter]→  root</title></path>
+<path d="M 1093,548 C 1093,610.28 774,359.28 774,297" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; filter  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 1125,536 C 1156.6,536 1156.6,304 1127,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; filter  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 1125,536 C 1162.2,536 1162.2,472 1141,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; filter  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 1107,516 C 1097,480 1143,480 1123,519" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; filter  —[Hover_axis, Hover_layout, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; filter
 Hover_axis: stroke: (sin definir) -&gt; #000
 Hover_layout: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,246 C 817.4000000000001,346.728 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[background, layout]→  root</title></path>
-<path d="M 817.4000000000001,246 C 817.4000000000001,291.88800000000003 585,112.888 585,67" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 847.6,237 C 868.4000000000002,237 868.4000000000002,309 852.8000000000002,309" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 847.6,237 C 880.0000000000001,237 880.0000000000001,349 862.4000000000001,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 847.6,237 C 869.2,237 869.2,389 849.6,389" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 833.6,220 C 827.6,196 859.6,196 845.6,222" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; layout  —[Hover_operator, Hover_layout, Hover_encoder, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; layout
+<path d="M 1093,324 C 1093,461.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[background, layout]→  root</title></path>
+<path d="M 1093,324 C 1093,386.28 774,135.28 774,73" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; layout  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 1125,312 C 1153.7,312 1153.7,416 1130.5,416" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 1125,312 C 1167,312 1167,472 1141,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 1125,312 C 1155.8,312 1155.8,528 1127,528" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; layout  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 1107,292 C 1097,256 1143,256 1123,295" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; layout  —[Hover_operator, Hover_layout, Hover_encoder, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; layout
 Hover_operator: stroke: (sin definir) -&gt; #000
 Hover_layout: stroke: (sin definir) -&gt; #000
 Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,326 C 817.4000000000001,426.728 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[background, encoder]→  root</title></path>
-<path d="M 817.4000000000001,326 C 817.4000000000001,400.592 345.8,241.592 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[vis]→  root &gt; vis</title></path>
-<path d="M 817.4000000000001,326 C 817.4000000000001,371.88800000000003 585,192.888 585,147" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 850.8000000000002,317 C 867.2000000000002,317 867.2000000000002,229 849.6,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; encoder  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 850.8000000000002,317 C 865.2000000000002,317 865.2000000000002,269 847.4000000000001,269" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; encoder  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 836.8000000000002,300 C 830.8000000000002,276 862.8000000000002,276 848.8000000000002,302" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; encoder  —[Hover_vis, Hover_controls, Hover_layout, Hover_label, Hover_encoder]→  root &gt; vis &gt; operator &gt; encoder
+<path d="M 1093,436 C 1093,573.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[background, encoder]→  root</title></path>
+<path d="M 1093,436 C 1093,537.34 448.5,314.34000000000003 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[vis]→  root &gt; vis</title></path>
+<path d="M 1093,436 C 1093,498.28 774,247.28 774,185" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; encoder  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 1128.5,424 C 1152.5,424 1152.5,304 1127,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; encoder  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 1128.5,424 C 1149.7,424 1149.7,360 1123.5,360" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; encoder  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 1110.5,404 C 1100.5,368 1146.5,368 1126.5,407" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; encoder  —[Hover_vis, Hover_controls, Hover_layout, Hover_label, Hover_encoder]→  root &gt; vis &gt; operator &gt; encoder
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_controls: stroke: (sin definir) -&gt; #000
 Hover_layout: stroke: (sin definir) -&gt; #000
 Hover_label: stroke: (sin definir) -&gt; #000
 Hover_encoder: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,286 C 817.4000000000001,386.728 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; label  —[background, label]→  root</title></path>
-<path d="M 845.4000000000001,277 C 866.4000000000002,277 866.4000000000002,309 852.8000000000002,309" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; label  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 845.4000000000001,277 C 878.0000000000001,277 878.0000000000001,349 862.4000000000001,349" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; label  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 831.4000000000001,260 C 825.4000000000001,236 857.4000000000001,236 843.4000000000001,262" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; label  —[Hover_label, Hover_encoder, Hover_distortion]→  root &gt; vis &gt; operator &gt; label
+<path d="M 1093,380 C 1093,517.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; label  —[background, label]→  root</title></path>
+<path d="M 1121.5,368 C 1150.9,368 1150.9,416 1130.5,416" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; label  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 1121.5,368 C 1164.2,368 1164.2,472 1141,472" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; label  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 1103.5,348 C 1093.5,312 1139.5,312 1119.5,351" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; label  —[Hover_label, Hover_encoder, Hover_distortion]→  root &gt; vis &gt; operator &gt; label
 Hover_label: stroke: (sin definir) -&gt; #000
 Hover_encoder: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,366 C 817.4000000000001,466.728 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[background, distortion]→  root</title></path>
-<path d="M 817.4000000000001,366 C 817.4000000000001,440.592 345.8,241.592 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[vis]→  root &gt; vis</title></path>
-<path d="M 860.4000000000001,357 C 878.8000000000001,357 878.8000000000001,229 849.6,229" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 860.4000000000001,357 C 876.8000000000001,357 876.8000000000001,269 847.4000000000001,269" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 860.4000000000001,357 C 874.0000000000001,357 874.0000000000001,389 849.6,389" fill="none" stroke="#9bb7d4" stroke-opacity="0.75" stroke-width="1" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 846.4000000000001,340 C 840.4000000000001,316 872.4000000000001,316 858.4000000000001,342" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; distortion  —[Hover_vis, Hover_layout, Hover_label, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; distortion
+<path d="M 1093,492 C 1093,629.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[background, distortion]→  root</title></path>
+<path d="M 1093,492 C 1093,593.34 448.5,314.34000000000003 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator &gt; distortion  —[vis]→  root &gt; vis</title></path>
+<path d="M 1139,480 C 1165.8,480 1165.8,304 1127,304" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 1139,480 C 1163,480 1163,360 1123.5,360" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 1139,480 C 1159.4,480 1159.4,528 1127,528" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis &gt; operator &gt; distortion  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 1121,460 C 1111,424 1157,424 1137,463" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator &gt; distortion  —[Hover_vis, Hover_layout, Hover_label, Hover_distortion, Hover_filter]→  root &gt; vis &gt; operator &gt; distortion
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_layout: stroke: (sin definir) -&gt; #000
 Hover_label: stroke: (sin definir) -&gt; #000
 Hover_distortion: stroke: (sin definir) -&gt; #000
 Hover_filter: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 817.4000000000001,446 C 817.4000000000001,546.7280000000001 128,447.728 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[background, render]→  root</title></path>
-<path d="M 817.4000000000001,446 C 817.4000000000001,520.592 345.8,241.592 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[vis]→  root &gt; vis</title></path>
-<path d="M 817.4000000000001,446 C 817.4000000000001,491.88800000000003 585,192.888 585,147" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 833.6,420 C 827.6,396 859.6,396 845.6,422" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; data &gt; render  —[Hover_vis, Hover_controls, Hover_render]→  root &gt; vis &gt; data &gt; render
+<path d="M 1093,604 C 1093,741.4 148,602.4 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[background, render]→  root</title></path>
+<path d="M 1093,604 C 1093,705.34 448.5,314.34000000000003 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[vis]→  root &gt; vis</title></path>
+<path d="M 1093,604 C 1093,666.28 774,247.28 774,185" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data &gt; render  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 1107,572 C 1097,536 1143,536 1123,575" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; data &gt; render  —[Hover_vis, Hover_controls, Hover_render]→  root &gt; vis &gt; data &gt; render
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_controls: stroke: (sin definir) -&gt; #000
 Hover_render: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 575,266 C 575,337.64 128,418.64 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[background, events]→  root</title></path>
-<path d="M 575,266 C 575,311.504 345.8,212.504 345.8,167" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[vis]→  root &gt; vis</title></path>
-<path d="M 591.2,240 C 585.2,216 617.2,216 603.2,242" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; events  —[Hover_vis, Hover_events]→  root &gt; vis &gt; events
+<path d="M 764,352 C 764,449.92 148,562.92 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[background, events]→  root</title></path>
+<path d="M 764,352 C 764,413.86 448.5,274.86 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[vis]→  root &gt; vis</title></path>
+<path d="M 778,320 C 768,284 814,284 794,323" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; events  —[Hover_vis, Hover_events]→  root &gt; vis &gt; events
 Hover_vis: stroke: (sin definir) -&gt; #000
 Hover_events: stroke: (sin definir) -&gt; #000</title></path>
-<path d="M 335.8,486 C 335.8,528.936 128,389.936 128,347" fill="none" stroke="#c4c4c4" stroke-width="1" stroke-dasharray="4 3" marker-end="url(#arrow-back)"><title>root &gt; display  —[background, display]→  root</title></path>
-<path d="M 355.2,460 C 349.2,436 381.2,436 367.2,462" fill="none" stroke="#1b8a82" stroke-width="1" marker-end="url(#arrow-hover)"><title>root &gt; display  —[Hover_display]→  root &gt; display
+<path d="M 438.5,660 C 438.5,718.86 148,523.86 148,465" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; display  —[background, display]→  root</title></path>
+<path d="M 456,628 C 446,592 492,592 472,631" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; display  —[Hover_display]→  root &gt; display
 Hover_display: stroke: (sin definir) -&gt; #000</title></path>
 </g>
 <g class="forward-edges">
-<path d="M 146,333 C 225.9,333 225.9,153 305.8,153" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
-<path d="M 146,333 C 225.9,333 225.9,193 305.8,193" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
-<path d="M 146,333 C 223.2,333 223.2,233 300.4,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[animate]→  root &gt; animate</title></path>
-<path d="M 146,333 C 225.9,333 225.9,273 305.8,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[query]→  root &gt; query</title></path>
-<path d="M 146,333 C 220,333 220,313 294,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
-<path d="M 146,333 C 225.9,333 225.9,353 305.8,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[scale]→  root &gt; scale</title></path>
-<path d="M 146,333 C 225.9,333 225.9,393 305.8,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[data]→  root &gt; data</title></path>
-<path d="M 146,333 C 223.2,333 223.2,433 300.4,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[physics]→  root &gt; physics</title></path>
-<path d="M 146,333 C 223.2,333 223.2,473 300.4,473" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[display]→  root &gt; display</title></path>
-<path d="M 146,333 C 225.9,333 225.9,513 305.8,513" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[flex]→  root &gt; flex</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,116 L 513.6,61 Q 513.6,53 521.6,53 L 536.4,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,116 L 513.6,101 Q 513.6,93 521.6,93 L 545,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,125 Q 513.6,133 521.6,133 L 536.4,133" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,165 Q 513.6,173 521.6,173 L 542.8000000000001,173" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,205 Q 513.6,213 521.6,213 L 545,213" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,245 Q 513.6,253 521.6,253 L 542.8000000000001,253" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[events]→  root &gt; vis &gt; events</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,285 Q 513.6,293 521.6,293 L 539.6,293" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,132 Q 158,124 166,124 L 505.6,124 Q 513.6,124 513.6,132 L 513.6,325 Q 513.6,333 521.6,333 L 545,333" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[heap]→  root &gt; util &gt; heap</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,381 Q 513.6,373 521.6,373 L 545,373" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[math]→  root &gt; util &gt; math</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,421 Q 513.6,413 521.6,413 L 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,461 Q 513.6,453 521.6,453 L 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,501 Q 513.6,493 521.6,493 L 545,493" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,534 L 513.6,541 Q 513.6,533 521.6,533 L 539.6,533" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,550 L 513.6,565 Q 513.6,573 521.6,573 L 523.6,573" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,534 Q 158,542 166,542 L 505.6,542 Q 513.6,542 513.6,550 L 513.6,605 Q 513.6,613 521.6,613 L 530,613" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[converters]→  root &gt; data &gt; converters</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,32 Q 158,24 166,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,225 Q 762.4000000000001,233 770.4000000000001,233 L 785.2,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,32 Q 158,24 166,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,265 Q 762.4000000000001,273 770.4000000000001,273 L 787.4000000000001,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,325 L 158,32 Q 158,24 166,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,305 Q 762.4000000000001,313 770.4000000000001,313 L 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,634 Q 158,642 166,642 L 754.4000000000001,642 Q 762.4000000000001,642 762.4000000000001,634 L 762.4000000000001,361 Q 762.4000000000001,353 770.4000000000001,353 L 772.4000000000001,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,634 Q 158,642 166,642 L 754.4000000000001,642 Q 762.4000000000001,642 762.4000000000001,634 L 762.4000000000001,401 Q 762.4000000000001,393 770.4000000000001,393 L 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 146,333 L 150,333 Q 158,333 158,341 L 158,634 Q 158,642 166,642 L 754.4000000000001,642 Q 762.4000000000001,642 762.4000000000001,634 L 762.4000000000001,441 Q 762.4000000000001,433 770.4000000000001,433 L 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 363.8,153 C 450.1,153 450.1,53 536.4,53" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[operator]→  root &gt; vis &gt; operator</title></path>
-<path d="M 363.8,153 C 454.4,153 454.4,93 545,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 363.8,153 C 450.1,153 450.1,133 536.4,133" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[controls]→  root &gt; vis &gt; controls</title></path>
-<path d="M 363.8,153 C 453.30000000000007,153 453.30000000000007,173 542.8000000000001,173" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[legend]→  root &gt; vis &gt; legend</title></path>
-<path d="M 363.8,153 C 454.4,153 454.4,213 545,213" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[axis]→  root &gt; vis &gt; axis</title></path>
-<path d="M 363.8,153 C 453.30000000000007,153 453.30000000000007,253 542.8000000000001,253" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[events]→  root &gt; vis &gt; events</title></path>
-<path d="M 363.8,153 C 445.30000000000007,153 445.30000000000007,413 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 363.8,153 C 451.70000000000005,153 451.70000000000005,453 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 363.8,153 C 443.70000000000005,153 443.70000000000005,573 523.6,573" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,225 Q 762.4000000000001,233 770.4000000000001,233 L 785.2,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,265 Q 762.4000000000001,273 770.4000000000001,273 L 787.4000000000001,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,305 Q 762.4000000000001,313 770.4000000000001,313 L 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,345 Q 762.4000000000001,353 770.4000000000001,353 L 772.4000000000001,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,385 Q 762.4000000000001,393 770.4000000000001,393 L 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 363.8,153 L 379.6,153 Q 387.6,153 387.6,145 L 387.6,32 Q 387.6,24 395.6,24 L 754.4000000000001,24 Q 762.4000000000001,24 762.4000000000001,32 L 762.4000000000001,425 Q 762.4000000000001,433 770.4000000000001,433 L 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 369.2,233 C 457.1,233 457.1,93 545,93" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; animate  —[vis/data]→  root &gt; vis &gt; data</title></path>
-<path d="M 369.2,233 C 448,233 448,413 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; animate  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 363.8,193 C 451.70000000000005,193 451.70000000000005,293 539.6,293" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
-<path d="M 363.8,193 C 454.4,193 454.4,333 545,333" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[heap]→  root &gt; util &gt; heap</title></path>
-<path d="M 363.8,193 C 454.4,193 454.4,373 545,373" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; util  —[math]→  root &gt; util &gt; math</title></path>
-<path d="M 363.8,273 C 451.70000000000005,273 451.70000000000005,453 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; query  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 363.8,273 C 451.70000000000005,273 451.70000000000005,533 539.6,533" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; query  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 375.6,313 C 457.6,313 457.6,453 539.6,453" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[methods]→  root &gt; query &gt; methods</title></path>
-<path d="M 375.6,313 C 460.3,313 460.3,493 545,493" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
-<path d="M 375.6,313 C 457.6,313 457.6,533 539.6,533" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
-<path d="M 375.6,313 C 449.6,313 449.6,573 523.6,573" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; analytics  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
-<path d="M 363.8,393 C 446.9,393 446.9,613 530,613" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; data  —[converters]→  root &gt; data &gt; converters</title></path>
-<path d="M 363.8,353 C 445.30000000000007,353 445.30000000000007,413 526.8000000000001,413" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; scale  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
-<path d="M 603,93 C 694.1,93 694.1,433 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; data  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 611.6,133 C 696.8000000000001,133 696.8000000000001,313 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; controls  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 611.6,133 C 698.4000000000001,133 698.4000000000001,433 785.2,433" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; controls  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
-<path d="M 611.6,53 C 698.4000000000001,53 698.4000000000001,233 785.2,233" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
-<path d="M 611.6,53 C 699.5,53 699.5,273 787.4000000000001,273" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
-<path d="M 611.6,53 C 696.8000000000001,53 696.8000000000001,313 782.0000000000001,313" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
-<path d="M 611.6,53 C 692,53 692,353 772.4000000000001,353" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
-<path d="M 611.6,53 C 698.4000000000001,53 698.4000000000001,393 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
-<path d="M 603,213 C 694.1,213 694.1,393 785.2,393" fill="none" stroke="#777" stroke-width="1.1" marker-end="url(#arrow)"><title>root &gt; vis &gt; axis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 166,448 C 287.25,448 287.25,196 408.5,196" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
+<path d="M 166,448 C 287.25,448 287.25,252 408.5,252" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
+<path d="M 166,448 C 283.5,448 283.5,308 401,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[animate]→  root &gt; animate</title></path>
+<path d="M 166,448 C 287,448 287,364 408,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[query]→  root &gt; query</title></path>
+<path d="M 166,448 C 280,448 280,420 394,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 166,448 C 287,448 287,476 408,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[scale]→  root &gt; scale</title></path>
+<path d="M 166,448 C 287.25,448 287.25,532 408.5,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[data]→  root &gt; data</title></path>
+<path d="M 166,448 C 283.5,448 283.5,588 401,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[physics]→  root &gt; physics</title></path>
+<path d="M 166,448 C 283.5,448 283.5,644 401,644" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[display]→  root &gt; display</title></path>
+<path d="M 166,448 C 287.25,448 287.25,700 408.5,700" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[flex]→  root &gt; flex</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,146 L 607,66 Q 607,56 617,56 L 723,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,146 L 607,122 Q 607,112 617,112 L 734,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,158 Q 607,168 617,168 L 723,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,214 Q 607,224 617,224 L 730,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,270 Q 607,280 617,280 L 734,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,326 Q 607,336 617,336 L 730,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[events]→  root &gt; vis &gt; events</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,382 Q 607,392 617,392 L 726.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,166 Q 182,156 192,156 L 597,156 Q 607,156 607,166 L 607,438 Q 607,448 617,448 L 734,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,514 Q 607,504 617,504 L 734,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,570 Q 607,560 617,560 L 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,626 Q 607,616 617,616 L 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,682 Q 607,672 617,672 L 733.5,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,730 L 607,738 Q 607,728 617,728 L 726.5,728" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,750 L 607,774 Q 607,784 617,784 L 709,784" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,730 Q 182,740 192,740 L 597,740 Q 607,740 607,750 L 607,830 Q 607,840 617,840 L 716,840" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[converters]→  root &gt; data &gt; converters</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,26 Q 182,16 192,16 L 945,16 Q 955,16 955,26 L 955,298 Q 955,308 965,308 L 1059,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,26 Q 182,16 192,16 L 945,16 Q 955,16 955,26 L 955,354 Q 955,364 965,364 L 1062.5,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,438 L 182,26 Q 182,16 192,16 L 945,16 Q 955,16 955,26 L 955,410 Q 955,420 965,420 L 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,870 Q 182,880 192,880 L 945,880 Q 955,880 955,870 L 955,486 Q 955,476 965,476 L 1045,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,870 Q 182,880 192,880 L 945,880 Q 955,880 955,870 L 955,542 Q 955,532 965,532 L 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 166,448 L 172,448 Q 182,448 182,458 L 182,870 Q 182,880 192,880 L 945,880 Q 955,880 955,870 L 955,598 Q 955,588 965,588 L 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 466.5,196 C 594.75,196 594.75,56 723,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 466.5,196 C 600.25,196 600.25,112 734,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 466.5,196 C 594.75,196 594.75,168 723,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[controls]→  root &gt; vis &gt; controls</title></path>
+<path d="M 466.5,196 C 598.25,196 598.25,224 730,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[legend]→  root &gt; vis &gt; legend</title></path>
+<path d="M 466.5,196 C 600.25,196 600.25,280 734,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[axis]→  root &gt; vis &gt; axis</title></path>
+<path d="M 466.5,196 C 598.25,196 598.25,336 730,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[events]→  root &gt; vis &gt; events</title></path>
+<path d="M 466.5,196 C 589.5,196 589.5,560 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 466.5,196 C 596.5,196 596.5,616 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 466.5,196 C 587.75,196 587.75,784 709,784" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,298 Q 955,308 965,308 L 1059,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,354 Q 955,364 965,364 L 1062.5,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,410 Q 955,420 965,420 L 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,466 Q 955,476 965,476 L 1045,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,522 Q 955,532 965,532 L 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 466.5,196 L 487,196 Q 497,196 497,186 L 497,26 Q 497,16 507,16 L 945,16 Q 955,16 955,26 L 955,578 Q 955,588 965,588 L 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 474,308 C 604,308 604,112 734,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; animate  —[vis/data]→  root &gt; vis &gt; data</title></path>
+<path d="M 474,308 C 593.25,308 593.25,560 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; animate  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 466.5,252 C 596.5,252 596.5,392 726.5,392" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 466.5,252 C 600.25,252 600.25,448 734,448" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 466.5,252 C 600.25,252 600.25,504 734,504" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[math]→  root &gt; util &gt; math</title></path>
+<path d="M 467,364 C 596.75,364 596.75,616 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; query  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 467,364 C 596.75,364 596.75,728 726.5,728" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; query  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 481,420 C 603.75,420 603.75,616 726.5,616" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[methods]→  root &gt; query &gt; methods</title></path>
+<path d="M 481,420 C 607.25,420 607.25,672 733.5,672" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 481,420 C 603.75,420 603.75,728 726.5,728" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 481,420 C 595,420 595,784 709,784" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[optimization]→  root &gt; analytics &gt; optimization</title></path>
+<path d="M 466.5,532 C 591.25,532 591.25,840 716,840" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; data  —[converters]→  root &gt; data &gt; converters</title></path>
+<path d="M 467,476 C 589.75,476 589.75,560 712.5,560" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; scale  —[interpolate]→  root &gt; animate &gt; interpolate</title></path>
+<path d="M 792,112 C 925.5,112 925.5,588 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; data  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 803,168 C 929.25,168 929.25,420 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; controls  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 803,168 C 931,168 931,588 1059,588" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; controls  —[render]→  root &gt; vis &gt; data &gt; render</title></path>
+<path d="M 803,56 C 931,56 931,308 1059,308" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[layout]→  root &gt; vis &gt; operator &gt; layout</title></path>
+<path d="M 803,56 C 932.75,56 932.75,364 1062.5,364" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[label]→  root &gt; vis &gt; operator &gt; label</title></path>
+<path d="M 803,56 C 929.25,56 929.25,420 1055.5,420" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[encoder]→  root &gt; vis &gt; operator &gt; encoder</title></path>
+<path d="M 803,56 C 924,56 924,476 1045,476" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[distortion]→  root &gt; vis &gt; operator &gt; distortion</title></path>
+<path d="M 803,56 C 931,56 931,532 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; operator  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
+<path d="M 792,280 C 925.5,280 925.5,532 1059,532" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis &gt; axis  —[filter]→  root &gt; vis &gt; operator &gt; filter</title></path>
 </g>
-<line x1="50" y1="333" x2="88" y2="333" stroke="#555" stroke-width="1.5" marker-end="url(#arrow)"/>
+<line x1="52" y1="448" x2="108" y2="448" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
 <g class="states">
 <g>
 <title>root
@@ -464,8 +464,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_distortion → root
   Hover_filter → root
   Hover_render → root</title>
-<rect x="90" y="320" width="56" height="26" rx="13" fill="#e6f1fb" stroke="#333" stroke-width="2"/>
-<text x="118" y="333" text-anchor="middle" dominant-baseline="central">root</text>
+<rect x="110" y="432" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="138" y="448" text-anchor="middle" dominant-baseline="central">root</text>
 </g>
 <g>
 <title>root &gt; vis
@@ -512,8 +512,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_distortion → root &gt; vis
   Hover_filter → root &gt; vis
   Hover_render → root &gt; vis</title>
-<rect x="307.8" y="140" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="153" text-anchor="middle" dominant-baseline="central">vis</text>
+<rect x="410.5" y="180" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="196" text-anchor="middle" dominant-baseline="central">vis</text>
 </g>
 <g>
 <title>root &gt; animate
@@ -532,8 +532,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_flex → root &gt; animate
   Hover_vis/data → root &gt; animate
   Hover_interpolate → root &gt; animate</title>
-<rect x="302.4" y="220" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="233" text-anchor="middle" dominant-baseline="central">animate</text>
+<rect x="403" y="292" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="308" text-anchor="middle" dominant-baseline="central">animate</text>
 </g>
 <g>
 <title>root &gt; util
@@ -552,8 +552,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_palette → root &gt; util
   Hover_heap → root &gt; util
   Hover_math → root &gt; util</title>
-<rect x="307.8" y="180" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="193" text-anchor="middle" dominant-baseline="central">util</text>
+<rect x="410.5" y="236" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="252" text-anchor="middle" dominant-baseline="central">util</text>
 </g>
 <g>
 <title>root &gt; query
@@ -570,8 +570,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_analytics → root &gt; query
   Hover_methods → root &gt; query
   Hover_cluster → root &gt; query</title>
-<rect x="307.8" y="260" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="273" text-anchor="middle" dominant-baseline="central">query</text>
+<rect x="410" y="348" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="364" text-anchor="middle" dominant-baseline="central">query</text>
 </g>
 <g>
 <title>root &gt; analytics
@@ -590,8 +590,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_graph → root &gt; analytics
   Hover_cluster → root &gt; analytics
   Hover_optimization → root &gt; analytics</title>
-<rect x="296" y="300" width="79.6" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="313" text-anchor="middle" dominant-baseline="central">analytics</text>
+<rect x="396" y="404" width="85" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="420" text-anchor="middle" dominant-baseline="central">analytics</text>
 </g>
 <g>
 <title>root &gt; query &gt; methods
@@ -604,8 +604,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_query → root &gt; query &gt; methods
   Hover_analytics → root &gt; query &gt; methods
   Hover_methods → root &gt; query &gt; methods</title>
-<rect x="541.6" y="440" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="453" text-anchor="middle" dominant-baseline="central">methods</text>
+<rect x="728.5" y="600" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="616" text-anchor="middle" dominant-baseline="central">methods</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; graph
@@ -616,8 +616,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_analytics → root &gt; analytics &gt; graph
   Hover_graph → root &gt; analytics &gt; graph
   Hover_optimization → root &gt; analytics &gt; graph</title>
-<rect x="547" y="480" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="493" text-anchor="middle" dominant-baseline="central">graph</text>
+<rect x="735.5" y="656" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="672" text-anchor="middle" dominant-baseline="central">graph</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; optimization
@@ -632,8 +632,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_graph → root &gt; analytics &gt; optimization
   Hover_cluster → root &gt; analytics &gt; optimization
   Hover_optimization → root &gt; analytics &gt; optimization</title>
-<rect x="525.6" y="560" width="98.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="573" text-anchor="middle" dominant-baseline="central">optimization</text>
+<rect x="711" y="768" width="106" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="784" text-anchor="middle" dominant-baseline="central">optimization</text>
 </g>
 <g>
 <title>root &gt; analytics &gt; cluster
@@ -644,8 +644,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_query → root &gt; analytics &gt; cluster
   Hover_cluster → root &gt; analytics &gt; cluster
   Hover_optimization → root &gt; analytics &gt; cluster</title>
-<rect x="541.6" y="520" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="533" text-anchor="middle" dominant-baseline="central">cluster</text>
+<rect x="728.5" y="712" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="728" text-anchor="middle" dominant-baseline="central">cluster</text>
 </g>
 <g>
 <title>root &gt; data
@@ -656,8 +656,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_util → root &gt; data
   Hover_data → root &gt; data
   Hover_converters → root &gt; data</title>
-<rect x="307.8" y="380" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="393" text-anchor="middle" dominant-baseline="central">data</text>
+<rect x="410.5" y="516" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="532" text-anchor="middle" dominant-baseline="central">data</text>
 </g>
 <g>
 <title>root &gt; data &gt; converters
@@ -666,8 +666,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   converters → root
   Hover_data → root &gt; data &gt; converters
   Hover_converters → root &gt; data &gt; converters</title>
-<rect x="532" y="600" width="86" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="613" text-anchor="middle" dominant-baseline="central">converters</text>
+<rect x="718" y="824" width="92" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="840" text-anchor="middle" dominant-baseline="central">converters</text>
 </g>
 <g>
 <title>root &gt; util &gt; palette
@@ -676,8 +676,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   math → root &gt; util &gt; math
   Hover_palette → root &gt; util &gt; palette
   Hover_math → root &gt; util &gt; palette</title>
-<rect x="541.6" y="280" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="293" text-anchor="middle" dominant-baseline="central">palette</text>
+<rect x="728.5" y="376" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="392" text-anchor="middle" dominant-baseline="central">palette</text>
 </g>
 <g>
 <title>root &gt; util &gt; math
@@ -686,16 +686,16 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   math → root
   Hover_palette → root &gt; util &gt; math
   Hover_math → root &gt; util &gt; math</title>
-<rect x="547" y="360" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="373" text-anchor="middle" dominant-baseline="central">math</text>
+<rect x="736" y="488" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="504" text-anchor="middle" dominant-baseline="central">math</text>
 </g>
 <g>
 <title>root &gt; util &gt; heap
   background → root
   heap → root
   Hover_heap → root &gt; util &gt; heap</title>
-<rect x="547" y="320" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="333" text-anchor="middle" dominant-baseline="central">heap</text>
+<rect x="736" y="432" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="448" text-anchor="middle" dominant-baseline="central">heap</text>
 </g>
 <g>
 <title>root &gt; scale
@@ -710,8 +710,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_scale → root &gt; scale
   Hover_physics → root &gt; scale
   Hover_interpolate → root &gt; scale</title>
-<rect x="307.8" y="340" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="353" text-anchor="middle" dominant-baseline="central">scale</text>
+<rect x="410" y="460" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="476" text-anchor="middle" dominant-baseline="central">scale</text>
 </g>
 <g>
 <title>root &gt; physics
@@ -722,8 +722,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_vis → root &gt; physics
   Hover_scale → root &gt; physics
   Hover_physics → root &gt; physics</title>
-<rect x="302.4" y="420" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="433" text-anchor="middle" dominant-baseline="central">physics</text>
+<rect x="403" y="572" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="588" text-anchor="middle" dominant-baseline="central">physics</text>
 </g>
 <g>
 <title>root &gt; animate &gt; interpolate
@@ -736,8 +736,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_animate → root &gt; animate &gt; interpolate
   Hover_scale → root &gt; animate &gt; interpolate
   Hover_interpolate → root &gt; animate &gt; interpolate</title>
-<rect x="528.8000000000001" y="400" width="92.4" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="413" text-anchor="middle" dominant-baseline="central">interpolate</text>
+<rect x="714.5" y="544" width="99" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="560" text-anchor="middle" dominant-baseline="central">interpolate</text>
 </g>
 <g>
 <title>root &gt; flex
@@ -746,8 +746,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   flex → root
   Hover_animate → root &gt; flex
   Hover_flex → root &gt; flex</title>
-<rect x="307.8" y="500" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="513" text-anchor="middle" dominant-baseline="central">flex</text>
+<rect x="410.5" y="684" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="700" text-anchor="middle" dominant-baseline="central">flex</text>
 </g>
 <g>
 <title>root &gt; vis &gt; data
@@ -764,8 +764,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_controls → root &gt; vis &gt; data
   Hover_legend → root &gt; vis &gt; data
   Hover_render → root &gt; vis &gt; data</title>
-<rect x="547" y="80" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="93" text-anchor="middle" dominant-baseline="central">data</text>
+<rect x="736" y="96" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="112" text-anchor="middle" dominant-baseline="central">data</text>
 </g>
 <g>
 <title>root &gt; vis &gt; controls
@@ -782,8 +782,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_controls → root &gt; vis &gt; controls
   Hover_encoder → root &gt; vis &gt; controls
   Hover_render → root &gt; vis &gt; controls</title>
-<rect x="538.4" y="120" width="73.2" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="133" text-anchor="middle" dominant-baseline="central">controls</text>
+<rect x="725" y="152" width="78" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="168" text-anchor="middle" dominant-baseline="central">controls</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator
@@ -806,8 +806,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_encoder → root &gt; vis &gt; operator
   Hover_distortion → root &gt; vis &gt; operator
   Hover_filter → root &gt; vis &gt; operator</title>
-<rect x="538.4" y="40" width="73.2" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="53" text-anchor="middle" dominant-baseline="central">operator</text>
+<rect x="725" y="40" width="78" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="56" text-anchor="middle" dominant-baseline="central">operator</text>
 </g>
 <g>
 <title>root &gt; vis &gt; legend
@@ -822,8 +822,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_vis/data → root &gt; vis &gt; legend
   Hover_legend → root &gt; vis &gt; legend
   Hover_axis → root &gt; vis &gt; legend</title>
-<rect x="544.8000000000001" y="160" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="173" text-anchor="middle" dominant-baseline="central">legend</text>
+<rect x="732" y="208" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="224" text-anchor="middle" dominant-baseline="central">legend</text>
 </g>
 <g>
 <title>root &gt; vis &gt; axis
@@ -836,8 +836,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_legend → root &gt; vis &gt; axis
   Hover_axis → root &gt; vis &gt; axis
   Hover_filter → root &gt; vis &gt; axis</title>
-<rect x="547" y="200" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="213" text-anchor="middle" dominant-baseline="central">axis</text>
+<rect x="736" y="264" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="280" text-anchor="middle" dominant-baseline="central">axis</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; filter
@@ -850,8 +850,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_layout → root &gt; vis &gt; operator &gt; filter
   Hover_distortion → root &gt; vis &gt; operator &gt; filter
   Hover_filter → root &gt; vis &gt; operator &gt; filter</title>
-<rect x="787.2" y="380" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="393" text-anchor="middle" dominant-baseline="central">filter</text>
+<rect x="1061" y="516" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="532" text-anchor="middle" dominant-baseline="central">filter</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; layout
@@ -866,8 +866,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_encoder → root &gt; vis &gt; operator &gt; layout
   Hover_distortion → root &gt; vis &gt; operator &gt; layout
   Hover_filter → root &gt; vis &gt; operator &gt; layout</title>
-<rect x="787.2" y="220" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="233" text-anchor="middle" dominant-baseline="central">layout</text>
+<rect x="1061" y="292" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="308" text-anchor="middle" dominant-baseline="central">layout</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; encoder
@@ -882,8 +882,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_layout → root &gt; vis &gt; operator &gt; encoder
   Hover_label → root &gt; vis &gt; operator &gt; encoder
   Hover_encoder → root &gt; vis &gt; operator &gt; encoder</title>
-<rect x="784.0000000000001" y="300" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="313" text-anchor="middle" dominant-baseline="central">encoder</text>
+<rect x="1057.5" y="404" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="420" text-anchor="middle" dominant-baseline="central">encoder</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; label
@@ -894,8 +894,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_label → root &gt; vis &gt; operator &gt; label
   Hover_encoder → root &gt; vis &gt; operator &gt; label
   Hover_distortion → root &gt; vis &gt; operator &gt; label</title>
-<rect x="789.4000000000001" y="260" width="56" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="273" text-anchor="middle" dominant-baseline="central">label</text>
+<rect x="1064.5" y="348" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="364" text-anchor="middle" dominant-baseline="central">label</text>
 </g>
 <g>
 <title>root &gt; vis &gt; operator &gt; distortion
@@ -910,8 +910,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_label → root &gt; vis &gt; operator &gt; distortion
   Hover_distortion → root &gt; vis &gt; operator &gt; distortion
   Hover_filter → root &gt; vis &gt; operator &gt; distortion</title>
-<rect x="774.4000000000001" y="340" width="86" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="353" text-anchor="middle" dominant-baseline="central">distortion</text>
+<rect x="1047" y="460" width="92" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="476" text-anchor="middle" dominant-baseline="central">distortion</text>
 </g>
 <g>
 <title>root &gt; vis &gt; data &gt; render
@@ -922,8 +922,8 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   Hover_vis → root &gt; vis &gt; data &gt; render
   Hover_controls → root &gt; vis &gt; data &gt; render
   Hover_render → root &gt; vis &gt; data &gt; render</title>
-<rect x="787.2" y="420" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="817.4000000000001" y="433" text-anchor="middle" dominant-baseline="central">render</text>
+<rect x="1061" y="572" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="1093" y="588" text-anchor="middle" dominant-baseline="central">render</text>
 </g>
 <g>
 <title>root &gt; vis &gt; events
@@ -932,176 +932,166 @@ Hover_display: stroke: (sin definir) -&gt; #000</title></path>
   events → root
   Hover_vis → root &gt; vis &gt; events
   Hover_events → root &gt; vis &gt; events</title>
-<rect x="544.8000000000001" y="240" width="60.400000000000006" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="575" y="253" text-anchor="middle" dominant-baseline="central">events</text>
+<rect x="732" y="320" width="64" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="764" y="336" text-anchor="middle" dominant-baseline="central">events</text>
 </g>
 <g>
 <title>root &gt; display
   background → root
   display → root
   Hover_display → root &gt; display</title>
-<rect x="302.4" y="460" width="66.80000000000001" height="26" rx="13" fill="#f7f7f7" stroke="#333" stroke-width="1"/>
-<text x="335.8" y="473" text-anchor="middle" dominant-baseline="central">display</text>
+<rect x="403" y="628" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="644" text-anchor="middle" dominant-baseline="central">display</text>
 </g>
 </g>
 <g class="labels">
-<text x="154" y="306" font-size="10" fill="#555">background</text>
-<text x="154" y="292" font-size="10" fill="#1b7f79">Hover_vis +30</text>
-<text x="371.8" y="126" font-size="10" fill="#1b7f79">Hover_vis +20</text>
-<text x="377.2" y="206" font-size="10" fill="#1b7f79">Hover_vis +6</text>
-<text x="371.8" y="166" font-size="10" fill="#1b7f79">Hover_util +6</text>
-<text x="371.8" y="246" font-size="10" fill="#1b7f79">Hover_vis +5</text>
-<text x="383.6" y="286" font-size="10" fill="#1b7f79">Hover_vis +6</text>
-<text x="616.4000000000001" y="426" font-size="10" fill="#1b7f79">Hover_vis +3</text>
-<text x="611" y="466" font-size="10" fill="#1b7f79">Hover_analytics +2</text>
-<text x="632.4000000000001" y="546" font-size="10" fill="#1b7f79">Hover_vis +4</text>
-<text x="616.4000000000001" y="506" font-size="10" fill="#1b7f79">Hover_query +2</text>
-<text x="371.8" y="366" font-size="10" fill="#1b7f79">Hover_util +2</text>
-<text x="626" y="586" font-size="10" fill="#1b7f79">Hover_data +1</text>
-<text x="616.4000000000001" y="266" font-size="10" fill="#1b7f79">Hover_palette, Hover_math</text>
-<text x="611" y="346" font-size="10" fill="#1b7f79">Hover_palette, Hover_math</text>
-<text x="611" y="306" font-size="10" fill="#1b7f79">Hover_heap</text>
-<text x="371.8" y="326" font-size="10" fill="#1b7f79">Hover_vis +4</text>
-<text x="377.2" y="406" font-size="10" fill="#1b7f79">Hover_vis +2</text>
-<text x="629.2" y="386" font-size="10" fill="#1b7f79">Hover_vis +3</text>
-<text x="371.8" y="486" font-size="10" fill="#1b7f79">Hover_animate, Hover_flex</text>
-<text x="611" y="66" font-size="10" fill="#1b7f79">Hover_vis +5</text>
-<text x="619.6" y="106" font-size="10" fill="#1b7f79">Hover_vis +5</text>
-<text x="619.6" y="26" font-size="10" fill="#1b7f79">Hover_operator +8</text>
-<text x="613.2" y="146" font-size="10" fill="#1b7f79">Hover_vis +4</text>
-<text x="611" y="186" font-size="10" fill="#1b7f79">Hover_operator +3</text>
-<text x="855.6" y="366" font-size="10" fill="#1b7f79">Hover_axis +3</text>
-<text x="855.6" y="206" font-size="10" fill="#1b7f79">Hover_operator +4</text>
-<text x="858.8000000000002" y="286" font-size="10" fill="#1b7f79">Hover_vis +4</text>
-<text x="853.4000000000001" y="246" font-size="10" fill="#1b7f79">Hover_label +2</text>
-<text x="868.4000000000001" y="326" font-size="10" fill="#1b7f79">Hover_vis +4</text>
-<text x="855.6" y="406" font-size="10" fill="#1b7f79">Hover_vis +2</text>
-<text x="613.2" y="226" font-size="10" fill="#1b7f79">Hover_vis, Hover_events</text>
-<text x="377.2" y="446" font-size="10" fill="#1b7f79">Hover_display</text>
-<text x="299.8" y="148" text-anchor="end" font-size="10" fill="#333">vis</text>
-<text x="299.8" y="188" text-anchor="end" font-size="10" fill="#333">util</text>
-<text x="294.4" y="228" text-anchor="end" font-size="10" fill="#333">animate</text>
-<text x="299.8" y="268" text-anchor="end" font-size="10" fill="#333">query</text>
-<text x="288" y="308" text-anchor="end" font-size="10" fill="#333">analytics</text>
-<text x="299.8" y="348" text-anchor="end" font-size="10" fill="#333">scale</text>
-<text x="299.8" y="388" text-anchor="end" font-size="10" fill="#333">data</text>
-<text x="294.4" y="428" text-anchor="end" font-size="10" fill="#333">physics</text>
-<text x="294.4" y="468" text-anchor="end" font-size="10" fill="#333">display</text>
-<text x="299.8" y="508" text-anchor="end" font-size="10" fill="#333">flex</text>
-<text x="530.4" y="48" text-anchor="end" font-size="10" fill="#333">operator</text>
-<text x="539" y="88" text-anchor="end" font-size="10" fill="#333">vis/data</text>
-<text x="530.4" y="128" text-anchor="end" font-size="10" fill="#333">controls</text>
-<text x="536.8000000000001" y="168" text-anchor="end" font-size="10" fill="#333">legend</text>
-<text x="539" y="208" text-anchor="end" font-size="10" fill="#333">axis</text>
-<text x="536.8000000000001" y="248" text-anchor="end" font-size="10" fill="#333">events</text>
-<text x="533.6" y="288" text-anchor="end" font-size="10" fill="#333">palette</text>
-<text x="539" y="328" text-anchor="end" font-size="10" fill="#333">heap</text>
-<text x="539" y="368" text-anchor="end" font-size="10" fill="#333">math</text>
-<text x="520.8000000000001" y="408" text-anchor="end" font-size="10" fill="#333">interpolate</text>
-<text x="533.6" y="448" text-anchor="end" font-size="10" fill="#333">methods</text>
-<text x="539" y="488" text-anchor="end" font-size="10" fill="#333">graph</text>
-<text x="533.6" y="528" text-anchor="end" font-size="10" fill="#333">cluster</text>
-<text x="517.6" y="568" text-anchor="end" font-size="10" fill="#333">optimization</text>
-<text x="524" y="608" text-anchor="end" font-size="10" fill="#333">converters</text>
-<text x="779.2" y="228" text-anchor="end" font-size="10" fill="#333">layout</text>
-<text x="781.4000000000001" y="268" text-anchor="end" font-size="10" fill="#333">label</text>
-<text x="776.0000000000001" y="308" text-anchor="end" font-size="10" fill="#333">encoder</text>
-<text x="766.4000000000001" y="348" text-anchor="end" font-size="10" fill="#333">distortion</text>
-<text x="779.2" y="388" text-anchor="end" font-size="10" fill="#333">filter</text>
-<text x="779.2" y="428" text-anchor="end" font-size="10" fill="#333">render</text>
-<text x="327.8" y="176" font-size="9"><tspan fill="#555">↷ layout, label +4</tspan>  <tspan fill="#999">↩ background, vis</tspan>  <tspan fill="#5b84b1">↕ animate, query +3</tspan></text>
-<text x="327.8" y="256" font-size="9"><tspan fill="#999">↩ background, animate</tspan>  <tspan fill="#5b84b1">↕ vis, util, scale, flex</tspan></text>
-<text x="327.8" y="216" font-size="9"><tspan fill="#999">↩ background, util</tspan>  <tspan fill="#5b84b1">↕ animate, query, data</tspan></text>
-<text x="327.8" y="296" font-size="9"><tspan fill="#999">↩ background, query</tspan>  <tspan fill="#5b84b1">↕ vis, util, analytics</tspan></text>
-<text x="327.8" y="336" font-size="9"><tspan fill="#999">↩ background, analytics</tspan>  <tspan fill="#5b84b1">↕ vis, query</tspan></text>
-<text x="567" y="476" font-size="9"><tspan fill="#999">↩ background, methods +3</tspan></text>
-<text x="567" y="516" font-size="9"><tspan fill="#999">↩ background, graph +1</tspan>  <tspan fill="#5b84b1">↕ optimization</tspan></text>
-<text x="567" y="596" font-size="9"><tspan fill="#999">↩ background +3</tspan>  <tspan fill="#5b84b1">↕ graph, cluster</tspan></text>
-<text x="567" y="556" font-size="9"><tspan fill="#999">↩ background, cluster, query</tspan>  <tspan fill="#5b84b1">↕ optimization</tspan></text>
-<text x="327.8" y="416" font-size="9"><tspan fill="#999">↩ background, data</tspan>  <tspan fill="#5b84b1">↕ util</tspan></text>
-<text x="567" y="636" font-size="9"><tspan fill="#999">↩ background +2</tspan></text>
-<text x="567" y="316" font-size="9"><tspan fill="#999">↩ background, palette</tspan>  <tspan fill="#5b84b1">↕ math</tspan></text>
-<text x="567" y="396" font-size="9"><tspan fill="#999">↩ background, math</tspan>  <tspan fill="#5b84b1">↕ palette</tspan></text>
-<text x="567" y="356" font-size="9"><tspan fill="#999">↩ background, heap</tspan></text>
-<text x="327.8" y="376" font-size="9"><tspan fill="#999">↩ background, scale</tspan>  <tspan fill="#5b84b1">↕ vis, animate, physics</tspan></text>
-<text x="327.8" y="456" font-size="9"><tspan fill="#999">↩ background, physics</tspan>  <tspan fill="#5b84b1">↕ vis, scale</tspan></text>
-<text x="567" y="436" font-size="9"><tspan fill="#999">↩ background +4</tspan></text>
-<text x="327.8" y="536" font-size="9"><tspan fill="#999">↩ background, flex</tspan>  <tspan fill="#5b84b1">↕ animate</tspan></text>
-<text x="567" y="116" font-size="9"><tspan fill="#999">↩ background, vis/data +2</tspan>  <tspan fill="#5b84b1">↕ controls, legend</tspan></text>
-<text x="567" y="156" font-size="9"><tspan fill="#999">↩ background, controls, vis</tspan>  <tspan fill="#5b84b1">↕ operator, vis/data</tspan></text>
-<text x="567" y="76" font-size="9"><tspan fill="#999">↩ background, operator</tspan>  <tspan fill="#5b84b1">↕ controls, legend, axis</tspan></text>
-<text x="567" y="196" font-size="9"><tspan fill="#999">↩ background, legend, vis</tspan>  <tspan fill="#5b84b1">↕ operator, vis/data, axis</tspan></text>
-<text x="567" y="236" font-size="9"><tspan fill="#999">↩ background, axis</tspan>  <tspan fill="#5b84b1">↕ operator, legend</tspan></text>
-<text x="809.4000000000001" y="416" font-size="9"><tspan fill="#999">↩ background, filter, axis</tspan>  <tspan fill="#5b84b1">↕ layout, distortion</tspan></text>
-<text x="809.4000000000001" y="256" font-size="9"><tspan fill="#999">↩ background, layout +1</tspan>  <tspan fill="#5b84b1">↕ encoder, distortion +1</tspan></text>
-<text x="809.4000000000001" y="336" font-size="9"><tspan fill="#999">↩ background, encoder +2</tspan>  <tspan fill="#5b84b1">↕ layout, label</tspan></text>
-<text x="809.4000000000001" y="296" font-size="9"><tspan fill="#999">↩ background, label</tspan>  <tspan fill="#5b84b1">↕ encoder, distortion</tspan></text>
-<text x="809.4000000000001" y="376" font-size="9"><tspan fill="#999">↩ background +2</tspan>  <tspan fill="#5b84b1">↕ layout, label, filter</tspan></text>
-<text x="809.4000000000001" y="456" font-size="9"><tspan fill="#999">↩ background, render +2</tspan></text>
-<text x="567" y="276" font-size="9"><tspan fill="#999">↩ background, events, vis</tspan></text>
-<text x="327.8" y="496" font-size="9"><tspan fill="#999">↩ background, display</tspan></text>
-<text x="110" y="356" font-size="9"><tspan fill="#555">↷ operator, vis/data +19</tspan></text>
+<text x="176" y="412" font-size="11" fill="#555">background</text>
+<text x="176" y="394" font-size="11" fill="#1b7f79">Hover_vis +30</text>
+<text x="476.5" y="160" font-size="11" fill="#1b7f79">Hover_vis +20</text>
+<text x="484" y="272" font-size="11" fill="#1b7f79">Hover_vis +6</text>
+<text x="476.5" y="216" font-size="11" fill="#1b7f79">Hover_util +6</text>
+<text x="477" y="328" font-size="11" fill="#1b7f79">Hover_vis +5</text>
+<text x="491" y="384" font-size="11" fill="#1b7f79">Hover_vis +6</text>
+<text x="809.5" y="580" font-size="11" fill="#1b7f79">Hover_vis +3</text>
+<text x="802.5" y="636" font-size="11" fill="#1b7f79">Hover_analytics +2</text>
+<text x="827" y="748" font-size="11" fill="#1b7f79">Hover_vis +4</text>
+<text x="809.5" y="692" font-size="11" fill="#1b7f79">Hover_query +2</text>
+<text x="476.5" y="496" font-size="11" fill="#1b7f79">Hover_util +2</text>
+<text x="820" y="804" font-size="11" fill="#1b7f79">Hover_data +1</text>
+<text x="809.5" y="356" font-size="11" fill="#1b7f79">Hover_palette, Hover_math</text>
+<text x="802" y="468" font-size="11" fill="#1b7f79">Hover_palette, Hover_math</text>
+<text x="802" y="412" font-size="11" fill="#1b7f79">Hover_heap</text>
+<text x="477" y="440" font-size="11" fill="#1b7f79">Hover_vis +4</text>
+<text x="484" y="552" font-size="11" fill="#1b7f79">Hover_vis +2</text>
+<text x="823.5" y="524" font-size="11" fill="#1b7f79">Hover_vis +3</text>
+<text x="476.5" y="664" font-size="11" fill="#1b7f79">Hover_animate, Hover_flex</text>
+<text x="802" y="76" font-size="11" fill="#1b7f79">Hover_vis +5</text>
+<text x="813" y="132" font-size="11" fill="#1b7f79">Hover_vis +5</text>
+<text x="813" y="20" font-size="11" fill="#1b7f79">Hover_operator +8</text>
+<text x="806" y="188" font-size="11" fill="#1b7f79">Hover_vis +4</text>
+<text x="802" y="244" font-size="11" fill="#1b7f79">Hover_operator +3</text>
+<text x="1135" y="496" font-size="11" fill="#1b7f79">Hover_axis +3</text>
+<text x="1135" y="272" font-size="11" fill="#1b7f79">Hover_operator +4</text>
+<text x="1138.5" y="384" font-size="11" fill="#1b7f79">Hover_vis +4</text>
+<text x="1131.5" y="328" font-size="11" fill="#1b7f79">Hover_label +2</text>
+<text x="1149" y="440" font-size="11" fill="#1b7f79">Hover_vis +4</text>
+<text x="1135" y="552" font-size="11" fill="#1b7f79">Hover_vis +2</text>
+<text x="806" y="300" font-size="11" fill="#1b7f79">Hover_vis, Hover_events</text>
+<text x="484" y="608" font-size="11" fill="#1b7f79">Hover_display</text>
+<text x="392.5" y="187" text-anchor="end" font-size="11" fill="#333">vis</text>
+<text x="392.5" y="243" text-anchor="end" font-size="11" fill="#333">util</text>
+<text x="385" y="299" text-anchor="end" font-size="11" fill="#333">animate</text>
+<text x="392" y="355" text-anchor="end" font-size="11" fill="#333">query</text>
+<text x="378" y="411" text-anchor="end" font-size="11" fill="#333">analytics</text>
+<text x="392" y="467" text-anchor="end" font-size="11" fill="#333">scale</text>
+<text x="392.5" y="523" text-anchor="end" font-size="11" fill="#333">data</text>
+<text x="385" y="579" text-anchor="end" font-size="11" fill="#333">physics</text>
+<text x="385" y="635" text-anchor="end" font-size="11" fill="#333">display</text>
+<text x="392.5" y="691" text-anchor="end" font-size="11" fill="#333">flex</text>
+<text x="707" y="47" text-anchor="end" font-size="11" fill="#333">operator</text>
+<text x="718" y="103" text-anchor="end" font-size="11" fill="#333">vis/data</text>
+<text x="707" y="159" text-anchor="end" font-size="11" fill="#333">controls</text>
+<text x="714" y="215" text-anchor="end" font-size="11" fill="#333">legend</text>
+<text x="718" y="271" text-anchor="end" font-size="11" fill="#333">axis</text>
+<text x="714" y="327" text-anchor="end" font-size="11" fill="#333">events</text>
+<text x="710.5" y="383" text-anchor="end" font-size="11" fill="#333">palette</text>
+<text x="718" y="439" text-anchor="end" font-size="11" fill="#333">heap</text>
+<text x="718" y="495" text-anchor="end" font-size="11" fill="#333">math</text>
+<text x="696.5" y="551" text-anchor="end" font-size="11" fill="#333">interpolate</text>
+<text x="710.5" y="607" text-anchor="end" font-size="11" fill="#333">methods</text>
+<text x="717.5" y="663" text-anchor="end" font-size="11" fill="#333">graph</text>
+<text x="710.5" y="719" text-anchor="end" font-size="11" fill="#333">cluster</text>
+<text x="693" y="775" text-anchor="end" font-size="11" fill="#333">optimization</text>
+<text x="700" y="831" text-anchor="end" font-size="11" fill="#333">converters</text>
+<text x="1043" y="299" text-anchor="end" font-size="11" fill="#333">layout</text>
+<text x="1046.5" y="355" text-anchor="end" font-size="11" fill="#333">label</text>
+<text x="1039.5" y="411" text-anchor="end" font-size="11" fill="#333">encoder</text>
+<text x="1029" y="467" text-anchor="end" font-size="11" fill="#333">distortion</text>
+<text x="1043" y="523" text-anchor="end" font-size="11" fill="#333">filter</text>
+<text x="1043" y="579" text-anchor="end" font-size="11" fill="#333">render</text>
+<text x="430.5" y="226" font-size="10"><tspan fill="#555">↷ layout, label +4</tspan>  <tspan fill="#999">↩ background, vis</tspan>  <tspan fill="#5b84b1">↕ animate, query +3</tspan></text>
+<text x="430.5" y="338" font-size="10"><tspan fill="#999">↩ background, animate</tspan>  <tspan fill="#5b84b1">↕ vis, util, scale, flex</tspan></text>
+<text x="430.5" y="282" font-size="10"><tspan fill="#999">↩ background, util</tspan>  <tspan fill="#5b84b1">↕ animate, query, data</tspan></text>
+<text x="430.5" y="394" font-size="10"><tspan fill="#999">↩ background, query</tspan>  <tspan fill="#5b84b1">↕ vis, util, analytics</tspan></text>
+<text x="430.5" y="450" font-size="10"><tspan fill="#999">↩ background, analytics</tspan>  <tspan fill="#5b84b1">↕ vis, query</tspan></text>
+<text x="756" y="646" font-size="10"><tspan fill="#999">↩ background, methods +3</tspan></text>
+<text x="756" y="702" font-size="10"><tspan fill="#999">↩ background, graph +1</tspan>  <tspan fill="#5b84b1">↕ optimization</tspan></text>
+<text x="756" y="814" font-size="10"><tspan fill="#999">↩ background +3</tspan>  <tspan fill="#5b84b1">↕ graph, cluster</tspan></text>
+<text x="756" y="758" font-size="10"><tspan fill="#999">↩ background, cluster, query</tspan>  <tspan fill="#5b84b1">↕ optimization</tspan></text>
+<text x="430.5" y="562" font-size="10"><tspan fill="#999">↩ background, data</tspan>  <tspan fill="#5b84b1">↕ util</tspan></text>
+<text x="756" y="870" font-size="10"><tspan fill="#999">↩ background +2</tspan></text>
+<text x="756" y="422" font-size="10"><tspan fill="#999">↩ background, palette</tspan>  <tspan fill="#5b84b1">↕ math</tspan></text>
+<text x="756" y="534" font-size="10"><tspan fill="#999">↩ background, math</tspan>  <tspan fill="#5b84b1">↕ palette</tspan></text>
+<text x="756" y="478" font-size="10"><tspan fill="#999">↩ background, heap</tspan></text>
+<text x="430.5" y="506" font-size="10"><tspan fill="#999">↩ background, scale</tspan>  <tspan fill="#5b84b1">↕ vis, animate, physics</tspan></text>
+<text x="430.5" y="618" font-size="10"><tspan fill="#999">↩ background, physics</tspan>  <tspan fill="#5b84b1">↕ vis, scale</tspan></text>
+<text x="756" y="590" font-size="10"><tspan fill="#999">↩ background +4</tspan></text>
+<text x="430.5" y="730" font-size="10"><tspan fill="#999">↩ background, flex</tspan>  <tspan fill="#5b84b1">↕ animate</tspan></text>
+<text x="756" y="142" font-size="10"><tspan fill="#999">↩ background, vis/data +2</tspan>  <tspan fill="#5b84b1">↕ controls, legend</tspan></text>
+<text x="756" y="198" font-size="10"><tspan fill="#999">↩ background, controls, vis</tspan>  <tspan fill="#5b84b1">↕ operator, vis/data</tspan></text>
+<text x="756" y="86" font-size="10"><tspan fill="#999">↩ background, operator</tspan>  <tspan fill="#5b84b1">↕ controls, legend, axis</tspan></text>
+<text x="756" y="254" font-size="10"><tspan fill="#999">↩ background, legend, vis</tspan>  <tspan fill="#5b84b1">↕ operator, vis/data, axis</tspan></text>
+<text x="756" y="310" font-size="10"><tspan fill="#999">↩ background, axis</tspan>  <tspan fill="#5b84b1">↕ operator, legend</tspan></text>
+<text x="1085" y="562" font-size="10"><tspan fill="#999">↩ background, filter, axis</tspan>  <tspan fill="#5b84b1">↕ layout, distortion</tspan></text>
+<text x="1085" y="338" font-size="10"><tspan fill="#999">↩ background, layout +1</tspan>  <tspan fill="#5b84b1">↕ encoder, distortion +1</tspan></text>
+<text x="1085" y="450" font-size="10"><tspan fill="#999">↩ background, encoder +2</tspan>  <tspan fill="#5b84b1">↕ layout, label</tspan></text>
+<text x="1085" y="394" font-size="10"><tspan fill="#999">↩ background, label</tspan>  <tspan fill="#5b84b1">↕ encoder, distortion</tspan></text>
+<text x="1085" y="506" font-size="10"><tspan fill="#999">↩ background +2</tspan>  <tspan fill="#5b84b1">↕ layout, label, filter</tspan></text>
+<text x="1085" y="618" font-size="10"><tspan fill="#999">↩ background, render +2</tspan></text>
+<text x="756" y="366" font-size="10"><tspan fill="#999">↩ background, events, vis</tspan></text>
+<text x="430.5" y="674" font-size="10"><tspan fill="#999">↩ background, display</tspan></text>
+<text x="130" y="478" font-size="10"><tspan fill="#555">↷ operator, vis/data +19</tspan></text>
 </g>
 <g font-size="10" fill="#666">
-<line x1="40" y1="688" x2="68" y2="688" stroke="#777" marker-end="url(#arrow)"/>
-<text x="74" y="691">acción que avanza (etiqueta junto al destino)</text>
-<line x1="330" y1="688" x2="358" y2="688" stroke="#c4c4c4" stroke-dasharray="4 3" marker-end="url(#arrow-back)"/>
-<text x="364" y="691">acción que vuelve (↩ bajo el origen)</text>
-<line x1="570" y1="688" x2="598" y2="688" stroke="#9bb7d4" marker-end="url(#arrow-side)"/>
-<text x="604" y="691">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="708">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
-<line x1="40" y1="724" x2="68" y2="724" stroke="#1b8a82" marker-end="url(#arrow-hover)"/>
-<text x="74" y="727">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+<line x1="40" y1="928" x2="80" y2="928" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="931">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="928" x2="400" y2="928" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="931">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="928" x2="670" y2="928" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="931">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="948">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="964" x2="80" y2="964" stroke="#1b8a82" stroke-width="1.6" marker-end="url(#arrow-hover)"/>
+<text x="88" y="967">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
 </g>
-<line x1="40" y1="750" x2="1030.4" y2="750" stroke="#ddd"/>
-<text x="40" y="770" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 101 atajos aparte, ver regex.cycles en transitions.json)</text>
+<line x1="40" y1="990" x2="1339" y2="990" stroke="#ddd"/>
+<text x="40" y="1010" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 101 atajos aparte, ver regex.cycles en transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="788">(Click_background | Hover_vis | Hover_util | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_data | Hover_physics | Hover_display</tspan>
-<tspan x="40" y="803">| Hover_flex | Hover_operator | Hover_vis/data | Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_palette | Hover_heap | Hover_math |</tspan>
-<tspan x="40" y="818">Hover_interpolate | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization | Hover_converters | Hover_layout | Hover_label | Hover_encoder |</tspan>
-<tspan x="40" y="833">Hover_distortion | Hover_filter | Hover_render | Click_util (Hover_util | Hover_animate | Hover_query | Hover_data | Hover_palette | Hover_heap |</tspan>
-<tspan x="40" y="848">Hover_math)* (Click_background | Click_util | Click_palette (Hover_palette | Hover_math)* (Click_background | Click_palette) | Click_heap Hover_heap*</tspan>
-<tspan x="40" y="863">(Click_background | Click_heap) | Click_math (Hover_palette | Hover_math)* (Click_background | Click_math)) | Click_scale (Hover_vis | Hover_animate |</tspan>
-<tspan x="40" y="878">Hover_scale | Hover_physics | Hover_interpolate)* (Click_background | Click_scale) | Click_physics (Hover_vis | Hover_scale | Hover_physics)*</tspan>
-<tspan x="40" y="893">(Click_background | Click_physics) | Click_display Hover_display* (Click_background | Click_display) | Click_flex (Hover_animate | Hover_flex)*</tspan>
-<tspan x="40" y="908">(Click_background | Click_flex) | Click_vis (Hover_vis | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_physics | Hover_operator</tspan>
-<tspan x="40" y="923">| Hover_vis/data | Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_interpolate | Hover_methods | Hover_optimization | Hover_layout |</tspan>
-<tspan x="40" y="938">Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Hover_render | (Click_operator (Hover_operator | Hover_controls | Hover_legend |</tspan>
-<tspan x="40" y="953">Hover_axis | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout (Hover_operator | Hover_layout |</tspan>
-<tspan x="40" y="968">Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_encoder (Hover_vis | Hover_controls | Hover_layout | Hover_label |</tspan>
-<tspan x="40" y="983">Hover_encoder)* | Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)*) | Click_vis/data (Hover_vis |</tspan>
-<tspan x="40" y="998">Hover_animate | Hover_vis/data | Hover_controls | Hover_legend | Hover_render)* (Click_render (Hover_vis | Hover_controls | Hover_render)*)? |</tspan>
-<tspan x="40" y="1013">Click_controls (Hover_vis | Hover_operator | Hover_vis/data | Hover_controls | Hover_encoder | Hover_render)* | Click_legend (Hover_vis |</tspan>
-<tspan x="40" y="1028">Hover_operator | Hover_vis/data | Hover_legend | Hover_axis)* | Click_events (Hover_vis | Hover_events)*) Click_vis)* (Click_background | Click_vis |</tspan>
-<tspan x="40" y="1043">Click_axis (Hover_operator | Hover_legend | Hover_axis | Hover_filter)* (Click_background | Click_axis) | Click_operator (Hover_operator |</tspan>
-<tspan x="40" y="1058">Hover_controls | Hover_legend | Hover_axis | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout</tspan>
-<tspan x="40" y="1073">(Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_background | Click_operator | Click_label</tspan>
-<tspan x="40" y="1088">(Hover_label | Hover_encoder | Hover_distortion)* (Click_background | Click_label) | Click_filter (Hover_axis | Hover_layout | Hover_distortion |</tspan>
-<tspan x="40" y="1103">Hover_filter)* (Click_background | Click_filter) | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)*</tspan>
-<tspan x="40" y="1118">(Click_background | Click_layout) | Click_encoder (Hover_vis | Hover_controls | Hover_layout | Hover_label | Hover_encoder)* (Click_background |</tspan>
-<tspan x="40" y="1133">Click_encoder) | Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)* (Click_background | Click_distortion)) |</tspan>
-<tspan x="40" y="1148">Click_vis/data (Hover_vis | Hover_animate | Hover_vis/data | Hover_controls | Hover_legend | Hover_render)* (Click_background | Click_vis/data |</tspan>
-<tspan x="40" y="1163">Click_render (Hover_vis | Hover_controls | Hover_render)* (Click_background | Click_render)) | Click_controls (Hover_vis | Hover_operator |</tspan>
-<tspan x="40" y="1178">Hover_vis/data | Hover_controls | Hover_encoder | Hover_render)* (Click_background | Click_controls) | Click_legend (Hover_vis | Hover_operator |</tspan>
-<tspan x="40" y="1193">Hover_vis/data | Hover_legend | Hover_axis)* (Click_background | Click_legend) | Click_events (Hover_vis | Hover_events)* (Click_background |</tspan>
-<tspan x="40" y="1208">Click_events)) | Click_animate (Hover_vis | Hover_util | Hover_animate | Hover_scale | Hover_flex | Hover_vis/data | Hover_interpolate |</tspan>
-<tspan x="40" y="1223">Click_interpolate (Hover_vis | Hover_animate | Hover_scale | Hover_interpolate)* Click_animate)* (Click_background | Click_animate | Click_interpolate</tspan>
-<tspan x="40" y="1238">(Hover_vis | Hover_animate | Hover_scale | Hover_interpolate)* (Click_background | Click_interpolate)) | Click_query (Hover_vis | Hover_util |</tspan>
-<tspan x="40" y="1253">Hover_query | Hover_analytics | Hover_methods | Hover_cluster | Click_methods (Hover_vis | Hover_query | Hover_analytics | Hover_methods)*</tspan>
-<tspan x="40" y="1268">Click_query)* (Click_background | Click_query | Click_methods (Hover_vis | Hover_query | Hover_analytics | Hover_methods)* (Click_background |</tspan>
-<tspan x="40" y="1283">Click_methods)) | Click_analytics (Hover_vis | Hover_query | Hover_analytics | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization |</tspan>
-<tspan x="40" y="1298">(Click_graph (Hover_analytics | Hover_graph | Hover_optimization)* | Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster |</tspan>
-<tspan x="40" y="1313">Hover_optimization)*) Click_analytics)* (Click_background | Click_analytics | Click_cluster (Hover_query | Hover_cluster | Hover_optimization)*</tspan>
-<tspan x="40" y="1328">(Click_background | Click_cluster) | Click_graph (Hover_analytics | Hover_graph | Hover_optimization)* (Click_background | Click_graph) |</tspan>
-<tspan x="40" y="1343">Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster | Hover_optimization)* (Click_background | Click_optimization)) |</tspan>
-<tspan x="40" y="1358">Click_data (Hover_util | Hover_data | Hover_converters | Click_converters (Hover_data | Hover_converters)* Click_data)* (Click_background | Click_data</tspan>
-<tspan x="40" y="1373">| Click_converters (Hover_data | Hover_converters)* (Click_background | Click_converters)))*</tspan>
+<tspan x="40" y="1028">(Click_background | Hover_vis | Hover_util | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_data | Hover_physics | Hover_display | Hover_flex | Hover_operator | Hover_vis/data</tspan>
+<tspan x="40" y="1043">| Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_palette | Hover_heap | Hover_math | Hover_interpolate | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization |</tspan>
+<tspan x="40" y="1058">Hover_converters | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Hover_render | Click_util (Hover_util | Hover_animate | Hover_query | Hover_data | Hover_palette |</tspan>
+<tspan x="40" y="1073">Hover_heap | Hover_math)* (Click_background | Click_util | Click_palette (Hover_palette | Hover_math)* (Click_background | Click_palette) | Click_heap Hover_heap* (Click_background | Click_heap) |</tspan>
+<tspan x="40" y="1088">Click_math (Hover_palette | Hover_math)* (Click_background | Click_math)) | Click_scale (Hover_vis | Hover_animate | Hover_scale | Hover_physics | Hover_interpolate)* (Click_background |</tspan>
+<tspan x="40" y="1103">Click_scale) | Click_physics (Hover_vis | Hover_scale | Hover_physics)* (Click_background | Click_physics) | Click_display Hover_display* (Click_background | Click_display) | Click_flex</tspan>
+<tspan x="40" y="1118">(Hover_animate | Hover_flex)* (Click_background | Click_flex) | Click_vis (Hover_vis | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_physics | Hover_operator | Hover_vis/data</tspan>
+<tspan x="40" y="1133">| Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_interpolate | Hover_methods | Hover_optimization | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter</tspan>
+<tspan x="40" y="1148">| Hover_render | (Click_operator (Hover_operator | Hover_controls | Hover_legend | Hover_axis | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout</tspan>
+<tspan x="40" y="1163">(Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_encoder (Hover_vis | Hover_controls | Hover_layout | Hover_label | Hover_encoder)* |</tspan>
+<tspan x="40" y="1178">Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)*) | Click_vis/data (Hover_vis | Hover_animate | Hover_vis/data | Hover_controls | Hover_legend |</tspan>
+<tspan x="40" y="1193">Hover_render)* (Click_render (Hover_vis | Hover_controls | Hover_render)*)? | Click_controls (Hover_vis | Hover_operator | Hover_vis/data | Hover_controls | Hover_encoder | Hover_render)* |</tspan>
+<tspan x="40" y="1208">Click_legend (Hover_vis | Hover_operator | Hover_vis/data | Hover_legend | Hover_axis)* | Click_events (Hover_vis | Hover_events)*) Click_vis)* (Click_background | Click_vis | Click_axis</tspan>
+<tspan x="40" y="1223">(Hover_operator | Hover_legend | Hover_axis | Hover_filter)* (Click_background | Click_axis) | Click_operator (Hover_operator | Hover_controls | Hover_legend | Hover_axis | Hover_layout |</tspan>
+<tspan x="40" y="1238">Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_background |</tspan>
+<tspan x="40" y="1253">Click_operator | Click_label (Hover_label | Hover_encoder | Hover_distortion)* (Click_background | Click_label) | Click_filter (Hover_axis | Hover_layout | Hover_distortion | Hover_filter)*</tspan>
+<tspan x="40" y="1268">(Click_background | Click_filter) | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* (Click_background | Click_layout) | Click_encoder (Hover_vis |</tspan>
+<tspan x="40" y="1283">Hover_controls | Hover_layout | Hover_label | Hover_encoder)* (Click_background | Click_encoder) | Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)*</tspan>
+<tspan x="40" y="1298">(Click_background | Click_distortion)) | Click_vis/data (Hover_vis | Hover_animate | Hover_vis/data | Hover_controls | Hover_legend | Hover_render)* (Click_background | Click_vis/data |</tspan>
+<tspan x="40" y="1313">Click_render (Hover_vis | Hover_controls | Hover_render)* (Click_background | Click_render)) | Click_controls (Hover_vis | Hover_operator | Hover_vis/data | Hover_controls | Hover_encoder |</tspan>
+<tspan x="40" y="1328">Hover_render)* (Click_background | Click_controls) | Click_legend (Hover_vis | Hover_operator | Hover_vis/data | Hover_legend | Hover_axis)* (Click_background | Click_legend) | Click_events</tspan>
+<tspan x="40" y="1343">(Hover_vis | Hover_events)* (Click_background | Click_events)) | Click_animate (Hover_vis | Hover_util | Hover_animate | Hover_scale | Hover_flex | Hover_vis/data | Hover_interpolate |</tspan>
+<tspan x="40" y="1358">Click_interpolate (Hover_vis | Hover_animate | Hover_scale | Hover_interpolate)* Click_animate)* (Click_background | Click_animate | Click_interpolate (Hover_vis | Hover_animate | Hover_scale |</tspan>
+<tspan x="40" y="1373">Hover_interpolate)* (Click_background | Click_interpolate)) | Click_query (Hover_vis | Hover_util | Hover_query | Hover_analytics | Hover_methods | Hover_cluster | Click_methods (Hover_vis |</tspan>
+<tspan x="40" y="1388">Hover_query | Hover_analytics | Hover_methods)* Click_query)* (Click_background | Click_query | Click_methods (Hover_vis | Hover_query | Hover_analytics | Hover_methods)* (Click_background |</tspan>
+<tspan x="40" y="1403">Click_methods)) | Click_analytics (Hover_vis | Hover_query | Hover_analytics | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization | (Click_graph (Hover_analytics | Hover_graph |</tspan>
+<tspan x="40" y="1418">Hover_optimization)* | Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster | Hover_optimization)*) Click_analytics)* (Click_background | Click_analytics | Click_cluster</tspan>
+<tspan x="40" y="1433">(Hover_query | Hover_cluster | Hover_optimization)* (Click_background | Click_cluster) | Click_graph (Hover_analytics | Hover_graph | Hover_optimization)* (Click_background | Click_graph) |</tspan>
+<tspan x="40" y="1448">Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster | Hover_optimization)* (Click_background | Click_optimization)) | Click_data (Hover_util | Hover_data |</tspan>
+<tspan x="40" y="1463">Hover_converters | Click_converters (Hover_data | Hover_converters)* Click_data)* (Click_background | Click_data | Click_converters (Hover_data | Hover_converters)* (Click_background |</tspan>
+<tspan x="40" y="1478">Click_converters)))*</tspan>
 </text>
-<text x="40" y="1406" font-weight="bold" fill="#222">Hover (31 acciones con efecto visible)</text>
+<text x="40" y="1511" font-weight="bold" fill="#222">Hover (31 acciones con efecto visible)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="1424">Hover_vis, Hover_util, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_data, Hover_physics, Hover_display, Hover_flex, Hover_operator,</tspan>
-<tspan x="40" y="1439">Hover_vis/data, Hover_controls, Hover_legend, Hover_axis, Hover_events, Hover_palette, Hover_heap, Hover_math, Hover_interpolate, Hover_methods,</tspan>
-<tspan x="40" y="1454">Hover_graph, Hover_cluster, Hover_optimization, Hover_converters, Hover_layout, Hover_label, Hover_encoder, Hover_distortion, Hover_filter,</tspan>
-<tspan x="40" y="1469">Hover_render (31; bucle en el estado): stroke: (sin definir) -&gt; #000</tspan>
+<tspan x="40" y="1529">Hover_vis, Hover_util, Hover_animate, Hover_query, Hover_analytics, Hover_scale, Hover_data, Hover_physics, Hover_display, Hover_flex, Hover_operator, Hover_vis/data, Hover_controls, Hover_legend,</tspan>
+<tspan x="40" y="1544">Hover_axis, Hover_events, Hover_palette, Hover_heap, Hover_math, Hover_interpolate, Hover_methods, Hover_graph, Hover_cluster, Hover_optimization, Hover_converters, Hover_layout, Hover_label,</tspan>
+<tspan x="40" y="1559">Hover_encoder, Hover_distortion, Hover_filter, Hover_render (31; bucle en el estado): stroke: (sin definir) -&gt; #000</tspan>
 </text>
 </svg>
