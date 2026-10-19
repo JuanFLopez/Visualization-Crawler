@@ -1,0 +1,312 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_vis": "root > vis",
+      "Click_analytics": "root > analytics",
+      "Click_util": "root > util",
+      "Click_data": "root > vis > data",
+      "Click_operator": "root > vis > operator",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_heap": "root > util > heap",
+      "Click_palette": "root > util > palette",
+      "Click_circle": "root",
+      "Hover_vis": "root",
+      "Hover_analytics": "root",
+      "Hover_util": "root",
+      "Hover_data": "root",
+      "Hover_operator": "root",
+      "Hover_graph": "root",
+      "Hover_cluster": "root",
+      "Hover_heap": "root",
+      "Hover_palette": "root"
+    },
+    "root > vis": {
+      "Click_data": "root > vis > data",
+      "Click_operator": "root > vis > operator",
+      "Click_circle": "root",
+      "Hover_data": "root > vis",
+      "Hover_operator": "root > vis",
+      "Hover_TreeBuilder": "root > vis",
+      "Hover_Tree": "root > vis",
+      "Hover_OperatorSwitch": "root > vis",
+      "Hover_SortOperator": "root > vis"
+    },
+    "root > vis > data": {
+      "Click_circle": "root > vis",
+      "Hover_TreeBuilder": "root > vis > data",
+      "Hover_Tree": "root > vis > data"
+    },
+    "root > vis > operator": {
+      "Click_circle": "root > vis",
+      "Hover_OperatorSwitch": "root > vis > operator",
+      "Hover_SortOperator": "root > vis > operator"
+    },
+    "root > analytics": {
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_circle": "root",
+      "Hover_graph": "root > analytics",
+      "Hover_cluster": "root > analytics",
+      "Hover_ShortestPaths": "root > analytics",
+      "Hover_SpanningTree": "root > analytics",
+      "Hover_HierarchicalCluster": "root > analytics",
+      "Hover_MergeEdge": "root > analytics"
+    },
+    "root > analytics > graph": {
+      "Click_circle": "root > analytics",
+      "Hover_ShortestPaths": "root > analytics > graph",
+      "Hover_SpanningTree": "root > analytics > graph"
+    },
+    "root > analytics > cluster": {
+      "Click_circle": "root > analytics",
+      "Hover_HierarchicalCluster": "root > analytics > cluster",
+      "Hover_MergeEdge": "root > analytics > cluster"
+    },
+    "root > util": {
+      "Click_heap": "root > util > heap",
+      "Click_palette": "root > util > palette",
+      "Click_circle": "root",
+      "Hover_heap": "root > util",
+      "Hover_palette": "root > util",
+      "Hover_FibonacciHeap": "root > util",
+      "Hover_HeapNode": "root > util",
+      "Hover_SizePalette": "root > util",
+      "Hover_ShapePalette": "root > util"
+    },
+    "root > util > heap": {
+      "Click_circle": "root > util",
+      "Hover_FibonacciHeap": "root > util > heap",
+      "Hover_HeapNode": "root > util > heap"
+    },
+    "root > util > palette": {
+      "Click_circle": "root > util",
+      "Hover_SizePalette": "root > util > palette",
+      "Hover_ShapePalette": "root > util > palette"
+    }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "cycleCut": "((Click_vis (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | Click_analytics (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | Click_util (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)*",
+    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycles": {
+      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "tree": 9,
+      "back": 49,
+      "shortcuts": 6,
+      "shortcutTransitions": [
+        {
+          "state": "root",
+          "action": "Click_data",
+          "to": "root > vis > data"
+        },
+        {
+          "state": "root",
+          "action": "Click_operator",
+          "to": "root > vis > operator"
+        },
+        {
+          "state": "root",
+          "action": "Click_graph",
+          "to": "root > analytics > graph"
+        },
+        {
+          "state": "root",
+          "action": "Click_cluster",
+          "to": "root > analytics > cluster"
+        },
+        {
+          "state": "root",
+          "action": "Click_heap",
+          "to": "root > util > heap"
+        },
+        {
+          "state": "root",
+          "action": "Click_palette",
+          "to": "root > util > palette"
+        }
+      ]
+    },
+    "language": "(((Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)* (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)* | (Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*)? | Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*)? | Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)* (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*)?)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "(((Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+  },
+  "hovers": {
+    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "transient": 21,
+    "structural": 0,
+    "actions": {
+      "Hover_vis": {
+        "type": "transient",
+        "states": 1,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_analytics": {
+        "type": "transient",
+        "states": 1,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_util": {
+        "type": "transient",
+        "states": 1,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_data": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_operator": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_graph": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_cluster": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_heap": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_palette": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_TreeBuilder": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_Tree": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_OperatorSwitch": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_SortOperator": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_ShortestPaths": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_SpanningTree": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_HierarchicalCluster": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_MergeEdge": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_FibonacciHeap": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_HeapNode": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_SizePalette": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      },
+      "Hover_ShapePalette": {
+        "type": "transient",
+        "states": 2,
+        "changes": [
+          "stroke: (sin definir) -> #000",
+          "stroke-width: (sin definir) -> 2"
+        ]
+      }
+    }
+  },
+  "issues": []
+}

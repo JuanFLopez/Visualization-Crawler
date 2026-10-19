@@ -1,0 +1,347 @@
+{
+  "initialState": "root",
+  "transitions": {
+    "root": {
+      "Click_background": "root",
+      "Click_analytics": "root > analytics",
+      "Click_util": "root > util",
+      "Click_vis": "root > vis",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math",
+      "Click_controls": "root > vis > controls",
+      "Click_events": "root > vis > events",
+      "Hover_analytics": "root",
+      "Hover_util": "root",
+      "Hover_vis": "root",
+      "Hover_graph": "root",
+      "Hover_cluster": "root",
+      "Hover_heap": "root",
+      "Hover_math": "root",
+      "Hover_controls": "root",
+      "Hover_events": "root"
+    },
+    "root > analytics": {
+      "Click_background": "root",
+      "Click_analytics": "root",
+      "Click_vis": "root > vis",
+      "Click_graph": "root > analytics > graph",
+      "Click_cluster": "root > analytics > cluster",
+      "Hover_analytics": "root > analytics",
+      "Hover_vis": "root > analytics",
+      "Hover_graph": "root > analytics",
+      "Hover_cluster": "root > analytics"
+    },
+    "root > vis": {
+      "Click_background": "root",
+      "Click_analytics": "root > analytics",
+      "Click_util": "root > util",
+      "Click_vis": "root",
+      "Click_controls": "root > vis > controls",
+      "Click_events": "root > vis > events",
+      "Hover_analytics": "root > vis",
+      "Hover_util": "root > vis",
+      "Hover_vis": "root > vis",
+      "Hover_controls": "root > vis",
+      "Hover_events": "root > vis"
+    },
+    "root > util": {
+      "Click_background": "root",
+      "Click_util": "root",
+      "Click_vis": "root > vis",
+      "Click_heap": "root > util > heap",
+      "Click_math": "root > util > math",
+      "Hover_util": "root > util",
+      "Hover_vis": "root > util",
+      "Hover_heap": "root > util",
+      "Hover_math": "root > util"
+    },
+    "root > util > heap": {
+      "Click_background": "root",
+      "Click_util": "root > util",
+      "Click_heap": "root",
+      "Hover_util": "root > util > heap",
+      "Hover_heap": "root > util > heap"
+    },
+    "root > util > math": {
+      "Click_background": "root",
+      "Click_util": "root > util",
+      "Click_math": "root",
+      "Hover_util": "root > util > math",
+      "Hover_math": "root > util > math"
+    },
+    "root > vis > controls": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_controls": "root",
+      "Hover_vis": "root > vis > controls",
+      "Hover_controls": "root > vis > controls"
+    },
+    "root > vis > events": {
+      "Click_background": "root",
+      "Click_vis": "root > vis",
+      "Click_events": "root",
+      "Hover_vis": "root > vis > events",
+      "Hover_events": "root > vis > events"
+    },
+    "root > analytics > graph": {
+      "Click_background": "root",
+      "Click_analytics": "root > analytics",
+      "Click_graph": "root",
+      "Hover_analytics": "root > analytics > graph",
+      "Hover_graph": "root > analytics > graph"
+    },
+    "root > analytics > cluster": {
+      "Click_background": "root",
+      "Click_analytics": "root > analytics",
+      "Click_cluster": "root",
+      "Hover_analytics": "root > analytics > cluster",
+      "Hover_cluster": "root > analytics > cluster"
+    }
+  },
+  "regex": {
+    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "cycleCut": "(Click_background | Hover_analytics | Hover_util | Hover_vis | Hover_graph | Hover_cluster | Hover_heap | Hover_math | Hover_controls | Hover_events | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_controls (Hover_vis | Hover_controls)* | Click_events (Hover_vis | Hover_events)*) Click_vis)* (Click_background | Click_vis | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls) | Click_events (Hover_vis | Hover_events)* (Click_background | Click_events)))*",
+    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycles": {
+      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "tree": 9,
+      "back": 59,
+      "shortcuts": 10,
+      "shortcutTransitions": [
+        {
+          "state": "root",
+          "action": "Click_graph",
+          "to": "root > analytics > graph"
+        },
+        {
+          "state": "root",
+          "action": "Click_cluster",
+          "to": "root > analytics > cluster"
+        },
+        {
+          "state": "root",
+          "action": "Click_heap",
+          "to": "root > util > heap"
+        },
+        {
+          "state": "root",
+          "action": "Click_math",
+          "to": "root > util > math"
+        },
+        {
+          "state": "root",
+          "action": "Click_controls",
+          "to": "root > vis > controls"
+        },
+        {
+          "state": "root",
+          "action": "Click_events",
+          "to": "root > vis > events"
+        },
+        {
+          "state": "root > analytics",
+          "action": "Click_vis",
+          "to": "root > vis"
+        },
+        {
+          "state": "root > util",
+          "action": "Click_vis",
+          "to": "root > vis"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_analytics",
+          "to": "root > analytics"
+        },
+        {
+          "state": "root > vis",
+          "action": "Click_util",
+          "to": "root > util"
+        }
+      ]
+    },
+    "language": "(Click_background | Hover_analytics | Hover_util | Hover_vis | Hover_graph | Hover_cluster | Hover_heap | Hover_math | Hover_controls | Hover_events | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster) | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math) | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls) | ((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_background | Click_vis | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls)) | (((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)*)? Click_events (Hover_vis | Hover_events | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* Click_events)* (Click_background | Click_events | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_background | Click_vis | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls))))* (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)* | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? | Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? | Click_controls (Hover_vis | Hover_controls)* | ((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? | Click_controls (Hover_vis | Hover_controls)*)? | (((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)*)? Click_events (Hover_vis | Hover_events | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* Click_events)* (Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? | Click_controls (Hover_vis | Hover_controls)*)?)?)?",
+    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "completeInteractions": "(Click_background | Hover_analytics | Hover_util | Hover_vis | Hover_graph | Hover_cluster | Hover_heap | Hover_math | Hover_controls | Hover_events | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster) | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math) | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls) | ((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_background | Click_vis | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls)) | (((Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*)? Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*)? Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*)? Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)*)? Click_events (Hover_vis | Hover_events | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* Click_events)* (Click_background | Click_events | Click_vis (Hover_analytics | Hover_util | Hover_vis | Hover_controls | Hover_events | (Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* | Click_controls (Hover_vis | Hover_controls)*) Click_vis)* (Click_background | Click_vis | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* | Click_cluster (Hover_analytics | Hover_cluster)*) Click_analytics)* (Click_background | Click_analytics | Click_graph (Hover_analytics | Hover_graph)* (Click_background | Click_graph) | Click_cluster (Hover_analytics | Hover_cluster)* (Click_background | Click_cluster)) | Click_util (Hover_util | Hover_vis | Hover_heap | Hover_math | (Click_heap (Hover_util | Hover_heap)* | Click_math (Hover_util | Hover_math)*) Click_util)* (Click_background | Click_util | Click_heap (Hover_util | Hover_heap)* (Click_background | Click_heap) | Click_math (Hover_util | Hover_math)* (Click_background | Click_math)) | Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls))))*",
+    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+  },
+  "visibility": {
+    "root > analytics": {
+      "Click_vis": 0.05
+    },
+    "root > vis": {
+      "Click_analytics": 0.05,
+      "Click_util": 0.05
+    },
+    "root > util": {
+      "Click_vis": 0.1
+    },
+    "root > util > heap": {
+      "Click_util": 0.43
+    },
+    "root > util > math": {
+      "Click_util": 0.29
+    },
+    "root > vis > controls": {
+      "Click_vis": 0.43
+    },
+    "root > vis > events": {
+      "Click_vis": 0.29
+    },
+    "root > analytics > graph": {
+      "Click_analytics": 0.43
+    },
+    "root > analytics > cluster": {
+      "Click_analytics": 0.29
+    }
+  },
+  "partiallyVisibleClicks": {
+    "meaning": "transiciones cuyo elemento se veía solo en parte al clickearlo (visible: fracción aproximada de su área)",
+    "count": 10,
+    "ofTransitions": 78,
+    "transitions": [
+      {
+        "state": "root > analytics",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.05
+      },
+      {
+        "state": "root > vis",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0.05
+      },
+      {
+        "state": "root > util",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.1
+      },
+      {
+        "state": "root > util > math",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0.29
+      },
+      {
+        "state": "root > vis > events",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.29
+      },
+      {
+        "state": "root > analytics > cluster",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.29
+      },
+      {
+        "state": "root > util > heap",
+        "action": "Click_util",
+        "to": "root > util",
+        "visible": 0.43
+      },
+      {
+        "state": "root > vis > controls",
+        "action": "Click_vis",
+        "to": "root > vis",
+        "visible": 0.43
+      },
+      {
+        "state": "root > analytics > graph",
+        "action": "Click_analytics",
+        "to": "root > analytics",
+        "visible": 0.43
+      }
+    ]
+  },
+  "hovers": {
+    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "transient": 9,
+    "structural": 0,
+    "actions": {
+      "Hover_analytics": {
+        "type": "transient",
+        "states": 5,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_util": {
+        "type": "transient",
+        "states": 5,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_vis": {
+        "type": "transient",
+        "states": 6,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_graph": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_cluster": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_heap": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_math": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_controls": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      },
+      "Hover_events": {
+        "type": "transient",
+        "states": 3,
+        "changes": [
+          "stroke: (sin definir) -> #7a0019",
+          "stroke-width: (sin definir) -> 3"
+        ]
+      }
+    }
+  },
+  "issues": []
+}

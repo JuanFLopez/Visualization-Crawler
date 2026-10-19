@@ -1,0 +1,267 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1029" height="735" viewBox="0 0 1029 735" font-family="Helvetica, Arial, sans-serif" font-size="12">
+<title>Autómata (10 estados)</title>
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
+  <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
+  <marker id="arrow-side" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#9bb7d4"/></marker>
+  <marker id="arrow-hl" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="15" markerHeight="15" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#d33"/></marker>
+  <marker id="arrow-hover" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#1b8a82"/></marker>
+</defs>
+<rect width="1029" height="735" fill="white"/>
+<g class="back-edges">
+<path d="M 148,180 C 138,144 184,144 164,183" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[circle]→  root</title></path>
+<path d="M 148,180 C 138,126 184,126 164,183" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root  —[Hover_vis, Hover_analytics, Hover_util, Hover_data, Hover_operator, Hover_graph, Hover_cluster, Hover_heap, Hover_palette]→  root
+Hover_vis: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_analytics: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_util: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_data: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_operator: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_graph: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_cluster: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_heap: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_palette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 438.5,156 C 438.5,214.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis  —[circle]→  root</title></path>
+<path d="M 448.5,124 C 438.5,88 484.5,88 464.5,127" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis  —[Hover_data, Hover_operator, Hover_TreeBuilder, Hover_Tree, Hover_OperatorSwitch, Hover_SortOperator]→  root &gt; vis
+Hover_data: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_operator: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_TreeBuilder: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_Tree: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_OperatorSwitch: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_SortOperator: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,72 C 750,132.18 448.5,217.18 448.5,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; data  —[circle]→  root &gt; vis</title></path>
+<path d="M 760,40 C 750,4 796,4 776,43" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; data  —[Hover_TreeBuilder, Hover_Tree]→  root &gt; vis &gt; data
+Hover_TreeBuilder: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_Tree: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,128 C 750,188.18 448.5,217.18 448.5,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; operator  —[circle]→  root &gt; vis</title></path>
+<path d="M 771,96 C 761,60 807,60 787,99" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; operator  —[Hover_OperatorSwitch, Hover_SortOperator]→  root &gt; vis &gt; operator
+Hover_OperatorSwitch: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_SortOperator: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 438.5,212 C 438.5,270.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[circle]→  root</title></path>
+<path d="M 463,180 C 453,144 499,144 479,183" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics  —[Hover_graph, Hover_cluster, Hover_ShortestPaths, Hover_SpanningTree, Hover_HierarchicalCluster, Hover_MergeEdge]→  root &gt; analytics
+Hover_graph: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_cluster: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_ShortestPaths: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_SpanningTree: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_HierarchicalCluster: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_MergeEdge: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,184 C 750,244.18 448.5,273.18 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[circle]→  root &gt; analytics</title></path>
+<path d="M 760.5,152 C 750.5,116 796.5,116 776.5,155" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; graph  —[Hover_ShortestPaths, Hover_SpanningTree]→  root &gt; analytics &gt; graph
+Hover_ShortestPaths: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_SpanningTree: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,240 C 750,300.18 448.5,273.18 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[circle]→  root &gt; analytics</title></path>
+<path d="M 767.5,208 C 757.5,172 803.5,172 783.5,211" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; cluster  —[Hover_HierarchicalCluster, Hover_MergeEdge]→  root &gt; analytics &gt; cluster
+Hover_HierarchicalCluster: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_MergeEdge: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 438.5,268 C 438.5,326.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util  —[circle]→  root</title></path>
+<path d="M 448.5,236 C 438.5,200 484.5,200 464.5,239" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util  —[Hover_heap, Hover_palette, Hover_FibonacciHeap, Hover_HeapNode, Hover_SizePalette, Hover_ShapePalette]→  root &gt; util
+Hover_heap: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_palette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_FibonacciHeap: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_HeapNode: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_SizePalette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_ShapePalette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,296 C 750,356.18 448.5,329.18 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[circle]→  root &gt; util</title></path>
+<path d="M 760,264 C 750,228 796,228 776,267" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; heap  —[Hover_FibonacciHeap, Hover_HeapNode]→  root &gt; util &gt; heap
+Hover_FibonacciHeap: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_HeapNode: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+<path d="M 750,352 C 750,412.18 448.5,329.18 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; palette  —[circle]→  root &gt; util</title></path>
+<path d="M 767.5,320 C 757.5,284 803.5,284 783.5,323" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; palette  —[Hover_SizePalette, Hover_ShapePalette]→  root &gt; util &gt; palette
+Hover_SizePalette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2
+Hover_ShapePalette: stroke: (sin definir) -&gt; #000; stroke-width: (sin definir) -&gt; 2</title></path>
+</g>
+<g class="forward-edges">
+<path d="M 166,196 C 287.25,196 287.25,140 408.5,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[vis]→  root &gt; vis</title></path>
+<path d="M 166,196 C 280,196 280,196 394,196" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
+<path d="M 166,196 C 287.25,196 287.25,252 408.5,252" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[util]→  root &gt; util</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,186 L 182,110 Q 182,100 192,100 L 621,100 Q 631,100 631,90 L 631,66 Q 631,56 641,56 L 720,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[data]→  root &gt; vis &gt; data</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,186 L 182,110 Q 182,100 192,100 L 621,100 Q 631,100 631,110 L 631,102 Q 631,112 641,112 L 709,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,186 L 182,110 Q 182,100 192,100 L 621,100 Q 631,100 631,110 L 631,158 Q 631,168 641,168 L 719.5,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,206 L 182,282 Q 182,292 192,292 L 621,292 Q 631,292 631,282 L 631,234 Q 631,224 641,224 L 712.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,206 L 182,282 Q 182,292 192,292 L 621,292 Q 631,292 631,282 L 631,290 Q 631,280 641,280 L 720,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 166,196 L 172,196 Q 182,196 182,206 L 182,282 Q 182,292 192,292 L 621,292 Q 631,292 631,302 L 631,326 Q 631,336 641,336 L 712.5,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[palette]→  root &gt; util &gt; palette</title></path>
+<path d="M 466.5,140 C 593.25,140 593.25,56 720,56" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[data]→  root &gt; vis &gt; data</title></path>
+<path d="M 466.5,140 C 587.75,140 587.75,112 709,112" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; vis  —[operator]→  root &gt; vis &gt; operator</title></path>
+<path d="M 481,196 C 600.25,196 600.25,168 719.5,168" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[graph]→  root &gt; analytics &gt; graph</title></path>
+<path d="M 481,196 C 596.75,196 596.75,224 712.5,224" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; analytics  —[cluster]→  root &gt; analytics &gt; cluster</title></path>
+<path d="M 466.5,252 C 593.25,252 593.25,280 720,280" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[heap]→  root &gt; util &gt; heap</title></path>
+<path d="M 466.5,252 C 589.5,252 589.5,336 712.5,336" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root &gt; util  —[palette]→  root &gt; util &gt; palette</title></path>
+</g>
+<line x1="52" y1="196" x2="108" y2="196" stroke="#555" stroke-width="2.2" marker-end="url(#arrow)"/>
+<g class="states">
+<g>
+<title>root
+  vis → root &gt; vis
+  analytics → root &gt; analytics
+  util → root &gt; util
+  data → root &gt; vis &gt; data
+  operator → root &gt; vis &gt; operator
+  graph → root &gt; analytics &gt; graph
+  cluster → root &gt; analytics &gt; cluster
+  heap → root &gt; util &gt; heap
+  palette → root &gt; util &gt; palette
+  circle → root
+  Hover_vis → root
+  Hover_analytics → root
+  Hover_util → root
+  Hover_data → root
+  Hover_operator → root
+  Hover_graph → root
+  Hover_cluster → root
+  Hover_heap → root
+  Hover_palette → root</title>
+<rect x="110" y="180" width="56" height="32" rx="16" fill="#e6f1fb" stroke="#333" stroke-width="2.4"/>
+<text x="138" y="196" text-anchor="middle" dominant-baseline="central">root</text>
+</g>
+<g>
+<title>root &gt; vis
+  data → root &gt; vis &gt; data
+  operator → root &gt; vis &gt; operator
+  circle → root
+  Hover_data → root &gt; vis
+  Hover_operator → root &gt; vis
+  Hover_TreeBuilder → root &gt; vis
+  Hover_Tree → root &gt; vis
+  Hover_OperatorSwitch → root &gt; vis
+  Hover_SortOperator → root &gt; vis</title>
+<rect x="410.5" y="124" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="140" text-anchor="middle" dominant-baseline="central">vis</text>
+</g>
+<g>
+<title>root &gt; vis &gt; data
+  circle → root &gt; vis
+  Hover_TreeBuilder → root &gt; vis &gt; data
+  Hover_Tree → root &gt; vis &gt; data</title>
+<rect x="722" y="40" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="56" text-anchor="middle" dominant-baseline="central">data</text>
+</g>
+<g>
+<title>root &gt; vis &gt; operator
+  circle → root &gt; vis
+  Hover_OperatorSwitch → root &gt; vis &gt; operator
+  Hover_SortOperator → root &gt; vis &gt; operator</title>
+<rect x="711" y="96" width="78" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="112" text-anchor="middle" dominant-baseline="central">operator</text>
+</g>
+<g>
+<title>root &gt; analytics
+  graph → root &gt; analytics &gt; graph
+  cluster → root &gt; analytics &gt; cluster
+  circle → root
+  Hover_graph → root &gt; analytics
+  Hover_cluster → root &gt; analytics
+  Hover_ShortestPaths → root &gt; analytics
+  Hover_SpanningTree → root &gt; analytics
+  Hover_HierarchicalCluster → root &gt; analytics
+  Hover_MergeEdge → root &gt; analytics</title>
+<rect x="396" y="180" width="85" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="196" text-anchor="middle" dominant-baseline="central">analytics</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; graph
+  circle → root &gt; analytics
+  Hover_ShortestPaths → root &gt; analytics &gt; graph
+  Hover_SpanningTree → root &gt; analytics &gt; graph</title>
+<rect x="721.5" y="152" width="57" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="168" text-anchor="middle" dominant-baseline="central">graph</text>
+</g>
+<g>
+<title>root &gt; analytics &gt; cluster
+  circle → root &gt; analytics
+  Hover_HierarchicalCluster → root &gt; analytics &gt; cluster
+  Hover_MergeEdge → root &gt; analytics &gt; cluster</title>
+<rect x="714.5" y="208" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="224" text-anchor="middle" dominant-baseline="central">cluster</text>
+</g>
+<g>
+<title>root &gt; util
+  heap → root &gt; util &gt; heap
+  palette → root &gt; util &gt; palette
+  circle → root
+  Hover_heap → root &gt; util
+  Hover_palette → root &gt; util
+  Hover_FibonacciHeap → root &gt; util
+  Hover_HeapNode → root &gt; util
+  Hover_SizePalette → root &gt; util
+  Hover_ShapePalette → root &gt; util</title>
+<rect x="410.5" y="236" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="438.5" y="252" text-anchor="middle" dominant-baseline="central">util</text>
+</g>
+<g>
+<title>root &gt; util &gt; heap
+  circle → root &gt; util
+  Hover_FibonacciHeap → root &gt; util &gt; heap
+  Hover_HeapNode → root &gt; util &gt; heap</title>
+<rect x="722" y="264" width="56" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="280" text-anchor="middle" dominant-baseline="central">heap</text>
+</g>
+<g>
+<title>root &gt; util &gt; palette
+  circle → root &gt; util
+  Hover_SizePalette → root &gt; util &gt; palette
+  Hover_ShapePalette → root &gt; util &gt; palette</title>
+<rect x="714.5" y="320" width="71" height="32" rx="16" fill="#f7f7f7" stroke="#333" stroke-width="1.4"/>
+<text x="750" y="336" text-anchor="middle" dominant-baseline="central">palette</text>
+</g>
+</g>
+<g class="labels">
+<text x="176" y="160" font-size="11" fill="#555">circle</text>
+<text x="176" y="142" font-size="11" fill="#1b7f79">Hover_vis +8</text>
+<text x="476.5" y="104" font-size="11" fill="#1b7f79">Hover_data +5</text>
+<text x="788" y="20" font-size="11" fill="#1b7f79">Hover_TreeBuilder +1</text>
+<text x="799" y="76" font-size="11" fill="#1b7f79">Hover_OperatorSwitch +1</text>
+<text x="491" y="160" font-size="11" fill="#1b7f79">Hover_graph +5</text>
+<text x="788.5" y="132" font-size="11" fill="#1b7f79">Hover_ShortestPaths +1</text>
+<text x="795.5" y="188" font-size="11" fill="#1b7f79">Hover_HierarchicalCluster +1</text>
+<text x="476.5" y="216" font-size="11" fill="#1b7f79">Hover_heap +5</text>
+<text x="788" y="244" font-size="11" fill="#1b7f79">Hover_FibonacciHeap +1</text>
+<text x="795.5" y="300" font-size="11" fill="#1b7f79">Hover_SizePalette +1</text>
+<text x="392.5" y="131" text-anchor="end" font-size="11" fill="#333">vis</text>
+<text x="378" y="187" text-anchor="end" font-size="11" fill="#333">analytics</text>
+<text x="392.5" y="243" text-anchor="end" font-size="11" fill="#333">util</text>
+<text x="704" y="47" text-anchor="end" font-size="11" fill="#333">data</text>
+<text x="693" y="103" text-anchor="end" font-size="11" fill="#333">operator</text>
+<text x="703.5" y="159" text-anchor="end" font-size="11" fill="#333">graph</text>
+<text x="696.5" y="215" text-anchor="end" font-size="11" fill="#333">cluster</text>
+<text x="704" y="271" text-anchor="end" font-size="11" fill="#333">heap</text>
+<text x="696.5" y="327" text-anchor="end" font-size="11" fill="#333">palette</text>
+<text x="430.5" y="170" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="86" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="142" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="226" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="198" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="254" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="430.5" y="282" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="310" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="742" y="366" font-size="10"><tspan fill="#999">↩ circle</tspan></text>
+<text x="130" y="226" font-size="10"><tspan fill="#555">↷ data, operator +4</tspan></text>
+</g>
+<g font-size="10" fill="#666">
+<line x1="40" y1="424" x2="80" y2="424" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
+<text x="88" y="427">acción que avanza (etiqueta junto al destino)</text>
+<line x1="360" y1="424" x2="400" y2="424" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
+<text x="408" y="427">acción que vuelve (↩ bajo el origen)</text>
+<line x1="630" y1="424" x2="670" y2="424" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
+<text x="678" y="427">a la misma columna (↕ bajo el origen)</text>
+<text x="40" y="444">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<line x1="40" y1="460" x2="80" y2="460" stroke="#1b8a82" stroke-width="1.6" marker-end="url(#arrow-hover)"/>
+<text x="88" y="463">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+</g>
+<line x1="40" y1="486" x2="989" y2="486" stroke="#ddd"/>
+<text x="40" y="506" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 6 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="524">((Click_vis (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data</tspan>
+<tspan x="40" y="539">(Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | Click_analytics (Hover_graph</tspan>
+<tspan x="40" y="554">| Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths |</tspan>
+<tspan x="40" y="569">Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | Click_util (Hover_heap | Hover_palette |</tspan>
+<tspan x="40" y="584">Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* |</tspan>
+<tspan x="40" y="599">Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data</tspan>
+<tspan x="40" y="614">| Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)*</tspan>
+</text>
+<text x="40" y="647" font-weight="bold" fill="#222">Hover (21 acciones con efecto visible)</text>
+<text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
+<tspan x="40" y="665">Hover_vis, Hover_analytics, Hover_util, Hover_data, Hover_operator, Hover_graph, Hover_cluster, Hover_heap, Hover_palette, Hover_TreeBuilder,</tspan>
+<tspan x="40" y="680">Hover_Tree, Hover_OperatorSwitch, Hover_SortOperator, Hover_ShortestPaths, Hover_SpanningTree, Hover_HierarchicalCluster, Hover_MergeEdge,</tspan>
+<tspan x="40" y="695">Hover_FibonacciHeap, Hover_HeapNode, Hover_SizePalette, Hover_ShapePalette (21; bucle en el estado): stroke: (sin definir) -&gt; #000;</tspan>
+<tspan x="40" y="710">stroke-width: (sin definir) -&gt; 2</tspan>
+</text>
+</svg>
