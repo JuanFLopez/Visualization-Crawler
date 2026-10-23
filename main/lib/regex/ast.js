@@ -13,7 +13,7 @@
  * {type, node}) and may be SHARED between expressions: state elimination
  * reuses sub-expressions, so the AST is a DAG. Printing a node and measuring
  * it are both cached on the node (`_k`, `_n`), which is why sizeOf can say how
- * long a regex would be without printing it. Used by eliminate.js.
+ * long a regex would be without printing it.
  */
 
 const EMPTY = { type: 'empty' };

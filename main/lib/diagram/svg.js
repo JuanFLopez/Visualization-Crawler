@@ -61,7 +61,6 @@ function defs(hasPointer) {
  * @param {'loop'|'forward'|'side'|'back'} kind - a key of EDGE_STYLES
  * @param {string} d - the path geometry
  * @param {{highlighted: boolean, pointer: boolean, tip: string}} edge - tip: the text of its tooltip
- * @returns {string}
  */
 function edgePath(kind, d, { highlighted, pointer, tip }) {
   const style = EDGE_STYLES[kind];
@@ -272,7 +271,6 @@ function legendElements(y, { hierarchical, hasPointer }) {
 /**
  * The text blocks at the bottom, each a bold title and monospace lines.
  * @param {{title: string, color?: string, lines: string[]}[]} blocks - lines already wrapped
- * @param {number} startY
  * @param {number} width - of the whole diagram, for the separator line
  */
 function footerElements(blocks, startY, width) {
@@ -321,7 +319,6 @@ function toSVG(dfa, opts = {}) {
   const pairs = groupTransitions(dfa);
   const hasPointer = pairs.some((p) => p.pointer);
 
-  // footer: wrapped text blocks
   const maxChars = Math.floor((width - 2 * MARGIN) / MONO_CHAR_W);
   const footerBlocks = footer.map((b) => ({ ...b, lines: b.text.split('\n').flatMap((l) => wrapText(l, maxChars)) }));
   const footerH = footerBlocks.reduce((h, b) => h + 26 + b.lines.length * 15 + 10, footer.length ? 20 : 0);

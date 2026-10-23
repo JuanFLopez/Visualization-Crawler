@@ -23,12 +23,10 @@
  */
 
 const { fromTransitionsJson } = require('../automaton');
-const { cleanNames, stripNumber } = require('../names');
-const { toSVG } = require('../diagram');
+const { toSVG } = require('../diagram/svg');
 const { classifyEdges, cutDfa } = require('../cycles');
 const { buildIssues, issuesLog } = require('../issues');
 const { summarizeHovers, hoverNotes, hoverLines } = require('../hovers');
-const { compositeKey } = require('../util');
 const { buildRegexSection } = require('./regexSection');
 const { compareWithExpected } = require('./comparison');
 
@@ -38,31 +36,23 @@ const { compareWithExpected } = require('./comparison');
 const DEFAULT_MAX_REGEX_LENGTH = 500000;
 
 /**
- * Transitions whose clicked element was only partly visible when it was
- * discovered (see visibleFrac in lib/page/actionability.js), from the least
- * visible to the most.
+ * The `partiallyVisibleClicks` section and its log lines: the transitions whose
+ * clicked element was only partly visible when it was discovered (see
+ * visibleFrac in lib/page/actionability.js), from the least visible to the most.
  * @param {Object<string, Object<string, string>>} transitions
  * @param {Object<string, Object<string, number>>} visibility - state -> action -> visible fraction
- * @returns {{state: string, action: string, to: string, visible: number}[]}
- */
-function partiallyVisibleClicks(transitions, visibility) {
-  const list = [];
-  for (const [state, byAction] of Object.entries(visibility)) {
-    for (const [action, visible] of Object.entries(byAction)) {
-      const to = transitions[state] && transitions[state][action];
-      if (to !== undefined) list.push({ state, action, to, visible });
-    }
-  }
-  return list.sort((a, b) => a.visible - b.visible);
-}
-
-/**
- * The `partiallyVisibleClicks` section and its log lines.
  * @returns {{json: Object, log: string[]}|null} null when every click was fully visible
  */
 function partiallyVisibleSection(transitions, visibility) {
-  const partial = partiallyVisibleClicks(transitions, visibility);
+  const partial = [];
+  for (const [state, byAction] of Object.entries(visibility)) {
+    for (const [action, visible] of Object.entries(byAction)) {
+      const to = transitions[state] && transitions[state][action];
+      if (to !== undefined) partial.push({ state, action, to, visible });
+    }
+  }
   if (!partial.length) return null;
+  partial.sort((a, b) => a.visible - b.visible);
   const nTransitions = Object.values(transitions).reduce((n, t) => n + Object.keys(t).length, 0);
   return {
     json: {
@@ -75,23 +65,6 @@ function partiallyVisibleSection(transitions, visibility) {
     log: ['', `${partial.length} of ${nTransitions} transitions click elements that are only partly visible; the least visible ones:`,
       ...partial.slice(0, 5).map((p) => `    ${p.state} --${p.action}--> ${p.to}  (≈${Math.round(p.visible * 100)}% visible)`)],
   };
-}
-
-/**
- * The hovers the crawler discarded, with clean names (the ones that are not
- * in the table did not go through cleanNames), repeated entries merged.
- * @param {{action: string, reason: string, states: number}[]} list - as the crawler returns them
- * @param {Object<string, string>} renamed - old action -> new action, from cleanNames
- * @returns {{action: string, reason: string, states: number}[]}
- */
-function mergeIgnored(list, renamed) {
-  const merged = new Map();
-  for (const { action, reason, states } of list) {
-    const name = renamed[action] ?? stripNumber(action);
-    const key = compositeKey(name, reason);
-    merged.set(key, { action: name, reason, states: (merged.has(key) ? merged.get(key).states : 0) + states });
-  }
-  return [...merged.values()];
 }
 
 // Footer blocks of the diagram: the text under the graph, each { title, text, color? }.
@@ -138,22 +111,18 @@ function issuesBlock(issues, { expectedRegex, matchedName, target }) {
  */
 function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10, maxRegexLength = DEFAULT_MAX_REGEX_LENGTH, traceRegex = false } = {}) {
   const log = [];
-  const clean = cleanNames(data);
-  const nRenamed = Object.keys(clean.renamed).length;
-  if (nRenamed) log.push(`names cleaned: ${nRenamed} actions without a numeric suffix (e.g. "${Object.keys(clean.renamed)[0]}" -> "${Object.values(clean.renamed)[0]}")`);
-
-  const dfa = fromTransitionsJson(clean);
-  const visibility = clean.visibility || {};
+  const dfa = fromTransitionsJson(data);
+  const visibility = data.visibility || {};
   const cls = classifyEdges(dfa);
   const cut = cutDfa(dfa, cls);
 
   const regexSection = buildRegexSection({ dfa, cut, cls, visibility, maxRegexLength, traceRegex });
   const { cycleCutRegex, completeRegex } = regexSection;
-  const json = { initialState: clean.initialState, transitions: clean.transitions, regex: regexSection.regex };
+  const json = { initialState: data.initialState, transitions: data.transitions, regex: regexSection.regex };
   log.push(...regexSection.log);
 
   if (Object.keys(visibility).length) json.visibility = visibility;
-  const partial = partiallyVisibleSection(clean.transitions, visibility);
+  const partial = partiallyVisibleSection(data.transitions, visibility);
   if (partial) {
     json.partiallyVisibleClicks = partial.json;
     log.push(...partial.log);
@@ -164,9 +133,9 @@ function buildReport(data, { expectedRegex = null, prefixes = false, limit = 10,
   // listed apart as what is NOT an action. In --from mode they arrive already
   // summarized.
   const hovers = data.hovers || summarizeHovers({
-    transitions: clean.transitions,
-    effects: clean.effects || {},
-    ignored: mergeIgnored(data.ignoredHovers || [], clean.renamed),
+    transitions: data.transitions,
+    effects: data.effects || {},
+    ignored: data.ignoredHovers || [],
   });
   if (hovers) {
     json.hovers = hovers;

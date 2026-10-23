@@ -102,7 +102,6 @@ function epsilonClosure(states, stateSet) {
  * Subset construction: NFA -> DFA. Partial: there is no explicit trap state, a
  * missing transition rejects.
  * @param {ReturnType<typeof astToNfa>} nfa
- * @param {Set<string>} alphabet
  * @returns {import('../automaton').DFA} its states are named after the NFA states they stand for ("0,3,4")
  */
 function nfaToDfa(nfa, alphabet) {
@@ -143,7 +142,6 @@ function nfaToDfa(nfa, alphabet) {
  * Compiles a regex (string) into a DFA with accepting states (standard
  * semantics). `alphabet` is needed to expand '.' to "any symbol"; the tokens
  * the regex mentions are added on their own.
- * @param {string} src
  * @param {Iterable<string>} [alphabet]
  * @returns {import('../automaton').DFA}
  * @throws {Error} on a syntax error (see parse)

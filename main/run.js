@@ -35,12 +35,11 @@ const fs = require('fs');
 const path = require('path');
 const { crawl } = require('./crawler');
 const { ERROR_STATE } = require('./lib/constants');
-const { startServer } = require('./lib/server');
-const { resolveChromePath } = require('./lib/browser');
+const { startServer, resolveChromePath } = require('./lib/host');
 const { prettifyStates } = require('./lib/labels');
 const { buildReport } = require('./lib/report');
 const { KIND } = require('./lib/issues');
-const { compileRegex } = require('./lib/regex');
+const { compileRegex } = require('./lib/regex/compile');
 
 // Crawler options that can come from the visualization's config.js and be overridden on top of it:
 //   settleMs            fixed real-time pause after every gesture (default: virtual time)
@@ -73,7 +72,6 @@ function validateRegex(src) {
 
 /**
  * The visualization's own crawler options, from its optional config.js.
- * @param {string} vizDir
  * @returns {Object} the exported object, or {} when there is no config.js
  */
 function loadVizConfig(vizDir) {
@@ -89,7 +87,6 @@ function loadVizConfig(vizDir) {
  * summary); everything else is derived again.
  * @param {string} fromTransitions - the file, or the folder that contains it
  * @param {string} [outDirIn] - where to write; defaults to the folder of the input
- * @param {(msg: string) => void} onLog
  * @returns {{ data: Object, outDir: string }} outDir: where to write by default, next to the input
  */
 function loadTransitions(fromTransitions, outDirIn, onLog) {
@@ -118,9 +115,7 @@ function findErrorTransitions(transitions) {
 
 /**
  * Writes transitions.json and automaton.svg (creating the folder if needed).
- * @param {string} outDir
  * @param {{json: Object, svg: string}} report - from buildReport
- * @param {(msg: string) => void} onLog
  * @returns {{transitions: string, svg: string}} the paths written
  */
 function writeOutputs(outDir, report, onLog) {

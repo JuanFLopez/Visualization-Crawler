@@ -25,10 +25,6 @@
  * that chains siblings (vis -> animate -> flex) as if they were levels. With
  * no hierarchy in the names (or when the parent has no transition to the
  * child) the parent is the BFS one.
- *
- * Used by lib/report (the cut regex and the cycle counts), lib/issues (which
- * edges of an event series are back edges or shortcuts) and shown in the
- * diagram through the cut regex.
  */
 
 const { DFA } = require('./automaton');
@@ -39,8 +35,6 @@ const { compositeKey } = require('./util');
  * Classifies every transition of the states reachable from the initial one.
  * @param {import('./automaton').DFA} dfa - the observed automaton
  * @returns {{
- *   parent: Map<string, string>,       // spanning tree: state -> its parent
- *   hierarchical: boolean,             // true when the state names are hierarchy paths
  *   counts: {tree: number, back: number, shortcut: number},
  *   shortcuts: {state: string, action: string, to: string}[],
  *   kindOf: (state: string, action: string) => 'tree'|'back'|'shortcut'|null,
@@ -92,8 +86,6 @@ function classifyEdges(dfa) {
   }
 
   return {
-    parent,
-    hierarchical,
     counts,
     shortcuts,
     /** @returns {'tree'|'back'|'shortcut'|null} null for __ERROR__ or a transition from an unreachable state */

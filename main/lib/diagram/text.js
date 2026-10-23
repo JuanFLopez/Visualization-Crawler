@@ -1,6 +1,5 @@
 /**
- * Text helpers for the diagram (used by layout.js to size the nodes and
- * svg.js to write the labels): state labels, edge labels, XML escaping and
+ * Text helpers for the diagram: state labels, edge labels, XML escaping and
  * line wrapping.
  */
 
@@ -9,11 +8,7 @@ const { HIERARCHY_SEPARATOR } = require('../constants');
 
 const MAX_EDGE_LABEL = 26;
 
-/**
- * Text inside a state: the last segment of its path, cut when long.
- * @param {string} state
- * @returns {string}
- */
+/** Text inside a state: the last segment of its path, cut when long. */
 function defaultLabel(state) {
   // "prettified" states (see lib/labels.js) use " > " as the path separator
   // ("root > A > A1"); hand-built names (window.__testState) usually use "/"
@@ -28,11 +23,7 @@ function escapeXml(s) {
   return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' }[c]));
 }
 
-/**
- * The action names of an edge on one line; when too long, the first ones and "+N".
- * @param {string[]} symbols
- * @returns {string}
- */
+/** The action names of an edge on one line; when too long, the first ones and "+N". */
 function abbreviate(symbols) {
   const names = symbols.map(displayAction);
   const full = names.join(', ');

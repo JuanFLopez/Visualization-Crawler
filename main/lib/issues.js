@@ -17,9 +17,6 @@
  * action) are the same problem: they are grouped and the shortest series is
  * shown (diff is BFS, so that is the first one).
  *
- * The result is the `issues` section of transitions.json (buildIssues) and the
- * lines of the log (issuesLog); lib/report/index.js calls both.
- *
  * @typedef {Object} IssueEvent one step of a series of events
  * @property {number} step - 1-based
  * @property {string} state - the state the action was performed in
@@ -71,7 +68,6 @@ function replay(dfa, seq, cls) {
 /**
  * First step (1-based) at which the expected regex stops admitting the sequence, or null if it admits it to the end.
  * @param {import('./automaton').DFA} expected
- * @param {string[]} seq
  */
 function expectedDivergence(expected, seq) {
   let cur = expected.initial;
@@ -95,9 +91,7 @@ function shortestPath(tree, target) {
  * expected regex does not accept as finished; `alsoExpected`: an `error` the expected regex admits;
  * `reason` (see GAP) and `form` ('language' or 'completeInteractions') refine the wording.
  * @param {string} kind - see KIND
- * @param {number} failingStep
  * @param {IssueEvent|{action: string, state: string}} event - the failing step
- * @returns {string}
  */
 function describe(kind, failingStep, event, { incomplete = false, alsoExpected = false, reason = null, form = 'language' } = {}) {
   const a = `"${shortAction(event.action)}"`; // with the verb in front ("hover") the prefix is redundant

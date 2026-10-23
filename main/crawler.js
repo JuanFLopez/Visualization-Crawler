@@ -17,9 +17,8 @@
  * unstable stateKeyFn / fingerprint hits a hard step limit (maxSteps) that
  * aborts instead of growing without bound.
  *
- * Where it sits: run.js calls crawl() with the options of the run and then
- * turns the raw tables it returns into the report (lib/labels.js, lib/report).
- * crawl() knows nothing about files, regexes or diagrams.
+ * crawl() knows nothing about files, regexes or diagrams: run.js turns the raw
+ * tables it returns into the report.
  *
  * Every part of the crawl shares one context object, built in runCrawl:
  *
@@ -41,7 +40,7 @@
  * @property {(state: string) => Promise<void>} expand - expands a state (used when a hover discovers one)
  */
 
-const { launchBrowser } = require('./lib/browser');
+const { launchBrowser } = require('./lib/host');
 const { createSession } = require('./lib/crawl/session');
 const { createNaming, renameUnstableActions } = require('./lib/crawl/naming');
 const { createNavigator } = require('./lib/crawl/navigator');
@@ -68,11 +67,9 @@ const { newNode, collectResult } = require('./lib/crawl/graph');
  * @param {string} [opts.backSelector] - fast navigation mode (see
  *   lib/crawl/navigator.js). Generic mode (reload + replay) when omitted.
  * @param {number} [opts.settleMs] - FIXED pause after every gesture. When
- *   omitted (or null) the wait is adaptive: after every gesture or load it waits
- *   until the state stops changing, no requests are in flight and no animation
- *   frames are requested (see window.__crawlerActivity in instrument.js), so it
- *   depends neither on a number picked by eye nor on which element is clicked to
- *   measure it.
+ *   omitted (or null) the wait is adaptive: until the state stops changing, no
+ *   requests are in flight and no animation frames are requested (see
+ *   window.__crawlerActivity in instrument.js).
  * @param {number} [opts.discoverySettleMs] - settle used specifically when
  *   re-entering a state before listing its candidates. Defaults to settleMs
  *   (fixed or adaptive).
@@ -132,7 +129,6 @@ async function startFresh(session) {
 
 /**
  * A counter of the interactions of the crawl.
- * @param {number} maxSteps
  * @returns {() => void} call it once per candidate tried; it throws when the total passes `maxSteps`
  */
 function createStepCounter(maxSteps) {

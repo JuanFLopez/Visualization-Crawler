@@ -19,8 +19,7 @@ const fs = require('fs');
 const path = require('path');
 const { installPageHelpers, isActionable } = require('./lib/page');
 const { measureSettle } = require('./lib/crawl/settle');
-const { startServer } = require('./lib/server');
-const { resolveChromePath, launchBrowser } = require('./lib/browser');
+const { startServer, resolveChromePath, launchBrowser } = require('./lib/host');
 
 const VIEWPORT = { width: 700, height: 700 };
 
@@ -28,7 +27,6 @@ const VIEWPORT = { width: 700, height: 700 };
  * First point where two readings differ (';' separates one element per
  * fragment), with context, so thousands of characters need not be read by hand.
  * @param {string} a - a fingerprint from window.__crawlerStateDebug()
- * @param {string} b
  * @returns {{index: number, a: string, b: string}|null} the element number and both versions; null if equal
  */
 function firstDifference(a, b) {
@@ -92,8 +90,6 @@ async function checkInitialStability(browser, url, initScripts, { waitMs, rounds
  * "settles") or never do. Up to 10 candidates are tried, since the first may be
  * a no-op or may break the page.
  * @param {import('playwright').Browser} browser
- * @param {string} url
- * @param {string[]} initScripts
  * @param {{waitMs: number, containerSelector: string|null}} opts
  */
 async function checkSettling(browser, url, initScripts, { waitMs, containerSelector }) {

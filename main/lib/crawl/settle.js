@@ -81,7 +81,7 @@ function settle(page, wait) {
  * Clicks `sel` and measures when the state stops changing: it reads every
  * `pollMs` and counts the page as settled once `quietMs` pass with no change.
  * Returns the instant (ms since the click) of the last change observed, or
- * null when it is still changing on reaching `maxMs`. Used by diagnose.js.
+ * null when it is still changing on reaching `maxMs`.
  */
 async function measureSettle(page, sel, readFn, { pollMs = 50, quietMs = 400, maxMs = 6000, onChange = null } = {}) {
   let prev = await readFn();

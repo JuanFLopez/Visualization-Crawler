@@ -4,23 +4,11 @@
  * the clicks, the browser's mouse is never moved). They are found through an
  * addEventListener (what D3's selection.on does), through a handler in a
  * property or an attribute, through a stylesheet :hover (the state is FORCED
- * through the DevTools protocol, see cssHoverSession.js), and through a
- * listener delegated on a container, probing the D3 marks inside it. A hover
- * enters the automaton only when it changes something visible: a hover that
- * does nothing, or that sits on something a user could not touch, is not an
- * interaction and is not invented. A highlight or a tooltip is one more action
- * of the same state (a loop) with its effect noted; a hover that opens
- * something or leaves a change leads to another state, with its unhover back.
- * Move-type hovers are probed at the center and at the edge, and a warning
- * says when the effect depends on where the pointer is. What a probe means is
- * decided in lib/hovers.js.
- *
- * Native browser tooltips (an SVG <title> child or a title="" attribute) are
- * deliberately NOT hover actions, and there is no option to count them. D3
- * has no tooltip code (7.9.0 never creates a <title>); the browser draws the
- * tooltip itself, with no listener and no DOM change, so no effect can ever
- * be observed. A hover that cannot be verified would be a phantom. The <title>
- * text is still used to NAME actions (see readableOf in lib/page/discovery.js).
+ * through the DevTools protocol, see gestures.js), and through a listener
+ * delegated on a container, probing the D3 marks inside it. Move-type hovers
+ * are probed at the center and at the edge, and a warning says when the effect
+ * depends on where the pointer is. What a probe means (inert, decorative or
+ * structural, and why native tooltips are not hovers) is decided in lib/hovers.js.
  */
 
 const { ERROR_STATE } = require('../constants');

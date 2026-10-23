@@ -275,13 +275,14 @@ run.js ── crawler.js ──────────────► raw table
 | `crawler.js` | `crawl()`: wires the exploration together |
 | `diagnose.js` | the diagnosis tool above |
 | `instrument.js` | injected into the page: finds listeners, fingerprints the state, snapshots effects |
-| `lib/crawl/` | session (the page), navigator, expand, hoverProbe, graph, naming, settle, gestures |
+| `lib/crawl/` | session (the page), navigator, expand, hoverProbe, graph, naming, settle, gestures (also forces CSS `:hover` through DevTools) |
 | `lib/page/` | functions that run inside the page: actionability, discovery, pointer. The `window.__crawler*` contract between the two halves is documented in `lib/page/index.js`. |
 | `lib/report/` | builds `transitions.json` and the diagram input |
 | `lib/regex/`, `lib/automaton.js` | regex parser and compiler, state elimination, the DFA type |
 | `lib/cycles.js`, `lib/diff.js`, `lib/issues.js` | cycle cutting, language comparison, unexpected behaviors |
 | `lib/diagram/` | layout and SVG |
-| `lib/hovers.js`, `lib/cssHover.js`, `lib/actions.js`, `lib/labels.js`, `lib/names.js` | hover semantics, `:hover` rule parser, action names, state names, name clean-up |
+| `lib/hovers.js`, `lib/cssHover.js`, `lib/actions.js`, `lib/labels.js` | hover semantics, `:hover` rule parser, action names, state names |
+| `lib/host.js`, `lib/constants.js`, `lib/util.js` | the local server and Chromium; shared constants; small helpers |
 
 ## The examples
 

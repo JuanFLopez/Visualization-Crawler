@@ -8,9 +8,6 @@
  * it is among the shortest. More than one is collected: up to `limit` per
  * direction (each pair is visited once, so they are counterexamples from
  * different "places" of the automaton, not trivial extensions of one).
- *
- * Used by lib/report/comparison.js (observed automaton vs the expected regex)
- * and, through its counterexamples, by lib/issues.js.
  */
 
 const { compositeKey } = require('./util');

@@ -24,10 +24,6 @@
  * hover that cannot be verified, which is exactly the phantom this module
  * exists to keep out. The <title> text is still used to name actions.
  *
- * Used by lib/crawl/hoverProbe.js (classifyProbe, describeEffect, selfKeyOf,
- * IGNORE_REASON) while crawling, and by lib/report (summarizeHovers,
- * hoverNotes, hoverLines) when the table is turned into the report.
- *
  * A "snapshot" below is the array __crawlerEffects returns (instrument.js):
  * { k: key, p: parent key, t: tag, h?: 1 (hidden), a?: attributes, x?: own text,
  * cs?: changed computed styles }.
@@ -81,8 +77,7 @@ function classifyProbe({ state, hoveredKey, before, after, restored, actionsBefo
   return { type: decorative ? 'decorative' : 'structural', reverted, revealed, hidden };
 }
 
-// text helpers for the effect notes
-const q = (s) => JSON.stringify(s); // a quoted string
+const q =(s) => JSON.stringify(s); // a quoted string
 const plural = (n, noun) => `${n} ${noun}${n === 1 ? '' : 's'}`; // "1 state", "2 states"
 // an attribute value for a note: "(unset)" when missing, cut when long
 const show = (v) => (v === undefined ? '(unset)' : v.length > 60 ? `${v.slice(0, 57)}...` : v);
@@ -157,7 +152,6 @@ function describeEffect(before, after, selfKey) {
  * The crawler id of a gesture selector, or null: [data-crawler-id="c12"] -> "id:c12".
  * The "id:" key format must match the keys __crawlerEffects builds in instrument.js.
  * @param {string} sel - the selector of a gesture
- * @returns {string|null}
  */
 function selfKeyOf(sel) {
   const m = /data-crawler-id="([^"]+)"/.exec(sel);
@@ -259,7 +253,6 @@ function hoverNotes(hovers) {
  * do the same. After those come the probed elements that are NOT actions,
  * with the reason.
  * @param {Object|null} hovers - the section built by summarizeHovers
- * @returns {string[]}
  */
 function hoverLines(hovers) {
   if (!hovers) return [];

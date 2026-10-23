@@ -46,8 +46,6 @@ const ensureField = (node, field) => (node[field] = node[field] || {});
 /**
  * Shortest sequence of already observed gestures from `from` to `to`, or null.
  * @param {Map<string, GraphNode>} graph
- * @param {string} from
- * @param {string} to
  * @returns {import('./gestures').Gesture[]|null}
  */
 function knownRoute(graph, from, to) {

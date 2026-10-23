@@ -88,7 +88,7 @@ function renameUnstableActions(graph) {
   const rename = new Map();
   for (const [action, { readables, tag }] of seen) {
     if (readables.size < 2) continue;
-    // '#n' and not '_n': lib/names.js strips "_<number>" suffixes
+    // "#2", "#3"... tell apart elements of the same tag
     const kind = kindOfAction(action);
     let name = actionName(kind, tag);
     for (let k = 2; taken.has(name); k++) name = actionName(kind, `${tag}#${k}`);
@@ -113,12 +113,7 @@ function renameUnstableActions(graph) {
     return out;
   };
   for (const node of graph.values()) {
-    node.transitions = renameKeys(node.transitions);
-    node.gestures = renameKeys(node.gestures);
-    node.visibility = renameKeys(node.visibility);
-    node.labels = renameKeys(node.labels);
-    node.inert = renameKeys(node.inert);
-    node.effects = renameKeys(node.effects);
+    for (const field of ['transitions', 'gestures', 'visibility', 'labels', 'inert', 'effects']) node[field] = renameKeys(node[field]);
     for (const effect of Object.values(node.effects || {})) {
       for (const list of [effect.reveals, effect.hides]) {
         if (list) list.forEach((a, i) => { list[i] = rename.get(a) ?? a; });

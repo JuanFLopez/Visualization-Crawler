@@ -22,7 +22,6 @@ const { newNode, ensureField } = require('./graph');
  * name the states by their place in the hierarchy) and, for a click on a partly
  * visible element, how much of it was visible.
  * @param {import('./graph').GraphNode} node - the state being expanded
- * @param {string} action
  * @param {import('./gestures').Gesture} gesture
  * @param {import('../page/discovery').Candidate} info
  */

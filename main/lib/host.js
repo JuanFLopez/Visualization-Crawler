@@ -1,11 +1,13 @@
 /**
- * Static file server for the visualization under test. The crawler never opens
- * the page from disk: it loads it from here, so relative URLs, fetch and XHR
- * (d3.json, d3.csv) behave as on a real site. Used by run.js and diagnose.js.
+ * Hosting the page under test: a local static file server and the headless
+ * Chromium (Playwright) that loads from it. The crawler never opens the page
+ * from disk, so relative URLs, fetch and XHR (d3.json, d3.csv) behave as on a
+ * real site.
  */
 const fs = require('fs');
 const path = require('path');
 const http = require('http');
+const { chromium } = require('playwright');
 
 const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json', '.css': 'text/css', '.csv': 'text/csv', '.svg': 'image/svg+xml' };
 
@@ -34,4 +36,26 @@ function startServer(dir) {
   });
 }
 
-module.exports = { startServer };
+/**
+ * Which Chromium executable to launch. On Linux (a server, a lambda) the one
+ * bundled in @sparticuz/chromium when it is installed; everywhere else
+ * undefined, which makes Playwright use its own downloaded browser.
+ */
+async function resolveChromePath() {
+  if (process.platform !== 'linux') return undefined;
+  try {
+    return await require('@sparticuz/chromium').executablePath();
+  } catch (e) {
+    return undefined;
+  }
+}
+
+/**
+ * @param {string} [executablePath] - from resolveChromePath()
+ * @returns {Promise<import('playwright').Browser>}
+ */
+function launchBrowser(executablePath) {
+  return chromium.launch({ executablePath, headless: true, args: ['--no-sandbox'] });
+}
+
+module.exports = { startServer, resolveChromePath, launchBrowser };

@@ -5,7 +5,8 @@
  */
 
 const { prefixClosure, completeInteractionsDfa } = require('../automaton');
-const { compileRegex, tokenize, literalsOf } = require('../regex');
+const { compileRegex } = require('../regex/compile');
+const { tokenize, literalsOf } = require('../regex/parse');
 const { diff } = require('../diff');
 const { DEFAULT_KIND, actionName } = require('../actions');
 const { AUTOMATON } = require('../constants');

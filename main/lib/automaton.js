@@ -10,10 +10,6 @@
  * set of action sequences that can really be executed from the initial
  * state. The automaton built from a regex (lib/regex) has acceptance of
  * its own (standard semantics).
- *
- * This is the shared data structure of the analysis: lib/report builds the
- * observed DFA from transitions.json, lib/cycles cuts it, lib/regex converts it
- * to and from regexes, lib/diff compares two of them and lib/diagram draws one.
  */
 
 const { ERROR_STATE } = require('./constants');
@@ -47,8 +43,6 @@ class DFA {
   }
 
   /**
-   * @param {string} state
-   * @param {string} symbol
    * @returns {string|null} the target state, or null when there is no such transition (string rejected)
    */
   step(state, symbol) {
@@ -110,8 +104,6 @@ function fromTransitionsJson({ initialState, transitions }) {
 /**
  * `targets` plus every state that can reach one of them.
  * @param {DFA} dfa
- * @param {Iterable<string>} targets
- * @returns {Set<string>}
  */
 function statesReaching(dfa, targets) {
   const preds = new Map();

@@ -85,7 +85,6 @@ function createNavigator({ session, graph, backSelector, current }) {
      * path was discovered: with `strict` it aborts, otherwise it returns false so
      * the caller can try another path.
      * @param {import('./gestures').Gesture[]} gestures
-     * @param {number|null} wait
      * @param {{strict?: boolean}} [opts]
      * @returns {Promise<boolean>} false when a hover could not be replayed (only if not strict)
      */

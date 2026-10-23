@@ -14,16 +14,12 @@ const { mapKeys } = require('./util');
 const ROOT_LABEL = 'root';
 
 /**
- * The crawler identifies each state by a fingerprint (a hash), which is fine
- * for equality but says nothing to a reader. This builds a human name per
- * state from the path of ACTIONS (already readable, see createNaming in
- * lib/crawl/naming.js) that first reaches it from the root: "root", "root > A",
- * "root > A > A1", and so on.
- *
- * It needs nothing from the browser: it works purely on the generated
- * transitions.json, running a BFS (the order in which the crawler discovered
- * the states) and numbering on collisions (which should not happen, since
- * each state has a single shortest path recorded, but just in case).
+ * Builds a human name per state from the path of ACTIONS (already readable,
+ * see createNaming in lib/crawl/naming.js) that first reaches it from the
+ * root: "root", "root > A", "root > A > A1", and so on. It works purely on the
+ * transition table with a BFS (the order in which the crawler discovered the
+ * states), numbering on collisions (which should not happen, since each state
+ * has a single shortest path recorded, but just in case).
  *
  * When `data.labels` is also present (readable names per state and action,
  * see collectResult in lib/crawl/graph.js) and describes a hierarchy, names come from the data
@@ -31,9 +27,8 @@ const ROOT_LABEL = 'root';
  *
  * @param {{initialState: string, transitions: Object, visibility?: Object, effects?: Object, labels?: Object}} data -
  *   the raw crawl tables; visibility and effects are keyed by state and get their keys renamed too
- * @returns {{initialState: string, transitions: Object, labelOf: Object, hierarchical: boolean, visibility?: Object, effects?: Object}}
- *   labelOf maps the original hash -> readable name, in case it has to be
- *   correlated with logs.
+ * @returns {{initialState: string, transitions: Object, hierarchical: boolean, visibility?: Object, effects?: Object}}
+ *   hierarchical: the names come from the data hierarchy rather than from click paths
  */
 function prettifyStates(data) {
   const { initialState, transitions } = data;
@@ -72,7 +67,6 @@ function prettifyStates(data) {
   const result = {
     initialState: labelOf.get(initialState),
     transitions: renamedTransitions,
-    labelOf: Object.fromEntries(labelOf),
     hierarchical: !!hierarchy,
   };
   const renameState = (state) => labelOf.get(state) ?? state;

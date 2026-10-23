@@ -6,8 +6,8 @@
  * next to its parent; otherwise the column is the depth (BFS) from the initial
  * state, grouped by the state each one was discovered from.
  *
- * Pure geometry: it knows nothing about SVG. svg.js calls layout() and draws
- * what it returns. All distances are in the SVG's user units (about CSS px).
+ * Pure geometry, it knows nothing about SVG: distances are in the SVG's user
+ * units (about CSS px).
  */
 
 const { ERROR_STATE, HIERARCHY_SEPARATOR: SEP } = require('../constants');
@@ -26,7 +26,6 @@ const LANE_GAP = 24; // gap between the columns and the lane of an edge that ski
  * States to draw: the ones with a row in the table PLUS the ones that only
  * appear as a target (e.g. the crawler's __ERROR__, which is never expanded).
  * @param {import('../automaton').DFA} dfa
- * @returns {string[]}
  */
 function drawnStates(dfa) {
   const all = new Set(dfa.states());
@@ -68,7 +67,6 @@ function assignDepths(dfa, states) {
     }
   }
 
-  // unreachable states and __ERROR__: columns of their own at the end
   let maxDepth = Math.max(0, ...depth.values());
   const unreachable = states.filter((s) => !depth.has(s) && s !== ERROR_STATE);
   if (unreachable.length) { maxDepth++; unreachable.forEach((s) => { depth.set(s, maxDepth); order.set(s, order.size); }); }
@@ -114,16 +112,9 @@ function layout(dfa, labelFn) {
   const states = drawnStates(dfa);
   const { depth, parent, order, hierarchical } = assignDepths(dfa, states);
 
-  const columns = [];
-  for (const s of states) {
-    const d = depth.get(s);
-    (columns[d] = columns[d] || []).push(s);
-  }
-  for (let d = 0; d < columns.length; d++) {
-    columns[d] = columns[d] || [];
-  }
+  const columns = Array.from({ length: Math.max(...states.map((s) => depth.get(s))) + 1 }, () => []);
+  for (const s of states) columns[depth.get(s)].push(s);
 
-  // width of each node according to its label
   const size = new Map(states.map((s) => [s, { w: Math.max(56, labelFn(s).length * CHAR_W + 22), h: NODE_H }]));
   const { labelWidth, gapBefore } = columnGaps(dfa, columns, depth);
 

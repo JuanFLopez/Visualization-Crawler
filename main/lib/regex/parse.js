@@ -34,8 +34,6 @@ const SPECIAL = '()|*+?{},.';
 /**
  * Splits a regex into tokens: the special characters on their own and every
  * other run of non-space characters (an action name) as one token.
- * @param {string} src
- * @returns {string[]}
  */
 function tokenize(src) {
   const tokens = [];
@@ -54,7 +52,6 @@ function tokenize(src) {
 
 /**
  * Recursive-descent parser for the grammar above.
- * @param {string} src
  * @param {Iterable<string>} alphabet - what '.' expands to
  * @returns {AstNode}
  * @throws {Error} with a message that says what was expected and where, for a syntax error
@@ -141,7 +138,6 @@ function parse(src, alphabet) {
 /**
  * The literal tokens that appear in the regex, so that a comparison can tell
  * which symbols it mentions that the crawler never saw (typically typos).
- * @param {string} src
  * @returns {Set<string>} the tokens that are action names (not operators, not the numbers of {n,m})
  */
 function literalsOf(src) {

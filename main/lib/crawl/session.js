@@ -18,9 +18,8 @@
  */
 
 const { installPageHelpers } = require('../page');
-const { gesture, PERFORM } = require('./gestures');
+const { gesture, resetCssHover, PERFORM } = require('./gestures');
 const { settle } = require('./settle');
-const { resetCssHover } = require('./cssHoverSession');
 const { selectorFor } = require('./naming');
 
 /**

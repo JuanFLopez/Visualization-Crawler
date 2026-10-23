@@ -62,7 +62,6 @@ async function installPageHelpers(page) {
  * Generic "actionable now" filter for a loose locator (used by diagnose.js).
  * Needs installPageHelpers to have run on the page.
  * @param {import('playwright').Locator} locator
- * @returns {Promise<boolean>}
  */
 function isActionable(locator) {
   return locator.evaluate((node) => window.__crawlerIsActionable(node));

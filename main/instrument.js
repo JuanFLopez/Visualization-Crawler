@@ -38,22 +38,18 @@
  * visualizations expose no attributes to fingerprint; those need a manual
  * window.__testState.
  *
- * Hovers that do not go through addEventListener on the element itself are
- * found by the crawler in other ways (handlers in a property or an inline
- * attribute, stylesheet :hover rules, listeners delegated on a container: see
- * __crawlerCandidates and __crawlerMarks in lib/page/discovery.js). Still not seen: listeners on
- * window / document, effects on pseudo-elements (::after), :hover rules from a
- * stylesheet of ANOTHER origin (the browser does not let them be read), and
- * effects that do not go through the DOM (a <canvas>).
+ * Hovers that do not go through addEventListener on the element itself
+ * (inline handlers, stylesheet :hover rules, delegated listeners) are found by
+ * lib/page/discovery.js. Still not seen: listeners on window / document,
+ * effects on pseudo-elements (::after), :hover rules from a stylesheet of
+ * ANOTHER origin (the browser does not let them be read), and effects that do
+ * not go through the DOM (a <canvas>). Native browser tooltips are not hovers
+ * either (see lib/hovers.js).
  *
  * How it is loaded: run.js and diagnose.js read this file as TEXT and pass it
  * to page.addInitScript, so it is not a module. It must stay a single
  * self-contained script (no require, no import), and it talks to the Node side
  * only through the window.__crawler* globals listed in lib/page/index.js.
- *
- * Native browser tooltips (an SVG <title> child or a title="" attribute) are
- * not hovers either: the browser draws them with no listener and no DOM change,
- * so no effect can be observed (see lib/crawl/hoverProbe.js).
  */
 (function () {
   try { localStorage.clear(); } catch (e) {}
