@@ -15,52 +15,51 @@
  *                  without opening the browser (to compare against another
  *                  regex, or to regenerate the diagram).
  * and the comparison against an expected regex is optional in both.
+ *
+ * The pipeline:
+ *   crawl (crawler.js, in a headless browser)  ->  readable state names (lib/labels.js)
+ *     ->  report (lib/report: regexes, comparison, issues, diagram)  ->  transitions.json + automaton.svg
+ * In transitions mode the first two steps are skipped: the table is read from
+ * the file instead.
+ *
+ * Per-visualization configuration: a `config.js` next to the visualization's
+ * index.html may export an object with crawl options (see CRAWLER_OPTIONS and
+ * "Configuration" in the README). The `crawler` option of run() and the
+ * matching command-line flags override it.
+ *
+ * Exit codes of the command line: 0 ok (or the expected regex matched),
+ * 1 error, 2 the expected regex differs from what was observed or some click
+ * breaks the page.
  */
 const fs = require('fs');
 const path = require('path');
-const http = require('http');
-const { crawl, ERROR_STATE } = require('./crawler');
+const { crawl } = require('./crawler');
+const { ERROR_STATE } = require('./lib/constants');
+const { startServer } = require('./lib/server');
+const { resolveChromePath } = require('./lib/browser');
 const { prettifyStates } = require('./lib/labels');
 const { buildReport } = require('./lib/report');
+const { KIND } = require('./lib/issues');
 const { compileRegex } = require('./lib/regex');
 
-const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json', '.css': 'text/css', '.csv': 'text/csv', '.svg': 'image/svg+xml' };
-
-// crawler options that can be overridden (on top of the visualization's config.js)
+// Crawler options that can come from the visualization's config.js and be overridden on top of it:
+//   settleMs            fixed real-time pause after every gesture (default: virtual time)
+//   discoverySettleMs   the same, before listing the candidates of a newly visited state
+//   maxStates           states to discover before stopping (the result is then marked incomplete)
+//   maxSteps            hard cap on interactions, a safety net against an unstable state key
+//   containerSelector   CSS selector: restrict detection and state to this container
+//   backSelector        CSS selector of an element that goes "up one level": enables fast navigation
+//   clickableSelector   what counts as clickable (default: what instrument.js marked)
+//   hoverableSelector   what counts as hoverable (default: what instrument.js marked)
+//   hover               false to probe clicks only
+//   maxDelegated        cap on the D3 marks probed per delegated listener (0 = none)
+// A config.js may also export any other option of crawl(), for example stateKeyFn.
 const CRAWLER_OPTIONS = ['settleMs', 'discoverySettleMs', 'maxStates', 'maxSteps', 'containerSelector', 'backSelector', 'clickableSelector', 'hover', 'hoverableSelector', 'maxDelegated'];
-
-// Port 0 lets the system pick a free one, so several runs (or a GUI with
-// several tabs) do not step on each other.
-function startServer(dir) {
-  return new Promise((resolve, reject) => {
-    const server = http.createServer((req, res) => {
-      const rel = decodeURIComponent(req.url.split('?')[0] === '/' ? '/index.html' : req.url.split('?')[0]);
-      const filePath = path.join(dir, rel);
-      if (!filePath.startsWith(dir)) { res.writeHead(403); res.end(); return; }
-      fs.readFile(filePath, (err, data) => {
-        if (err) { res.writeHead(404); res.end(); return; }
-        res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'text/plain' });
-        res.end(data);
-      });
-    });
-    server.on('error', reject);
-    server.listen(0, '127.0.0.1', () => resolve(server));
-  });
-}
-
-async function resolveChromePath() {
-  if (process.platform !== 'linux') return undefined;
-  try {
-    const chromium = require('@sparticuz/chromium');
-    return await chromium.executablePath();
-  } catch (e) {
-    return undefined;
-  }
-}
 
 /**
  * Validates a regex without running anything (so a GUI can flag syntax errors
  * while the user types).
+ * @param {string} src - the expected regex, in the token syntax of lib/regex
  * @returns {{ ok: true } | { ok: false, error: string }}
  */
 function validateRegex(src) {
@@ -72,11 +71,66 @@ function validateRegex(src) {
   }
 }
 
+/**
+ * The visualization's own crawler options, from its optional config.js.
+ * @param {string} vizDir
+ * @returns {Object} the exported object, or {} when there is no config.js
+ */
 function loadVizConfig(vizDir) {
   const configPath = path.join(vizDir, 'config.js');
   if (!fs.existsSync(configPath)) return {};
   delete require.cache[require.resolve(configPath)]; // re-read it if it changed between runs
   return require(configPath);
+}
+
+/**
+ * Reads a transitions.json (or the folder that has it) for re-analysis. Only the
+ * parts the report is built from are kept (the table, the visibility, the hover
+ * summary); everything else is derived again.
+ * @param {string} fromTransitions - the file, or the folder that contains it
+ * @param {string} [outDirIn] - where to write; defaults to the folder of the input
+ * @param {(msg: string) => void} onLog
+ * @returns {{ data: Object, outDir: string }} outDir: where to write by default, next to the input
+ */
+function loadTransitions(fromTransitions, outDirIn, onLog) {
+  let input = path.resolve(fromTransitions);
+  if (fs.existsSync(input) && fs.statSync(input).isDirectory()) input = path.join(input, 'transitions.json');
+  if (!fs.existsSync(input)) throw new Error(`not found: ${input}`);
+  const { initialState, transitions, visibility, hovers } = JSON.parse(fs.readFileSync(input, 'utf8'));
+  if (!initialState || !transitions) throw new Error(`${input} is not in the transitions.json format (initialState/transitions are missing)`);
+  const data = { initialState, transitions };
+  if (visibility) data.visibility = visibility;
+  if (hovers) data.hovers = hovers; // already summarized: re-analyzing must not lose the notes
+  onLog(`re-analyzing ${input} (no crawl)`);
+  return { data, outDir: outDirIn ? path.resolve(outDirIn) : path.dirname(input) };
+}
+
+/** The transitions that lead to __ERROR__: a click that breaks the page. */
+function findErrorTransitions(transitions) {
+  const found = [];
+  for (const [state, trans] of Object.entries(transitions)) {
+    for (const [action, next] of Object.entries(trans)) {
+      if (next === ERROR_STATE) found.push({ state, action });
+    }
+  }
+  return found;
+}
+
+/**
+ * Writes transitions.json and automaton.svg (creating the folder if needed).
+ * @param {string} outDir
+ * @param {{json: Object, svg: string}} report - from buildReport
+ * @param {(msg: string) => void} onLog
+ * @returns {{transitions: string, svg: string}} the paths written
+ */
+function writeOutputs(outDir, report, onLog) {
+  fs.mkdirSync(outDir, { recursive: true });
+  const files = { transitions: path.join(outDir, 'transitions.json'), svg: path.join(outDir, 'automaton.svg') };
+  fs.writeFileSync(files.transitions, JSON.stringify(report.json, null, 2));
+  fs.writeFileSync(files.svg, report.svg);
+  onLog(`saved: ${files.transitions}`);
+  onLog(`saved: ${files.svg}`);
+  return files;
 }
 
 /**
@@ -93,7 +147,6 @@ function loadVizConfig(vizDir) {
  * @param {number} [opts.maxRegexLength=500000] - longer regexes are omitted (null) and where they
  *   blew up is reported (regex.explosion); Infinity = no limit
  * @param {boolean} [opts.traceRegex=false] - log the state-elimination trace
- * @param {boolean} [opts.resume=true] - resume checkpoint.json when it exists; false discards it
  * @param {boolean} [opts.includeLinks=false] - also detect <a> / [href] as clickable
  * @param {Object} [opts.crawler] - overrides config.js: settleMs, discoverySettleMs, maxStates,
  *   maxSteps, containerSelector, backSelector, clickableSelector, hover (false: clicks only),
@@ -109,7 +162,7 @@ function loadVizConfig(vizDir) {
  *            language: string|null, completeInteractions: string|null,
  *            cycleCutOmitted?: string, languageOmitted?: string, completeInteractionsOmitted?: string, explosion?: Object, ... },
  *   comparison: null | { equivalent: boolean, onlyInCrawler: string[], onlyInExpected: string[], ... },
- *   issues: { kind: 'error'|'faltante'|'noEsperado', message: string, detail: string, sequence: string[],
+ *   issues: { kind: 'error'|'missing'|'unexpected', message: string, detail: string, sequence: string[],
  *             events: {step, state, action, to, edge}[], failingStep: number, occurrences: number }[],
  *   partiallyVisibleClicks: null | { count: number, ofTransitions: number, transitions: Object[] },
  *   hovers: null | { transient: number, structural: number, actions: Object, ignored?: Object[] } - the hover actions
@@ -130,7 +183,6 @@ async function run(opts = {}) {
     diffLimit = 10,
     maxRegexLength,
     traceRegex = false,
-    resume: allowResume = true,
     includeLinks = false,
     crawler: crawlerOverrides = {},
     onLog = () => {},
@@ -138,15 +190,15 @@ async function run(opts = {}) {
   } = opts;
 
   if (!!vizDirIn === !!fromTransitions) {
-    throw new Error('indicá exactamente uno de: vizDir (crawlear una visualización) o fromTransitions (re-analizar un transitions.json)');
+    throw new Error('specify exactly one of: vizDir (crawl a visualization) or fromTransitions (re-analyze a transitions.json)');
   }
 
   // Validate the regex BEFORE crawling: a syntax error should not be found
   // only at the end of a long crawl.
   if (regex) {
     const v = validateRegex(regex);
-    if (!v.ok) throw new Error(`el regex esperado no es válido: ${v.error}`);
-    onLog(`regex esperado a comparar: ${regex}${regexPrefixes ? ' (por prefijos)' : ''}`);
+    if (!v.ok) throw new Error(`the expected regex is not valid: ${v.error}`);
+    onLog(`expected regex to compare against: ${regex}${regexPrefixes ? ' (by prefixes)' : ''}`);
   }
 
   const t0 = Date.now();
@@ -154,23 +206,14 @@ async function run(opts = {}) {
 
   if (fromTransitions) {
     mode = 'transitions';
-    let input = path.resolve(fromTransitions);
-    if (fs.existsSync(input) && fs.statSync(input).isDirectory()) input = path.join(input, 'transitions.json');
-    if (!fs.existsSync(input)) throw new Error(`no se encontró ${input}`);
-    const { initialState, transitions, visibility, hovers } = JSON.parse(fs.readFileSync(input, 'utf8'));
-    if (!initialState || !transitions) throw new Error(`${input} no tiene el formato de transitions.json (faltan initialState/transitions)`);
-    data = { initialState, transitions };
-    if (visibility) data.visibility = visibility;
-    if (hovers) data.hovers = hovers; // already summarized: re-analyzing must not lose the notes
-    outDir = outDirIn ? path.resolve(outDirIn) : path.dirname(input);
-    onLog(`re-analizando ${input} (sin crawlear)`);
+    ({ data, outDir } = loadTransitions(fromTransitions, outDirIn, onLog));
     stats = { truncated: false };
   } else {
     mode = 'crawl';
     const vizDir = path.resolve(vizDirIn);
-    if (!fs.existsSync(path.join(vizDir, 'index.html'))) throw new Error(`no se encontró ${path.join(vizDir, 'index.html')}`);
+    if (!fs.existsSync(path.join(vizDir, 'index.html'))) throw new Error(`not found: ${path.join(vizDir, 'index.html')}`);
     outDir = outDirIn ? path.resolve(outDirIn) : vizDir;
-    const crawled = await crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks, crawlerOverrides, onLog, onProgress, t0 });
+    const crawled = await crawlViz({ vizDir, includeLinks, crawlerOverrides, onLog, onProgress, t0 });
     data = crawled.data;
     stats = crawled.stats;
   }
@@ -178,22 +221,8 @@ async function run(opts = {}) {
   const report = buildReport(data, { expectedRegex: regex, prefixes: regexPrefixes, limit: diffLimit, maxRegexLength, traceRegex });
   report.log.forEach((l) => onLog(l));
 
-  const errorTransitions = [];
-  for (const [state, trans] of Object.entries(report.json.transitions)) {
-    for (const [action, next] of Object.entries(trans)) {
-      if (next === ERROR_STATE) errorTransitions.push({ state, action });
-    }
-  }
-
-  let files = null;
-  if (writeFiles) {
-    fs.mkdirSync(outDir, { recursive: true });
-    files = { transitions: path.join(outDir, 'transitions.json'), svg: path.join(outDir, 'automaton.svg') };
-    fs.writeFileSync(files.transitions, JSON.stringify(report.json, null, 2));
-    fs.writeFileSync(files.svg, report.svg);
-    onLog(`guardado: ${files.transitions}`);
-    onLog(`guardado: ${files.svg}`);
-  }
+  const errorTransitions = findErrorTransitions(report.json.transitions);
+  const files = writeFiles ? writeOutputs(outDir, report, onLog) : null;
 
   return {
     mode,
@@ -215,39 +244,38 @@ async function run(opts = {}) {
   };
 }
 
-async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks, crawlerOverrides, onLog, onProgress, t0 }) {
+/**
+ * The crawl mode of run(): starts a local server for the visualization, crawls it
+ * with crawler.js and gives the states readable names.
+ * @param {Object} p
+ * @param {string} p.vizDir - absolute path of the folder with index.html
+ * @param {boolean} p.includeLinks - also treat <a> / [href] as interactive
+ * @param {Object} p.crawlerOverrides - the `crawler` option of run(); wins over config.js
+ * @param {(msg: string) => void} p.onLog
+ * @param {Function} p.onProgress - called after every state expanded
+ * @param {number} p.t0 - when the run started (Date.now()), for the elapsed times
+ * @returns {Promise<{data: Object, stats: {truncated: boolean, usedManualState: boolean}}>}
+ *   data: the tables buildReport takes; truncated: maxStates cut the crawl short
+ */
+async function crawlViz({ vizDir, includeLinks, crawlerOverrides, onLog, onProgress, t0 }) {
   const config = { ...loadVizConfig(vizDir) };
   for (const k of CRAWLER_OPTIONS) if (crawlerOverrides[k] != null) config[k] = crawlerOverrides[k];
 
   onLog(config.backSelector
-    ? `analizando ${vizDir} -- con backSelector -> modo rápido (navegación por ancestro común)`
-    : `analizando ${vizDir} -- sin backSelector -> modo genérico (detección automática, recarga+replay)`);
-  if (config.settleMs == null) onLog('tiempo virtual: tras cada click/carga se adelanta el reloj de la página hasta que termina la animación');
+    ? `analyzing ${vizDir} -- with backSelector -> fast mode (navigation through the common ancestor)`
+    : `analyzing ${vizDir} -- without backSelector -> generic mode (automatic detection, reload + replay)`);
+  if (config.settleMs == null) onLog('virtual time: after every click/load the page clock is advanced until the animation ends');
 
   const initScripts = [];
   if (includeLinks) {
     initScripts.push('window.__crawlerIncludeLinks = true;');
-    onLog('los <a>/[href] SÍ se van a detectar como clickeables');
+    onLog('<a>/[href] elements WILL be detected as clickable');
   }
   if (config.containerSelector) {
     initScripts.push(`window.__crawlerContainerSelector = ${JSON.stringify(config.containerSelector)};`);
-    onLog(`acotado al contenedor: ${config.containerSelector}`);
+    onLog(`restricted to the container: ${config.containerSelector}`);
   }
   initScripts.push(fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8'));
-
-  // The checkpoint lives next to the output; with no file writing there is no checkpoint.
-  const checkpointPath = writeFiles ? path.join(outDir, 'checkpoint.json') : null;
-  let resume = null;
-  if (checkpointPath && fs.existsSync(checkpointPath)) {
-    if (allowResume) {
-      resume = JSON.parse(fs.readFileSync(checkpointPath, 'utf8'));
-      onLog(`retomando checkpoint: ${resume.graph.length} estados ya conocidos, ${resume.queue.length} en cola`);
-    } else {
-      fs.unlinkSync(checkpointPath);
-      onLog('checkpoint anterior descartado');
-    }
-  }
-  if (checkpointPath) fs.mkdirSync(outDir, { recursive: true });
 
   const server = await startServer(vizDir);
   const chromePath = await resolveChromePath();
@@ -256,119 +284,116 @@ async function crawlViz({ vizDir, outDir, writeFiles, allowResume, includeLinks,
       fixtureUrl: `http://127.0.0.1:${server.address().port}/index.html`,
       chromePath,
       initScripts,
-      resume,
       ...config,
       onLog,
-      onStateExpanded: (state, trans, snapshot) => {
-        const progress = { elapsedMs: Date.now() - t0, state, actions: Object.keys(trans).length, knownStates: snapshot.graph.length };
+      onStateExpanded: (state, trans, knownStates) => {
+        const progress = { elapsedMs: Date.now() - t0, state, actions: Object.keys(trans).length, knownStates };
         onProgress(progress);
-        onLog(`[${(progress.elapsedMs / 1000).toFixed(1)}s] estado expandido: "${state}" (${progress.actions} acciones) -- total conocido: ${progress.knownStates}`);
-        if (checkpointPath) fs.writeFileSync(checkpointPath, JSON.stringify(snapshot));
+        onLog(`[${(progress.elapsedMs / 1000).toFixed(1)}s] state expanded: "${state}" (${progress.actions} actions) -- total known: ${progress.knownStates}`);
       },
     });
 
     onLog(truncated
-      ? `CRAWL INCOMPLETO: se alcanzó maxStates con estados sin expandir -- el autómata es PARCIAL, subí maxStates`
-      : 'CRAWL COMPLETO');
+      ? `CRAWL INCOMPLETE: maxStates was reached with unexpanded states -- the automaton is PARTIAL, raise maxStates`
+      : 'CRAWL COMPLETE');
     for (const [from, to] of Object.entries(renamed)) {
-      onLog(`acción renombrada: "${from}" -> "${to}" (el elemento muestra un nombre distinto según el estado, p.ej. un dato que se re-liga en cada click)`);
+      onLog(`action renamed: "${from}" -> "${to}" (the element shows a different name depending on the state, e.g. a datum that is re-bound on every click)`);
     }
 
     let data = { initialState, transitions, visibility, effects, ignoredHovers };
     if (!usedManualState) {
       const pretty = prettifyStates({ ...data, labels });
       onLog(pretty.hierarchical
-        ? 'estados nombrados por su lugar en la jerarquía de datos (columnas del diagrama = niveles)'
-        : 'estados nombrados por el camino de clicks que los descubrió (no se detectó una jerarquía)');
+        ? 'states named by their place in the data hierarchy (diagram columns = levels)'
+        : 'states named by the click path that discovered them (no hierarchy was detected)');
       data = { initialState: pretty.initialState, transitions: pretty.transitions, visibility: pretty.visibility, effects: pretty.effects, ignoredHovers };
     }
-    if (checkpointPath && fs.existsSync(checkpointPath)) fs.unlinkSync(checkpointPath);
     return { data, stats: { truncated, usedManualState } };
-  } catch (e) {
-    if (checkpointPath && fs.existsSync(checkpointPath)) {
-      e.message = `${e.message} (progreso guardado en ${checkpointPath} -- volvé a correr para retomar)`;
-      e.checkpoint = checkpointPath;
-    }
-    throw e;
   } finally {
     server.close();
   }
 }
 
+/** Prints the help text to stderr. */
 function usage() {
-  console.error(`Uso:
-  node run.js <carpeta-con-index.html> [opciones]     crawlea la visualización
-  node run.js --from <transitions.json|carpeta> [...]  re-analiza una salida previa, sin crawlear
+  console.error(`Usage:
+  node run.js <folder-with-index.html> [options]       crawl the visualization
+  node run.js --from <transitions.json|folder> [...]   re-analyze a previous output, without crawling
 
-Ejemplos:
+Examples:
   node run.js examples/sunburst-amplio
   node run.js examples/sunburst-amplio --regex "((vis | util) circle)*" --regexPrefixes
   node run.js --from examples/sunburst-amplio --regexFile esperado.txt
 
-Regex observado: el diagrama muestra el regex con los CICLOS CORTADOS (jerarquía + volver hacia
-arriba; los atajos a otra rama van aparte en regex.cycles). transitions.json trae además los dos
-regex exactos (language, completeInteractions), que en grafos densos pueden quedar omitidos.
+Observed regex: the diagram shows the regex with the CYCLES CUT (hierarchy + going back
+up; shortcuts to another branch are listed apart in regex.cycles). transitions.json also carries the two
+exact regexes (language, completeInteractions), which may be omitted on dense graphs.
 
-Hover: además de clickear, el crawler prueba poner el puntero sobre cada elemento que reacciona a
-mouseover/mouseenter. Un hover entra al regex como Hover_<elemento> solo si cambia algo visible -- aunque
-sea un resaltado, y el efecto queda anotado en transitions.json (hovers). Los que no hacen nada visible
-no son acciones: se listan en hovers.ignored. Si el hover abre algo (un menú) lleva a otro estado, y su
-vuelta es Unhover_<elemento>. Con --no-hover se prueban solo los clicks.
-  Se ven los hovers hechos con addEventListener (lo que hace selection.on de D3), con handlers en la propiedad o
-  el atributo (el.onmouseover = fn, onmouseover="..."), con :hover de CSS (se fuerza el estado en el navegador,
-  sin mover ningún mouse), y los de movimiento (mousemove/pointermove: se prueban en el centro y en el borde, y
-  se avisa si el efecto depende de dónde se apunta). Un listener delegado en un contenedor (que mira
-  event.target) se prueba sobre las marcas de D3 que tiene adentro, hasta --maxDelegated.
-  El tooltip nativo del navegador (un <title> o title="") se ignora a propósito y no hay opción para contarlo:
-  D3 no genera tooltips (nunca crea un <title>), lo dibuja el navegador sin listener y sin cambiar el DOM, así que
-  su efecto no se puede observar y sería un hover inventado. El texto del <title> sí se usa para nombrar acciones.
+Hover: besides clicking, the crawler tries putting the pointer over every element that reacts to
+mouseover/mouseenter. A hover enters the regex as Hover_<element> only if it changes something visible -- even
+a highlight, and its effect is noted in transitions.json (hovers). The ones that do nothing visible
+are not actions: they are listed in hovers.ignored. If the hover opens something (a menu) it leads to another state, and its
+way back is Unhover_<element>. With --no-hover only clicks are tried.
+  Hovers made with addEventListener (what D3's selection.on does) are found, and so are handlers in the property or
+  the attribute (el.onmouseover = fn, onmouseover="..."), CSS :hover (the state is forced in the browser,
+  without moving any mouse), and move hovers (mousemove/pointermove: tried at the center and at the edge, and
+  a warning says when the effect depends on where it is aimed). A listener delegated on a container (which looks at
+  event.target) is tried on the D3 marks inside it, up to --maxDelegated.
+  The browser's native tooltip (a <title> or title="") is ignored on purpose and there is no option to count it:
+  D3 does not generate tooltips (it never creates a <title>), the browser draws it with no listener and no DOM change, so
+  its effect cannot be observed and it would be an invented hover. The <title> text is still used to name actions.
 
-Comparación (opcional; sin --regex solo se genera el regex observado). El regex esperado se
-compara contra el autómata completo y contra el de ciclos cortados (cada uno como todo prefijo
-realizable y como interacciones completas): pasa si coincide exactamente con alguno. Cada diferencia, y cada
-click que rompe la página, se informa como "comportamiento inesperado": la serie de eventos
-(estado, click, estado siguiente) que lo reproduce desde el estado inicial.
-  --regex "<expr>"          regex esperado: tokens separados por espacio, | * + ? {n,m} ( );
-                            el prefijo Click_ es opcional ("vis circle" = "Click_vis Click_circle")
-  --regexFile <archivo>     igual, leído de un archivo (evita escapar | y * en la consola)
-  --regexPrefixes           comparar contra los PREFIJOS del regex (si describe interacciones completas)
-  --diffLimit <n>           contraejemplos a mostrar por dirección (default 10)
+Comparison (optional; without --regex only the observed regex is generated). The expected regex is
+compared against the full automaton and against the one with cycles cut (each as every performable prefix and
+as complete interactions): it passes if it matches exactly one of them. Every difference, and every
+click that breaks the page, is reported as "unexpected behavior": the series of events
+(state, click, next state) that reproduces it from the initial state.
+  --regex "<expr>"          expected regex: tokens separated by spaces, | * + ? {n,m} ( );
+                            the Click_ prefix is optional ("vis circle" = "Click_vis Click_circle")
+  --regexFile <file>        same, read from a file (avoids escaping | and * in the shell)
+  --regexPrefixes           compare against the PREFIXES of the regex (if it describes complete interactions)
+  --diffLimit <n>           counterexamples to show per direction (default 10)
 
-Tamaño del regex:
-  --maxRegexLength <n>      omitir el regex si supera n caracteres e informar dónde explota
-                            (default 500000; 0 = sin tope)
-  --traceRegex              loguear la traza de la eliminación de estados (tamaño paso a paso)
+Regex size:
+  --maxRegexLength <n>      omit the regex if it exceeds n characters and report where it blows up
+                            (default 500000; 0 = no limit)
+  --traceRegex              log the state elimination trace (size step by step)
 
-Salida:
-  --out <carpeta>           dónde guardar transitions.json/automaton.svg (default: la carpeta de origen)
-  --no-write                no escribir archivos
-  --json                    imprimir el resultado como JSON por stdout (los mensajes van a stderr)
+Output:
+  --out <folder>            where to save transitions.json/automaton.svg (default: the source folder)
+  --no-write                do not write files
+  --json                    print the result as JSON on stdout (messages go to stderr)
 
-Crawler (pisan config.js de la visualización):
-  --settleMs <ms>           pausa FIJA en tiempo real tras cada click (default: tiempo virtual)
-  --discoverySettleMs <ms>  pausa antes de listar candidatos de un estado recién visitado
-  --maxStates <n>           tope de estados a descubrir
-  --maxSteps <n>            tope duro de interacciones totales
-  --containerSelector <css> acotar detección y estado a este contenedor (ej. "#sb")
-  --include-links           no excluir <a>/[href] de la detección automática
-  --no-hover                no probar hovers (solo clicks)
-  --maxDelegated <n>        tope de marcas a probar por listener delegado (default 50; 0 = no probar delegados)
-  --fresh                   ignorar (y borrar) un checkpoint.json previo
+Crawler (override the visualization's config.js):
+  --settleMs <ms>           FIXED real-time pause after every click (default: virtual time)
+  --discoverySettleMs <ms>  pause before listing the candidates of a newly visited state
+  --maxStates <n>           cap on the states to discover
+  --maxSteps <n>            hard cap on total interactions
+  --containerSelector <css> restrict detection and state to this container (e.g. "#sb")
+  --include-links           do not exclude <a>/[href] from automatic detection
+  --no-hover                do not probe hovers (clicks only)
+  --maxDelegated <n>        cap on the marks to probe per delegated listener (default 50; 0 = do not probe delegated ones)
 
-Código de salida: 0 ok / equivalentes, 1 error, 2 el regex esperado difiere de lo observado
-o algún click rompe la página.`);
+Exit code: 0 ok / equivalent, 1 error, 2 the expected regex differs from what was observed
+or some click breaks the page.`);
 }
 
+/**
+ * Command-line arguments -> the options of run(). Crawler flags land in `opts.crawler`.
+ * @param {string[]} argv - process.argv without node and the script
+ * @returns {Object} the options; also `help` and `json`, which only the command line uses
+ * @throws {Error} for an unknown option, a missing value or a non-numeric number
+ */
 function parseArgs(argv) {
   const opts = { crawler: {} };
   const rest = [];
   const need = (i, flag) => {
-    if (argv[i + 1] === undefined) throw new Error(`${flag} espera un valor`);
+    if (argv[i + 1] === undefined) throw new Error(`${flag} expects a value`);
     return argv[i + 1];
   };
   const num = (v, flag) => {
     const n = Number(v);
-    if (Number.isNaN(n)) throw new Error(`${flag} espera un número, se recibió "${v}"`);
+    if (Number.isNaN(n)) throw new Error(`${flag} expects a number, got "${v}"`);
     return n;
   };
   for (let i = 0; i < argv.length; i++) {
@@ -386,21 +411,21 @@ function parseArgs(argv) {
       case '--json': opts.json = true; break;
       case '--include-links': opts.includeLinks = true; break;
       case '--no-hover': opts.crawler.hover = false; break;
-      case '--fresh': opts.resume = false; break;
       case '--settleMs': case '--discoverySettleMs': case '--maxStates': case '--maxSteps': case '--maxDelegated':
         opts.crawler[a.slice(2)] = num(need(i, a), a); i++; break;
       case '--containerSelector': opts.crawler.containerSelector = need(i, a); i++; break;
       case '-h': case '--help': opts.help = true; break;
       default:
-        if (a.startsWith('--')) throw new Error(`opción desconocida: ${a}`);
+        if (a.startsWith('--')) throw new Error(`unknown option: ${a}`);
         rest.push(a);
     }
   }
-  if (rest.length > 1) throw new Error(`argumentos de más: ${rest.slice(1).join(' ')}`);
+  if (rest.length > 1) throw new Error(`extra arguments: ${rest.slice(1).join(' ')}`);
   if (rest.length === 1) opts.vizDir = rest[0];
   return opts;
 }
 
+/** The command line: parses the arguments, runs, prints, and sets the exit code (see the header). */
 async function main() {
   let opts;
   try {
@@ -425,10 +450,10 @@ async function main() {
       const { svg, ...rest } = result; // the SVG is already in files.svg; do not bloat stdout
       process.stdout.write(JSON.stringify(rest, null, 2) + '\n');
     } else {
-      log(`\nestados: ${result.stats.states} · transiciones a ERROR: ${result.stats.errorTransitions.length} · comportamientos inesperados: ${result.issues.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);
-      log(`regex (ciclos cortados): ${result.regex.cycleCut ?? result.regex.cycleCutOmitted}`);
+      log(`\nstates: ${result.stats.states} · transitions to ERROR: ${result.stats.errorTransitions.length} · unexpected behaviors: ${result.issues.length} · ${(result.stats.elapsedMs / 1000).toFixed(1)}s`);
+      log(`regex (cycles cut): ${result.regex.cycleCut ?? result.regex.cycleCutOmitted}`);
     }
-    if ((result.comparison && !result.comparison.equivalent) || result.issues.some((i) => i.kind === 'error')) process.exitCode = 2;
+    if ((result.comparison && !result.comparison.equivalent) || result.issues.some((i) => i.kind === KIND.error)) process.exitCode = 2;
   } catch (e) {
     console.error(`ERROR: ${e.message || e}`);
     process.exitCode = 1;

@@ -42,11 +42,11 @@
     }
   },
   "regex": {
-    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "syntax": "tokens separated by spaces; | union, * + ? {n,m} repetition, ( ) grouping, () empty string",
     "cycleCut": "((Click_D ((Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle)* | Click_B | Click_A (Click_A1 Click_circle)* | Click_C)? Click_circle)*",
-    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycleCutMeaning": "complete interactions with the cycles cut: going down the hierarchy and back up (zoom out, back, background); shortcuts (jumps to a state of another branch) are not expanded in the regex and are listed in regex.cycles.shortcutTransitions",
     "cycles": {
-      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "meaning": "spanning tree from the initial state (by hierarchical name when there is one, otherwise by BFS): tree = from parent to child, back = to an ancestor (closes a cycle), shortcut = to another branch",
       "tree": 8,
       "back": 9,
       "shortcuts": 4,
@@ -74,18 +74,18 @@
       ]
     },
     "language": "((Click_B | Click_C | (Click_D | (Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle) (((Click_D1 | Click_D1a Click_circle) (Click_D1a Click_circle)* | Click_D2) Click_circle)* | (Click_A | Click_A1 Click_circle) (Click_A1 Click_circle)*)? Click_circle)* (Click_B | Click_C | Click_D1 (Click_D1a Click_circle)* Click_D1a? | Click_D2 | (Click_D | (Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle) (((Click_D1 | Click_D1a Click_circle) (Click_D1a Click_circle)* | Click_D2) Click_circle)* (Click_D1a | (Click_D1 | Click_D1a Click_circle) (Click_D1a Click_circle)* Click_D1a? | Click_D2)? | Click_A1 | (Click_A | Click_A1 Click_circle) (Click_A1 Click_circle)* Click_A1?)?",
-    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "languageMeaning": "standard semantics: matches EXACTLY the sequences of clicks that can be performed from the initial state (without the ones that break the page)",
     "completeInteractions": "((Click_B | Click_C | (Click_D | (Click_D1 (Click_D1a Click_circle)* | Click_D2) Click_circle) (((Click_D1 | Click_D1a Click_circle) (Click_D1a Click_circle)* | Click_D2) Click_circle)* | (Click_A | Click_A1 Click_circle) (Click_A1 Click_circle)*)? Click_circle)*",
-    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+    "completeInteractionsMeaning": "sequences that return to the initial state; every performable sequence is a prefix of one of these"
   },
   "comparison": {
     "expected": "( circle\n| (A | A1 circle) (A1 circle)* circle\n| (B | B2 circle) (B2 circle)* circle\n| C circle\n| (D | D2 circle | D1 (D1a circle)* circle) (D2 circle | (D1 | D1a circle) (D1a circle)* circle)* circle\n)*",
-    "mode": "semántica estándar (secuencias completas)",
+    "mode": "standard semantics (complete sequences)",
     "equivalent": false,
     "matched": null,
     "targets": [
       {
-        "automaton": "cortado",
+        "automaton": "cut",
         "form": "completeInteractions",
         "equivalent": false,
         "onlyInCrawler": 0,
@@ -93,7 +93,7 @@
         "truncated": false
       },
       {
-        "automaton": "cortado",
+        "automaton": "cut",
         "form": "language",
         "equivalent": false,
         "onlyInCrawler": 12,
@@ -101,7 +101,7 @@
         "truncated": false
       },
       {
-        "automaton": "completo",
+        "automaton": "full",
         "form": "completeInteractions",
         "equivalent": false,
         "onlyInCrawler": 0,
@@ -109,7 +109,7 @@
         "truncated": false
       },
       {
-        "automaton": "completo",
+        "automaton": "full",
         "form": "language",
         "equivalent": false,
         "onlyInCrawler": 22,
@@ -118,7 +118,7 @@
       }
     ],
     "reportedAgainst": {
-      "automaton": "completo",
+      "automaton": "full",
       "form": "completeInteractions"
     },
     "onlyInCrawler": [],
@@ -145,9 +145,9 @@
   },
   "issues": [
     {
-      "kind": "faltante",
-      "message": "Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B2 → circle → circle",
-      "detail": "el regex esperado admite click \"B2\" en el paso 1, pero en \"root\" la visualización no lo ofrece",
+      "kind": "missing",
+      "message": "Unexpected behavior occurs when this series of events happens: B2 → circle → circle",
+      "detail": "the expected regex admits click \"B2\" at step 1, but in \"root\" the visualization does not offer it",
       "sequence": [
         "B2",
         "Click_circle",
@@ -166,9 +166,9 @@
       "occurrences": 1
     },
     {
-      "kind": "faltante",
-      "message": "Hay un comportamiento inesperado cuando ocurre esta serie de eventos: B → B2 → circle → circle",
-      "detail": "el regex esperado admite click \"B2\" en el paso 2, pero en \"root > B\" la visualización no lo ofrece",
+      "kind": "missing",
+      "message": "Unexpected behavior occurs when this series of events happens: B → B2 → circle → circle",
+      "detail": "the expected regex admits click \"B2\" at step 2, but in \"root > B\" the visualization does not offer it",
       "sequence": [
         "Click_B",
         "B2",

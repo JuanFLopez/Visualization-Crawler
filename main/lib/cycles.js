@@ -25,27 +25,32 @@
  * that chains siblings (vis -> animate -> flex) as if they were levels. With
  * no hierarchy in the names (or when the parent has no transition to the
  * child) the parent is the BFS one.
+ *
+ * Used by lib/report (the cut regex and the cycle counts), lib/issues (which
+ * edges of an event series are back edges or shortcuts) and shown in the
+ * diagram through the cut regex.
  */
 
-const { DFA, ERROR_STATE } = require('./automaton');
+const { DFA } = require('./automaton');
+const { ERROR_STATE, HIERARCHY_SEPARATOR: SEP } = require('./constants');
+const { compositeKey } = require('./util');
 
-const SEP = ' > ';
-
+/**
+ * Classifies every transition of the states reachable from the initial one.
+ * @param {import('./automaton').DFA} dfa - the observed automaton
+ * @returns {{
+ *   parent: Map<string, string>,       // spanning tree: state -> its parent
+ *   hierarchical: boolean,             // true when the state names are hierarchy paths
+ *   counts: {tree: number, back: number, shortcut: number},
+ *   shortcuts: {state: string, action: string, to: string}[],
+ *   kindOf: (state: string, action: string) => 'tree'|'back'|'shortcut'|null,
+ * }}
+ */
 function classifyEdges(dfa) {
   const succ = (s) => dfa.transitions.get(s) || new Map();
 
-  const bfsParent = new Map();
-  const reachable = new Set([dfa.initial]);
-  const queue = [dfa.initial];
-  while (queue.length) {
-    const s = queue.shift();
-    for (const to of succ(s).values()) {
-      if (to === ERROR_STATE || reachable.has(to)) continue;
-      reachable.add(to);
-      bfsParent.set(to, s);
-      queue.push(to);
-    }
-  }
+  const { order, parent: bfsParent } = dfa.bfs({ skip: [ERROR_STATE] });
+  const reachable = new Set(order);
 
   const hierarchical = [...reachable].every((s) => s === dfa.initial || s.startsWith(dfa.initial + SEP));
   const parent = new Map();
@@ -80,7 +85,7 @@ function classifyEdges(dfa) {
     for (const [action, to] of succ(s)) {
       if (to === ERROR_STATE) continue;
       const kind = parent.get(to) === s ? 'tree' : isAncestor(to, s) ? 'back' : 'shortcut';
-      kinds.set(`${s}\u0000${action}`, kind);
+      kinds.set(compositeKey(s, action), kind);
       counts[kind]++;
       if (kind === 'shortcut') shortcuts.push({ state: s, action, to });
     }
@@ -92,11 +97,16 @@ function classifyEdges(dfa) {
     counts,
     shortcuts,
     /** @returns {'tree'|'back'|'shortcut'|null} null for __ERROR__ or a transition from an unreachable state */
-    kindOf: (state, action) => kinds.get(`${state}\u0000${action}`) || null,
+    kindOf: (state, action) => kinds.get(compositeKey(state, action)) || null,
   };
 }
 
-/** The DFA with only its tree and back transitions (same alphabet and acceptance). */
+/**
+ * The DFA with only its tree and back transitions (same alphabet and acceptance).
+ * @param {import('./automaton').DFA} dfa
+ * @param {ReturnType<typeof classifyEdges>} cls - the classification of `dfa`
+ * @returns {import('./automaton').DFA}
+ */
 function cutDfa(dfa, cls) {
   const transitions = new Map();
   for (const [s, m] of dfa.transitions) {

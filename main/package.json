@@ -2,7 +2,7 @@
   "name": "d3-viz-crawler",
   "version": "0.2.0",
   "private": true,
-  "description": "Alimenta con cualquier visualización D3, descubre su tabla de transiciones y devuelve transitions.json + el diagrama del autómata (automaton.svg).",
+  "description": "Feed it any D3 visualization: it discovers its transition table and returns transitions.json + the automaton diagram (automaton.svg).",
   "main": "run.js",
   "scripts": {
     "start": "node run.js"

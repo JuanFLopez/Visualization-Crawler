@@ -39,16 +39,21 @@
  * window.__testState.
  *
  * Hovers that do not go through addEventListener on the element itself are
- * found by crawler.js in other ways (handlers in a property or an inline
+ * found by the crawler in other ways (handlers in a property or an inline
  * attribute, stylesheet :hover rules, listeners delegated on a container: see
- * __crawlerCandidates and __crawlerMarks). Still not seen: listeners on
+ * __crawlerCandidates and __crawlerMarks in lib/page/discovery.js). Still not seen: listeners on
  * window / document, effects on pseudo-elements (::after), :hover rules from a
  * stylesheet of ANOTHER origin (the browser does not let them be read), and
  * effects that do not go through the DOM (a <canvas>).
  *
+ * How it is loaded: run.js and diagnose.js read this file as TEXT and pass it
+ * to page.addInitScript, so it is not a module. It must stay a single
+ * self-contained script (no require, no import), and it talks to the Node side
+ * only through the window.__crawler* globals listed in lib/page/index.js.
+ *
  * Native browser tooltips (an SVG <title> child or a title="" attribute) are
  * not hovers either: the browser draws them with no listener and no DOM change,
- * so no effect can be observed (see the HOVER paragraph in crawler.js).
+ * so no effect can be observed (see lib/crawl/hoverProbe.js).
  */
 (function () {
   try { localStorage.clear(); } catch (e) {}
@@ -64,7 +69,7 @@
   const HOVER_ENTER = new Set(['mouseover', 'mouseenter', 'pointerover', 'pointerenter']);
   // MOVE events count too, but their effect often depends on WHERE the pointer
   // is (a tooltip that follows it, a guide line): the crawler probes them at two
-  // points and warns when the effect changes (see observeHover in crawler.js);
+  // points and warns when the effect changes (see observeAtPositions in lib/crawl/hoverProbe.js);
   // it does not enumerate positions.
   const HOVER_MOVE = new Set(['mousemove', 'pointermove']);
 
@@ -195,7 +200,7 @@
   window.__crawlerStateDebug = function () {
     const sel = window.__crawlerContainerSelector;
     const root = sel ? document.querySelector(sel) : document;
-    if (!root) throw new Error('contenedor no encontrado: ' + sel);
+    if (!root) throw new Error('container not found: ' + sel);
     let buf = '';
     const svgRects = new Map();
     root.querySelectorAll('svg, svg *, [data-crawler-clickable], [data-crawler-hoverable]').forEach((el) => {
@@ -219,6 +224,10 @@
   //    tooltip, say) and what. It is the NET effect: whatever a handler sets
   //    and unsets in the same step leaves no trace. Hidden elements count only
   //    as "hidden": changing something the user cannot see is not an effect.
+  //    The snapshot is an array with one entry per element, in document order:
+  //      { k: key, p: key of the parent entry, t: tag, h: 1 }              a hidden element
+  //      { k, p, t, a: attributes, x: own text, cs?: changed computed styles }   a visible one
+  //    (lib/hovers.js compares two snapshots to describe what a hover changed.)
   //    CSS: a stylesheet :hover changes how something looks without touching
   //    any attribute, so when the page has :hover rules (the crawler reports it
   //    in window.__crawlerCssHover) the snapshot also takes a subset of
@@ -256,6 +265,7 @@
       if (tag === 'script' || tag === 'style' || tag === 'noscript') continue;
       // The key of an element with a crawler id is that id (it does not change
       // if a sibling appears); for the rest, its position among its own tag.
+      // The "id:" format is mirrored by selfKeyOf in lib/hovers.js.
       let key = el.getAttribute('data-crawler-id');
       if (key) {
         key = 'id:' + key;

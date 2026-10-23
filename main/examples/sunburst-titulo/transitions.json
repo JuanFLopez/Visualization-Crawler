@@ -14,20 +14,20 @@
     }
   },
   "regex": {
-    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "syntax": "tokens separated by spaces; | union, * + ? {n,m} repetition, ( ) grouping, () empty string",
     "cycleCut": "((Click_A | Click_B)? Click_root)*",
-    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycleCutMeaning": "complete interactions with the cycles cut: going down the hierarchy and back up (zoom out, back, background); shortcuts (jumps to a state of another branch) are not expanded in the regex and are listed in regex.cycles.shortcutTransitions",
     "cycles": {
-      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "meaning": "spanning tree from the initial state (by hierarchical name when there is one, otherwise by BFS): tree = from parent to child, back = to an ancestor (closes a cycle), shortcut = to another branch",
       "tree": 2,
       "back": 3,
       "shortcuts": 0,
       "shortcutTransitions": []
     },
     "language": "((Click_A | Click_B)? Click_root)* (Click_A | Click_B)?",
-    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de clicks realizables desde el estado inicial (sin las que rompen la página)",
+    "languageMeaning": "standard semantics: matches EXACTLY the sequences of clicks that can be performed from the initial state (without the ones that break the page)",
     "completeInteractions": "((Click_A | Click_B)? Click_root)*",
-    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+    "completeInteractionsMeaning": "sequences that return to the initial state; every performable sequence is a prefix of one of these"
   },
   "issues": []
 }

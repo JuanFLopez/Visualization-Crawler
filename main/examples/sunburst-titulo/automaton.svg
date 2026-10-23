@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="307" viewBox="0 0 900 307" font-family="Helvetica, Arial, sans-serif" font-size="12">
-<title>Autómata (3 estados)</title>
+<title>Automaton (3 states)</title>
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
   <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
@@ -48,15 +48,15 @@
 </g>
 <g font-size="10" fill="#666">
 <line x1="40" y1="200" x2="80" y2="200" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
-<text x="88" y="203">acción que avanza (etiqueta junto al destino)</text>
+<text x="88" y="203">forward action (label next to the target)</text>
 <line x1="360" y1="200" x2="400" y2="200" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
-<text x="408" y="203">acción que vuelve (↩ bajo el origen)</text>
+<text x="408" y="203">backward action (↩ under the source)</text>
 <line x1="630" y1="200" x2="670" y2="200" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
-<text x="678" y="203">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="220">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<text x="678" y="203">to the same column (↕ under the source)</text>
+<text x="40" y="220">columns = level in the state name (root = 0) · ↷ under the source: action that skips columns, drawn around them · actions without the "Click_" prefix · hover a state or an edge for the full detail</text>
 </g>
 <line x1="40" y1="244" x2="860" y2="244" stroke="#ddd"/>
-<text x="40" y="264" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text x="40" y="264" font-weight="bold" fill="#222">Regex with the cycles cut (complete interactions; 0 shortcuts listed apart, see regex.cycles in transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
 <tspan x="40" y="282">((Click_A | Click_B)? Click_root)*</tspan>
 </text>

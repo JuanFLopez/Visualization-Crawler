@@ -17,23 +17,23 @@
     }
   },
   "regex": {
-    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "syntax": "tokens separated by spaces; | union, * + ? {n,m} repetition, ( ) grouping, () empty string",
     "cycleCut": "(Hover_menu (Unhover_menu | (Click_optionA | Click_optionB) Click_reset))*",
-    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycleCutMeaning": "complete interactions with the cycles cut: going down the hierarchy and back up (zoom out, back, background); shortcuts (jumps to a state of another branch) are not expanded in the regex and are listed in regex.cycles.shortcutTransitions",
     "cycles": {
-      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "meaning": "spanning tree from the initial state (by hierarchical name when there is one, otherwise by BFS): tree = from parent to child, back = to an ancestor (closes a cycle), shortcut = to another branch",
       "tree": 3,
       "back": 3,
       "shortcuts": 0,
       "shortcutTransitions": []
     },
     "language": "(Hover_menu (Unhover_menu | (Click_optionA | Click_optionB) Click_reset))* (Hover_menu (Click_optionA | Click_optionB)?)?",
-    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "languageMeaning": "standard semantics: matches EXACTLY the sequences of interactions (clicks and hovers) that can be performed from the initial state (without the ones that break the page)",
     "completeInteractions": "(Hover_menu (Unhover_menu | (Click_optionA | Click_optionB) Click_reset))*",
-    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+    "completeInteractionsMeaning": "sequences that return to the initial state; every performable sequence is a prefix of one of these"
   },
   "hovers": {
-    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "meaning": "hover actions (the pointer enters an element) that change something visible. transient: a highlight or tooltip that disappears on leaving and does not change what can be done (a loop on its state); structural: opens something or leaves a change, leading to another state (its way back is Unhover_); error: doing it breaks the page (reported as unexpected behavior). changes is the observed effect; hovers with no visible effect are not actions (ignored)",
     "transient": 0,
     "structural": 1,
     "actions": {
@@ -41,7 +41,7 @@
         "type": "structural",
         "states": 1,
         "changes": [
-          "g.items: se muestra"
+          "g.items: shown"
         ],
         "reveals": [
           "Click_optionA",
@@ -52,15 +52,15 @@
   },
   "comparison": {
     "expected": "( Hover_menu ( Unhover_menu | (optionA | optionB) reset ) )*",
-    "mode": "semántica estándar (secuencias completas)",
+    "mode": "standard semantics (complete sequences)",
     "equivalent": true,
     "matched": {
-      "automaton": "cortado",
+      "automaton": "cut",
       "form": "completeInteractions"
     },
     "targets": [
       {
-        "automaton": "cortado",
+        "automaton": "cut",
         "form": "completeInteractions",
         "equivalent": true,
         "onlyInCrawler": 0,
@@ -68,7 +68,7 @@
         "truncated": false
       },
       {
-        "automaton": "cortado",
+        "automaton": "cut",
         "form": "language",
         "equivalent": false,
         "onlyInCrawler": 3,
@@ -76,7 +76,7 @@
         "truncated": false
       },
       {
-        "automaton": "completo",
+        "automaton": "full",
         "form": "completeInteractions",
         "equivalent": true,
         "onlyInCrawler": 0,
@@ -84,7 +84,7 @@
         "truncated": false
       },
       {
-        "automaton": "completo",
+        "automaton": "full",
         "form": "language",
         "equivalent": false,
         "onlyInCrawler": 3,
@@ -93,7 +93,7 @@
       }
     ],
     "reportedAgainst": {
-      "automaton": "cortado",
+      "automaton": "cut",
       "form": "completeInteractions"
     },
     "onlyInCrawler": [],

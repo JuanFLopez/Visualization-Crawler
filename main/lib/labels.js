@@ -1,10 +1,23 @@
+/**
+ * Human-readable state names. The crawler's states are fingerprint hashes;
+ * run.js passes the raw table through prettifyStates right after a crawl, so
+ * that everything downstream (regex, diagram, issues) speaks in names like
+ * "root > vis > operator". It is skipped when the page defines its own
+ * window.__testState (those names are already meaningful) and on a --from
+ * re-analysis (the file already has the readable names).
+ */
+
 const { displayAction, verbOf } = require('./actions');
+const { ERROR_STATE, HIERARCHY_SEPARATOR } = require('./constants');
+const { mapKeys } = require('./util');
+
+const ROOT_LABEL = 'root';
 
 /**
  * The crawler identifies each state by a fingerprint (a hash), which is fine
  * for equality but says nothing to a reader. This builds a human name per
  * state from the path of ACTIONS (already readable, see createNaming in
- * crawler.js) that first reaches it from the root: "root", "root > A",
+ * lib/crawl/naming.js) that first reaches it from the root: "root", "root > A",
  * "root > A > A1", and so on.
  *
  * It needs nothing from the browser: it works purely on the generated
@@ -13,23 +26,20 @@ const { displayAction, verbOf } = require('./actions');
  * each state has a single shortest path recorded, but just in case).
  *
  * When `data.labels` is also present (readable names per state and action,
- * see crawler.js) and describes a hierarchy, names come from the data
+ * see collectResult in lib/crawl/graph.js) and describes a hierarchy, names come from the data
  * hierarchy instead of the click path (see hierarchyLabels).
  *
- * @param {{initialState: string, transitions: Object, visibility?: Object, labels?: Object}} data
- * @param {Object} [opts]
- * @param {string} [opts.rootLabel='root']
- * @param {string} [opts.separator=' > ']
- * @returns {{initialState: string, transitions: Object, labelOf: Object, hierarchical: boolean, visibility?: Object}}
+ * @param {{initialState: string, transitions: Object, visibility?: Object, effects?: Object, labels?: Object}} data -
+ *   the raw crawl tables; visibility and effects are keyed by state and get their keys renamed too
+ * @returns {{initialState: string, transitions: Object, labelOf: Object, hierarchical: boolean, visibility?: Object, effects?: Object}}
  *   labelOf maps the original hash -> readable name, in case it has to be
- *   correlated with earlier checkpoints or logs.
+ *   correlated with logs.
  */
-function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
+function prettifyStates(data) {
   const { initialState, transitions } = data;
-  const ERROR_STATE = '__ERROR__';
 
-  const hierarchy = hierarchyLabels(data, { rootLabel, separator });
-  const labelOf = hierarchy || new Map([[initialState, rootLabel]]);
+  const hierarchy = hierarchyLabels(data);
+  const labelOf = hierarchy || new Map([[initialState, ROOT_LABEL]]);
   // With a hierarchy, everything reachable by clicks is already named; states
   // reached only through a hover ("root > Hover_menu") are named from their origin.
   const queue = hierarchy ? [...hierarchy.keys()] : [initialState];
@@ -40,10 +50,10 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
     for (const [action, next] of Object.entries(actions)) {
       if (next === ERROR_STATE || labelOf.has(next)) continue;
       const short = displayAction(action);
-      let label = `${labelOf.get(state)}${separator}${short}`;
+      let label = `${labelOf.get(state)}${HIERARCHY_SEPARATOR}${short}`;
       const existing = new Set(labelOf.values());
       let suffix = 2;
-      while (existing.has(label)) label = `${labelOf.get(state)}${separator}${short}#${suffix++}`;
+      while (existing.has(label)) label = `${labelOf.get(state)}${HIERARCHY_SEPARATOR}${short}#${suffix++}`;
       labelOf.set(next, label);
       queue.push(next);
     }
@@ -65,14 +75,9 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
     labelOf: Object.fromEntries(labelOf),
     hierarchical: !!hierarchy,
   };
-  if (data.visibility) {
-    result.visibility = {};
-    for (const [state, byAction] of Object.entries(data.visibility)) result.visibility[labelOf.get(state) ?? state] = byAction;
-  }
-  if (data.effects) {
-    result.effects = {};
-    for (const [state, byAction] of Object.entries(data.effects)) result.effects[labelOf.get(state) ?? state] = byAction;
-  }
+  const renameState = (state) => labelOf.get(state) ?? state;
+  if (data.visibility) result.visibility = mapKeys(data.visibility, renameState);
+  if (data.effects) result.effects = mapKeys(data.effects, renameState);
   return result;
 }
 
@@ -84,7 +89,7 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
  * "vis", and the diagram would draw vis -> operator as a sideways move.
  *
  * Each action carries the full readable name of the clicked element IN its
- * source state (`data.labels`, see crawler.js), which in a hierarchical
+ * source state (`data.labels`, see collectResult in lib/crawl/graph.js), which in a hierarchical
  * visualization is a path ("flare/vis/operator", from the <title> or the D3
  * datum). A state's path is the longest common prefix (by segments) of the
  * paths of all actions that enter it: entering "animate" in an icicle is
@@ -98,9 +103,8 @@ function prettifyStates(data, { rootLabel = 'root', separator = ' > ' } = {}) {
  *
  * @returns {Map<string, string> | null} state -> name
  */
-function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'root', separator = ' > ' } = {}) {
+function hierarchyLabels({ initialState, transitions, labels }) {
   if (!labels) return null;
-  const ERROR_STATE = '__ERROR__';
 
   // Only clicks count: they are what descends the data hierarchy. A hover on
   // "flare/vis" that does not change state (or the way back from a hover)
@@ -151,13 +155,13 @@ function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'r
     : commonPrefix([...pathOf.values()]);
   if (!rootPath || rootPath.length === 0) return null;
 
-  const out = new Map([[initialState, rootLabel]]);
-  const used = new Set([rootLabel]);
+  const out = new Map([[initialState, ROOT_LABEL]]);
+  const used = new Set([ROOT_LABEL]);
   for (const [state, path] of pathOf) {
     const hangsFromRoot = path.length > rootPath.length && rootPath.every((seg, i) => path[i] === seg);
     const rest = path.slice(rootPath.length);
-    if (!hangsFromRoot || rest.some((seg) => seg.includes(separator.trim()))) return null;
-    const label = [rootLabel, ...rest].join(separator);
+    if (!hangsFromRoot || rest.some((seg) => seg.includes(HIERARCHY_SEPARATOR.trim()))) return null;
+    const label = [ROOT_LABEL, ...rest].join(HIERARCHY_SEPARATOR);
     if (used.has(label)) return null;
     used.add(label);
     out.set(state, label);
@@ -165,4 +169,4 @@ function hierarchyLabels({ initialState, transitions, labels }, { rootLabel = 'r
   return out;
 }
 
-module.exports = { prettifyStates, hierarchyLabels };
+module.exports = { prettifyStates };

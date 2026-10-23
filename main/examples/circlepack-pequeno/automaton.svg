@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1029" height="750" viewBox="0 0 1029 750" font-family="Helvetica, Arial, sans-serif" font-size="12">
-<title>Autómata (10 estados)</title>
+<title>Automaton (10 states)</title>
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
   <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
@@ -11,68 +11,68 @@
 <g class="back-edges">
 <path d="M 148,180 C 138,144 184,144 164,183" fill="none" stroke="#888" stroke-width="1.5" marker-end="url(#arrow)"><title>root  —[background]→  root</title></path>
 <path d="M 148,180 C 138,126 184,126 164,183" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root  —[Hover_analytics, Hover_util, Hover_vis, Hover_graph, Hover_cluster, Hover_heap, Hover_math, Hover_controls, Hover_events]→  root
-Hover_analytics: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_util: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_graph: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_cluster: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_heap: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_math: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_controls: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_events: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_analytics: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_util: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_graph: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_cluster: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_heap: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_math: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_controls: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_events: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 438.5,156 C 438.5,214.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics  —[background, analytics]→  root</title></path>
 <path d="M 481,144 C 504.2,144 504.2,248 468.5,248" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; analytics  —[vis]→  root &gt; vis</title></path>
 <path d="M 463,124 C 453,88 499,88 479,127" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics  —[Hover_analytics, Hover_vis, Hover_graph, Hover_cluster]→  root &gt; analytics
-Hover_analytics: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_graph: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_cluster: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_analytics: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_graph: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_cluster: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 438.5,268 C 438.5,326.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis  —[background, vis]→  root</title></path>
 <path d="M 466.5,256 C 507,256 507,136 483,136" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[analytics]→  root &gt; analytics</title></path>
 <path d="M 466.5,256 C 489.7,256 489.7,192 468.5,192" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; vis  —[util]→  root &gt; util</title></path>
 <path d="M 448.5,236 C 438.5,200 484.5,200 464.5,239" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis  —[Hover_analytics, Hover_util, Hover_vis, Hover_controls, Hover_events]→  root &gt; vis
-Hover_analytics: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_util: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_controls: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_events: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_analytics: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_util: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_controls: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_events: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 438.5,212 C 438.5,270.86 148,271.86 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util  —[background, util]→  root</title></path>
 <path d="M 466.5,200 C 488.9,200 488.9,248 468.5,248" fill="none" stroke="#9bb7d4" stroke-opacity="0.8" stroke-width="1.5" marker-end="url(#arrow-side)"><title>root &gt; util  —[vis]→  root &gt; vis</title></path>
 <path d="M 448.5,180 C 438.5,144 484.5,144 464.5,183" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util  —[Hover_util, Hover_vis, Hover_heap, Hover_math]→  root &gt; util
-Hover_util: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_heap: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_math: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_util: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_heap: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_math: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,184 C 750,280.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[background, heap]→  root</title></path>
 <path d="M 750,184 C 750,244.18 448.5,273.18 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; heap  —[util]→  root &gt; util</title></path>
 <path d="M 760,152 C 750,116 796,116 776,155" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; heap  —[Hover_util, Hover_heap]→  root &gt; util &gt; heap
-Hover_util: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_heap: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_util: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_heap: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,240 C 750,336.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[background, math]→  root</title></path>
 <path d="M 750,240 C 750,300.18 448.5,273.18 448.5,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; util &gt; math  —[util]→  root &gt; util</title></path>
 <path d="M 760,208 C 750,172 796,172 776,211" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; util &gt; math  —[Hover_util, Hover_math]→  root &gt; util &gt; math
-Hover_util: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_math: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_util: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_math: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,296 C 750,392.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[background, controls]→  root</title></path>
 <path d="M 750,296 C 750,356.18 448.5,329.18 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; controls  —[vis]→  root &gt; vis</title></path>
 <path d="M 771,264 C 761,228 807,228 787,267" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; controls  —[Hover_vis, Hover_controls]→  root &gt; vis &gt; controls
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_controls: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_controls: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,352 C 750,448.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[background, events]→  root</title></path>
 <path d="M 750,352 C 750,412.18 448.5,329.18 448.5,269" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; vis &gt; events  —[vis]→  root &gt; vis</title></path>
 <path d="M 764,320 C 754,284 800,284 780,323" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; vis &gt; events  —[Hover_vis, Hover_events]→  root &gt; vis &gt; events
-Hover_vis: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_events: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_vis: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_events: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,72 C 750,168.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[background, graph]→  root</title></path>
 <path d="M 750,72 C 750,132.18 448.5,217.18 448.5,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; graph  —[analytics]→  root &gt; analytics</title></path>
 <path d="M 760.5,40 C 750.5,4 796.5,4 776.5,43" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; graph  —[Hover_analytics, Hover_graph]→  root &gt; analytics &gt; graph
-Hover_analytics: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_graph: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_analytics: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_graph: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 <path d="M 750,128 C 750,224.24 148,309.24 148,213" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[background, cluster]→  root</title></path>
 <path d="M 750,128 C 750,188.18 448.5,217.18 448.5,157" fill="none" stroke="#c4c4c4" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrow-back)"><title>root &gt; analytics &gt; cluster  —[analytics]→  root &gt; analytics</title></path>
 <path d="M 767.5,96 C 757.5,60 803.5,60 783.5,99" fill="none" stroke="#1b8a82" stroke-width="1.5" marker-end="url(#arrow-hover)"><title>root &gt; analytics &gt; cluster  —[Hover_analytics, Hover_cluster]→  root &gt; analytics &gt; cluster
-Hover_analytics: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3
-Hover_cluster: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</title></path>
+Hover_analytics: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3
+Hover_cluster: stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</title></path>
 </g>
 <g class="forward-edges">
 <path d="M 166,196 C 280,196 280,140 394,140" fill="none" stroke="#777" stroke-width="1.8" marker-end="url(#arrow)"><title>root  —[analytics]→  root &gt; analytics</title></path>
@@ -256,17 +256,17 @@ Hover_cluster: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) 
 </g>
 <g font-size="10" fill="#666">
 <line x1="40" y1="424" x2="80" y2="424" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
-<text x="88" y="427">acción que avanza (etiqueta junto al destino)</text>
+<text x="88" y="427">forward action (label next to the target)</text>
 <line x1="360" y1="424" x2="400" y2="424" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
-<text x="408" y="427">acción que vuelve (↩ bajo el origen)</text>
+<text x="408" y="427">backward action (↩ under the source)</text>
 <line x1="630" y1="424" x2="670" y2="424" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
-<text x="678" y="427">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="444">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<text x="678" y="427">to the same column (↕ under the source)</text>
+<text x="40" y="444">columns = level in the state name (root = 0) · ↷ under the source: action that skips columns, drawn around them · actions without the "Click_" prefix · hover a state or an edge for the full detail</text>
 <line x1="40" y1="460" x2="80" y2="460" stroke="#1b8a82" stroke-width="1.6" marker-end="url(#arrow-hover)"/>
-<text x="88" y="463">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+<text x="88" y="463">pointer action (Hover_ / Unhover_), shown with its prefix: a loop only highlights or shows something; an arrow to another state opens something</text>
 </g>
 <line x1="40" y1="486" x2="989" y2="486" stroke="#ddd"/>
-<text x="40" y="506" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 10 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text x="40" y="506" font-weight="bold" fill="#222">Regex with the cycles cut (complete interactions; 10 shortcuts listed apart, see regex.cycles in transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
 <tspan x="40" y="524">(Click_background | Hover_analytics | Hover_util | Hover_vis | Hover_graph | Hover_cluster | Hover_heap | Hover_math | Hover_controls |</tspan>
 <tspan x="40" y="539">Hover_events | Click_analytics (Hover_analytics | Hover_vis | Hover_graph | Hover_cluster | (Click_graph (Hover_analytics | Hover_graph)* |</tspan>
@@ -279,9 +279,9 @@ Hover_cluster: stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) 
 <tspan x="40" y="644">Click_controls (Hover_vis | Hover_controls)* (Click_background | Click_controls) | Click_events (Hover_vis | Hover_events)* (Click_background |</tspan>
 <tspan x="40" y="659">Click_events)))*</tspan>
 </text>
-<text x="40" y="692" font-weight="bold" fill="#222">Hover (9 acciones con efecto visible)</text>
+<text x="40" y="692" font-weight="bold" fill="#222">Hover (9 actions with a visible effect)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="710">Hover_analytics, Hover_util, Hover_vis, Hover_graph, Hover_cluster, Hover_heap, Hover_math, Hover_controls, Hover_events (9; bucle en el</tspan>
-<tspan x="40" y="725">estado): stroke: (sin definir) -&gt; #7a0019; stroke-width: (sin definir) -&gt; 3</tspan>
+<tspan x="40" y="710">Hover_analytics, Hover_util, Hover_vis, Hover_graph, Hover_cluster, Hover_heap, Hover_math, Hover_controls, Hover_events (9; loop on the</tspan>
+<tspan x="40" y="725">state): stroke: (unset) -&gt; #7a0019; stroke-width: (unset) -&gt; 3</tspan>
 </text>
 </svg>

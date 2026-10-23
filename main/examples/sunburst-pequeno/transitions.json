@@ -87,11 +87,11 @@
     }
   },
   "regex": {
-    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "syntax": "tokens separated by spaces; | union, * + ? {n,m} repetition, ( ) grouping, () empty string",
     "cycleCut": "((Click_vis (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | Click_analytics (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | Click_util (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)*",
-    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycleCutMeaning": "complete interactions with the cycles cut: going down the hierarchy and back up (zoom out, back, background); shortcuts (jumps to a state of another branch) are not expanded in the regex and are listed in regex.cycles.shortcutTransitions",
     "cycles": {
-      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "meaning": "spanning tree from the initial state (by hierarchical name when there is one, otherwise by BFS): tree = from parent to child, back = to an ancestor (closes a cycle), shortcut = to another branch",
       "tree": 9,
       "back": 49,
       "shortcuts": 6,
@@ -129,12 +129,12 @@
       ]
     },
     "language": "(((Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)* (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)* | (Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*)? | Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*)? | Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)* (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*)?)?",
-    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "languageMeaning": "standard semantics: matches EXACTLY the sequences of interactions (clicks and hovers) that can be performed from the initial state (without the ones that break the page)",
     "completeInteractions": "(((Click_vis | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle) (Hover_data | Hover_operator | Hover_TreeBuilder | Hover_Tree | Hover_OperatorSwitch | Hover_SortOperator | (Click_data (Hover_TreeBuilder | Hover_Tree)* | Click_operator (Hover_OperatorSwitch | Hover_SortOperator)*) Click_circle)* | (Click_analytics | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle) (Hover_graph | Hover_cluster | Hover_ShortestPaths | Hover_SpanningTree | Hover_HierarchicalCluster | Hover_MergeEdge | (Click_graph (Hover_ShortestPaths | Hover_SpanningTree)* | Click_cluster (Hover_HierarchicalCluster | Hover_MergeEdge)*) Click_circle)* | (Click_util | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle) (Hover_heap | Hover_palette | Hover_FibonacciHeap | Hover_HeapNode | Hover_SizePalette | Hover_ShapePalette | (Click_heap (Hover_FibonacciHeap | Hover_HeapNode)* | Click_palette (Hover_SizePalette | Hover_ShapePalette)*) Click_circle)*)? Click_circle | Hover_vis | Hover_analytics | Hover_util | Hover_data | Hover_operator | Hover_graph | Hover_cluster | Hover_heap | Hover_palette)*",
-    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas"
+    "completeInteractionsMeaning": "sequences that return to the initial state; every performable sequence is a prefix of one of these"
   },
   "hovers": {
-    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "meaning": "hover actions (the pointer enters an element) that change something visible. transient: a highlight or tooltip that disappears on leaving and does not change what can be done (a loop on its state); structural: opens something or leaves a change, leading to another state (its way back is Unhover_); error: doing it breaks the page (reported as unexpected behavior). changes is the observed effect; hovers with no visible effect are not actions (ignored)",
     "transient": 21,
     "structural": 0,
     "actions": {
@@ -142,168 +142,168 @@
         "type": "transient",
         "states": 1,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_analytics": {
         "type": "transient",
         "states": 1,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_util": {
         "type": "transient",
         "states": 1,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_data": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_operator": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_graph": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_cluster": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_heap": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_palette": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_TreeBuilder": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_Tree": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_OperatorSwitch": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_SortOperator": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_ShortestPaths": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_SpanningTree": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_HierarchicalCluster": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_MergeEdge": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_FibonacciHeap": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_HeapNode": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_SizePalette": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       },
       "Hover_ShapePalette": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000",
-          "stroke-width: (sin definir) -> 2"
+          "stroke: (unset) -> #000",
+          "stroke-width: (unset) -> 2"
         ]
       }
     }

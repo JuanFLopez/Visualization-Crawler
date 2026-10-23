@@ -8,11 +8,15 @@
  * accepting except __ERROR__. It does not model "did the run end well" but
  * "can this sequence of actions be performed", so its language is exactly the
  * set of action sequences that can really be executed from the initial
- * state. The automaton built from a regex (lib/regex.js) has acceptance of
+ * state. The automaton built from a regex (lib/regex) has acceptance of
  * its own (standard semantics).
+ *
+ * This is the shared data structure of the analysis: lib/report builds the
+ * observed DFA from transitions.json, lib/cycles cuts it, lib/regex converts it
+ * to and from regexes, lib/diff compares two of them and lib/diagram draws one.
  */
 
-const ERROR_STATE = '__ERROR__';
+const { ERROR_STATE } = require('./constants');
 
 class DFA {
   /**
@@ -29,6 +33,7 @@ class DFA {
     this.accepting = accepting;
   }
 
+  /** @param {string} state */
   isAccepting(state) {
     return this.accepting ? this.accepting.has(state) : true;
   }
@@ -41,22 +46,55 @@ class DFA {
     return alphabet;
   }
 
-  /** @returns {string|null} the target state, or null when there is no such transition (string rejected) */
+  /**
+   * @param {string} state
+   * @param {string} symbol
+   * @returns {string|null} the target state, or null when there is no such transition (string rejected)
+   */
   step(state, symbol) {
     const symbolMap = this.transitions.get(state);
     if (!symbolMap) return null;
     return symbolMap.has(symbol) ? symbolMap.get(symbol) : null;
   }
 
+  /** @returns {string[]} the states that have a row in the table (a target that never appears as a source is not listed) */
   states() {
     return [...this.transitions.keys()];
+  }
+
+  /**
+   * Breadth-first discovery from the initial state, never entering a state in
+   * `skip`. The first state to reach another is its parent, so the result does
+   * not depend on how the caller later walks it.
+   * @returns {{ order: string[], depth: Map<string, number>, parent: Map<string, string>, via: Map<string, string> }}
+   *   order: states in discovery order; parent / via: the state and the symbol that first reached each one
+   */
+  bfs({ skip = [] } = {}) {
+    const skipped = new Set(skip);
+    const order = [this.initial];
+    const depth = new Map([[this.initial, 0]]);
+    const parent = new Map();
+    const via = new Map();
+    for (let i = 0; i < order.length; i++) {
+      const from = order[i];
+      for (const [symbol, to] of this.transitions.get(from) || []) {
+        if (skipped.has(to) || depth.has(to)) continue;
+        order.push(to);
+        depth.set(to, depth.get(from) + 1);
+        parent.set(to, from);
+        via.set(to, symbol);
+      }
+    }
+    return { order, depth, parent, via };
   }
 }
 
 /**
  * Builds a DFA from the transitions.json the crawler writes
  * ({ initialState, transitions: { state: { action: targetState } } }).
- * This is the OBSERVED automaton.
+ * This is the OBSERVED automaton: every state accepts except __ERROR__.
+ * @param {{initialState: string, transitions: Object<string, Object<string, string>>}} table
+ * @returns {DFA}
  */
 function fromTransitionsJson({ initialState, transitions }) {
   const map = new Map();
@@ -70,12 +108,12 @@ function fromTransitionsJson({ initialState, transitions }) {
 }
 
 /**
- * Prefix closure: accepts every sequence that can be EXTENDED to an accepted
- * one. Lets an expected regex that describes complete interactions (such as
- * "(Click_A Click_BACK)*") be compared without spelling out every
- * half-finished interaction.
+ * `targets` plus every state that can reach one of them.
+ * @param {DFA} dfa
+ * @param {Iterable<string>} targets
+ * @returns {Set<string>}
  */
-function prefixClosure(dfa) {
+function statesReaching(dfa, targets) {
   const preds = new Map();
   for (const [from, m] of dfa.transitions) {
     for (const to of m.values()) {
@@ -83,13 +121,26 @@ function prefixClosure(dfa) {
       preds.get(to).add(from);
     }
   }
-  const live = new Set([...dfa.transitions.keys()].filter((s) => dfa.isAccepting(s)));
-  const stack = [...live];
+  const reaching = new Set(targets);
+  const stack = [...reaching];
   while (stack.length) {
     for (const p of preds.get(stack.pop()) || []) {
-      if (!live.has(p)) { live.add(p); stack.push(p); }
+      if (!reaching.has(p)) { reaching.add(p); stack.push(p); }
     }
   }
+  return reaching;
+}
+
+/**
+ * Prefix closure: accepts every sequence that can be EXTENDED to an accepted
+ * one. Lets an expected regex that describes complete interactions (such as
+ * "(Click_A Click_BACK)*") be compared without spelling out every
+ * half-finished interaction.
+ * @param {DFA} dfa - its initial state becomes null when no accepting state is reachable from it
+ * @returns {DFA}
+ */
+function prefixClosure(dfa) {
+  const live = statesReaching(dfa, dfa.states().filter((s) => dfa.isAccepting(s)));
   const map = new Map();
   for (const s of live) {
     const m = new Map();
@@ -100,4 +151,18 @@ function prefixClosure(dfa) {
   return new DFA({ initial, transitions: map, alphabet: dfa.alphabet, accepting: live });
 }
 
-module.exports = { DFA, fromTransitionsJson, prefixClosure, ERROR_STATE };
+/**
+ * The same automaton, accepting only the COMPLETE interactions: the initial
+ * state, and the states from which the initial one can no longer be reached.
+ * Every valid sequence is a prefix of one of the accepted ones.
+ * @param {DFA} dfa
+ * @returns {DFA} shares `dfa.transitions`
+ */
+function completeInteractionsDfa(dfa) {
+  const reachesInitial = statesReaching(dfa, [dfa.initial]);
+  const accepting = new Set([dfa.initial]);
+  for (const s of dfa.states()) if (!reachesInitial.has(s)) accepting.add(s);
+  return new DFA({ initial: dfa.initial, transitions: dfa.transitions, alphabet: dfa.alphabet, accepting });
+}
+
+module.exports = { DFA, fromTransitionsJson, prefixClosure, completeInteractionsDfa };

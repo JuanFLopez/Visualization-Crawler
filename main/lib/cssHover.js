@@ -7,7 +7,7 @@
  * has to receive the :hover (here `.node`; the circle only changes as a
  * consequence).
  *
- * Both functions are SELF-CONTAINED (no closures, no require): crawler.js
+ * Both functions are SELF-CONTAINED (no closures, no require): lib/page/index.js
  * injects them into the page with toString(), and the tests call them directly.
  */
 

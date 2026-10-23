@@ -11,6 +11,9 @@
  *   unhover  take it away; it exists only as the way back from a hover that
  *            changes what can be done (an opened menu), never for a plain
  *            highlight, which does not change state
+ *
+ * Used by: lib/crawl (naming the candidates), lib/hovers, lib/names,
+ * lib/labels, lib/issues, lib/diagram and lib/report.
  */
 
 /** Interaction kind -> prefix of its action names. */
@@ -25,12 +28,22 @@ const prefixes = Object.values(PREFIXES).join('|');
 const PREFIX_RE = new RegExp(`^(?:${prefixes})`);
 const INTERNAL_RE = new RegExp(`^(?:${prefixes})${UNKNOWN}\\d+$`);
 
+/**
+ * @param {'click'|'hover'|'unhover'} kind
+ * @param {string} base - the element part of the name
+ * @returns {string} "Click_vis", "Hover_vis", ...
+ * @throws {Error} on an unknown kind
+ */
 function actionName(kind, base) {
-  if (!Object.hasOwn(PREFIXES, kind)) throw new Error(`tipo de acción desconocido: ${kind}`);
+  if (!Object.hasOwn(PREFIXES, kind)) throw new Error(`unknown action kind: ${kind}`);
   return PREFIXES[kind] + base;
 }
 
-/** Name for an element with no readable identity (see createNaming in crawler.js). */
+/**
+ * Name for an element with no readable identity (see createNaming in lib/crawl/naming.js).
+ * @param {'click'|'hover'|'unhover'} kind
+ * @param {number} n - running counter
+ */
 function internalName(kind, n) {
   return actionName(kind, `${UNKNOWN}${n}`);
 }
@@ -40,7 +53,11 @@ function isInternalName(action) {
   return INTERNAL_RE.test(action);
 }
 
-/** "Click_vis" -> "click" (null when the name has no known prefix). */
+/**
+ * "Click_vis" -> "click".
+ * @param {string} action
+ * @returns {'click'|'hover'|'unhover'|null} null when the name has no known prefix
+ */
 function kindOfAction(action) {
   return Object.keys(PREFIXES).find((kind) => action.startsWith(PREFIXES[kind])) ?? null;
 }
@@ -59,7 +76,10 @@ function displayAction(action) {
   return kindOfAction(action) === 'click' ? shortAction(action) : action;
 }
 
-/** The verb to use for the action in a message; an unprefixed name (a hand-written table) reads as a click. */
+/**
+ * The verb to use for the action in a message; an unprefixed name (a hand-written table) reads as a click.
+ * @returns {'click'|'hover'|'unhover'}
+ */
 function verbOf(action) {
   return kindOfAction(action) ?? 'click';
 }

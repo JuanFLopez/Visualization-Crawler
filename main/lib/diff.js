@@ -9,6 +9,18 @@
  * direction (each pair is visited once, so they are counterexamples from
  * different "places" of the automaton, not trivial extensions of one).
  *
+ * Used by lib/report/comparison.js (observed automaton vs the expected regex)
+ * and, through its counterexamples, by lib/issues.js.
+ */
+
+const { compositeKey } = require('./util');
+
+/**
+ * @param {import('./automaton').DFA} dfaA - sequences only it accepts end up in `onlyInA`
+ * @param {import('./automaton').DFA} dfaB
+ * @param {Object} [opts]
+ * @param {number} [opts.limit=10] - counterexamples to collect per direction
+ * @param {number} [opts.maxDepth=200] - longest sequence explored
  * @returns {{
  *   equivalent: boolean,
  *   onlyInA: string[][],   // sequences A accepts and B does not
@@ -29,7 +41,7 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
   // would merge into one (e.g. two options missing from the regex that return
   // to the same place).
   const visited = new Set();
-  const keyOf = (a, b, deadA, deadB) => `${a}\u0000${b}\u0000${a === null ? deadA : ''}\u0000${b === null ? deadB : ''}`;
+  const keyOf = (a, b, deadA, deadB) => compositeKey(a, b, a === null ? deadA : '', b === null ? deadB : '');
   const queue = [{ a: dfaA.initial, b: dfaB.initial, path: [], deadA: null, deadB: null }];
   visited.add(keyOf(dfaA.initial, dfaB.initial));
 
@@ -51,8 +63,8 @@ function diff(dfaA, dfaB, { limit = 10, maxDepth = 200 } = {}) {
     for (const sym of alphabet) {
       const na = step(dfaA, a, sym), nb = step(dfaB, b, sym);
       if (na === null && nb === null) continue;
-      const nDeadA = a !== null && na === null ? `${a}\u0000${sym}` : deadA;
-      const nDeadB = b !== null && nb === null ? `${a}\u0000${sym}` : deadB;
+      const nDeadA = a !== null && na === null ? compositeKey(a, sym) : deadA;
+      const nDeadB = b !== null && nb === null ? compositeKey(a, sym) : deadB;
       const k = keyOf(na, nb, nDeadA, nDeadB);
       if (visited.has(k)) continue;
       visited.add(k);

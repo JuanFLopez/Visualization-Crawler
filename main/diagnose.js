@@ -5,54 +5,155 @@
  *   phase 2  clicks the first candidate that changes something and measures
  *            how long the page takes to settle (or whether it never does).
  *
+ * Run it when a crawl fails with "the initial state is not stable between
+ * reloads" or "the page kept animating": phase 1 shows exactly which attribute
+ * differs between two loads, and phase 2 tells a slow transition (use a larger
+ * settle time) from an animation that never ends (instrument window.__testState
+ * by hand). It runs in REAL time, unlike the crawler, and uses the same page
+ * helpers and instrument.js, so what it sees is what the crawler sees.
+ *
  * Usage: node diagnose.js <folder-with-index.html> [waitMs=500] [rounds=5] [--containerSelector <css>]
+ *   waitMs  real ms to wait after every load        rounds  how many times phase 1 reloads
  */
 const fs = require('fs');
 const path = require('path');
-const http = require('http');
-const { chromium } = require('playwright');
-const { installPageHelpers, isActionable, measureSettle } = require('./crawler');
+const { installPageHelpers, isActionable } = require('./lib/page');
+const { measureSettle } = require('./lib/crawl/settle');
+const { startServer } = require('./lib/server');
+const { resolveChromePath, launchBrowser } = require('./lib/browser');
 
-const PORT = 8935;
-const MIME = { '.html': 'text/html', '.js': 'application/javascript', '.json': 'application/json' };
+const VIEWPORT = { width: 700, height: 700 };
 
-function startServer(dir) {
-  return new Promise((resolve) => {
-    const server = http.createServer((req, res) => {
-      const rel = decodeURIComponent(req.url === '/' ? '/index.html' : req.url);
-      const filePath = path.join(dir, rel);
-      fs.readFile(filePath, (err, data) => {
-        if (err) { res.writeHead(404); res.end(); return; }
-        res.writeHead(200, { 'Content-Type': MIME[path.extname(filePath)] || 'text/plain' });
-        res.end(data);
-      });
-    });
-    server.listen(PORT, () => resolve(server));
-  });
-}
-
-async function resolveChromePath() {
-  if (process.platform !== 'linux') return undefined;
-  try {
-    const chromium = require('@sparticuz/chromium');
-    return await chromium.executablePath();
-  } catch (e) {
-    return undefined;
-  }
-}
-
-// First point where two readings differ (';' separates one element per
-// fragment), with context, so thousands of characters need not be read by hand.
+/**
+ * First point where two readings differ (';' separates one element per
+ * fragment), with context, so thousands of characters need not be read by hand.
+ * @param {string} a - a fingerprint from window.__crawlerStateDebug()
+ * @param {string} b
+ * @returns {{index: number, a: string, b: string}|null} the element number and both versions; null if equal
+ */
 function firstDifference(a, b) {
   const partsA = a.split(';');
   const partsB = b.split(';');
   const len = Math.max(partsA.length, partsB.length);
   for (let i = 0; i < len; i++) {
     if (partsA[i] !== partsB[i]) {
-      return { index: i, a: partsA[i] ?? '(no existe)', b: partsB[i] ?? '(no existe)' };
+      return { index: i, a: partsA[i] ?? '(does not exist)', b: partsB[i] ?? '(does not exist)' };
     }
   }
   return null;
+}
+
+/**
+ * Phase 1: reload without touching anything and compare the fingerprints.
+ * @param {import('playwright').Browser} browser
+ * @param {string} url - of the visualization's index.html
+ * @param {string[]} initScripts - instrument.js and the options
+ * @param {{waitMs: number, rounds: number}} opts
+ */
+async function checkInitialStability(browser, url, initScripts, { waitMs, rounds }) {
+  const page = await browser.newPage({ viewport: VIEWPORT });
+  for (const src of initScripts) await page.addInitScript({ content: src });
+
+  const bufs = [];
+  for (let i = 0; i < rounds; i++) {
+    await page.goto(url);
+    await page.waitForTimeout(waitMs);
+    const buf = await page.evaluate(() => window.__crawlerStateDebug());
+    bufs.push(buf);
+    console.log(`round ${i + 1}: ${buf.length} fingerprint characters`);
+  }
+  await page.close();
+
+  console.log('');
+  if (bufs.every((b) => b === bufs[0])) {
+    console.log('STABLE on the initial load: the', rounds, 'readings without clicking anything are identical.');
+    return;
+  }
+  console.log('UNSTABLE already on the initial load: the fingerprint changes between reloads WITHOUT CLICKING ANYTHING.');
+  console.log('This confirms the problem is not the crawler -- not even the starting state');
+  console.log('repeats, so no crawling strategy can converge.\n');
+
+  for (let i = 1; i < bufs.length; i++) {
+    const diff = firstDifference(bufs[0], bufs[i]);
+    if (diff) {
+      console.log(`First difference between round 1 and round ${i + 1} (element #${diff.index}):`);
+      console.log('  round 1:', diff.a);
+      console.log(`  round ${i + 1}:`, diff.b);
+      console.log('');
+    }
+  }
+}
+
+/**
+ * Phase 2: the initial load may be stable, yet what matters usually happens
+ * AFTER a click (a D3 transition, a force simulation that starts there). The
+ * first candidate that changes something is clicked once and the fingerprint is
+ * measured over time, to see whether two consecutive readings ever match (it
+ * "settles") or never do. Up to 10 candidates are tried, since the first may be
+ * a no-op or may break the page.
+ * @param {import('playwright').Browser} browser
+ * @param {string} url
+ * @param {string[]} initScripts
+ * @param {{waitMs: number, containerSelector: string|null}} opts
+ */
+async function checkSettling(browser, url, initScripts, { waitMs, containerSelector }) {
+  const page = await browser.newPage({ viewport: VIEWPORT });
+  await installPageHelpers(page);
+  for (const src of initScripts) await page.addInitScript({ content: src });
+  let pageErrors = 0;
+  page.on('pageerror', () => pageErrors++);
+
+  await page.goto(url);
+  await page.waitForTimeout(waitMs);
+
+  const clickableSelector = containerSelector
+    ? `${containerSelector} [data-crawler-clickable]`
+    : '[data-crawler-clickable]';
+  const all = await page.locator(clickableSelector).all();
+  const actionable = [];
+  for (const el of all) if (await isActionable(el)) actionable.push(el);
+  console.log(`clickable elements detected: ${all.length} (${actionable.length} interactable now)`);
+
+  if (actionable.length === 0) {
+    console.log('No interactable clickable element was detected (did automatic detection find no click listeners?). Skipping phase 2.');
+  } else {
+    // The first candidate may be a no-op (or may break: the root rect of an
+    // icicle in the root state), so try until one changes something.
+    const maxMs = 6000;
+    const maxTries = Math.min(actionable.length, 10);
+    let settledAt = 0;
+    for (let i = 0; i < maxTries && settledAt === 0; i++) {
+      const id = await actionable[i].getAttribute('data-crawler-id');
+      const errorsBefore = pageErrors;
+      settledAt = await measureSettle(
+        page,
+        `[data-crawler-id="${id}"]`,
+        () => page.evaluate(() => window.__crawlerState()),
+        { maxMs, onChange: (ms) => console.log(`  +${ms}ms: CHANGED`) }
+      );
+      if (settledAt === 0) {
+        const why = pageErrors > errorsBefore ? 'threw an error on the page' : 'changed nothing observable';
+        console.log(`candidate ${id}: ${why}, trying the next one...`);
+      }
+    }
+
+    console.log('');
+    if (settledAt === 0) {
+      console.log(`None of the first ${maxTries} candidates changed anything observable.`);
+    } else if (settledAt !== null) {
+      console.log(`It settles at ~${settledAt}ms (last change observed). crawler.js does not need this number`);
+      console.log(`(it uses virtual time); if you want a fixed real-time pause, use something above it, e.g. --settleMs ${Math.round(settledAt * 1.5) + 200}.`);
+    } else {
+      console.log('It NEVER settled within the', maxMs, 'ms we tried.');
+      console.log('This points to a continuous animation/simulation (d3-force, something with requestAnimationFrame');
+      console.log('running indefinitely) rather than "it needs to wait a little longer". In that case the automatic');
+      console.log('fingerprint based on DOM attributes is not the right tool: you need a manual');
+      console.log('window.__testState that captures ONLY what logically matters (what is');
+      console.log('selected/expanded), ignoring pixel positions that never repeat exactly.');
+    }
+  }
+
+  await page.close();
 }
 
 (async () => {
@@ -64,123 +165,28 @@ function firstDifference(a, b) {
   const rounds = parseInt(args[2], 10) || 5;
 
   if (!vizDir) {
-    console.error('Uso: node diagnose.js <carpeta-con-index.html> [waitMs=500] [rondas=5] [--containerSelector <css>]');
+    console.error('Usage: node diagnose.js <folder-with-index.html> [waitMs=500] [rounds=5] [--containerSelector <css>]');
     process.exit(1);
   }
 
   const resolvedDir = path.resolve(vizDir);
-  const instrumentSrc = fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8');
   const initScripts = [];
   if (containerSelector) {
     initScripts.push(`window.__crawlerContainerSelector = ${JSON.stringify(containerSelector)};`);
   }
-  initScripts.push(instrumentSrc);
+  initScripts.push(fs.readFileSync(path.join(__dirname, 'instrument.js'), 'utf8'));
 
   const server = await startServer(resolvedDir);
-  const chromePath = await resolveChromePath();
-  const browser = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
-  const page = await browser.newPage({ viewport: { width: 700, height: 700 } });
-  for (const src of initScripts) await page.addInitScript({ content: src });
+  const browser = await launchBrowser(await resolveChromePath());
+  const url = `http://127.0.0.1:${server.address().port}/index.html`;
+  try {
+    console.log(`reloading ${resolvedDir} ${rounds} times, waiting ${waitMs}ms each time, clicking nothing...\n`);
+    await checkInitialStability(browser, url, initScripts, { waitMs, rounds });
 
-  console.log(`recargando ${resolvedDir} ${rounds} veces, esperando ${waitMs}ms cada vez, sin clickear nada...\n`);
-
-  const bufs = [];
-  for (let i = 0; i < rounds; i++) {
-    await page.goto(`http://localhost:${PORT}/index.html`);
-    await page.waitForTimeout(waitMs);
-    const buf = await page.evaluate(() => window.__crawlerStateDebug());
-    bufs.push(buf);
-    console.log(`ronda ${i + 1}: ${buf.length} caracteres de fingerprint`);
+    console.log('\n--- Phase 2: does it settle after a click? ---\n');
+    await checkSettling(browser, url, initScripts, { waitMs, containerSelector });
+  } finally {
+    await browser.close();
+    server.close();
   }
-
-  await browser.close();
-  server.close();
-
-  const allSame = bufs.every((b) => b === bufs[0]);
-
-  console.log('');
-  if (allSame) {
-    console.log('ESTABLE en carga inicial: las', rounds, 'lecturas sin clickear nada son idénticas.');
-  } else {
-    console.log('INESTABLE ya en la carga inicial: el fingerprint cambia entre recargas SIN CLICKEAR NADA.');
-    console.log('Esto confirma que el problema no es el crawler -- es que ni el estado de arranque');
-    console.log('se repite, así que ninguna estrategia de crawling puede converger.\n');
-
-    for (let i = 1; i < bufs.length; i++) {
-      const diff = firstDifference(bufs[0], bufs[i]);
-      if (diff) {
-        console.log(`Primera diferencia entre ronda 1 y ronda ${i + 1} (elemento #${diff.index}):`);
-        console.log('  ronda 1:', diff.a);
-        console.log(`  ronda ${i + 1}:`, diff.b);
-        console.log('');
-      }
-    }
-  }
-
-  // Phase 2: the initial load may be stable, yet what matters usually happens
-  // AFTER a click (a D3 transition, a force simulation that starts there). The
-  // first candidate is clicked once and the fingerprint is measured over time,
-  // to see whether two consecutive readings ever match (it "settles") or never do.
-  console.log('\n--- Fase 2: ¿se asienta después de un click? ---\n');
-
-  const browser2 = await chromium.launch({ executablePath: chromePath, headless: true, args: ['--no-sandbox'] });
-  const page2 = await browser2.newPage({ viewport: { width: 700, height: 700 } });
-  await page2.addInitScript(installPageHelpers);
-  for (const src of initScripts) await page2.addInitScript({ content: src });
-  let pageErrors = 0;
-  page2.on('pageerror', () => pageErrors++);
-  const server2 = await startServer(resolvedDir);
-
-  await page2.goto(`http://localhost:${PORT}/index.html`);
-  await page2.waitForTimeout(waitMs);
-
-  const clickableSelector = containerSelector
-    ? `${containerSelector} [data-crawler-clickable]`
-    : '[data-crawler-clickable]';
-  const all = await page2.locator(clickableSelector).all();
-  const actionable = [];
-  for (const el of all) if (await isActionable(el)) actionable.push(el);
-  console.log(`clickeables detectados: ${all.length} (${actionable.length} interactuables ahora)`);
-
-  if (actionable.length === 0) {
-    console.log('No se detectó ningún elemento clickeable interactuable (¿el selector automático no encontró listeners de click?). Salteando fase 2.');
-  } else {
-    // The first candidate may be a no-op (or may break: the root rect of an
-    // icicle in the root state), so try until one changes something.
-    const maxMs = 6000;
-    const maxTries = Math.min(actionable.length, 10);
-    let settledAt = 0;
-    for (let i = 0; i < maxTries && settledAt === 0; i++) {
-      const id = await actionable[i].getAttribute('data-crawler-id');
-      const errorsBefore = pageErrors;
-      settledAt = await measureSettle(
-        page2,
-        `[data-crawler-id="${id}"]`,
-        () => page2.evaluate(() => window.__crawlerState()),
-        { maxMs, onChange: (ms) => console.log(`  +${ms}ms: CAMBIÓ`) }
-      );
-      if (settledAt === 0) {
-        const why = pageErrors > errorsBefore ? 'tiró un error en la página' : 'no cambió nada observable';
-        console.log(`candidato ${id}: ${why}, probando el siguiente...`);
-      }
-    }
-
-    console.log('');
-    if (settledAt === 0) {
-      console.log(`Ninguno de los primeros ${maxTries} candidatos cambió algo observable.`);
-    } else if (settledAt !== null) {
-      console.log(`Se asienta a los ~${settledAt}ms (último cambio observado). crawler.js no necesita este número`);
-      console.log(`(usa tiempo virtual); si querés una pausa fija en tiempo real, usá algo por encima, p.ej. --settleMs ${Math.round(settledAt * 1.5) + 200}.`);
-    } else {
-      console.log('NUNCA se asentó en los', maxMs, 'ms que probamos.');
-      console.log('Esto apunta a una animación/simulación continua (d3-force, algo con requestAnimationFrame');
-      console.log('corriendo indefinidamente) más que a "hace falta esperar un poco más". Ahí, el fingerprint');
-      console.log('automático basado en atributos del DOM no es la herramienta correcta: hace falta');
-      console.log('window.__testState manual que capture SOLO lo que lógicamente importa (qué está');
-      console.log('seleccionado/expandido), ignorando posiciones en píxeles que nunca se repiten exacto.');
-    }
-  }
-
-  await browser2.close();
-  server2.close();
 })();

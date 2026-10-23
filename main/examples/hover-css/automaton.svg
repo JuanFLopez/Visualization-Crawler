@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="900" height="416" viewBox="0 0 900 416" font-family="Helvetica, Arial, sans-serif" font-size="12">
-<title>Autómata (2 estados)</title>
+<title>Automaton (2 states)</title>
 <defs>
   <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="13" markerHeight="13" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#555"/></marker>
   <marker id="arrow-back" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path d="M1,1 L9,5 L1,9 Z" fill="#b5b5b5"/></marker>
@@ -55,29 +55,29 @@ Hover_node: circle: stroke (CSS): none -&gt; rgb(0, 0, 0); circle: stroke-width 
 </g>
 <g font-size="10" fill="#666">
 <line x1="40" y1="144" x2="80" y2="144" stroke="#777" stroke-width="1.6" marker-end="url(#arrow)"/>
-<text x="88" y="147">acción que avanza (etiqueta junto al destino)</text>
+<text x="88" y="147">forward action (label next to the target)</text>
 <line x1="360" y1="144" x2="400" y2="144" stroke="#c4c4c4" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#arrow-back)"/>
-<text x="408" y="147">acción que vuelve (↩ bajo el origen)</text>
+<text x="408" y="147">backward action (↩ under the source)</text>
 <line x1="630" y1="144" x2="670" y2="144" stroke="#9bb7d4" stroke-width="1.6" marker-end="url(#arrow-side)"/>
-<text x="678" y="147">a la misma columna (↕ bajo el origen)</text>
-<text x="40" y="164">columnas = nivel en el nombre del estado (root = 0) · ↷ bajo el origen: acción que saltea columnas, dibujada rodeándolas · acciones sin el prefijo "Click_" · pasá el mouse por un estado o arista para ver el detalle completo</text>
+<text x="678" y="147">to the same column (↕ under the source)</text>
+<text x="40" y="164">columns = level in the state name (root = 0) · ↷ under the source: action that skips columns, drawn around them · actions without the "Click_" prefix · hover a state or an edge for the full detail</text>
 <line x1="40" y1="180" x2="80" y2="180" stroke="#1b8a82" stroke-width="1.6" marker-end="url(#arrow-hover)"/>
-<text x="88" y="183">acción del puntero (Hover_ / Unhover_), con su prefijo: un bucle solo resalta o muestra algo; una flecha a otro estado abre algo</text>
+<text x="88" y="183">pointer action (Hover_ / Unhover_), shown with its prefix: a loop only highlights or shows something; an arrow to another state opens something</text>
 </g>
 <line x1="40" y1="206" x2="860" y2="206" stroke="#ddd"/>
-<text x="40" y="226" font-weight="bold" fill="#1a7f37">Comparación con: ( (Hover_barA | Hover_barB | Hover_barC | Hover_node)* toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* toggle )* (Hover_barA | Hover_barB | Hover_barC | Hover_node)*</text>
+<text x="40" y="226" font-weight="bold" fill="#1a7f37">Comparison with: ( (Hover_barA | Hover_barB | Hover_barC | Hover_node)* toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)* toggle )* (Hover_barA | Hover_barB | Hover_barC | Hover_node)*</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#1a7f37">
-<tspan x="40" y="244">EQUIVALENTES (autómata cortado · interacciones completas)</tspan>
+<tspan x="40" y="244">EQUIVALENT (cut automaton · complete interactions)</tspan>
 </text>
-<text x="40" y="277" font-weight="bold" fill="#222">Regex con los ciclos cortados (interacciones completas; 0 atajos aparte, ver regex.cycles en transitions.json)</text>
+<text x="40" y="277" font-weight="bold" fill="#222">Regex with the cycles cut (complete interactions; 0 shortcuts listed apart, see regex.cycles in transitions.json)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
 <tspan x="40" y="295">(Hover_barA | Hover_barB | Hover_barC | Hover_node | Click_toggle (Hover_barB | Hover_barC | Hover_barD | Hover_node)*</tspan>
 <tspan x="40" y="310">Click_toggle)*</tspan>
 </text>
-<text x="40" y="343" font-weight="bold" fill="#222">Hover (5 acciones con efecto visible)</text>
+<text x="40" y="343" font-weight="bold" fill="#222">Hover (5 actions with a visible effect)</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#333">
-<tspan x="40" y="361">Hover_barA, Hover_barB, Hover_barC, Hover_barD (4; bucle en el estado): fill (CSS): rgb(70, 130, 180) -&gt; rgb(255, 165, 0)</tspan>
-<tspan x="40" y="376">Hover_node (1; bucle en el estado): circle: stroke (CSS): none -&gt; rgb(0, 0, 0); circle: stroke-width (CSS): 1px -&gt; 3px</tspan>
-<tspan x="40" y="391">NO son acciones (sin efecto visible): Hover_locked (2 estados)</tspan>
+<tspan x="40" y="361">Hover_barA, Hover_barB, Hover_barC, Hover_barD (4; loop on the state): fill (CSS): rgb(70, 130, 180) -&gt; rgb(255, 165, 0)</tspan>
+<tspan x="40" y="376">Hover_node (1; loop on the state): circle: stroke (CSS): none -&gt; rgb(0, 0, 0); circle: stroke-width (CSS): 1px -&gt; 3px</tspan>
+<tspan x="40" y="391">NOT actions (no visible effect): Hover_locked (2 states)</tspan>
 </text>
 </svg>

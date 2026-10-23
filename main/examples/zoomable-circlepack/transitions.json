@@ -451,11 +451,11 @@
     }
   },
   "regex": {
-    "syntax": "tokens separados por espacio; | unión, * + ? {n,m} repetición, ( ) agrupación, () cadena vacía",
+    "syntax": "tokens separated by spaces; | union, * + ? {n,m} repetition, ( ) grouping, () empty string",
     "cycleCut": "(Click_background | Hover_vis | Hover_util | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_data | Hover_physics | Hover_display | Hover_flex | Hover_operator | Hover_vis/data | Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_palette | Hover_heap | Hover_math | Hover_interpolate | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization | Hover_converters | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Hover_render | Click_util (Hover_util | Hover_animate | Hover_query | Hover_data | Hover_palette | Hover_heap | Hover_math)* (Click_background | Click_util | Click_palette (Hover_palette | Hover_math)* (Click_background | Click_palette) | Click_heap Hover_heap* (Click_background | Click_heap) | Click_math (Hover_palette | Hover_math)* (Click_background | Click_math)) | Click_scale (Hover_vis | Hover_animate | Hover_scale | Hover_physics | Hover_interpolate)* (Click_background | Click_scale) | Click_physics (Hover_vis | Hover_scale | Hover_physics)* (Click_background | Click_physics) | Click_display Hover_display* (Click_background | Click_display) | Click_flex (Hover_animate | Hover_flex)* (Click_background | Click_flex) | Click_vis (Hover_vis | Hover_animate | Hover_query | Hover_analytics | Hover_scale | Hover_physics | Hover_operator | Hover_vis/data | Hover_controls | Hover_legend | Hover_axis | Hover_events | Hover_interpolate | Hover_methods | Hover_optimization | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Hover_render | (Click_operator (Hover_operator | Hover_controls | Hover_legend | Hover_axis | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_encoder (Hover_vis | Hover_controls | Hover_layout | Hover_label | Hover_encoder)* | Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)*) | Click_vis/data (Hover_vis | Hover_animate | Hover_vis/data | Hover_controls | Hover_legend | Hover_render)* (Click_render (Hover_vis | Hover_controls | Hover_render)*)? | Click_controls (Hover_vis | Hover_operator | Hover_vis/data | Hover_controls | Hover_encoder | Hover_render)* | Click_legend (Hover_vis | Hover_operator | Hover_vis/data | Hover_legend | Hover_axis)* | Click_events (Hover_vis | Hover_events)*) Click_vis)* (Click_background | Click_vis | Click_axis (Hover_operator | Hover_legend | Hover_axis | Hover_filter)* (Click_background | Click_axis) | Click_operator (Hover_operator | Hover_controls | Hover_legend | Hover_axis | Hover_layout | Hover_label | Hover_encoder | Hover_distortion | Hover_filter | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* Click_operator)* (Click_background | Click_operator | Click_label (Hover_label | Hover_encoder | Hover_distortion)* (Click_background | Click_label) | Click_filter (Hover_axis | Hover_layout | Hover_distortion | Hover_filter)* (Click_background | Click_filter) | Click_layout (Hover_operator | Hover_layout | Hover_encoder | Hover_distortion | Hover_filter)* (Click_background | Click_layout) | Click_encoder (Hover_vis | Hover_controls | Hover_layout | Hover_label | Hover_encoder)* (Click_background | Click_encoder) | Click_distortion (Hover_vis | Hover_layout | Hover_label | Hover_distortion | Hover_filter)* (Click_background | Click_distortion)) | Click_vis/data (Hover_vis | Hover_animate | Hover_vis/data | Hover_controls | Hover_legend | Hover_render)* (Click_background | Click_vis/data | Click_render (Hover_vis | Hover_controls | Hover_render)* (Click_background | Click_render)) | Click_controls (Hover_vis | Hover_operator | Hover_vis/data | Hover_controls | Hover_encoder | Hover_render)* (Click_background | Click_controls) | Click_legend (Hover_vis | Hover_operator | Hover_vis/data | Hover_legend | Hover_axis)* (Click_background | Click_legend) | Click_events (Hover_vis | Hover_events)* (Click_background | Click_events)) | Click_animate (Hover_vis | Hover_util | Hover_animate | Hover_scale | Hover_flex | Hover_vis/data | Hover_interpolate | Click_interpolate (Hover_vis | Hover_animate | Hover_scale | Hover_interpolate)* Click_animate)* (Click_background | Click_animate | Click_interpolate (Hover_vis | Hover_animate | Hover_scale | Hover_interpolate)* (Click_background | Click_interpolate)) | Click_query (Hover_vis | Hover_util | Hover_query | Hover_analytics | Hover_methods | Hover_cluster | Click_methods (Hover_vis | Hover_query | Hover_analytics | Hover_methods)* Click_query)* (Click_background | Click_query | Click_methods (Hover_vis | Hover_query | Hover_analytics | Hover_methods)* (Click_background | Click_methods)) | Click_analytics (Hover_vis | Hover_query | Hover_analytics | Hover_methods | Hover_graph | Hover_cluster | Hover_optimization | (Click_graph (Hover_analytics | Hover_graph | Hover_optimization)* | Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster | Hover_optimization)*) Click_analytics)* (Click_background | Click_analytics | Click_cluster (Hover_query | Hover_cluster | Hover_optimization)* (Click_background | Click_cluster) | Click_graph (Hover_analytics | Hover_graph | Hover_optimization)* (Click_background | Click_graph) | Click_optimization (Hover_vis | Hover_analytics | Hover_graph | Hover_cluster | Hover_optimization)* (Click_background | Click_optimization)) | Click_data (Hover_util | Hover_data | Hover_converters | Click_converters (Hover_data | Hover_converters)* Click_data)* (Click_background | Click_data | Click_converters (Hover_data | Hover_converters)* (Click_background | Click_converters)))*",
-    "cycleCutMeaning": "interacciones completas con los ciclos cortados: entrar por la jerarquía y volver hacia arriba (zoom out, volver, fondo); los atajos (saltos a un estado de otra rama) no se desarrollan en el regex y se listan en regex.cycles.shortcutTransitions",
+    "cycleCutMeaning": "complete interactions with the cycles cut: going down the hierarchy and back up (zoom out, back, background); shortcuts (jumps to a state of another branch) are not expanded in the regex and are listed in regex.cycles.shortcutTransitions",
     "cycles": {
-      "meaning": "árbol generador desde el estado inicial (por nombre jerárquico si lo hay, si no por BFS): tree = de padre a hijo, back = a un ancestro (cierra un ciclo), shortcut = a otra rama (atajo)",
+      "meaning": "spanning tree from the initial state (by hierarchical name when there is one, otherwise by BFS): tree = from parent to child, back = to an ancestor (closes a cycle), shortcut = to another branch",
       "tree": 31,
       "back": 252,
       "shortcuts": 101,
@@ -968,11 +968,11 @@
       ]
     },
     "language": null,
-    "languageMeaning": "semántica estándar: matchea EXACTAMENTE las secuencias de interacciones (clicks y hovers) realizables desde el estado inicial (sin las que rompen la página)",
+    "languageMeaning": "standard semantics: matches EXACTLY the sequences of interactions (clicks and hovers) that can be performed from the initial state (without the ones that break the page)",
     "completeInteractions": null,
-    "completeInteractionsMeaning": "secuencias que vuelven al estado inicial; toda secuencia realizable es prefijo de alguna de estas",
-    "languageOmitted": "omitido: el regex supera 500000 caracteres (crece exponencialmente al eliminar los estados del núcleo denso: root, root > vis, root > vis > operator, root > vis > controls, root > vis > legend, root > vis > axis, root > vis > operator > layout, root > vis > operator > label, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). La tabla de transiciones y la comparación contra un regex esperado no se ven afectadas. Ver regex.explosion en transitions.json.",
-    "completeInteractionsOmitted": "omitido: el regex supera 500000 caracteres (crece exponencialmente al eliminar los estados del núcleo denso: root, root > vis, root > vis > operator, root > vis > legend, root > vis > operator > layout, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). La tabla de transiciones y la comparación contra un regex esperado no se ven afectadas. Ver regex.explosion en transitions.json.",
+    "completeInteractionsMeaning": "sequences that return to the initial state; every performable sequence is a prefix of one of these",
+    "languageOmitted": "omitted: the regex exceeds 500000 characters (it grows exponentially when eliminating the states of the dense core: root, root > vis, root > vis > operator, root > vis > controls, root > vis > legend, root > vis > axis, root > vis > operator > layout, root > vis > operator > label, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). The transition table and the comparison against an expected regex are not affected. See regex.explosion in transitions.json.",
+    "completeInteractionsOmitted": "omitted: the regex exceeds 500000 characters (it grows exponentially when eliminating the states of the dense core: root, root > vis, root > vis > operator, root > vis > legend, root > vis > operator > layout, root > vis > operator > encoder, root > vis > operator > distortion, root > vis > operator > filter). The transition table and the comparison against an expected regex are not affected. See regex.explosion in transitions.json.",
     "explosion": {
       "language": {
         "maxLength": 500000,
@@ -1311,7 +1311,7 @@
     }
   },
   "partiallyVisibleClicks": {
-    "meaning": "transiciones cuyo elemento se veía solo en parte al clickearlo (visible: fracción aproximada de su área)",
+    "meaning": "transitions whose element was only partly visible when it was clicked (visible: approximate fraction of its area)",
     "count": 87,
     "ofTransitions": 384,
     "transitions": [
@@ -1840,7 +1840,7 @@
     ]
   },
   "hovers": {
-    "meaning": "acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto observado; los hovers sin efecto visible no son acciones (ignored)",
+    "meaning": "hover actions (the pointer enters an element) that change something visible. transient: a highlight or tooltip that disappears on leaving and does not change what can be done (a loop on its state); structural: opens something or leaves a change, leading to another state (its way back is Unhover_); error: doing it breaks the page (reported as unexpected behavior). changes is the observed effect; hovers with no visible effect are not actions (ignored)",
     "transient": 31,
     "structural": 0,
     "actions": {
@@ -1848,217 +1848,217 @@
         "type": "transient",
         "states": 17,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_util": {
         "type": "transient",
         "states": 5,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_animate": {
         "type": "transient",
         "states": 8,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_query": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_analytics": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_scale": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_data": {
         "type": "transient",
         "states": 4,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_physics": {
         "type": "transient",
         "states": 4,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_display": {
         "type": "transient",
         "states": 2,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_flex": {
         "type": "transient",
         "states": 3,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_operator": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_vis/data": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_controls": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_legend": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_axis": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_events": {
         "type": "transient",
         "states": 3,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_palette": {
         "type": "transient",
         "states": 4,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_heap": {
         "type": "transient",
         "states": 3,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_math": {
         "type": "transient",
         "states": 4,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_interpolate": {
         "type": "transient",
         "states": 5,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_methods": {
         "type": "transient",
         "states": 5,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_graph": {
         "type": "transient",
         "states": 4,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_cluster": {
         "type": "transient",
         "states": 5,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_optimization": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_converters": {
         "type": "transient",
         "states": 3,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_layout": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_label": {
         "type": "transient",
         "states": 6,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_encoder": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_distortion": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_filter": {
         "type": "transient",
         "states": 7,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       },
       "Hover_render": {
         "type": "transient",
         "states": 5,
         "changes": [
-          "stroke: (sin definir) -> #000"
+          "stroke: (unset) -> #000"
         ]
       }
     }

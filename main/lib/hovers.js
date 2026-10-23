@@ -1,6 +1,6 @@
 /**
  * Hover: decides what a probed element is from what the crawler saw
- * (probeHover in crawler.js), without touching the browser.
+ * (probeHover in lib/crawl/hoverProbe.js), without touching the browser.
  *
  * Probing a hover is: snapshot of the document (see __crawlerEffects in
  * instrument.js) -> the pointer enters -> snapshot -> the pointer leaves ->
@@ -23,14 +23,34 @@
  * change, so a probe can never observe an effect. Counting it would add a
  * hover that cannot be verified, which is exactly the phantom this module
  * exists to keep out. The <title> text is still used to name actions.
+ *
+ * Used by lib/crawl/hoverProbe.js (classifyProbe, describeEffect, selfKeyOf,
+ * IGNORE_REASON) while crawling, and by lib/report (summarizeHovers,
+ * hoverNotes, hoverLines) when the table is turned into the report.
+ *
+ * A "snapshot" below is the array __crawlerEffects returns (instrument.js):
+ * { k: key, p: parent key, t: tag, h?: 1 (hidden), a?: attributes, x?: own text,
+ * cs?: changed computed styles }.
  */
 
 const { kindOfAction } = require('./actions');
+const { ERROR_STATE } = require('./constants');
+const { sameJson, compositeKey, splitKey } = require('./util');
 
-const ERROR_STATE = '__ERROR__';
 const MAX_CHANGES = 6;
 
-const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+/** What happened to an element between two snapshots; describeEffect compares these. */
+const CHANGE = { appears: 'appears', disappears: 'disappears', shown: 'shown', hidden: 'hidden' };
+
+/** Why a probed hover is NOT an action (the `reason` of hovers.ignored in transitions.json). */
+const IGNORE_REASON = {
+  noVisibleEffect: 'no visible effect',
+  notInteractable: 'no longer interactable',
+  navigationMissed: 'navigation did not reach this state',
+  neverSettles: 'never settles (continuous animation)',
+  pageDrifts: 'the page changes by itself over time',
+  structuralInFastMode: 'structural, and fast mode (backSelector) cannot follow it',
+};
 
 /**
  * @param {Object} p
@@ -45,8 +65,8 @@ const same = (a, b) => JSON.stringify(a) === JSON.stringify(b);
  *   revealed / hidden: gestures that become possible / impossible while the pointer is over the element
  */
 function classifyProbe({ state, hoveredKey, before, after, restored, actionsBefore, actionsHovered }) {
-  const reverted = same(before, restored);
-  if (same(before, after)) return { type: 'inert', reverted, revealed: [], hidden: [] };
+  const reverted = sameJson(before, restored);
+  if (sameJson(before, after)) return { type: 'inert', reverted, revealed: [], hidden: [] };
 
   const had = new Set(actionsBefore);
   const has = new Set(actionsHovered);
@@ -61,22 +81,28 @@ function classifyProbe({ state, hoveredKey, before, after, restored, actionsBefo
   return { type: decorative ? 'decorative' : 'structural', reverted, revealed, hidden };
 }
 
-const q = (s) => JSON.stringify(s);
-const show = (v) => (v === undefined ? '(sin definir)' : v.length > 60 ? `${v.slice(0, 57)}...` : v);
+// text helpers for the effect notes
+const q = (s) => JSON.stringify(s); // a quoted string
+const plural = (n, noun) => `${n} ${noun}${n === 1 ? '' : 's'}`; // "1 state", "2 states"
+// an attribute value for a note: "(unset)" when missing, cut when long
+const show = (v) => (v === undefined ? '(unset)' : v.length > 60 ? `${v.slice(0, 57)}...` : v);
+// how a snapshot element is named in a note: tag#id.firstClass
 const labelOf = (e) => `${e.t}${e.a && e.a.id ? `#${e.a.id}` : ''}${e.a && e.a.class ? `.${e.a.class.split(' ')[0]}` : ''}`;
 
 /**
  * The effect of a hover as a short list of readable changes, from two
  * snapshots. Changes on the element itself have no prefix
- * ("stroke: (sin definir) -> #000"); changes on another element carry its label.
+ * ("stroke: (unset) -> #000"); changes on another element carry its label.
+ * @param {Object[]} before - snapshot before the hover
+ * @param {Object[]} after - snapshot with the pointer over the element
  * @param {string|null} selfKey - snapshot key of the element the pointer was put over
- * @returns {{ changes: string[], more?: number }}
+ * @returns {{ changes: string[], more?: number }} at most MAX_CHANGES readable changes, and how many more there were
  */
 function describeEffect(before, after, selfKey) {
   const prev = new Map(before.map((e) => [e.k, e]));
   const next = new Map(after.map((e) => [e.k, e]));
   const who = (e) => (e.k === selfKey ? '' : `${labelOf(e)}: `);
-  const withText = (e) => (e.x ? ` (texto ${q(e.x)})` : '');
+  const withText = (e) => (e.x ? ` (text ${q(e.x)})` : '');
   const changes = [];
 
   // Which elements appear, disappear, or are shown / hidden. When a group is
@@ -84,9 +110,9 @@ function describeEffect(before, after, selfKey) {
   const shown = (e) => !e.h;
   const flip = (k) => {
     const was = prev.get(k), now = next.get(k);
-    if (!was && now) return 'aparece';
-    if (was && !now) return 'desaparece';
-    if (shown(was) !== shown(now)) return shown(now) ? 'se muestra' : 'se oculta';
+    if (!was && now) return CHANGE.appears;
+    if (was && !now) return CHANGE.disappears;
+    if (shown(was) !== shown(now)) return shown(now) ? CHANGE.shown : CHANGE.hidden;
     return null;
   };
   const underSameChange = (e, how) => e.p !== null && flip(e.p) === how;
@@ -98,7 +124,7 @@ function describeEffect(before, after, selfKey) {
       if (!underSameChange(now, how)) {
         // a hidden element keeps no attributes: to name it, use the earlier one
         const ref = shown(now) ? now : was || now;
-        const label = how === 'aparece' || ref.k !== selfKey ? `${labelOf(ref)}: ` : '';
+        const label = how === CHANGE.appears || ref.k !== selfKey ? `${labelOf(ref)}: ` : '';
         changes.push(`${label}${how}${shown(now) ? withText(now) : ''}`);
       }
       continue;
@@ -107,7 +133,7 @@ function describeEffect(before, after, selfKey) {
     for (const name of new Set([...Object.keys(was.a), ...Object.keys(now.a)])) {
       if (was.a[name] !== now.a[name]) changes.push(`${who(now)}${name}: ${show(was.a[name])} -> ${show(now.a[name])}`);
     }
-    if (was.x !== now.x) changes.push(`${who(now)}texto: ${q(was.x)} -> ${q(now.x)}`);
+    if (was.x !== now.x) changes.push(`${who(now)}text: ${q(was.x)} -> ${q(now.x)}`);
     // Computed styles that changed (a CSS :hover): if an attribute of the same
     // name changed it is already reported, and if the parent changed the same
     // way the child merely inherits it, so the parent's line is enough.
@@ -119,7 +145,7 @@ function describeEffect(before, after, selfKey) {
     }
   }
   for (const [k, was] of prev) {
-    if (!next.has(k) && !underSameChange(was, 'desaparece')) changes.push(`${labelOf(was)}: desaparece`);
+    if (!next.has(k) && !underSameChange(was, CHANGE.disappears)) changes.push(`${labelOf(was)}: ${CHANGE.disappears}`);
   }
 
   const out = { changes: changes.slice(0, MAX_CHANGES) };
@@ -127,7 +153,12 @@ function describeEffect(before, after, selfKey) {
   return out;
 }
 
-/** The crawler id of a gesture selector, or null: [data-crawler-id="c12"] -> "id:c12". */
+/**
+ * The crawler id of a gesture selector, or null: [data-crawler-id="c12"] -> "id:c12".
+ * The "id:" key format must match the keys __crawlerEffects builds in instrument.js.
+ * @param {string} sel - the selector of a gesture
+ * @returns {string|null}
+ */
 function selfKeyOf(sel) {
   const m = /data-crawler-id="([^"]+)"/.exec(sel);
   return m ? `id:${m[1]}` : null;
@@ -137,7 +168,12 @@ function selfKeyOf(sel) {
  * Per-action summary of the hovers in the transition table, for the report.
  * `effects`: state -> action -> effect (what describeEffect left, plus
  * `persistent` / `reveals` / `hides`); `ignored`: [{ action, reason, states }].
- * @returns {Object|null} null when there is no hover and none was ignored
+ * @param {Object} p
+ * @param {Object<string, Object<string, string>>} p.transitions - the table, with clean names
+ * @param {Object<string, Object<string, Object>>} [p.effects]
+ * @param {{action: string, reason: string, states: number}[]} [p.ignored] - probed elements that are not actions
+ * @returns {Object|null} the `hovers` section of transitions.json (actions grouped by type, effects, ignored),
+ *   or null when there is no hover and none was ignored
  */
 function summarizeHovers({ transitions, effects = {}, ignored = [] }) {
   const byAction = new Map();
@@ -174,12 +210,12 @@ function summarizeHovers({ transitions, effects = {}, ignored = [] }) {
   }
 
   const flagged = (flag) => Object.values(actions).some((a) => a[flag] || (a.effects || []).some((e) => e[flag]));
-  let meaning = 'acciones de hover (el puntero entra a un elemento) que cambian algo visible. transient: un resaltado o tooltip que ' +
-    'desaparece al salir y no cambia qué se puede hacer (un bucle en su estado); structural: abre algo o deja un cambio, lleva a ' +
-    'otro estado (su vuelta es Unhover_); error: hacerlo rompe la página (se informa como comportamiento inesperado). changes es el efecto ' +
-    'observado; los hovers sin efecto visible no son acciones (ignored)';
+  let meaning = 'hover actions (the pointer enters an element) that change something visible. transient: a highlight or tooltip that ' +
+    'disappears on leaving and does not change what can be done (a loop on its state); structural: opens something or leaves a change, ' +
+    'leading to another state (its way back is Unhover_); error: doing it breaks the page (reported as unexpected behavior). changes is the ' +
+    'observed effect; hovers with no visible effect are not actions (ignored)';
   // only when there is one, so the output of pages without them does not change
-  if (flagged('positional')) meaning += '. positional: el efecto depende de dónde se apunta; se probó en el centro y en el borde del elemento';
+  if (flagged('positional')) meaning += '. positional: the effect depends on where the pointer is aimed; it was tested at the center and at the edge of the element';
   const out = {
     meaning,
     transient,
@@ -193,23 +229,25 @@ function summarizeHovers({ transitions, effects = {}, ignored = [] }) {
 
 /**
  * One line of text per action saying what it does, for the diagram tooltip
- * and the footer: "stroke: (sin definir) -> #000".
+ * and the footer: "stroke: (unset) -> #000".
+ * @param {Object|null} hovers - the section built by summarizeHovers
+ * @returns {Object<string, string>} action -> its note (empty when there are no hovers)
  */
 function hoverNotes(hovers) {
   const notes = {};
   if (!hovers) return notes;
   const text = (e) => {
     const parts = [...(e.changes || [])];
-    if (e.more) parts.push(`... y ${e.more} más`);
-    if (e.reveals && e.reveals.length) parts.push(`habilita: ${e.reveals.join(', ')}`);
-    if (e.hides && e.hides.length) parts.push(`impide: ${e.hides.join(', ')}`);
-    if (e.persistent) parts.push('no se revierte al salir');
-    if (e.positional) parts.push('depende de dónde se apunta (probado en el centro y en el borde)');
+    if (e.more) parts.push(`... and ${e.more} more`);
+    if (e.reveals && e.reveals.length) parts.push(`enables: ${e.reveals.join(', ')}`);
+    if (e.hides && e.hides.length) parts.push(`disables: ${e.hides.join(', ')}`);
+    if (e.persistent) parts.push('does not revert on leaving');
+    if (e.positional) parts.push('depends on where it is aimed (tested at the center and at the edge)');
     return parts.join('; ');
   };
   for (const [action, a] of Object.entries(hovers.actions)) {
-    notes[action] = a.effects ? a.effects.map((e) => `${text(e)} (en ${e.in} estados)`).join(' | ') : text(a);
-    if (a.errors) notes[action] = [notes[action], 'rompe la página (excepción)'].filter(Boolean).join('; ');
+    notes[action] = a.effects ? a.effects.map((e) => `${text(e)} (in ${plural(e.in, 'state')})`).join(' | ') : text(a);
+    if (a.errors) notes[action] = [notes[action], 'breaks the page (exception)'].filter(Boolean).join('; ');
   }
   return notes;
 }
@@ -220,20 +258,22 @@ function hoverNotes(hovers) {
  * ..."), because in a visualization with dozens of elements almost all of them
  * do the same. After those come the probed elements that are NOT actions,
  * with the reason.
+ * @param {Object|null} hovers - the section built by summarizeHovers
+ * @returns {string[]}
  */
 function hoverLines(hovers) {
   if (!hovers) return [];
   const notes = hoverNotes(hovers);
   const groups = new Map(); // "type\0note" -> actions
   for (const [action, a] of Object.entries(hovers.actions)) {
-    const key = `${a.type}\u0000${notes[action] || '(sin efecto anotado)'}`;
+    const key = compositeKey(a.type, notes[action] || '(no effect noted)');
     if (!groups.has(key)) groups.set(key, []);
     groups.get(key).push(action);
   }
   const lines = [];
   for (const [key, actions] of groups) {
-    const [type, note] = key.split('\u0000');
-    const where = { structural: 'cambia de estado', transient: 'bucle en el estado', error: 'rompe la página' }[type];
+    const [type, note] = splitKey(key);
+    const where = { structural: 'changes state', transient: 'loop on the state', error: 'breaks the page' }[type];
     lines.push(`${actions.join(', ')} (${actions.length}; ${where}): ${note}`);
   }
   if (hovers.ignored && hovers.ignored.length) {
@@ -242,18 +282,18 @@ function hoverLines(hovers) {
     const groups = new Map(); // 'reason\0elsewhere' -> items
     for (const { action, reason, states } of hovers.ignored) {
       const elsewhere = Boolean(hovers.actions[action]);
-      const key = `${reason}\u0000${elsewhere ? 1 : 0}`;
+      const key = compositeKey(reason, elsewhere ? 1 : 0);
       if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(`${action} (${states} ${states === 1 ? 'estado' : 'estados'})`);
+      groups.get(key).push(`${action} (${plural(states, 'state')})`);
     }
     for (const [key, items] of groups) {
-      const [reason, elsewhere] = key.split('\u0000');
+      const [reason, elsewhere] = splitKey(key);
       lines.push(elsewhere === '1'
-        ? `sin efecto en algunos estados (${reason}), aunque sí lo tienen en otros: ${items.join(', ')}`
-        : `NO son acciones (${reason}): ${items.join(', ')}`);
+        ? `no effect in some states (${reason}), though they have one in others: ${items.join(', ')}`
+        : `NOT actions (${reason}): ${items.join(', ')}`);
     }
   }
   return lines;
 }
 
-module.exports = { classifyProbe, describeEffect, selfKeyOf, summarizeHovers, hoverNotes, hoverLines };
+module.exports = { IGNORE_REASON, classifyProbe, describeEffect, selfKeyOf, summarizeHovers, hoverNotes, hoverLines };
