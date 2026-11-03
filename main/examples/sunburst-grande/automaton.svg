@@ -144,12 +144,7 @@
 <text x="40" y="332">columns = level in the state name (root = 0) · ↷ under the source: action that skips columns, drawn around them · actions without the "Click_" prefix · hover a state or an edge for the full detail</text>
 </g>
 <line x1="40" y1="356" x2="1024" y2="356" stroke="#ddd"/>
-<text x="40" y="376" font-weight="bold" fill="#1a7f37">Comparison with: ( circle
-| (A | A1 circle) (A1 circle)* circle
-| (B | B2 circle) (B2 circle)* circle
-| C circle
-| (D | D2 circle | D1 (D1a circle)* circle) (D2 circle | (D1 | D1a circle) (D1a circle)* circle)* circle
-)*</text>
+<text x="40" y="376" font-weight="bold" fill="#1a7f37">Comparison with: ( circle| (A | A1 circle) (A1 circle)* circle| (B | B2 circle) (B2 circle)* circle| C circle| (D | D2 circle | D1 (D1a circle)* circle) (D2 circle | (D1 | D1a circle) (D1a circle)* circle)* circle)*</text>
 <text font-family="Consolas, Menlo, monospace" font-size="11" fill="#1a7f37">
 <tspan x="40" y="394">EQUIVALENT (full automaton · complete interactions)</tspan>
 </text>
